@@ -2,7 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  
   return (
+    /** Декларативный */
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -17,6 +19,9 @@ function App() {
         >
           Learn React
         </a>
+        <span>
+          {(new Date()).getFullYear()}
+        </span>
       </header>
     </div>
   );
