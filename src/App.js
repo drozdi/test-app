@@ -9,11 +9,12 @@ function App() {
   const [isValueVaild, setIsValueVaild] = useState(false);
 
   const onClick = (e) => {
-    const val = prompt('Введите значение');
+    let val = prompt('Введите значение');
+    val &&= val = val.trim()
     setValue(val);
     setError(false);
     setIsValueVaild(true);
-    if (val?.length < 3) {
+    if ((val || '').length < 3) {
       setError(true);
       setIsValueVaild(false);
     }
