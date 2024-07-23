@@ -1,56 +1,75 @@
-import logo from './logo.svg';
 import style from './App.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function App() {
-  const [value, setValue] = useState('');
-  const [list, setList] = useState([]);
-  const [error, setError] = useState(false);
-  const [isValueVaild, setIsValueVaild] = useState(false);
+  const [operator, setOperator] = useState('');
+  const [operand1, setOperand1] = useState('');
+  const [operand2, setOperand2] = useState('');
+  const [isResult, setIsResult] = useState(false);
+   
+  const NUMS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const OPERATORS = ['+', '-', 'C', '='];
 
-  const onClick = (e) => {
-    let val = prompt('Введите значение');
-    val &&= val = val.trim()
-    setValue(val);
-    setError(false);
-    setIsValueVaild(true);
-    if ((val || '').length < 3) {
-      setError(true);
-      setIsValueVaild(false);
+  const onNumClic = (num) => {
+    if (operator) {
+      setOperand2(operand2? operand2+num: String(num||''));
+    } else {
+      setOperand1(operand1? operand1+num: String(num||''));
     }
   }
-  const onAddClick = () => {
-    setList([...list, {
-      value,
-      id: Date.now(),
-      date: new Date().toLocaleString()
-    }]);
-
-    setValue('');
-    setError(false);
-    setIsValueVaild(false);
+  const onOperatorClick = (operator) => {
+    if (operator === "=") {
+      resultClick();
+    } else if (operator === "C") {
+      clearClick();
+    } else if (operand2) {
+      resultClick();
+      setOperator(operator);
+      setIsResult(false)
+    } else {
+      setOperator(operator);
+      setIsResult(false)
+    }
+  }
+  const clearClick = () => {
+    setOperator('');
+    setOperand1('');
+    setOperand2('');
+    setIsResult(false)
+  }
+  const resultClick = () => {
+    let num1 = +operand1;
+    let num2 = +operand2;
+    setOperand1('')
+    setOperand2('')
+    switch (operator) {
+      case '+':
+        setOperand1(num1 + num2)
+        setOperator('')
+        break;
+      case '-':
+        setOperand1(num1 - num2)
+        setOperator('')
+        break;  
+    }
+    setIsResult(true)
   }
 
-  return (<div className={style.app}>
-    <h1 className={style['page-heading']}>Ввод значения</h1>
-    <p className={style['no-margin-text']}>
-      Текущее значение <code>value</code>: "<output className={style['current-value']}>{value}</output>"
-    </p>
-    {error && <div className={style.error}>Введенное значение должно содержать минимум 3 символа</div>}
-    <div className={style['buttons-container']}>
-      <button className={style.button} onClick={onClick}>Ввести новое</button>
-      <button className={style.button} onClick={onAddClick} disabled={!isValueVaild}>Добавить в список</button>
-    </div>
-    <div className={style['list-container']}>
-      < h2 className={style['list-heading']}>Список:</h2>
-      {!list.length && < p className={style['no-margin-text']}>Нет добавленных элементов</p>}
-      <ul className={style.list}>
-        {list.map(({ id, value, date }) => {
-          return <li key={id} className={style['list-item']}>{value} - {date}</li>
+  return (<div className={style['app-calculator']}>
+      <div className={style['app-calculator__display']+(isResult? ' '+style['app-calculator__display--result']:'')}>
+        {operand1+operator+operand2}
+      </div>
+      <div className={style['app-calculator__buttons']}>
+        {NUMS.map((num) => {
+          return (<button key={num} className={style['app-calculator__button']} onClick={() => onNumClic(num)}>{num}</button>);
         })}
-      </ul>
-    </div>
-  </div >)
+      </div>
+      <div className={style['app-calculator__buttons']}>
+        {OPERATORS.map((operator) => {
+          return (<button key={operator} className={style['app-calculator__button']} onClick={() => onOperatorClick(operator)}>{operator}</button>);
+        })}
+      </div>
+  </div>)
 }
 
 export default App;
