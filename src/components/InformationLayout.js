@@ -1,8 +1,11 @@
+import PropTypes from 'prop-types';
 
-import React, { useState } from 'react';
-
-function InformationLayout () {
-    return '';
+function InformationLayout({ message = '' }) {
+    return <h2>{message}</h2>;
 }
+
+InformationLayout.propTypes = {
+    message: PropTypes.string
+};
 
 export default InformationLayout;

@@ -1,8 +1,12 @@
 
 import React, { useState } from 'react';
 
-function GameLayout () {
-    return '';
+import style from './Game.module.css';
+
+function GameLayout({ }) {
+    return (<div className={style.board}>
+        Game Layout
+    </div>);
 }
 
 export default GameLayout;

@@ -1,8 +1,18 @@
+import PropTypes from 'prop-types';
+import style from './Game.module.css';
 
-import React, { useState } from 'react';
-
-function FieldLayout () {
-    return '';
+function FieldLayout({ field, setFieldValue }) {
+    return (<div className={style.board}>
+        {field.map((cell, index) => {
+            return (<button key={index} className={style.cell} onClick={() => setFieldValue(index)}>
+                {cell}
+            </button>);
+        })}
+    </div>);
 }
+FieldLayout.propTypes = {
+    field: PropTypes.arrayOf(PropTypes.string),
+    setFieldValue: PropTypes.func
+};
 
 export default FieldLayout;
