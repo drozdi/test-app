@@ -10,13 +10,12 @@ function App() {
 
   const onClick = (e) => {
     let val = prompt('Введите значение');
-    val &&= val = val.trim()
-    setValue(val);
-    setError(false);
-    setIsValueVaild(true);
-    if ((val || '').length < 3) {
+    if (val && val.length > 2) {
+      setValue(val);
+      setError(false);
+      setIsValueVaild(true);
+    } else {
       setError(true);
-      setIsValueVaild(false);
     }
   }
   const onAddClick = () => {
@@ -25,7 +24,6 @@ function App() {
       id: Date.now(),
       date: new Date().toLocaleString()
     }]);
-
     setValue('');
     setError(false);
     setIsValueVaild(false);
