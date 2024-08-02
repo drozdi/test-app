@@ -3,7 +3,7 @@ import { Colors } from '../Colors.js';
 import blackImg from '../../assets/chess/bR.png'
 import whiteImg from '../../assets/chess/wR.png'
 
-export class Bishop extends Base {
+export class Rook extends Base {
     constructor(color, cell) {
         super(color, cell);
         this.label = Figures.ROOK;

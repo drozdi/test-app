@@ -8,7 +8,8 @@ function App() {
 
   useEffect(() => {
     const newBoard = new Board();
-    newBoard.init();
+    newBoard.generateCells();
+    newBoard.generateFigures();
     setBoard(newBoard);
   }, [])
 
