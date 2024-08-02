@@ -9,4 +9,16 @@ export class Rook extends Base {
         this.label = Figures.ROOK;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
+    canMove(target) {
+        if (!super.canMove(target)) {
+            return false;
+        }
+        if (this.cell.emptyV(target)) {
+            return true;
+        }
+        if (this.cell.emptyH(target)) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -9,4 +9,19 @@ export class Queen extends Base {
         this.label = Figures.QUEEN;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
+    canMove(target) {
+        if (!super.canMove(target)) {
+            return false;
+        }
+        if (this.cell.emptyV(target)) {
+            return true;
+        }
+        if (this.cell.emptyH(target)) {
+            return true;
+        }
+        if (this.cell.emptyD(target)) {
+            return true;
+        }
+        return false;
+    }
 }

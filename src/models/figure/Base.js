@@ -26,10 +26,13 @@ export class Base {
     }
 
     canMove(target) {
+        if (this.color === target.figure?.color) {
+            return false;
+        }
         return true;
     }
 
-    moveCell(target) {
+    moveToCell(target) {
 
     }
 

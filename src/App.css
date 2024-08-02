@@ -1,7 +1,7 @@
 .board {
     display: flex;
     flex-wrap: wrap;
-    margin: 50px auto;
+    margin: auto;
     width: calc(64px*8);
     height: calc(64px*8);
 }
@@ -38,4 +38,20 @@
 
 .attack {
     background-color: #0f0;
+}
+
+.area {
+    display: flex;
+    flex-direction: row;
+}
+
+.lost {
+    width: 64px;
+    height: 64px;
+}
+
+.lost-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(64px*3);
 }
