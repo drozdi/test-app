@@ -21,8 +21,6 @@ export class Board {
             this.cells.push(row);
         }
     }
-
-
     generateFigures() {
         this.generatePawns();
         this.generateKings();
@@ -62,5 +60,21 @@ export class Board {
         new Rook(Colors.BLACK, this.cells[7][0]);
         new Rook(Colors.WHITE, this.cells[0][7]);
         new Rook(Colors.BLACK, this.cells[7][7]);
+    }
+
+    copy () {
+        const newBoard = new Board();
+        newBoard.cells = this.cells;
+        return newBoard;
+    }
+
+    canMove (selectedCell) {
+        for (let i = 0; i < this.cells.length; i++) { 
+           const row =  this.cells[i];
+           for (let j = 0; j < row.length; j++) {
+                const target = row[j];
+                target.available = !!selectedCell?.figure?.canMove(target);
+           }
+        }
     }
 }

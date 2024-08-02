@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CellComponent from "./CellComponent";
 
 function BoardComponent({ board, setBoard }) {
     const [selectedCell, setSelectedCell ] = useState(null);
 
     function click (cell) {
-        if (cell.figure) {
+        if (selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)) {
+            selectedCell.moveFigure(cell)
+            setSelectedCell(null);
+        } else {
             setSelectedCell(cell);
         }
     }
+
+    function updateBoard () {
+        board.canMove(selectedCell);
+        const newBoard = board.copy();
+        setBoard(newBoard);
+    }
+
+    useEffect(updateBoard, [selectedCell])
+
+    
 
     return (<div className="board">
         {board.cells.map((row, index) =>

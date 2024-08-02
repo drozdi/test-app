@@ -16,4 +16,12 @@ export class Cell {
         this.available = false;
         this.key = `${x}-${y}`;
     }
+
+    moveFigure (target) {
+        if (this.figure?.canMove(target)) {
+            this.figure.moveCell(target);
+            target.figure = this.figure;
+            this.figure = null;
+        }
+    }
 }
