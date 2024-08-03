@@ -9,7 +9,7 @@ export class King extends Base {
         this.label = Figures.KING;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
-    canMove(target: Cell): boolean {
+    canMove(target: Cell) {
         if (!super.canMove(target)) {
             return false;
         }
