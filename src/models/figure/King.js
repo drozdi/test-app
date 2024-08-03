@@ -9,4 +9,21 @@ export class King extends Base {
         this.label = Figures.KING;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
+    canMove(target: Cell): boolean {
+        if (!super.canMove(target)) {
+            return false;
+        }
+        const dx = Math.abs(target.x - this.cell.x);
+        const dy = Math.abs(target.y - this.cell.y);
+
+        if (
+            (dx === 1 && dy === 0) ||
+            (dx === 0 && dy === 1) ||
+            (dx === 1 && dy === 1)
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }
