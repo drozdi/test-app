@@ -44,17 +44,13 @@ export class Pawn extends Base {
 
         //взятие на проходе
         if (target.x === this.cell.x + direct &&
-            target.y === this.cell.y - 1 &&
+            Math.abs(target.y - this.cell.y) === 1 &&
             this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) &&
             this.cell.board.cells[target.x - direct][target.y].figure.isCurrentStep &&
             this.cell.isEnemy(this.cell.board.cells[target.x - direct][target.y])) {
-            return true;
-        }
-        if (target.x === this.cell.x + direct &&
-            target.y === this.cell.y + 1 &&
-            this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) &&
-            this.cell.board.cells[target.x - direct][target.y].figure.isCurrentStep &&
-            this.cell.isEnemy(this.cell.board.cells[target.x - direct][target.y])) {
+
+            this.cell.board.cells[target.x - direct][target.y].available = true;
+
             return true;
         }
 
