@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Board } from './models/Board';
+import { ChessGame } from './models/ChessGame';
 import { Colors } from './models/Colors';
 import { Player } from './models/Player';
 import BoardComponent from './components/BoardComponent';
 
 function App() {
-  const [board, setBoard] = useState(new Board());
+  const [board, setBoard] = useState(new ChessGame());
   const [whitePlayer, setWhitePlayer] = useState(new Player(Colors.WHITE, 'Белый'));
   const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK, 'Черный'));
   const [currentPlayer, setCurrentPlayer] = useState(null)
   function restart() {
-    const newBoard = new Board();
+    const newBoard = new ChessGame();
     newBoard.generateCells();
     newBoard.generateFigures();
     setBoard(newBoard);

@@ -15,6 +15,7 @@ export class Base {
     label = null;
     key = null;
     img = null;
+    isFirstStep = true;
 
     constructor(color, cell) {
         this.color = color;
@@ -33,7 +34,7 @@ export class Base {
     }
 
     moveToCell(target) {
-
+        this.isFirstStep = false;
     }
 
 }

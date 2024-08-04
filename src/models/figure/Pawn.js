@@ -4,7 +4,6 @@ import blackImg from '../../assets/chess/bP.png'
 import whiteImg from '../../assets/chess/wP.png'
 
 export class Pawn extends Base {
-    isFirstStep = true;
     constructor(color, cell) {
         super(color, cell);
         this.label = Figures.PAWN;
@@ -14,8 +13,8 @@ export class Pawn extends Base {
         if (!super.canMove(target)) {
             return false;
         }
-        const direct = this.color === Colors.BLACK ? -1 : 1;
-        const firstDirect = this.color === Colors.BLACK ? -2 : 2;
+        const direct = this.color === Colors.BLACK ? 1 : -1;
+        const firstDirect = this.color === Colors.BLACK ? 2 : -2;
 
         if (target.x === this.cell.x + direct &&
             target.y === this.cell.y &&
@@ -44,9 +43,5 @@ export class Pawn extends Base {
         }
 
         return false;
-    }
-    moveToCell(target) {
-        super.moveToCell(target);
-        this.isFirstStep = false;
     }
 }

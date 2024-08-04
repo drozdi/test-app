@@ -27,19 +27,39 @@ function BoardComponent({ board, setBoard, currentPlayer = null, swapPlayer = ()
 
     return (<>
         <h2>Ходит "{currentPlayer?.name}"</h2>
-        <div className="area">
-            <div className="board">
-                {board.cells.map((row, index) =>
-                    <React.Fragment key={index}>
-                        {row.map(cell =>
-                            <CellComponent onClick={click} selected={selectedCell?.x === cell.x && selectedCell?.y === cell.y} cell={cell} key={cell.key} />
+        <div className="container">
+            <div className="board__container">
+                <div className="board__row">
+                    <div className="board__legend board__legend--h board__legend--w"></div>
+                    {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(i => <div key={i} className="board__legend board__legend--h">{i}</div>)}
+                    <div className="board__legend board__legend--h board__legend--w"></div>
+                </div>
+                <div className="board__row">
+                    <div className="board__column">
+                        {[8, 7, 6, 5, 4, 3, 2, 1].map(i => <div key={i} className="board__legend board__legend--w">{i}</div>)}
+                    </div>
+                    <div className="board">
+                        {board.cells.map((row, index) =>
+                            <React.Fragment key={index}>
+                                {row.map(cell =>
+                                    <CellComponent onClick={click} selected={selectedCell?.x === cell.x && selectedCell?.y === cell.y} cell={cell} key={cell.key} />
+                                )}
+                            </React.Fragment>
                         )}
-                    </React.Fragment>
-                )}
+                    </div>
+                    <div className="board__column">
+                        {[8, 7, 6, 5, 4, 3, 2, 1].map(i => <div key={i} className="board__legend board__legend--w">{i}</div>)}
+                    </div>
+                </div>
+                <div className="board__row">
+                    <div className="board__legend board__legend--h board__legend--w"></div>
+                    {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(i => <div key={i} className="board__legend board__legend--h">{i}</div>)}
+                    <div className="board__legend board__legend--h board__legend--w"></div>
+                </div>
             </div>
-            <div>
-                <LostFiguresComponent title="Черные фигуры" figures={board.lostBlackFigures} />
+            <div className="legend">
                 <LostFiguresComponent title="Белые фигуры" figures={board.lostWhiteFigures} />
+                <LostFiguresComponent title="Черные фигуры" figures={board.lostBlackFigures} />
             </div>
         </div>
     </>);
