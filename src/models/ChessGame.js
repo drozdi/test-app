@@ -15,12 +15,16 @@ export class ChessGame extends Board {
      * void generateCells() {}
      */
     generateFigures() {
-        this.generatePawns();
-        this.generateKings();
-        this.generateQueens();
-        this.generateBishops();
-        this.generateKnights();
-        this.generateRooks();
+        new Pawn(Colors.WHITE, this.cells[5][5]);
+        new Pawn(Colors.WHITE, this.cells[5][6]);
+        new Pawn(Colors.BLACK, this.cells[1][3]);
+        new Pawn(Colors.BLACK, this.cells[1][4]);
+        //this.generatePawns();
+        //this.generateKings();
+        //this.generateQueens();
+        //this.generateBishops();
+        //this.generateKnights();
+        //this.generateRooks();
     }
     /**
      * Generate the pawns
@@ -37,16 +41,16 @@ export class ChessGame extends Board {
      * void generateKings()
      */
     generateKings() {
-        new King(Colors.WHITE, this.cells[7][3]);
-        new King(Colors.BLACK, this.cells[0][3]);
+        new King(Colors.WHITE, this.cells[7][4]);
+        new King(Colors.BLACK, this.cells[0][4]);
     }
     /**
      * Generate the queens
      * void generateQueens()
      */
     generateQueens() {
-        new Queen(Colors.WHITE, this.cells[7][4]);
-        new Queen(Colors.BLACK, this.cells[0][4]);
+        new Queen(Colors.WHITE, this.cells[7][3]);
+        new Queen(Colors.BLACK, this.cells[0][3]);
     }
     /**
      * Generate the bishops

@@ -7,6 +7,7 @@ import { Knight } from "./figure/Knight";
 import { Bishop } from "./figure/Bishop";
 import { Rook } from "./figure/Rook";
 export class Board {
+    numStep = 0;
     cells = [];
     lostBlackFigures = [];
     lostWhiteFigures = [];
@@ -22,9 +23,9 @@ export class Board {
             const row = [];
             for (let j = 0; j < 8; j++) {
                 if ((i + j) % 2 === 0) {
-                    row.push(new Cell(this, i, j, Colors.BLACK)); //Black
-                } else {
                     row.push(new Cell(this, i, j, Colors.WHITE));
+                } else {
+                    row.push(new Cell(this, i, j, Colors.BLACK));
                 }
             }
             this.cells.push(row);

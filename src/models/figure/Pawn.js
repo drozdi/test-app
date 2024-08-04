@@ -42,6 +42,35 @@ export class Pawn extends Base {
             return true;
         }
 
+        //взятие на проходе
+        if (target.x === this.cell.x + direct &&
+            target.y === this.cell.y - 1 &&
+            this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) &&
+            this.cell.board.cells[target.x - direct][target.y].figure.isCurrentStep &&
+            this.cell.isEnemy(this.cell.board.cells[target.x - direct][target.y])) {
+            return true;
+        }
+        if (target.x === this.cell.x + direct &&
+            target.y === this.cell.y + 1 &&
+            this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) &&
+            this.cell.board.cells[target.x - direct][target.y].figure.isCurrentStep &&
+            this.cell.isEnemy(this.cell.board.cells[target.x - direct][target.y])) {
+            return true;
+        }
+
         return false;
+    }
+
+    moveToCell(target) {
+        super.moveToCell(target);
+        const direct = this.color === Colors.BLACK ? 1 : -1;
+
+        const dx = target.x - this.cell.x;
+        const dy = target.y - this.cell.y;
+
+        if (dy !== 0 && dx === direct && this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN)) {
+            this.cell.board.addLostFigure(this.cell.board.cells[target.x - direct][target.y].figure)
+            this.cell.board.cells[target.x - direct][target.y].figure = null;
+        }
     }
 }

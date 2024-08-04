@@ -25,6 +25,7 @@ export class Cell {
 
     moveFigure(target) {
         if (this.figure?.canMove(target)) {
+            this.board.numStep++;
             this.figure.moveToCell(target);
             if (target.figure) {
                 this.board.addLostFigure(target.figure)
@@ -32,6 +33,9 @@ export class Cell {
             target.setFigure(this.figure);
             this.figure = null;
         }
+    }
+    is(label) {
+        return this.figure?.is(label);
     }
     isEmpty() {
         return this.figure === null;

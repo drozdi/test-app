@@ -15,7 +15,8 @@ export class Base {
     label = null;
     key = null;
     img = null;
-    isFirstStep = true;
+    countSteps = 0;
+    numStep = 0;
 
     constructor(color, cell) {
         this.color = color;
@@ -26,6 +27,13 @@ export class Base {
         this.label = Figures.BASE;
     }
 
+    get isFirstStep() {
+        return this.countSteps === 0;
+    }
+    get isCurrentStep() {
+        return this.numStep === this.cell.board.numStep
+    }
+
     canMove(target) {
         if (this.color === target.figure?.color) {
             return false;
@@ -34,7 +42,10 @@ export class Base {
     }
 
     moveToCell(target) {
-        this.isFirstStep = false;
+        this.countSteps++;
+        this.numStep = this.cell.board.numStep;
     }
-
+    is(label) {
+        return this.label === label;
+    }
 }
