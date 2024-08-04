@@ -47,6 +47,7 @@ export class Pawn extends Base {
             Math.abs(target.y - this.cell.y) === 1 &&
             this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) &&
             this.cell.board.cells[target.x - direct][target.y].figure.isCurrentStep &&
+            this.cell.board.cells[target.x - direct][target.y].figure.isSecondStep &&
             this.cell.isEnemy(this.cell.board.cells[target.x - direct][target.y])) {
 
             this.cell.board.cells[target.x - direct][target.y].available = true;

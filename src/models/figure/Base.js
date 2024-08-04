@@ -30,6 +30,9 @@ export class Base {
     get isFirstStep() {
         return this.countSteps === 0;
     }
+    get isSecondStep() {
+        return this.countSteps === 1;
+    }
     get isCurrentStep() {
         return this.numStep === this.cell.board.numStep
     }
