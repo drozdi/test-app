@@ -2,7 +2,7 @@ function CellComponent({ cell, selected = false, onClick = (cell) => { } }) {
     return (<div onClick={() => onClick(cell)} className={[
         'cell', cell.color,
         selected ? 'selected' : '',
-        cell.available && !cell.figure ? 'available' : '',
+        cell.available ? 'available' : '',
         cell.attack ? 'attack' : ''
     ].join(' ')}>
         {cell.figure && <img src={cell.figure.img} />}

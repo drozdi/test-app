@@ -7,7 +7,7 @@ export class Cell {
     color = null;
     board = null;
     key = null;
-    available = false;
+    _available = false;
     _attack = false;
     constructor(board, x, y, color, figure = null) {
         this.x = x;
@@ -18,11 +18,17 @@ export class Cell {
         this.available = false;
         this.key = `${x}-${y}`;
     }
-    get attack () {
+    get attack() {
         return this._attack || this.available && this.figure
     }
-    set attack (value) {
+    set attack(value) {
         this._attack = value;
+    }
+    get available() {
+        return this._available && !this.figure
+    }
+    set available(value) {
+        this._available = value
     }
 
     setFigure(figure) {
@@ -53,13 +59,13 @@ export class Cell {
         }
         return false;
     }
-    
+
 
 
     underAttack(color) {
         color = color?.color || color || this.figure?.color;
 
-        
+
 
     }
 

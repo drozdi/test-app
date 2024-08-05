@@ -16,14 +16,11 @@ function BoardComponent({ board, setBoard, currentPlayer = null, swapPlayer = ()
         }
     }
 
-
     useEffect(() => {
         board.lightCells(selectedCell);
         const newBoard = board.copy();
         setBoard(newBoard);
     }, [selectedCell]);
-
-
 
     return (<>
         <h2>Ходит "{currentPlayer?.name}"</h2>
