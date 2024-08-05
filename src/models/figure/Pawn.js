@@ -63,7 +63,8 @@ export class Pawn extends Base {
         const dx = target.x - this.cell.x;
         const dy = target.y - this.cell.y;
 
-        if (dy !== 0 && dx === direct && this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN)) {
+        if (dy !== 0 && dx === direct && this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) && 
+            this.cell.board.cells[target.x - direct][target.y].isEnemy(this.cell)) {
             this.cell.board.addLostFigure(this.cell.board.cells[target.x - direct][target.y].figure)
             this.cell.board.cells[target.x - direct][target.y].figure = null;
             this.cell.board.cells[target.x - direct][target.y].attack = false;

@@ -54,6 +54,15 @@ export class Cell {
         this._attack = value;
     }
 
+
+    underAttack(color) {
+        color = color || this?.figure?.color;
+
+        
+
+    }
+
+
     emptyV(target) {
         // проверка одной вертикали
         if (this.y !== target.y) {
