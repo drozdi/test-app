@@ -18,6 +18,12 @@ export class Cell {
         this.available = false;
         this.key = `${x}-${y}`;
     }
+    get attack () {
+        return this._attack || this.available && this.figure
+    }
+    set attack (value) {
+        this._attack = value;
+    }
 
     setFigure(figure) {
         this.figure = figure;
@@ -47,16 +53,11 @@ export class Cell {
         }
         return false;
     }
-    get attack () {
-        return this._attack || this.available && this.figure
-    }
-    set attack (value) {
-        this._attack = value;
-    }
+    
 
 
     underAttack(color) {
-        color = color || this?.figure?.color;
+        color = color?.color || color || this.figure?.color;
 
         
 
