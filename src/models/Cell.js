@@ -8,6 +8,7 @@ export class Cell {
     board = null;
     key = null;
     available = false;
+    _attack = false;
     constructor(board, x, y, color, figure = null) {
         this.x = x;
         this.y = y;
@@ -45,6 +46,12 @@ export class Cell {
             return this.figure?.color !== target.figure.color;
         }
         return false;
+    }
+    get attack () {
+        return this._attack || this.available && this.figure
+    }
+    set attack (value) {
+        this._attack = value;
     }
 
     emptyV(target) {

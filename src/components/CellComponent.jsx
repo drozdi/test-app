@@ -3,8 +3,8 @@ function CellComponent({ cell, selected = false, onClick = (cell) => { } }) {
         'cell', cell.color,
         selected ? 'selected' : '',
         cell.available && !cell.figure ? 'available' : '',
-        cell.available && cell.figure ? 'attack' : ''
-    ].join(' ')} data-x={cell.x} data-y={cell.y}>
+        cell.attack ? 'attack' : ''
+    ].join(' ')}>
         {cell.figure && <img src={cell.figure.img} />}
     </div>);
 }

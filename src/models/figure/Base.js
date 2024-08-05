@@ -36,6 +36,9 @@ export class Base {
     get isCurrentStep() {
         return this.numStep === this.cell.board.numStep
     }
+    is(label) {
+        return this.label === label;
+    }
 
     canMove(target) {
         if (this.color === target.figure?.color) {
@@ -48,7 +51,5 @@ export class Base {
         this.countSteps++;
         this.numStep = this.cell.board.numStep;
     }
-    is(label) {
-        return this.label === label;
-    }
+    
 }
