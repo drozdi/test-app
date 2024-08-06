@@ -11,7 +11,7 @@ function BoardComponent({ board, setBoard, currentPlayer = null, swapPlayer = ()
             selectedCell.moveFigure(cell)
             swapPlayer();
             setSelectedCell(null);
-        } else if (!cell.isEmpty() && currentPlayer?.color === cell.figure?.color) {
+        } else if (!cell.isEmpty()) {// && currentPlayer?.color === cell.figure?.color) {
             setSelectedCell(cell);
         }
     }

@@ -16,13 +16,26 @@ export class King extends Base {
         const dx = Math.abs(target.x - this.cell.x);
         const dy = Math.abs(target.y - this.cell.y);
 
-        if (
+        /*if (
             (dx === 1 && dy === 0) ||
             (dx === 0 && dy === 1) ||
             (dx === 1 && dy === 1)
         ) {
             return true;
+        }*/
+
+        if (this.cell.emptyH(target)) {
+            return dx === 1 || target.x === this.cell.x + 1;
         }
+
+        if (this.cell.emptyV(target)) {
+            return dy === 1 || target.y === this.cell.y + 1;
+        }
+
+        if (this.cell.emptyD(target)) {
+            return dx === 1 && dy === 1;
+        }
+
         // рекировка
         if (this.countSteps === 0) {
             // одна линия

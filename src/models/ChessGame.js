@@ -19,7 +19,7 @@ export class ChessGame extends Board {
         //new Pawn(Colors.WHITE, this.cells[5][4]);
         //new Pawn(Colors.BLACK, this.cells[1][3]);
         //new Pawn(Colors.BLACK, this.cells[1][5]);
-        this.generatePawns();
+        //this.generatePawns();
         this.generateKings();
         this.generateQueens();
         this.generateBishops();

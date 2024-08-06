@@ -37,7 +37,7 @@ export class Cell {
         this.figure = figure;
         this.figure.cell = this;
     }
-
+    
     moveFigure(target) {
         if (this.figure?.canMove(target)) {
             this.board.numStep++;
@@ -61,19 +61,32 @@ export class Cell {
         }
         return false;
     }
-
-
-
+    
+    
+    
     underAttack(color) {
-        color = color?.color || color || this.figure?.color;
-
-        // вражеский цвет
-        // color = Colors.WHITE === color? Colors.BLACK: Colors.WHITE;
-
-
+        color = color || Colors.WHITE === this.figure?.color? Colors.BLACK: Colors.BLACK === this.figure?.color? Colors.WHITE: undefined;
+        
+        
+        for (let i = 0; i < 8; i++) {
+            if (this.getCell(i, this.y).figure?.canMove(this)) {
+                return true;
+            }
+        }
+        for (let i = 0; i < 8; i++) {
+            if (this.getCell(this.x, i).figure?.canMove(this)) {
+                return true;
+            }
+        }
+        
+        //const dx = 7 - this.x;
+        //const dy = 7 - this.y;
+        
+        
+        return false;
     }
-
-
+    
+    
     emptyV(target) {
         // проверка одной вертикали
         if (this.y !== target.y) {
@@ -90,7 +103,7 @@ export class Cell {
         }
         return true;
     }
-
+    
     emptyH(target) {
         // проверка одной горизонтали
         if (this.x !== target.x) {
@@ -107,7 +120,7 @@ export class Cell {
         }
         return true;
     }
-
+    
     emptyD(target) {
         // проверка одной диагонали и определение длины диогонали
         const ax = Math.abs(this.x - target.x);
@@ -128,7 +141,7 @@ export class Cell {
                 return false;
             }
         }
-
+        
         return true;
     }
 }
