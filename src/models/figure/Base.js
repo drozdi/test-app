@@ -39,6 +39,12 @@ export class Base {
     is(label) {
         return this.label === label;
     }
+    getCell(x, y) {
+        if (x !== undefined && y !== undefined) {
+            return this.cell.getCell(x, y);
+        }
+        return this.cell
+    }
 
     canMove(target) {
         if (this.color === target.figure?.color) {
@@ -51,5 +57,5 @@ export class Base {
         this.countSteps++;
         this.numStep = this.cell.board.numStep;
     }
-    
+
 }

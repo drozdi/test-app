@@ -12,7 +12,7 @@ export class Board {
     lostBlackFigures = [];
     lostWhiteFigures = [];
     getCell(x, y) {
-        return this.cells[y][x];
+        return this.cells[x][y];
     }
     /**
      * Generate the cells

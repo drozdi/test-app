@@ -30,7 +30,9 @@ export class Cell {
     set available(value) {
         this._available = value
     }
-
+    getCell(x, y) {
+        return this.board.getCell(x, y)
+    }
     setFigure(figure) {
         this.figure = figure;
         this.figure.cell = this;
@@ -65,6 +67,8 @@ export class Cell {
     underAttack(color) {
         color = color?.color || color || this.figure?.color;
 
+        // вражеский цвет
+        // color = Colors.WHITE === color? Colors.BLACK: Colors.WHITE;
 
 
     }
