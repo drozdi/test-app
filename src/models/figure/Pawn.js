@@ -13,6 +13,7 @@ export class Pawn extends Base {
         if (!super.canMove(target)) {
             return false;
         }
+
         const direct = this.color === Colors.BLACK ? 1 : -1;
         const firstDirect = this.color === Colors.BLACK ? 2 : -2;
 
@@ -36,9 +37,9 @@ export class Pawn extends Base {
             return true;
         }
         // ход в атаку
-        if ((target.x === this.cell.x + direct) && (
-            target.y === this.cell.y + 1 || target.y === this.cell.y - 1
-        ) && this.cell.isEnemy(target)) {
+        if ((target.x === this.cell.x + direct) && 
+            Math.abs(target.y - this.cell.y) === 1 && 
+            this.cell.isEnemy(target)) {
             return true;
         }
 

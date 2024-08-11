@@ -15,9 +15,9 @@ export class Board {
         return this.cells[x][y];
     }
     /**
-     * Generate the cells
-     * void generateCells() {}
-     */
+    * Generate the cells
+    * void generateCells() {}
+    */
     generateCells() {
         for (let i = 0; i < 8; i++) {
             const row = [];
@@ -32,9 +32,9 @@ export class Board {
         }
     }
     /**
-     * Copy board
-     * @returns Board
-     */
+    * Copy board
+    * @returns Board
+    */
     copy() {
         const newBoard = new Board();
         newBoard.cells = this.cells;
@@ -43,8 +43,8 @@ export class Board {
         return newBoard;
     }
     /**
-     * void lightCells(Cell selectedCell)
-     */
+    * void lightCells(Cell selectedCell)
+    */
     lightCells(selectedCell) {
         for (let i = 0; i < this.cells.length; i++) {
             const row = this.cells[i];

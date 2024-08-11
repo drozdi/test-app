@@ -1,4 +1,5 @@
 import { Colors } from "./Colors";
+import { Figures } from "./figure/Base";
 
 export class Cell {
     x = null;
@@ -9,17 +10,20 @@ export class Cell {
     key = null;
     _available = false;
     _attack = false;
+    _rec = false;
     constructor(board, x, y, color, figure = null) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.board = board;
         this.figure = figure;
-        this.available = false;
+        this._available = false;
+        this._attack = false;
+        this._rec = false;
         this.key = `${x}-${y}`;
     }
     get attack() {
-        return this._attack || this.available && this.figure
+        return this._attack || (this._available && this.figure);
     }
     set attack(value) {
         this._attack = value;
@@ -65,24 +69,92 @@ export class Cell {
     
     
     underAttack(color) {
-        color = color || Colors.WHITE === this.figure?.color? Colors.BLACK: Colors.BLACK === this.figure?.color? Colors.WHITE: undefined;
-        
+        if (this._rec) {
+            return false;
+        }
+        this._rec = true;
         
         for (let i = 0; i < 8; i++) {
-            if (this.getCell(i, this.y).figure?.canMove(this)) {
+            if (this.getCell(i, this.y).figure?.canMove(this) && 
+            this.getCell(i, this.y).figure?.color === color &&
+            !this.getCell(i, this.y).figure?.is(Figures.PAWN)) {
+                this._rec = false;
                 return true;
             }
         }
+        
         for (let i = 0; i < 8; i++) {
-            if (this.getCell(this.x, i).figure?.canMove(this)) {
+            if (this.getCell(this.x, i).figure?.canMove(this) && 
+            this.getCell(this.x, i).figure?.color === color &&
+            !this.getCell(this.x, i).figure?.is(Figures.PAWN)) {
+                this._rec = false;
+                return true;
+            }
+        }
+
+        // диагональ
+        let x = this.x;
+        let y = this.y;
+        while (x > 0 && y >0) {
+            x--;
+            y--;
+        }
+        let s = 8 - Math.max(x,y);
+        for (let i = 0; i<s; i++) {
+            if (this.getCell(x+i,y+i).figure?.canMove(this) && 
+            this.getCell(x+i,y+i).figure?.color === color &&
+            !this.getCell(x+i,y+i).figure?.is(Figures.PAWN)) {
+                this._rec = false;
                 return true;
             }
         }
         
-        //const dx = 7 - this.x;
-        //const dy = 7 - this.y;
+        //побочная диагональ
+        x = this.x;
+        y = this.y;
+        while (x < 7 && y > 0) {
+            x++;
+            y--;
+        }
+        s = Math.max(x,y)-Math.min(x,y)+1;
+        for (let i = 0; i<s; i++) {
+            if (this.getCell(x-i,y+i).figure?.canMove(this) && 
+            this.getCell(x-i,y+i).figure?.color === color &&
+            !this.getCell(x-i,y+i).figure?.is(Figures.PAWN)) {
+                this._rec = false;
+                return true;
+            }
+        }
         
+        //пешки
+        const direct = color === Colors.BLACK ? -1 : 1;
+        if (this.y < 7 &&
+            this.getCell(this.x + direct, this.y + 1).figure?.is(Figures.PAWN) &&
+            this.getCell(this.x + direct, this.y + 1).figure?.color === color) {
+            this._rec = false;
+            return true;
+        }
+        if (this.y > 0 &&
+            this.getCell(this.x + direct, this.y - 1).figure?.is(Figures.PAWN) &&
+            this.getCell(this.x + direct, this.y - 1).figure?.color === color) {
+            this._rec = false;
+            return true;
+        }
         
+        //конь
+        const steps = [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]];
+        for (let [x,y] of steps) {
+            if (this.x + x > 7 || this.x + x < 0 || this.y + y > 7 || this.y + y < 0) {
+                continue;
+            }
+            if (this.getCell(this.x + x,this.y + y).figure?.canMove(this) && 
+            this.getCell(this.x + x,this.y + y).figure?.color === color &&
+            this.getCell(this.x + x,this.y + y).figure?.is(Figures.KNIGHT)) {
+                return true;
+            }
+        }
+        
+        this._rec = false;
         return false;
     }
     
