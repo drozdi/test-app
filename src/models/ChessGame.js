@@ -32,7 +32,7 @@ export class ChessGame extends Board {
      */
     generatePawns() {
         for (let i = 0; i < 8; i++) {
-            new Pawn(Colors.WHITE, this.cells[6][i]);
+            new Pawn(Colors.WHITE, this.cells[5][i]);
             //new Pawn(Colors.BLACK, this.cells[1][i]);
         }
     }
@@ -42,7 +42,8 @@ export class ChessGame extends Board {
      */
     generateKings() {
         new King(Colors.WHITE, this.cells[7][4]);
-        new King(Colors.BLACK, this.cells[0][4]);
+        //new King(Colors.BLACK, this.cells[0][4]);
+        new King(Colors.BLACK, this.cells[4][4]);
     }
     /**
      * Generate the queens
