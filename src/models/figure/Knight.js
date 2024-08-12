@@ -9,8 +9,8 @@ export class Knight extends Base {
         this.label = Figures.KNIGHT;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
-    canMove(target) {
-        if (!super.canMove(target)) {
+    canMove(target, isColor = true) {
+        if (!super.canMove(target, isColor)) {
             return false;
         }
         const dx = Math.abs(target.x - this.cell.x);

@@ -41,7 +41,7 @@ export class Cell {
         this.figure = figure;
         this.figure.cell = this;
     }
-    
+
     moveFigure(target) {
         if (this.figure?.canMove(target)) {
             this.board.numStep++;
@@ -65,28 +65,28 @@ export class Cell {
         }
         return false;
     }
-    
-    
-    
+
+
+
     underAttack(color) {
         if (this._rec) {
             return false;
         }
         this._rec = true;
-        
+
         for (let i = 0; i < 8; i++) {
-            if (this.getCell(i, this.y).figure?.canMove(this) && 
-            this.getCell(i, this.y).figure?.color === color &&
-            !this.getCell(i, this.y).figure?.is(Figures.PAWN)) {
+            if (this.getCell(i, this.y).figure?.canMove(this, false) &&
+                this.getCell(i, this.y).figure?.color === color &&
+                !this.getCell(i, this.y).figure?.is(Figures.PAWN)) {
                 this._rec = false;
                 return true;
             }
         }
-        
+
         for (let i = 0; i < 8; i++) {
-            if (this.getCell(this.x, i).figure?.canMove(this) && 
-            this.getCell(this.x, i).figure?.color === color &&
-            !this.getCell(this.x, i).figure?.is(Figures.PAWN)) {
+            if (this.getCell(this.x, i).figure?.canMove(this, false) &&
+                this.getCell(this.x, i).figure?.color === color &&
+                !this.getCell(this.x, i).figure?.is(Figures.PAWN)) {
                 this._rec = false;
                 return true;
             }
@@ -95,20 +95,20 @@ export class Cell {
         // диагональ
         let x = this.x;
         let y = this.y;
-        while (x > 0 && y >0) {
+        while (x > 0 && y > 0) {
             x--;
             y--;
         }
-        let s = 8 - Math.max(x,y);
-        for (let i = 0; i<s; i++) {
-            if (this.getCell(x+i,y+i).figure?.canMove(this) && 
-            this.getCell(x+i,y+i).figure?.color === color &&
-            !this.getCell(x+i,y+i).figure?.is(Figures.PAWN)) {
+        let s = 8 - Math.max(x, y);
+        for (let i = 0; i < s; i++) {
+            if (this.getCell(x + i, y + i).figure?.canMove(this, false) &&
+                this.getCell(x + i, y + i).figure?.color === color &&
+                !this.getCell(x + i, y + i).figure?.is(Figures.PAWN)) {
                 this._rec = false;
                 return true;
             }
         }
-        
+
         //побочная диагональ
         x = this.x;
         y = this.y;
@@ -116,16 +116,16 @@ export class Cell {
             x++;
             y--;
         }
-        s = Math.max(x,y)-Math.min(x,y)+1;
-        for (let i = 0; i<s; i++) {
-            if (this.getCell(x-i,y+i).figure?.canMove(this) && 
-            this.getCell(x-i,y+i).figure?.color === color &&
-            !this.getCell(x-i,y+i).figure?.is(Figures.PAWN)) {
+        s = Math.max(x, y) - Math.min(x, y) + 1;
+        for (let i = 0; i < s; i++) {
+            if (this.getCell(x - i, y + i).figure?.canMove(this, false) &&
+                this.getCell(x - i, y + i).figure?.color === color &&
+                !this.getCell(x - i, y + i).figure?.is(Figures.PAWN)) {
                 this._rec = false;
                 return true;
             }
         }
-        
+
         //пешки
         const direct = color === Colors.BLACK ? -1 : 1;
         if (this.y < 7 &&
@@ -140,25 +140,25 @@ export class Cell {
             this._rec = false;
             return true;
         }
-        
+
         //конь
-        const steps = [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]];
-        for (let [x,y] of steps) {
+        const steps = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]];
+        for (let [x, y] of steps) {
             if (this.x + x > 7 || this.x + x < 0 || this.y + y > 7 || this.y + y < 0) {
                 continue;
             }
-            if (this.getCell(this.x + x,this.y + y).figure?.canMove(this) && 
-            this.getCell(this.x + x,this.y + y).figure?.color === color &&
-            this.getCell(this.x + x,this.y + y).figure?.is(Figures.KNIGHT)) {
+            if (this.getCell(this.x + x, this.y + y).figure?.canMove(this, false) &&
+                this.getCell(this.x + x, this.y + y).figure?.color === color &&
+                this.getCell(this.x + x, this.y + y).figure?.is(Figures.KNIGHT)) {
                 return true;
             }
         }
-        
+
         this._rec = false;
         return false;
     }
-    
-    
+
+
     emptyV(target) {
         // проверка одной вертикали
         if (this.y !== target.y) {
@@ -175,7 +175,7 @@ export class Cell {
         }
         return true;
     }
-    
+
     emptyH(target) {
         // проверка одной горизонтали
         if (this.x !== target.x) {
@@ -192,7 +192,7 @@ export class Cell {
         }
         return true;
     }
-    
+
     emptyD(target) {
         // проверка одной диагонали и определение длины диогонали
         const ax = Math.abs(this.x - target.x);
@@ -213,7 +213,7 @@ export class Cell {
                 return false;
             }
         }
-        
+
         return true;
     }
 }

@@ -9,8 +9,8 @@ export class Pawn extends Base {
         this.label = Figures.PAWN;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
-    canMove(target) {
-        if (!super.canMove(target)) {
+    canMove(target, isColor) {
+        if (!super.canMove(target, isColor)) {
             return false;
         }
 
@@ -37,8 +37,8 @@ export class Pawn extends Base {
             return true;
         }
         // ход в атаку
-        if ((target.x === this.cell.x + direct) && 
-            Math.abs(target.y - this.cell.y) === 1 && 
+        if ((target.x === this.cell.x + direct) &&
+            Math.abs(target.y - this.cell.y) === 1 &&
             this.cell.isEnemy(target)) {
             return true;
         }
@@ -50,7 +50,7 @@ export class Pawn extends Base {
             this.cell.board.cells[target.x - direct][target.y].figure.isCurrentStep &&
             this.cell.board.cells[target.x - direct][target.y].figure.isSecondStep &&
             this.cell.isEnemy(this.cell.board.cells[target.x - direct][target.y])) {
-                this.cell.board.cells[target.x - direct][target.y].attack = true;
+            this.cell.board.cells[target.x - direct][target.y].attack = true;
             return true;
         }
 
@@ -64,7 +64,7 @@ export class Pawn extends Base {
         const dx = target.x - this.cell.x;
         const dy = target.y - this.cell.y;
 
-        if (dy !== 0 && dx === direct && this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) && 
+        if (dy !== 0 && dx === direct && this.cell.board.cells[target.x - direct][target.y].is(Figures.PAWN) &&
             this.cell.board.cells[target.x - direct][target.y].isEnemy(this.cell)) {
             this.cell.board.addLostFigure(this.cell.board.cells[target.x - direct][target.y].figure)
             this.cell.board.cells[target.x - direct][target.y].figure = null;

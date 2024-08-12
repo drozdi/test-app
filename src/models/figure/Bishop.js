@@ -9,8 +9,8 @@ export class Bishop extends Base {
         this.label = Figures.BISHOP;
         this.img = color === Colors.BLACK ? blackImg : whiteImg;
     }
-    canMove(target) {
-        if (!super.canMove(target)) {
+    canMove(target, isColor = true) {
+        if (!super.canMove(target, isColor)) {
             return false;
         }
         if (this.cell.emptyD(target)) {
