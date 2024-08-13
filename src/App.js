@@ -2,53 +2,62 @@ import logo from './logo.svg';
 import style from './App.module.css';
 import React, { useState } from 'react';
 
-function App() {
-  const [value, setValue] = useState('');
-  const [list, setList] = useState([]);
-  const [error, setError] = useState(false);
-  const [isValueVaild, setIsValueVaild] = useState(false);
+function sendFormData (formData) {
+  console.log(JSON.stringify(formData))
+}
 
-  const onClick = (e) => {
-    let val = prompt('Введите значение');
-    if (val && val.length > 2) {
-      setValue(val);
-      setError(false);
-      setIsValueVaild(true);
-    } else {
-      setError(true);
+function App() {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const [errors, setErrors] = useState(null);
+
+  const onLoginChange = ({ target }) => {
+    setLogin(target.value);
+    let newError = null;
+
+    if (!/^[\w_]*$/.test(target.value)) {
+        newError = 'Неверный логин. Допустимые символы: буквы, цифры и нижнее подчёркивание';
+    } else if (target.value.length > 20) {
+        newError = 'Неверный логин. Должно быть не больше 20 символов';
     }
-  }
-  const onAddClick = () => {
-    setList([...list, {
-      value,
-      id: Date.now(),
-      date: new Date().toLocaleString()
-    }]);
-    setValue('');
-    setError(false);
-    setIsValueVaild(false);
-  }
+
+    setLoginError(newError);
+};
+
+  const onSubmit = (event) => {
+      event.preventDefault();
+      sendFormData({ login, password, rePassword });
+  };
 
   return (<div className={style.app}>
-    <h1 className={style['page-heading']}>Ввод значения</h1>
-    <p className={style['no-margin-text']}>
-      Текущее значение <code>value</code>: "<output className={style['current-value']}>{value}</output>"
-    </p>
-    {error && <div className={style.error}>Введенное значение должно содержать минимум 3 символа</div>}
-    <div className={style['buttons-container']}>
-      <button className={style.button} onClick={onClick}>Ввести новое</button>
-      <button className={style.button} onClick={onAddClick} disabled={!isValueVaild}>Добавить в список</button>
-    </div>
-    <div className={style['list-container']}>
-      < h2 className={style['list-heading']}>Список:</h2>
-      {!list.length && < p className={style['no-margin-text']}>Нет добавленных элементов</p>}
-      <ul className={style.list}>
-        {list.map(({ id, value, date }) => {
-          return <li key={id} className={style['list-item']}>{value} - {date}</li>
-        })}
-      </ul>
-    </div>
-  </div >)
+    <form onSubmit={onSubmit} className={style.form}>
+      
+      <input
+        name="login"
+        type="text"
+        value={login}
+        onChange={onLoginChange}
+        className={style.input}
+        placeholder="Логин" />
+
+      <input
+        name="password"
+        type="password"
+        value={password}
+        className={style.input}
+        placeholder="Пароль" />
+
+      <input
+        name="re_password"
+        type="password"
+        value={rePassword}
+        className={style.input}
+        placeholder="Повторить пароль" />
+
+        <button className={style.button} type="submit" disabled={!!loginError}>Зарегистрировать</button>
+    </form>
+  </div>)
 }
 
 export default App;
