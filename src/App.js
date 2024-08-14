@@ -39,14 +39,34 @@ function App() {
     return err;
   }
 
-  const handleChange = ({ target }) => {
-    setValidate(true);
+  const onChange = ({ target }) => {
+    setValidate(Object.values(formData).every(v => !v.length));
     setFormData({ ...formData, [target.name]: target.value });
     setErrors({ ...errors, [target.name]: validation(target) })
   }
 
-
-
+  const onLoginChange = ({target}) => {
+    onChange({target})
+  }
+  const onPasswordChange = ({target}) => {
+    onChange({target})
+    if (formData.re_password && formData.re_password !== target.value) {
+      setErrors({ ...errors, re_password: ['Пароли должны совпадать!']});
+      setValidate(false)
+    }
+  }
+  const onRePasswordChange = ({target}) => {
+    onChange({target})
+    if (target.value && formData.password === target.value) {
+      setValidate(true)
+      target.blur();
+      submitRef.current.focus();
+      console.log(submitRef.current)
+    } else {
+      setErrors({ ...errors, re_password: ['Пароли должны совпадать!']});
+      setValidate(false)
+    }
+  }
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -59,7 +79,7 @@ function App() {
         name="login"
         type="text"
         value={formData.login}
-        onChange={handleChange}
+        onChange={onLoginChange}
         className={styles.input}
         placeholder="Логин" />
       {errors.login.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
@@ -67,7 +87,7 @@ function App() {
         name="password"
         type="password"
         value={formData.password}
-        onChange={handleChange}
+        onChange={onPasswordChange}
         className={styles.input}
         placeholder="Пароль" />
       {errors.password.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
@@ -75,7 +95,7 @@ function App() {
         name="re_password"
         type="password"
         value={formData.re_password}
-        onChange={handleChange}
+        onChange={onRePasswordChange}
         className={styles.input}
         placeholder="Повторить пароль" />
       {errors.re_password.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
