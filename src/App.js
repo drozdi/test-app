@@ -44,11 +44,10 @@ function App() {
 
   const submitRef = useRef(null);
 
-  const validate = true;
   // наверно можно как то подругому, но это получаеться удобно
-  /*const validate = useMemo(() => {
-    return !(login.errors.length || password.errors.length || re_password.errors.length);
-  }, [login.errors, password.errors, re_password.errors]);*/
+  const validate = useMemo(() => {
+    return !(errors.login?.message || errors.password?.message || errors.re_password?.message);
+  }, [errors]);
 
 
   return (<div className={styles.app}>
