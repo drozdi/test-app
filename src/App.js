@@ -1,81 +1,79 @@
 import styles from './App.module.css';
 import React, { useState, useRef, useMemo } from 'react';
-import { useInput } from "./hooks/useInput.js";
+
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 
 function sendFormData(formData) {
   console.log(JSON.stringify(formData))
 }
 
+const fieldsSchema = yup.object()
+  .shape({
+    login: yup.string()
+      .required('Логин обязателен.')
+      .matches(/^[w_]*$/, 'Допустимые символы: буквы, цифры и нижнее подчёркивание')
+      .min(3, 'Должно быть не меньше 3 символов')
+      .max(20, 'Должно быть не больше 20 символов'),
+    password: yup.string()
+      .required('Пароль обязателен.')
+      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/, 'Допустимые символы: буквы, цифры и спец. символы @#$%^&*')
+      .min(6, 'Должно быть не меньше 6 символов')
+      .max(16, 'Должно быть не больше 16 символов'),
+    confirmPassword: yup.string()
+      .required('Повтор пароль обязателен.')
+      .oneOf([yup.ref('password')], 'Пароли должны совпадать!')
+  });
+
 function App() {
-  const login = useInput('', [
-    v => !!v || 'Логин обязателен.',
-    v => /^[\w_]*$/.test(v) || 'Допустимые символы: буквы, цифры и нижнее подчёркивание.',
-    v => v.length > 2 || 'Должно быть не меньше 3 символов.',
-    v => v.length < 21 || 'Должно быть не больше 20 символов.',
-  ]);
-  const password = useInput('', [
-    v => !!v || 'Пароль обязателен.',
-    v => /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/.test(v) || 'Допустимые символы: буквы, цифры и спец. символы @#$%^&*',
-    v => v.length > 5 || 'Должно быть не меньше 6 символов.',
-    v => v.length < 17 || 'Должно быть не больше 16 символов.'
-  ]);
-  const re_password = useInput('', [
-    v => !!v || 'Повтор пароль обязателен.',
-    v => password.value === v || 'Пароли должны совпадать!'
-  ]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      login: '',
+      password: '',
+      re_password: ''
+    },
+    resolver: yupResolver(fieldsSchema),
+  });
+
+
   const submitRef = useRef(null);
 
+  const validate = true;
   // наверно можно как то подругому, но это получаеться удобно
-  const validate = useMemo(() => {
+  /*const validate = useMemo(() => {
     return !(login.errors.length || password.errors.length || re_password.errors.length);
-  }, [login.errors, password.errors, re_password.errors]);
+  }, [login.errors, password.errors, re_password.errors]);*/
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    sendFormData({
-      login: login.value,
-      password: password.value,
-      re_password: re_password.value
-    });
-  };
-  const onChangeRePassword = (event) => {
-    re_password.onChange(event);
-    if (password.value === event.target.value) {
-      event.target.blur();
-      // не придумал как иначе
-      setTimeout(() => submitRef.current.focus(), 0);
-    }
-  }
 
   return (<div className={styles.app}>
-    <form onSubmit={onSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit(sendFormData)} className={styles.form}>
       <input
         name="login"
         type="text"
-        value={login.value}
-        onBlur={(e) => login.onBlur(e)}
-        onChange={(e) => login.onChange(e)}
+        {...register('login')}
         className={styles.input}
         placeholder="Логин" />
-      {login.dirty && login.errors.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
+      {errors.login && <div className={styles.error}>{errors.login}</div>}
       <input
         name="password"
         type="password"
-        value={password.value}
-        onBlur={(e) => password.onBlur(e)}
-        onChange={(e) => password.onChange(e)}
+        {...register('password')}
         className={styles.input}
         placeholder="Пароль" />
-      {password.dirty && password.errors.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
+      {errors.password && <div className={styles.error}>{errors.password}</div>}
       <input
         name="re_password"
         type="password"
-        value={re_password.value}
-        onBlur={(e) => re_password.onBlur(e)}
-        onChange={(e) => onChangeRePassword(e)}
+        {...register('re_password')}
         className={styles.input}
         placeholder="Повторить пароль" />
-      {re_password.dirty && re_password.errors.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
+      {errors.re_password && <div className={styles.error}>{errors.re_password}</div>}
       <button ref={submitRef} className={styles.button} type="submit" disabled={!validate}>Зарегистрировать</button>
     </form>
   </div>)
