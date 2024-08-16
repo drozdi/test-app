@@ -1,5 +1,5 @@
 import styles from './App.module.css';
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useInput } from "./hooks/useInput.js";
 
 function sendFormData(formData) {
@@ -25,11 +25,6 @@ function App() {
   ]);
   const submitRef = useRef(null);
 
-  // наверно можно как то подругому, но это получаеться удобно
-  const validate = useMemo(() => {
-    return !(login.errors.length || password.errors.length || re_password.errors.length);
-  }, [login.errors, password.errors, re_password.errors]);
-
   const onSubmit = (event) => {
     event.preventDefault();
     sendFormData({
@@ -38,14 +33,16 @@ function App() {
       re_password: re_password.value
     });
   };
-  const onChangeRePassword = (event) => {
-    re_password.onChange(event);
-    if (password.value === event.target.value) {
-      event.target.blur();
-      // не придумал как иначе
-      setTimeout(() => submitRef.current.focus(), 0);
+
+  useEffect(() => {
+    if (login.value && password.value && password.value === re_password.value) {
+      submitRef.current.disabled = false;
+      submitRef.current.focus();
     }
-  }
+    if (login.errors.length || password.errors.length || re_password.errors.length) {
+      submitRef.current.disabled = true;
+    }
+  }, [login.errors, password.errors, re_password.errors]);
 
   return (<div className={styles.app}>
     <form onSubmit={onSubmit} className={styles.form}>
@@ -72,11 +69,11 @@ function App() {
         type="password"
         value={re_password.value}
         onBlur={(e) => re_password.onBlur(e)}
-        onChange={(e) => onChangeRePassword(e)}
+        onChange={(e) => re_password.onChange(e)}
         className={styles.input}
         placeholder="Повторить пароль" />
       {re_password.dirty && re_password.errors.map((mes, index) => <div key={index} className={styles.error}>{mes}</div>)}
-      <button ref={submitRef} className={styles.button} type="submit" disabled={!validate}>Зарегистрировать</button>
+      <button ref={submitRef} className={styles.button} type="submit" disabled={true}>Зарегистрировать</button>
     </form>
   </div>)
 }
