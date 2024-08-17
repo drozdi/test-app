@@ -31,8 +31,7 @@ function App() {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -47,16 +46,10 @@ function App() {
 
 
   useEffect(() => {
-    const login = watch('login');
-    const password = watch('password');
-    const re_password = watch('re_password');
-    if (login && password && password === re_password) {
-      submitRef.current.disabled = false;
+    if (isValid) {
       submitRef.current.focus();
-    } else {
-      submitRef.current.disabled = true;
     }
-  }, [errors.login, errors.password, errors.re_password]);
+  }, [isValid]);
 
   return (<div className={styles.app}>
     <form onSubmit={handleSubmit(sendFormData)} className={styles.form}>
@@ -81,7 +74,7 @@ function App() {
         className={styles.input}
         placeholder="Повторить пароль" />
       {errors.re_password && <div className={styles.error}>{errors.re_password?.message}</div>}
-      <button ref={submitRef} className={styles.button} type="submit" disabled={true}>Зарегистрировать</button>
+      <button ref={submitRef} className={styles.button} type="submit" disabled={!isValid}>Зарегистрировать</button>
     </form>
   </div>)
 }
