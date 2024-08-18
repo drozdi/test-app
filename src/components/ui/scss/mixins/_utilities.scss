@@ -1,0 +1,33 @@
+@use 'sass:meta';
+
+$enable-important-utilities: false !default;
+
+@mixin generate-utility ($utility, $infix, $enable-important-utilities: $enable-important-utilities) {
+  $values: map-get($utility, values);
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values);
+  }
+
+  @each $key, $value in $values {
+
+      $properties: map-get($utility, property);
+
+      @if type-of($properties) == "string" {
+        $properties: append((), $properties);
+      }
+
+      $className: if(map-has-key($utility, class), map-get($utility, class), nth($properties, 1));
+      $className: '.#{if($className == null, "", $className)}';
+      $className: $className + if($infix, $infix, '');
+      $className: $className + if($key != null, '-#{$key}', null);
+
+      @if $value {
+        #{$className} {
+          @each $property in $properties {
+            #{$property}: $value if($enable-important-utilities, !important, null);
+          }
+        }
+      }
+  }
+}

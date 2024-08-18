@@ -1,0 +1,14 @@
+$default-inline-block-alignment: middle !default;
+
+@mixin inline-block ($alignment: $default-inline-block-alignment, $ie-alignment: auto) {
+	display: -moz-inline-stack;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	@if $alignment and $alignment != none {
+		vertical-align: $alignment;
+	}
+	@if $ie-alignment and $ie-alignment != none {
+		*vertical-align: $ie-alignment;
+	}
+}

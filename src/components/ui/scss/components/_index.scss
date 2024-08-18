@@ -1,0 +1,24 @@
+$component-btn: true !default;
+
+@import "./icon";
+@import "./btn";
+
+@import "./layout";
+
+
+
+%border-radius {
+	@include border-radius(0);
+}
+%border-radius-top {
+	@include border-top-radius(0);
+}
+%border-radius-right {
+	@include border-right-radius(0);
+}
+%border-radius-bottom {
+	@include border-bottom-radius(0);
+}
+%border-radius-left {
+	@include border-left-radius(0);
+}

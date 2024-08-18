@@ -1,0 +1,125 @@
+@import "vars/table";
+@import "../mixins/base";
+@import "../mixins/table";
+@import "../mixins/breakpoint";
+@import "../tools/namespace";
+
+table {
+  width: 100%;
+  margin-bottom: $spacer;
+
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: top;
+  }
+
+  thead th {
+    vertical-align: bottom;
+  }
+}
+
+@include separator('-', '-', '-') {
+  @include namespace('table', true) {
+    @include name() {
+      color: $table-color;
+      background-color: $table-bg;
+
+      td,
+      th {
+        border-top: $table-border-width solid $table-border-color;
+      }
+
+      thead th {
+        border-bottom: (2 * $table-border-width) solid $table-border-color;
+      }
+
+      tbody+tbody {
+        border-top: (2 * $table-border-width) solid $table-border-color;
+      }
+
+      tbody tr {
+        &:nth-of-type(#{$table-striped-order}) {
+          background-color: $table-accent-bg;
+        }
+      }
+
+      & & {
+        background-color: $table-table-bg;
+      }
+
+      tbody tr {
+        @include hover() {
+          color: $table-hover-color;
+          background-color: $table-hover-bg;
+        }
+      }
+    }
+
+    @include name(null, bordered) {
+      border: $table-border-width solid $table-border-color;
+
+      th,
+      td {
+        border: $table-border-width solid $table-border-color;
+      }
+
+      thead th {
+        border-bottom-width: 2 * $table-border-width;
+      }
+    }
+
+    @include name(null, borderless) {
+
+      th,
+      td,
+      thead th,
+      tbody+tbody {
+        border: 0 none transparent;
+      }
+    }
+
+    @include name(null, dark) {
+      color: $table-dark-color;
+      background-color: $table-dark-bg;
+
+      th,
+      td,
+      thead th {
+        border-color: $table-dark-border-color;
+      }
+
+      tbody tr:nth-of-type(#{$table-striped-order}) {
+        background-color: $table-dark-accent-bg;
+      }
+
+      tbody tr {
+        @include hover() {
+          color: $table-dark-hover-color;
+          background-color: $table-dark-hover-bg;
+        }
+      }
+
+      &#{name(null, bordered)} {
+        border: 0 none transparent;
+      }
+    }
+
+    @include name(null, sm) {
+
+      th,
+      td {
+        padding: $table-cell-padding-sm;
+      }
+    }
+
+    /*@include each-breakpoint-infix {
+      @include name(responsive, $infix) {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }*/
+  }
+}

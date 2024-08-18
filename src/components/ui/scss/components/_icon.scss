@@ -1,0 +1,33 @@
+@import "../tools/namespace";
+
+@include namespace('@icon') {
+  @include name {
+    line-height: 1;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    text-align: center;
+    position: relative;
+    box-sizing: content-box;
+    fill: currentColor;
+
+    &:before, &:after {
+      width: 100%;
+      height: 100%;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+    }
+
+    > svg,
+    > img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

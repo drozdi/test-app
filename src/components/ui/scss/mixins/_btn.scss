@@ -1,0 +1,58 @@
+@import "base";
+@import "../vars/btn";
+@import "../tools/color";
+
+
+@mixin button-variant ($state,
+	$background,
+	$border,
+	$hover-background: darken($background, 7.5%),
+	$hover-border: darken($border, 10%),
+	$active-background: darken($background, 10%),
+	$active-border: darken($border, 12.5%),
+	$color: color-yiq($background),
+	$hover-color: color-yiq($hover-background),
+	$active-color: color-yiq($active-background)
+) {
+	color: $color;
+	@include gradient-bg($background);
+	border-color: $border;
+	@include hover {
+		color: $hover-color;
+		@include gradient-bg($hover-background);
+		border-color: $hover-border;
+	}
+	@include focus {
+		color: $hover-color;
+		@include gradient-bg($hover-background);
+		border-color: $hover-border;
+	}
+	@include active {
+		color: $active-color;
+		background: $active-background;
+		border-color: $active-border;
+	}
+}
+@mixin button-outlined-variant (
+	$state,
+	$color,
+	$hover-color: color-yiq($color),
+	$active-background: $color,
+	$active-color: $color,
+	$active-border: $color) {
+	color: $color;
+	border-color: $color;
+	@include hover {
+		color: $hover-color;
+		background: rgba($active-background, 0.1);
+		border-color: $active-border;
+	}
+	@include focus {
+		background: transparent;
+	}
+	@include active {
+		color: $active-color;
+		background: transparent;
+		border-color: $active-border;
+	}
+}

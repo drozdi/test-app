@@ -1,0 +1,194 @@
+@import "gradients";
+@import "css";
+
+@mixin clearfix () {
+	//*zoom: 1;*/
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+		overflow: hidden;
+	}
+	&:after {
+		clear: both;
+		height: 0;
+	}
+}
+@mixin vendor ($property, $value...) {
+	-webkit-#{$property}: $value;
+	-khtml-#{$property}: $value;
+	-moz-#{$property}: $value;
+	-ms-#{$property}: $value;
+	-o-#{$property}: $value;
+	#{$property}: $value;
+}
+@mixin hover ($isClass: true) {
+	@if $isClass {
+		&:hover,
+		&.hover {
+			@content;
+		}
+	} @else {
+		&:hover {
+			@content;
+		}
+	}
+}
+@mixin focus ($isClass: true) {
+	@if $isClass {
+		&:focus,
+		&.focus {
+			@content;
+		}
+	} @else {
+		&:focus {
+			@content;
+		}
+	}
+}
+@mixin active ($isClass: true) {
+	@if $isClass {
+		&:active,
+		&.active {
+			@content;
+		}
+	} @else {
+		&:active {
+			@content;
+		}
+	}
+}
+@mixin hover-focus ($isClass: true) {
+	@if $isClass {
+		&:hover,
+		&:focus,
+		&.hover,
+		&.focus {
+			@content;
+		}
+	} @else {
+		&:hover,
+		&:focus {
+			@content;
+		}
+	}
+}
+@mixin plain-hover-focus ($isClass: true) {
+	@if $isClass {
+		&,
+		&:hover,
+		&:focus,
+		&.hover,
+		&.focus {
+			@content;
+		}
+	} @else {
+		&,
+		&:hover,
+		&:focus {
+			@content;
+		}
+	}
+}
+@mixin hover-focus-active ($isClass: true) {
+	@if $isClass {
+		&:hover,
+		&:focus,
+		&:active,
+		&.hover,
+		&.focus,
+		&.active {
+			@content;
+		}
+	} @else {
+		&:hover,
+		&:focus,
+		&:active {
+			@content;
+		}
+	}
+}
+@mixin plain-hover-focus-active ($isClass: true) {
+	@if $isClass {
+		&,
+		&:hover,
+		&:focus,
+		&:active,
+		&.hover,
+		&.focus,
+		&.active {
+			@content;
+		}
+	} @else {
+		&,
+		&:hover,
+		&:focus,
+		&:active {
+			@content;
+		}
+	}
+}
+
+@mixin caret ($size: null, $direction: down) {
+	@include inline-block;
+	width: 0;
+	height: 0;
+	border: 0;
+	@if  $direction == down {
+		border-top: $size solid \9; // IE8
+		border-top: $size solid;
+		border-right: $size solid transparent !important;
+		border-left: $size solid transparent !important;
+		border-bottom: 0 none transparent;
+	} @else if $direction == up {
+		border-bottom: $size solid \9; // IE8
+		border-bottom: $size solid;
+		border-right: $size solid transparent !important;
+		border-left: $size solid transparent !important;
+		border-top: 0 none transparent;
+	} @else if $direction == left {
+		border-left: $size solid \9; // IE8
+		border-left: $size solid;
+		border-top: $size solid transparent !important;
+		border-bottom: $size solid transparent !important;
+		border-right: 0 none transparent;
+	} @else if $direction == right {
+		border-right: $size solid \9; // IE8
+		border-right: $size solid;
+		border-top: $size solid transparent !important;
+		border-bottom: $size solid transparent !important;
+		border-left: 0 none transparent;
+	}
+	content: " ";
+}
+@mixin angel ($size: null, $direction: right) {
+	@include inline-block;
+	content: "";
+	float: right;
+	width: $size;
+	height: $size;
+	border: 0 solid transparent;
+	border-bottom-width: 2px;
+	border-right-width: 2px;
+	@if $direction == up {
+		@include transform(rotate(-135deg) scale(0.6));
+	} @else if $direction == right {
+		@include transform(rotate(-45deg) scale(0.6));
+	} @else if $direction == down {
+		@include transform(rotate(45deg) scale(0.6));
+	} @else if $direction == left {
+		@include transform(rotate(135deg) scale(0.6));
+	}
+}
+@mixin item-size ($margin: none, $width: none, $height: none, $border: auto, $padding: none, $border-props: null) {
+	@if $padding and $padding != none {
+		$padding: val-resize($padding, 4);
+		$bp: val-resize(border-width($border), 4);
+		$padding: list-minus($padding, $bp);
+	}
+	@if $margin and $margin != none { margin: val-compres($margin); }
+	@if $width and $width != none { width: $width; }
+	@if $height and $height != none { height: $height; }
+	@if $border and $border != auto { @include border($border, $border-props); }
+	@if $padding and $padding != none { padding: val-compres($padding); }
+}

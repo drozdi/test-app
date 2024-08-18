@@ -1,0 +1,142 @@
+@import "vars/typography";
+@import "../mixins/base";
+@import "../mixins/breakpoint";
+@import "../mixins/typography";
+@import "../mixins/css";
+
+// Headings
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	margin-bottom: $headings-margin-bottom;
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: $headings-line-height;
+	color: $headings-color;
+}
+h1, .h1 { font-size: $font-size-h1; }
+h2, .h2 { font-size: $font-size-h2; }
+h3, .h3 { font-size: $font-size-h3; }
+h4, .h4 { font-size: $font-size-h4; }
+h5, .h5 { font-size: $font-size-h5; }
+h6, .h6 { font-size: $font-size-h6; }
+small,
+.small {
+	font-size: $font-size-small;
+	font-weight: $font-weight-normal;
+}
+mark,
+.mark {
+	padding: $mark-padding;
+	background-color: $mark-bg;
+}
+abbr,
+.abbr {
+	font-size: 90%;
+	text-transform: uppercase;
+}
+.lead {
+	font-size: $font-size-lead;
+	font-weight: $font-weight-lead;
+}
+.text-muted {
+	color: $text-muted;
+}
+// Type display classes
+.display-1 {
+	font-size: $display1-size;
+	font-weight: $display1-weight;
+	line-height: $display-line-height;
+}
+.display-2 {
+	font-size: $display2-size;
+	font-weight: $display2-weight;
+	line-height: $display-line-height;
+}
+.display-3 {
+	font-size: $display3-size;
+	font-weight: $display3-weight;
+	line-height: $display-line-height;
+}
+.display-4 {
+	font-size: $display4-size;
+	font-weight: $display4-weight;
+	line-height: $display-line-height;
+}
+// Horizontal rulules
+br, hr {
+	margin-top: $hr-margin-y;
+	margin-bottom: $hr-margin-y;
+}
+hr {
+	border: 0 none transparent;
+	border-top: $hr-border-width solid $hr-border-color;
+}
+//
+// Lists
+//
+.list-unstyled {
+	@include list-unstyled();
+}
+.list-inline {
+	@extend .list-unstyled;
+	> li {
+		@include inline-block;
+		&:not(:last-child) {
+			margin-right: $list-inline-padding;
+		}
+	}
+}
+.list-keywords {
+	@extend .list-inline;
+	> li {
+		&:after{
+			content:"\002C" "\00A0";
+		}
+		&:last-child:after {
+			display: none;
+		}
+	}
+}
+
+blockquote,
+.blockquote {
+	margin-bottom: $blockquote-margin-y;
+	font-size: $blockquote-font-size;
+	footer {
+		@extend .blockquote-footer;
+	}
+}
+.blockquote-footer {
+	display: block;
+	font-size: $blockquote-small-font-size;
+	color: $blockquote-small-color;
+	&::before {
+		content: "\2014\00A0"; // em dash, nbsp
+	}
+}
+
+.dl-horizontal {
+	dd {
+		@extend %clearfix;
+	}
+	@include media-breakpoint-up (md) {
+		dt {
+			float: left;
+			width: 23%;
+			clear: left;
+			text-align: right;
+			@include text-overflow;
+		}
+		dd {
+			margin-left: 25%;
+		}
+	}
+}
+
+%clearfix {
+	@include clearfix;
+}
+
+.clearfix {
+	@extend %clearfix;
+}

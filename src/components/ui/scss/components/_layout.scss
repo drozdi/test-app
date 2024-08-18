@@ -1,0 +1,141 @@
+@import "../../scss/tools/namespace";
+@import "../../scss/tools/color";
+@import "../../scss/mixins/base";
+
+@import "../../scss/vars/colors";
+
+
+$spacer: 1rem !default;
+$xLayout-font-size: 1rem !default;
+$xLayout-line-height: 1.15 !default;
+
+$xLayout-header-font-size: 2 * $xLayout-font-size !default;
+$xLayout-header-line-height: 1.5 !default;
+$xLayout-header-min-height: 1 * $xLayout-header-line-height * $spacer !default;
+$xLayout-header-max-height: 4 * $xLayout-header-line-height * $spacer !default;
+
+$xLayout-footer-font-size: $xLayout-font-size !default;
+$xLayout-footer-line-height: 1.5 !default;
+$xLayout-footer-min-height: 1 * $xLayout-footer-line-height * $spacer !default;
+$xLayout-footer-max-height: 4 * $xLayout-footer-line-height * $spacer !default;
+
+$xLayout-sidebar-width: 200px !default;
+$xLayout-sidebar-min-width: 150px !default;
+$xLayout-sidebar-max-width: 400px !default;
+
+$xLayout-resizer-width: .5rem !default;
+
+@include namespace('@xLayout', true) {
+  @include name {
+    --x-layout-bg: #fff;
+    --x-layout-border: #{$separator-color};
+    --x-layout-sidebar-bg: #{$dimmed-background};
+    --x-layout-res-bg: #{$dimmed-background};
+  }
+
+  .theme--dark {
+    @include name {
+      --x-layout-bg: #{$dark-page};
+      --x-layout-border: #{$separator-dark-color};
+      --x-layout-sidebar-bg: #{rgba($dimmed-dark-background, .1)};
+      --x-layout-res-bg: #{$dimmed-dark-background};
+    }
+  }
+
+  @include name {
+    width: 100%;
+    height: 100%;
+  }
+
+  @include name (container) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    > {
+      @include name {
+        height: 100%
+      }
+    }
+  }
+
+  @include name(sidebar) {
+    min-width: $xLayout-sidebar-min-width;
+    max-width: $xLayout-sidebar-max-width;
+    position: absolute;
+  }
+
+  @include name(res) {
+    width: $xLayout-resizer-width;
+    cursor: col-resize;
+    background: var(--x-layout-sidebar-bg);
+
+    &:after {
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: " ";
+      background-image: url('../../../../assets/images/sidebar-divider-dots.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+
+  @include name(null, core) {
+    background: url('../../../../assets/images/kosmos-ec26025d6442.jpg') no-repeat fixed left top/cover;
+    background-position: top calc(15% - 30px);
+
+    @include name(header) {
+      &:before {
+        background: url('../../../../assets/images/kosmos-ec26025d6442.jpg') no-repeat fixed left top/cover;
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        content: " ";
+        filter: url('../../../../assets/images/filter.svg#blur');
+      }
+    }
+  }
+
+  @include name (header footer sidebar) {
+    border: 0 solid var(--x-layout-border);
+  }
+
+  @include name (sidebar) {
+    background: var(--x-layout-sidebar-bg);
+  }
+
+  @include name (header footer) {
+    max-width: 100%;
+    position: absolute;
+    min-height: 48px;
+    left: 0;
+    right: 0;
+    background-color: var(--x-layout-bg);
+  }
+
+  @include name (header) {
+    top: 0;
+    border-bottom-width: 1px;
+  }
+
+  @include name (footer) {
+    bottom: 0;
+    border-top-width: 1px;
+  }
+
+  @include name(sidebar, left) {
+    border-right-width: 1px;
+  }
+
+  @include name(sidebar, right) {
+    border-left-width: 1px;
+  }
+
+  @include name (body) {
+    padding: 0;
+  }
+}

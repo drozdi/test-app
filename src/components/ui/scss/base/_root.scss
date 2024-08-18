@@ -1,0 +1,25 @@
+@import "../vars/colors";
+@import "../vars/breakpoint";
+@import "vars/typography";
+
+:root {
+  @each $color, $value in $colors {
+    --x-#{$color}: #{map-get($value, base)};
+  }
+  @each $color, $value in $theme-colors {
+    --x-#{$color}: #{$value};
+  }
+  @each $bp, $value in $breakpoints {
+    --x-breakpoint-#{$bp}: #{$value};
+  }
+  --x-separator-color: #{$separator-color};
+  --x-dimmed-background: #{$dimmed-background};
+  --font-family-sans-serif: #{inspect($font-family-sans-serif)};
+  --font-family-monospace: #{inspect($font-family-monospace)};
+}
+
+*::-moz-selection,
+*::selection {
+  color: #eee;
+  background: #006a9b;
+}

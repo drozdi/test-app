@@ -1,0 +1,149 @@
+$default-contrasted-dark: #000;
+$default-contrasted-light: #fff;
+@function brightness($color) {
+	@if type-of($color) == color {
+		@return (red($color) * 0.299 + green($color) * 0.587 + blue($color) * 0.114) / 255 * 100%;
+	} @else {
+		@return unquote("brightness(#{$color})");
+	}
+}
+@function contrast-color ($color, $dark: $default-contrasted-dark, $light: $default-contrasted-light, $threshold: null) {
+	@if $threshold {
+		@warn "The $threshold argment to contrast-color is no longer needed and will be removed in the next release.";
+	}
+	@if $color == null {
+		@return null;
+	} @else {
+		$color-brightness: brightness($color);
+		$dark-text-brightness: brightness($dark);
+		$light-text-brightness: brightness($light);
+		@return if(abs($color-brightness - $light-text-brightness) > abs($color-brightness - $dark-text-brightness), $light, $dark);
+	}
+}
+@function is-time ($value) {
+	@return if(type-of($value) == number, not not index(s ms, unit($value)), false);
+}
+
+@function val-resize ($values, $len: 4) {
+	@if length($values) == 1 {
+		$values: append($values, nth($values, 1));
+	}
+	@if length($values) == 2 {
+		$values: append($values, nth($values, 1));
+	}
+	@if length($values) == 3 {
+		$values: append($values, nth($values, 2));
+	}
+	$ret: ();
+	@for $i from 1 through $len {
+	  $ret: append($ret, nth($values, $i));
+	}
+	@return $ret;
+}
+@function val-compres ($values) {
+	@if length($values) == 4 and nth($values, 2) == nth($values, 4) {
+		@return val-compres(nth($values, 1) nth($values, 2) nth($values, 3));
+	} @else if length($values) == 3 and nth($values, 1) == nth($values, 3) {
+		@return val-compres(nth($values, 1) nth($values, 2));
+	} @else if length($values) == 2 and nth($values, 1) == nth($values, 2) {
+		@return nth($values, 1);
+	}
+	@return $values;
+}
+@function select-type-in-list ($list, $type: string, $def: null) {
+	@each $val in $list {
+		@if type-of($val) == $type {
+			@return $val;
+		}
+	}
+	@return $def;
+}
+@function select-values-in-list ($values, $type: string, $def: null, $sep: space) {
+	$ret: ();
+	@if list-separator($values) == comma {
+		@each $value in $values {
+			$ret: append($ret, select-type-in-list($value, $type, $def), $sep);
+		}
+	} @else {
+		$ret: append($ret, select-type-in-list($values, $type, $def), $sep);
+	}
+	@return $ret;
+}
+@function list-sum ($l1, $l2) {
+	@if length($l1) == length($l2) {
+		$l3: ();
+		@for $i from 1 through length($l1) {	
+			$l3: append($l3, (nth($l1, $i) + if(nth($l2, 1) != auto and nth($l2, 1) != none, nth($l2, $i), 0)));		
+		}
+		@return $l3;
+	}
+	
+	@return null;	
+}
+@function list-minus ($l1, $l2) {
+	@if length($l1) == length($l2) {
+		$l3: ();
+		@for $i from 1 through length($l1) {
+			$l3: append($l3, (nth($l1, $i) - if(nth($l2, 1) != auto and nth($l2, 1) != none, nth($l2, $i), 0)));		
+		}
+		@return $l3;
+	}	
+	@return null;	
+}
+@function get-index-side ($side) {
+	$map: (top: 1, right: 2, bottom: 3, left: 4);
+	@return if(map-has-key($map, $side), map-get($map, $side), null);
+}
+@function get-side ($val, $side) {
+	@if length($val) == 1 {
+		@return $val;
+	}
+	$index: get-index-side($side);
+	@if $index {
+		$val: val-resize($val, 4);
+		@return nth($val, $index);
+	}
+}
+@function map-index ($map, $key) {
+	$keys: map-keys($map);
+	@return index($keys, $key);
+}
+@function map-next ($map, $key) {
+	$values: map-values($map);
+	$i: map-index($map, $key);
+	@if $i == null {
+		@return null;	
+	}
+	$i: $i + 1;
+	@if $i > length($map) {
+		@return null;
+	} @else {
+		@return nth($values, $i);
+	}
+}
+@function map-prev ($map, $key) {
+	$values: map-values($map);
+	$i: map-index($map, $key);
+	@if $i == null {
+		@return null;	
+	}
+	$i: $i - 1;
+	@if $i <= 0 {
+		@return null;
+	} @else {
+		@return nth($values, $i);
+	}
+}
+
+@function get-options ($opts, $seeking) {
+	@if type-of($opts) != 'list' {
+		$opts: ($opts);
+	}
+	$map: ();
+	@each $keyword in $seeking {
+		$val: if(index($opts, $keyword) != null, true, false);
+		$item: ($keyword: $val);
+		$map: map-merge($map, $item);
+	}
+	@return $map;
+}

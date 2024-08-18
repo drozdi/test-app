@@ -1,0 +1,153 @@
+@import "../vars/grid";
+@import "./breakpoint";
+@import "../tools/grid";
+
+$enable-flex: false !default;
+
+@mixin container-fixed (
+	$gutter: $grid-gutter-width,
+	$margin: auto,
+	$enable-flex: $enable-flex,
+	$cf: true
+) {
+	width: 100%;
+	position: relative;
+	padding-left: ($gutter / 2);
+	padding-right: ($gutter / 2);
+	margin-left: $margin;
+	margin-right: $margin;
+	@if not $enable-flex and $cf {
+		@include clearfix();
+	}
+}
+@mixin container-max-width ($max-width: $container-max-width) {
+	@if $max-width != null {
+		max-width: $max-width;
+	} @else {
+		@each $breakpoint, $value in $container-max-widths {
+			@include media-breakpoint($breakpoint up) {
+				max-width: $value;
+			}
+		}
+	}
+}
+@mixin container-fluid {
+	width: auto !important;
+	max-width: none !important;
+}
+
+@mixin grid-row ($gutter: $grid-gutter-width, $enable-flex: $enable-flex, $cf: true) {
+	position: relative;
+	@include grid-row-gutter($gutter);
+	@if $enable-flex and $cf {
+		@include display-flex;
+		@include flex-wrap(wrap);
+	} @else if $cf {
+		@include clearfix();
+	}
+}
+@mixin grid-row-collapse () {
+	margin-left: 0;
+	margin-right: 0;
+}
+@mixin grid-row-gutter ($gutter: $grid-gutter-width) {
+	$margin: auto;
+	@if type-of($gutter) == number {
+		$margin: ($gutter / -2);
+	}
+	margin-left: $margin;
+	margin-right: $margin;
+}
+
+@mixin grid-column ($columns: null, $gutter: $grid-gutter-width, $enable-flex: $enable-flex) {
+	position: relative;
+	@include grid-column-gutter($gutter);
+	@if $enable-flex {
+		width: 100%;
+	} @else {
+		float: left; 
+	}
+	max-width: 100%;
+	@include grid-column-size(
+		$columns: $columns,
+		$allColumns: $grid-columns,
+		$enable-flex: $enable-flex
+	);
+}
+@mixin grid-column-gutter ($gutter: $grid-gutter-width) {
+	padding-left: ($gutter / 2);
+	padding-right: ($gutter / 2);
+}
+@mixin grid-column-collapse {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+@mixin grid-column-size (
+	$columns: null,
+	$allColumns: $grid-columns,
+	$enable-flex: $enable-flex
+) {
+	@if $enable-flex {
+		@include flex(grid-flex-calc($columns, $allColumns));
+		@if $columns != null and $columns != shrink {
+			width: grid-calc($columns, $allColumns);
+		} @elseif $columns == shrink {
+			width: auto;
+		}
+	} @else {
+		width: if($columns == shrink, auto, grid-calc($columns, $allColumns));
+	}
+}
+@mixin grid-column-offset ($columns: null, $allColumns: $grid-columns) {
+	margin-left: grid-offset($columns, $allColumns);
+}
+@mixin grid-column-push ($columns: null, $allColumns: $grid-columns) {
+	left: grid-position($columns, $allColumns);
+}
+@mixin grid-column-pull ($columns: null, $allColumns: $grid-columns) {
+	right: grid-position($columns, $allColumns);
+}
+
+@mixin grid-block-cell ($columns: 1, $enable-flex: $enable-flex) {
+	@include grid-column-size($columns: (100% / $columns), $enable-flex: $enable-flex);
+	@if $enable-flex {
+
+	} @else {
+		
+	}
+}
+
+
+@mixin grid-row-unstack ($enable-flex: $enable-flex) {
+	@if $enable-flex {
+		@include display-flex;
+		min-width: 0;
+	} @else {
+		display: table;
+		min-width: 100%;
+	}
+}
+@mixin grid-column-unstack ($enable-flex: $enable-flex) {
+	@if $enable-flex {
+		@include flex(grid-flex-calc());
+	} @else {
+		display: table-cell;
+		width: auto;
+		float: none;
+	}
+	min-width: 0;
+}
+
+@mixin grid-row-stack ($enable-flex: $enable-flex) {
+	
+}
+@mixin grid-column-stack ($enable-flex: $enable-flex) {
+	@if $enable-flex {
+		@include flex(grid-flex-calc(1, 1));
+		min-width: 0;
+	} @else {
+		min-width: 100%;	
+	}
+}
+

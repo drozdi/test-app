@@ -1,0 +1,39 @@
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
+@import "./components";
+@import "./colors";
+@import "../base/vars/typography";
+
+
+$btn-padding-y                : .375rem !default;
+$btn-padding-x                : .75rem !default;
+$btn-font-size                : 1rem !default;
+$btn-line-height              : 1.715em !default;
+$btn-font-weight              : 500 !default;
+
+$btn-border-radius            : $border-radius !default;
+$btn-dense-padding            : .285em !default;
+
+$btn-transition               : .3s cubic-bezier(.25, .8, .5, 1) !default;
+$btn-rounded-border-radius    : 28px !default;
+$btn-push-border-radius       : 7px !default;
+
+
+$btn-white-space:             null !default; // Set to `nowrap` to prevent text wrapping
+
+$btn-block-spacing-y:         .5rem !default;
+
+
+$btn-transition:              color .15s ease-in-out,
+background-color .15s ease-in-out,
+border-color .15s ease-in-out,
+box-shadow .15s ease-in-out,
+transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1) !default;
+
+
+$btn-color: 				  rgba(#00aeff, 1) !default;
+$btn-bg: 					  rgba(0,8,26,.4) !default;
+
+$btn-link-disabled-color: 	  rgba(#fff, .7) !default;

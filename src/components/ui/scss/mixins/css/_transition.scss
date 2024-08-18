@@ -1,0 +1,116 @@
+// Transitions
+$default-transition-property: all !default;
+$default-transition-duration: 1s !default;
+$default-transition-function: null !default;
+$default-transition-delay: null !default;
+$transitionable-prefixed-values: transform transform-origin box-shadow background-size !default;
+
+
+@function prefixed-for-transition ($prefix, $property) {
+	@if not $prefix {
+		@return $property;
+	}
+	@if type-of($property) == list or type-of($property) == arglist {
+    	$new-list: ();
+		@each $v in $property {
+			$new-list: append($new-list, prefixed-for-transition($prefix, $v), comma);
+		}
+		@return $new-list;
+	} @else {
+		@if index($transitionable-prefixed-values, $property) {
+			@return #{$prefix}-#{$property};
+		} @else {
+			@return $property;
+		}
+	}
+}
+@function transition-map ($transition) {
+	$transition-map: ();
+	@each $item in $transition {
+		@if is-time($item) {
+			@if map-has-key($transition-map, duration) {
+				$transition-map: map-merge($transition-map, (delay: $item));
+			} @else {
+				$transition-map: map-merge($transition-map, (duration: $item));
+			}
+		} @else { 
+			@if map-has-key($transition-map, property) {
+				$transition-map: map-merge($transition-map, (timing-function: $item));
+			} @else {
+				$transition-map: map-merge($transition-map, (property: $item));
+			}
+		}
+	}
+	@return $transition-map;
+}
+
+@mixin transition-property ($properties...) {
+	$properties: set-arglist-default($properties, $default-transition-property);
+	@include with-each-prefix(css-transitions) {
+		$props: if($current-prefix, prefixed-for-transition($current-prefix, $properties), $properties);
+		@include prefix-prop(transition-property, $props);
+	}
+}
+@mixin transition-duration ($durations...) {
+	$durations: set-arglist-default($durations, $default-transition-duration);
+	@include prefixed-properties(css-transitions, (
+		transition-duration: $durations
+	));
+}
+@mixin transition-delay ($delays...) {
+	$delays: set-arglist-default($delays, $default-transition-delay);
+	@include prefixed-properties(css-transitions, (
+		transition-delay: $delays
+	));
+}
+@mixin transition-timing-function ($functions...) {
+	$functions: set-arglist-default($functions, $default-transition-function);
+	@include prefixed-properties(css-transitions, (
+		transition-timing-function: $functions
+	));
+}
+@mixin single-transition (
+  $property: $default-transition-property,
+  $duration: $default-transition-duration,
+  $function: $default-transition-function,
+  $delay: $default-transition-delay
+) {
+  @include transition(compact($property $duration $function $delay));
+}
+
+@mixin transition ($transitions...) {
+	$default: (compact($default-transition-property $default-transition-duration $default-transition-function $default-transition-delay));
+	$transitions: if(length($transitions) == 1 and type-of(nth($transitions, 1)) == list and list-separator(nth($transitions, 1)) == comma, nth($transitions, 1), $transitions);
+	$transitions: set-arglist-default($transitions, $default);
+	@include with-each-prefix(css-transitions) {
+		$delays: (); 
+		$transitions-without-delays: ();
+		$transitions-with-delays: ();
+		$has-delays: false;
+		@each $transition in $transitions {
+			$transition: transition-map($transition);
+			$property: map-get($transition, property);
+			$duration: map-get($transition, duration);
+			$timing-function: map-get($transition, timing-function);
+			$delay: map-get($transition, delay);
+			$has-delays: $has-delays or $delay;
+			@if $current-prefix == -webkit {
+				$delays: append($delays, if($delay, $delay, 0s), comma);
+				$transitions-without-delays: append($transitions-without-delays, prefixed-for-transition($current-prefix, $property) $duration $timing-function, comma);
+			} @else {
+				$transitions-with-delays: append($transitions-with-delays, prefixed-for-transition($current-prefix, $property) $duration $timing-function $delay, comma);
+			}
+		}
+	
+		@if $current-prefix == -webkit {
+			@include prefix-prop(transition, $transitions-without-delays);
+			@if $has-delays {
+				@include prefix-prop(transition-delay, $delays);
+			}
+		} @else if $current-prefix {
+			@include prefix-prop(transition, $transitions-with-delays);
+		} @else {
+			transition: $transitions-with-delays;
+		}
+	}
+}
