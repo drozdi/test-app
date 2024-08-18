@@ -126,7 +126,7 @@ export function XFooter({ children, className = '' }) {
 
 export function XSideBar({ children, className, type = 'left', width = 200 }) {
     const { $layout, $update } = useContext(LayoutContext)
-    let cn = ['x-sidebar', $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : '', className].join(' ')
+    let cn = ['x-sidebar', $layout ? ' p-sidebar x-layout__sidebar x-layout__sidebar--' + type : '', className].join(' ')
 
     const ref = useResizeObserver((target, entry) => {
         $update(type, 'size', target.offsetWidth);
