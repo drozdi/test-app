@@ -2,6 +2,10 @@ import React, { useContext, createContext, useEffect, useMemo, useState } from "
 import { useProxy } from "../../../hooks/useProxy";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
 
+import { styled, useTheme } from '@mui/material/styles';
+import Drawer from '@mui/material/Drawer';
+
+
 export const LayoutContext = createContext(null);
 
 export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
@@ -124,9 +128,33 @@ export function XFooter({ children, className = '' }) {
     </footer>)
 }
 
-export function XSideBar({ children, className, type = 'left', width = 200 }) {
+const openedMixin = (theme, drawerWidth) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+});
+    
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    minWidth: 0,
+    [theme.breakpoints.up('sm')]: {
+        width: `calc(${theme.spacing(8)} + 1px)`,
+    },
+ });
+
+
+export function XSideBar({ children, className, open=true, type = 'left', width = 200 }) {
+    const theme = useTheme();
     const { $layout, $update } = useContext(LayoutContext)
-    let cn = ['x-sidebar', $layout ? ' p-sidebar x-layout__sidebar x-layout__sidebar--' + type : '', className].join(' ')
+    let cl = ['x-sidebar', $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : '', className].join(' ')
 
     const ref = useResizeObserver((target, entry) => {
         $update(type, 'size', target.offsetWidth);
@@ -136,15 +164,40 @@ export function XSideBar({ children, className, type = 'left', width = 200 }) {
     const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
 
     const style = useMemo(() => ({
+        ...(open? openedMixin: closedMixin)(theme, width),
         top: header ? 0 : $layout.header.size,
         bottom: footer ? 0 : $layout.footer.size,
+        position: 'absolute',
         [type]: 0,
+        [`& .MuiDrawer-paper`]: { 
+            boxSizing: 'border-box',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    }
+        /*{
+        top: header ? 0 : $layout.header.size,
+        bottom: footer ? 0 : $layout.footer.size,
         width: width,
-    }), [$layout, width])
+        position: 'absolute',
+        [type]: 0,
+        [`& .MuiDrawer-paper`]: { 
+            boxSizing: 'border-box',
+            position: 'absolute',
+            width: width,
+        },
+    }*/
+), [$layout, width, open])
 
-    return (<aside ref={ref} className={cn} style={style}>
+    return (<Drawer ref={ref} className={cl} open={true} anchor={type} variant="permanent" sx={style}>
         {children}
-    </aside>)
+    </Drawer>)
+    /*return (<aside ref={ref} className={cn} style={style}>
+        {children}
+    </aside>)//*/
 }
 
 export function XMain({ children }) {

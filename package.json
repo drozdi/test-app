@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@mdi/font": "^7.4.47",
+    "@mdi/react": "^1.6.1",
+    "@mui/icons-material": "^5.16.5",
+    "@mui/material": "^5.16.7",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
-    "primeicons": "^7.0.0",
-    "primereact": "^10.8.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "primeng-sass-theme": "github:primefaces/primeng-sass-theme#15.2.0"
+    "styled-components": "^6.1.12",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
