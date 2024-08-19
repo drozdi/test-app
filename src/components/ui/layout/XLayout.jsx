@@ -18,6 +18,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
         right: { size: 0, offset: 0, space: false, open: false },
         footer: { size: 0, offset: 0, space: false },
         left: { size: 0, offset: 0, space: false, open: false },
+        width: 0
     });
     const $update = (part, prop, val) => {
         if ($layout[part][prop] !== val) {
@@ -29,6 +30,12 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             }))
         }
     }
+
+    const ref = useResizeObserver((target, entry) => {
+        if ($layout.width !== target.offsetWidth) {
+            set$layout(v => ({ ...v, width: target.offsetWidth }))
+        }
+    });
 
     const {
         XHeader = null,
@@ -59,7 +66,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
         return res;
     })(children)
 
-    let layout = (<div className="x-layout">
+    let layout = (<div className="x-layout" ref={ref}>
         {XHeader}
         {XFooter}
         {XLeft}
@@ -134,24 +141,30 @@ export function XFooter({ children, className = '' }) {
 }
 
 const openedMixin = (theme, width) => ({
-    width: width, minWidth: 0,
+    width: width,
 });
 const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(7)} + 1px)`,
-    minWidth: 0,
-    [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
-    },
 });
 
 
-export function XSideBar({ children, className, open = true, type = 'left', width = 200 }) {
+export function XSideBar({ children, miniBreakpoint = 1023, breakpoint = 768, mini = false, open = true, type = 'left', width = 200 }) {
     const theme = useTheme();
-
     const { $layout, $update } = useContext(LayoutContext)
 
-    const opened = $layout ? $layout[type].open : open;
-    let cl = ['x-sidebar', $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : '', className].join(' ')
+    const [state, setState] = useState({
+        open: $layout ? $layout[type].open : open,
+        mini: $layout.width < miniBreakpoint,
+        hide: $layout.width < breakpoint,
+        show: $layout.width >= breakpoint,
+        width: width
+    })
+
+
+    const isMini = mini || $layout.width < breakpoint;
+
+
+    let cl = ['x-sidebar x-sidebar--' + type, $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : ''].join(' ')
 
     const ref = useResizeObserver((target, entry) => {
         $update(type, 'size', target.offsetWidth);
@@ -160,17 +173,21 @@ export function XSideBar({ children, className, open = true, type = 'left', widt
     const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
     const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
 
-    const style = useMemo(() => ({
-        ...(opened ? openedMixin : closedMixin)(theme, width),
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        overflowX: 'hidden',
+    const [minin, setMinin] = useState(true)
+
+    const onMouseEnter = (e) => {
+        setMinin(false)
+    }
+    const onMouseLeave = (e) => {
+        setMinin(true)
+    }
+
+    console.log(minin);
+
+    const sx = useMemo(() => ({
+        ...(!minin ? openedMixin : closedMixin)(theme, width),
         top: header ? 0 : $layout.header.size,
         bottom: footer ? 0 : $layout.footer.size,
-        position: 'absolute',
-        [type]: 0,
         [`& .MuiDrawer-paper`]: {
             boxSizing: 'border-box',
             position: 'absolute',
@@ -178,10 +195,13 @@ export function XSideBar({ children, className, open = true, type = 'left', widt
             bottom: 0,
             left: 0,
             right: 0,
+            width: '100%',
+            height: '100%',
         }
-    }), [$layout, width, opened])
+    }), [$layout, width, state, minin])
 
-    return (<Drawer ref={ref} className={cl} elevation={0} open={opened} anchor={type} variant="permanent" sx={style}>
+    return (<Drawer onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ref={ref}
+        className={cl} elevation={0} open={state.open} anchor={type} variant="permanent" sx={sx}>
         {children}
     </Drawer>)
 }

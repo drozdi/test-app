@@ -60,9 +60,11 @@ $xLayout-resizer-width: .5rem !default;
   }
 
   @include name(sidebar) {
-    min-width: $xLayout-sidebar-min-width;
+    //min-width: $xLayout-sidebar-min-width;
     max-width: $xLayout-sidebar-max-width;
     position: absolute;
+    overflow-x: 'hidden';
+    transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
   }
 
   @include name(res) {
@@ -128,10 +130,12 @@ $xLayout-resizer-width: .5rem !default;
   }
 
   @include name(sidebar, left) {
+    left: 0;
     border-right-width: 1px;
   }
 
   @include name(sidebar, right) {
+    right: 0;
     border-left-width: 1px;
   }
 
