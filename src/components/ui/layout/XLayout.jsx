@@ -147,8 +147,10 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(7)} + 1px)`,
 });
 
-
-export function XSideBar({ children, miniBreakpoint = 1023, breakpoint = 768, mini = false, open = true, type = 'left', width = 200 }) {
+export function XSideBar({ children, 
+    miniBreakpoint = 1023, breakpoint = 768, 
+    mini = false, open = true, 
+    type = 'left', width = 200, resize = true }) {
     const theme = useTheme();
     const { $layout, $update } = useContext(LayoutContext)
 
@@ -160,11 +162,7 @@ export function XSideBar({ children, miniBreakpoint = 1023, breakpoint = 768, mi
         width: width
     })
 
-
-    const isMini = mini || $layout.width < breakpoint;
-
-
-    let cl = ['x-sidebar x-sidebar--' + type, $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : ''].join(' ')
+    let cl = ['x-drawer x-drawer--' + type, $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : ''].join(' ')
 
     const ref = useResizeObserver((target, entry) => {
         $update(type, 'size', target.offsetWidth);
@@ -173,37 +171,31 @@ export function XSideBar({ children, miniBreakpoint = 1023, breakpoint = 768, mi
     const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
     const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
 
-    const [minin, setMinin] = useState(true)
+    const [isHover, setIsHover] = useState(true)
 
     const onMouseEnter = (e) => {
-        setMinin(false)
+        setIsHover(false)
     }
     const onMouseLeave = (e) => {
-        setMinin(true)
+        setIsHover(true)
     }
 
-    console.log(minin);
+    
+    const minin = useMemo(() => {
+        return isHover
+    }, [$layout, state, isHover])
 
-    const sx = useMemo(() => ({
-        ...(!minin ? openedMixin : closedMixin)(theme, width),
+
+    const style = useMemo(() => ({
+        ...(!minin ? openedMixin : closedMixin)(theme, state.width),
         top: header ? 0 : $layout.header.size,
-        bottom: footer ? 0 : $layout.footer.size,
-        [`& .MuiDrawer-paper`]: {
-            boxSizing: 'border-box',
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            width: '100%',
-            height: '100%',
-        }
-    }), [$layout, width, state, minin])
+        bottom: footer ? 0 : $layout.footer.size
+    }), [$layout, state, minin])
 
-    return (<Drawer onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ref={ref}
-        className={cl} elevation={0} open={state.open} anchor={type} variant="permanent" sx={sx}>
+    return (<aside onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ref={ref} className={cl} style={style}>
         {children}
-    </Drawer>)
+        {resize && <div className="x-layout__res"></div>}
+    </aside>)
 }
 
 export function XMain({ children }) {
