@@ -143,8 +143,11 @@ export function XFooter({ children, className = '' }) {
 const openedMixin = (theme, width) => ({
     width: width,
 });
-const closedMixin = (theme) => ({
+const colapsedMixin = (theme, width) => ({
     width: `calc(${theme.spacing(7)} + 1px)`,
+});
+const closedMixin = (theme) => ({
+    width: 0
 });
 
 export function XSideBar({ children, 
@@ -162,6 +165,10 @@ export function XSideBar({ children,
         width: width
     })
 
+    
+    
+
+
     let cl = ['x-drawer x-drawer--' + type, $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : ''].join(' ')
 
     const ref = useResizeObserver((target, entry) => {
@@ -171,26 +178,35 @@ export function XSideBar({ children,
     const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
     const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
 
-    const [isHover, setIsHover] = useState(true)
+    const [isHover, setIsHover] = useState(false)
 
     const onMouseEnter = (e) => {
-        setIsHover(false)
+        setIsHover(true)
     }
     const onMouseLeave = (e) => {
-        setIsHover(true)
+        setIsHover(false)
     }
 
     
-    const minin = useMemo(() => {
-        return isHover
-    }, [$layout, state, isHover])
+    const mode = useMemo(() => {
+        let res = 'closed';
 
+        if (state.mini && isHover) {
+            res = 'opened';
+        } else if (state.mini) {
+            res = 'colapsed';
+         } else if (state.show) {
+            res = 'opened'
+        }
+
+        return res;
+    }, [state, isHover]);
 
     const style = useMemo(() => ({
-        ...(!minin ? openedMixin : closedMixin)(theme, state.width),
+        ...(mode === 'opened' ? openedMixin : mode === 'colapsed'? colapsedMixin :closedMixin)(theme, state.width),
         top: header ? 0 : $layout.header.size,
         bottom: footer ? 0 : $layout.footer.size
-    }), [$layout, state, minin])
+    }), [$layout, state, mode])
 
     return (<aside onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ref={ref} className={cl} style={style}>
         {children}
