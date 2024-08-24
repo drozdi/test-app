@@ -15,9 +15,9 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             return row.split('')
         }),
         header: { size: 0, offset: 0, space: false },
-        right: { size: 0, offset: 0, space: false, open: false },
+        right: { size: 0, offset: 0, space: false, open: true },
         footer: { size: 0, offset: 0, space: false },
-        left: { size: 0, offset: 0, space: false, open: false },
+        left: { size: 0, offset: 0, space: false, open: true },
         width: 0
     });
     const $update = (part, prop, val) => {
@@ -149,13 +149,24 @@ const colapsedMixin = (theme, width) => ({
 const closedMixin = (theme) => ({
     width: 0
 });
+const foldedMixin = (theme) => ({
+    width: `calc(${theme.spacing(7)} + 1px)`,
+})
 
-export function XSideBar({ children, 
-    miniBreakpoint = 1023, breakpoint = 768, 
-    mini = false, open = true, 
+
+
+export function XSideBar({ children, className = '',
+    folding = true, foldingBreakpoint = 1024, folded = false,
+    open = false, breakpoint = 768,
+
+
+    miniBreakpoint = 1023, mini = false,
     type = 'left', width = 200, resize = true }) {
     const theme = useTheme();
     const { $layout, $update } = useContext(LayoutContext)
+
+    const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
+    const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
 
     const [state, setState] = useState({
         open: $layout ? $layout[type].open : open,
@@ -165,18 +176,31 @@ export function XSideBar({ children,
         width: width
     })
 
-    
-    
+    const isFolding = useMemo(() => {
+        return folding;
+    }, [folding, $layout]);
+
+    const isFolded = useMemo(() => {
+        return folding && (folded || $layout.width < foldingBreakpoint);
+    }, [folding, $layout]);
 
 
-    let cl = ['x-drawer x-drawer--' + type, $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : ''].join(' ')
+
+    const isOpen = useMemo(() => {
+        return open || $layout.width > breakpoint;
+    }, [open, $layout])
+
+
+    let cl = className + ['x-sidebar x-sidebar--' + type, $layout ? ' x-layout__sidebar x-layout__sidebar--' + type : ''].join(' ')
+
+
+
 
     const ref = useResizeObserver((target, entry) => {
         $update(type, 'size', target.offsetWidth);
     });
 
-    const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
-    const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
+
 
     const [isHover, setIsHover] = useState(false)
 
@@ -187,30 +211,21 @@ export function XSideBar({ children,
         setIsHover(false)
     }
 
-    
-    const mode = useMemo(() => {
-        let res = 'closed';
-
-        if (state.mini && isHover) {
-            res = 'opened';
-        } else if (state.mini) {
-            res = 'colapsed';
-         } else if (state.show) {
-            res = 'opened'
-        }
-
-        return res;
-    }, [state, isHover]);
-
     const style = useMemo(() => ({
-        ...(mode === 'opened' ? openedMixin : mode === 'colapsed'? colapsedMixin :closedMixin)(theme, state.width),
+        ...(
+            isFolded ? foldedMixin : isOpen ? openedMixin : closedMixin
+
+        )(theme, width),
+
         top: header ? 0 : $layout.header.size,
         bottom: footer ? 0 : $layout.footer.size
-    }), [$layout, state, mode])
+    }), [$layout, state, isFolded])
 
     return (<aside onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ref={ref} className={cl} style={style}>
-        {children}
-        {resize && <div className="x-layout__res"></div>}
+        <div className="x-sidebar__content">
+            {children}
+        </div>
+        {resize && <div className="x-sidebar__res"></div>}
     </aside>)
 }
 

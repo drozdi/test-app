@@ -25,12 +25,70 @@ $xLayout-sidebar-max-width: 400px !default;
 
 $xLayout-resizer-width: .5rem !default;
 
-@include namespace('@xDrawer', true) {
+@include namespace('@xSideBar', true) {
+  @include name {
+    --x-sidebar-bg: #{$dimmed-background};
+    --x-sidebar-border: #{$separator-color};
+    --x-sidebar-res-bg: #{$dimmed-background};
+  }
+
+  .theme--dark {
+    @include name {
+      --x-sidebar-bg: #{rgba($dimmed-dark-background, .1)};
+      --x-sidebar-border: #{$separator-dark-color};
+      --x-sidebar-res-bg: #{$dimmed-dark-background};
+    }
+  }
+
   @include name {
     position: absolute;
-    overflow-x: 'hidden';
+    overflow: hidden;
     transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    background: var(--x-sidebar-bg);
+    border: 0 solid var(--x-sidebar-border);
   }
+
+  @include name (res) {
+    width: $xLayout-resizer-width;
+    cursor: col-resize;
+    background: var(--x-layout-sidebar-bg);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    &:after {
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: " ";
+      background-image: url('../../../../assets/images/sidebar-divider-dots.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+
+  @include name(null, left) {
+    padding-right: $xLayout-resizer-width;
+
+    @include name (res) {
+      right: 0;
+    }
+  }
+
+  @include name(null, right) {
+    padding-left: $xLayout-resizer-width;
+
+    @include name (res) {
+      left: 0;
+    }
+  }
+
+  @include name (content) {
+    overflow: auto;
+    max-height: 100%;
+  }
+
+
 }
 
 @include namespace('@xLayout', true) {
@@ -70,27 +128,7 @@ $xLayout-resizer-width: .5rem !default;
   @include name(sidebar) {
     //min-width: $xLayout-sidebar-min-width;
     max-width: $xLayout-sidebar-max-width;
-    position: absolute;
-    overflow-x: 'hidden';
-    transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
-  }
 
-  @include name(res) {
-    width: $xLayout-resizer-width;
-    cursor: col-resize;
-    background: var(--x-layout-sidebar-bg);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    &:after {
-      display: block;
-      width: 100%;
-      height: 100%;
-      content: " ";
-      background-image: url('../../../../assets/images/sidebar-divider-dots.png');
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
   }
 
   @include name(null, core) {
@@ -112,13 +150,10 @@ $xLayout-resizer-width: .5rem !default;
     }
   }
 
-  @include name (header footer sidebar) {
+  @include name (header footer) {
     border: 0 solid var(--x-layout-border);
   }
 
-  @include name (sidebar) {
-    background: var(--x-layout-sidebar-bg);
-  }
 
   @include name (header footer) {
     max-width: 100%;
@@ -142,6 +177,7 @@ $xLayout-resizer-width: .5rem !default;
   @include name(sidebar, left) {
     left: 0;
     border-right-width: 1px;
+
     @include name (res) {
       right: 0;
     }
@@ -150,13 +186,13 @@ $xLayout-resizer-width: .5rem !default;
   @include name(sidebar, right) {
     right: 0;
     border-left-width: 1px;
+
     @include name (res) {
       left: 0;
-    } 
+    }
   }
 
   @include name (body) {
     padding: 0;
   }
 }
-
