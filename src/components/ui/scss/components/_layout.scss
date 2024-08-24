@@ -46,6 +46,8 @@ $xLayout-resizer-width: .5rem !default;
     transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
     background: var(--x-sidebar-bg);
     border: 0 solid var(--x-sidebar-border);
+    top: 0;
+    right: 0;
   }
 
   @include name (res) {
@@ -66,29 +68,54 @@ $xLayout-resizer-width: .5rem !default;
       background-position: center center;
     }
   }
+  @include name (content) {
+    overflow: auto;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: var(--x-sidebar-bg);
+    transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  }
 
   @include name(null, left) {
+    left: 0;
     padding-right: $xLayout-resizer-width;
-
+    border-right-width: 1px;
     @include name (res) {
       right: 0;
     }
-  }
-
-  @include name(null, right) {
-    padding-left: $xLayout-resizer-width;
-
-    @include name (res) {
+    @include name (content) {
       left: 0;
     }
   }
 
-  @include name (content) {
-    overflow: auto;
-    max-height: 100%;
+  @include name(null, right) {
+    right: 0;
+    padding-left: $xLayout-resizer-width;
+    border-left-width: 1px;
+    @include name (res) {
+      left: 0;
+    }
+    @include name (content) {
+      right: 0;
+      min-width: 56px;
+    }
   }
 
+  
 
+  @include name (null, folded) {
+    width: 56px;
+    padding-left: 0;
+    padding-right: 0;
+    @include name (res) {
+      display: none;
+    }
+    &:hover {
+      overflow: visible;
+    }
+  }
 }
 
 @include namespace('@xLayout', true) {
@@ -172,24 +199,6 @@ $xLayout-resizer-width: .5rem !default;
   @include name (footer) {
     bottom: 0;
     border-top-width: 1px;
-  }
-
-  @include name(sidebar, left) {
-    left: 0;
-    border-right-width: 1px;
-
-    @include name (res) {
-      right: 0;
-    }
-  }
-
-  @include name(sidebar, right) {
-    right: 0;
-    border-left-width: 1px;
-
-    @include name (res) {
-      left: 0;
-    }
   }
 
   @include name (body) {
