@@ -1,5 +1,7 @@
-import styles from './XSidebar.module.css';
+import styles from './XSidebar.module.scss';
 
 export function XSidebar() {
-    return <div className={styles.XSidebar}>Sidebar</div>;
+    return (<div className={styles.xSidebar}>
+        Sidebar
+    </div>);
 }
