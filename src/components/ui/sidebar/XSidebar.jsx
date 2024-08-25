@@ -1,4 +1,4 @@
-import styles from './XSidebar.module.scss';
+import styles from './XSidebar.module.scss'
 
 export function XSidebar() {
     return (<div className={styles.xSidebar}>
