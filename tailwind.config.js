@@ -13,7 +13,10 @@ module.exports = {
         positive: '#4caf50',
         negative: '#dc3545',
         info: '#2196f3',
-        warning: '#fb8c00'
+        warning: '#fb8c00',
+        surface: '#15171e',
+        separator: 'rgba(255, 255, 255, .15)',
+        dimmed: 'rgba(0,0,0,0.02)',
       },
     },
   },

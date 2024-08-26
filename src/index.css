@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        background-color: #002650;
+        color: rgba(255,255,255, .7);
+    }
+    a {
+        color: #00aeff;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #fff;
+        text-decoration: underlined;
+    }
+  }
