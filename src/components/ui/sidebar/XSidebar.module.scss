@@ -1,3 +1,11 @@
 .xSidebar {
-    @apply flex border border-solid border-current max-w-52 min-h-96 bg-green-500
+    @apply flex flex-col border-solid border-separator max-w-52 min-h-96 bg-surface;
+
+    ul {
+        @apply flex flex-col;
+        > li {
+            @apply flex px-3 py-3.5 hover:bg-gray-50/10
+        }
+    }
 }
+

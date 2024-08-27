@@ -16,7 +16,7 @@ module.exports = {
         warning: '#fb8c00',
         surface: '#15171e',
         separator: 'rgba(255, 255, 255, .15)',
-        dimmed: 'rgba(0,0,0,0.02)',
+        dimmed: 'rgba(0,0,0,0.2)',
       },
     },
   },
