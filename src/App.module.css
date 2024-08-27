@@ -1,72 +1,41 @@
 .app {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 20px;
+  @apply max-w-screen-sm my-5 mx-auto;
 }
 
-.error {
-  color: var(--error-color);
-  font-weight: bold;
-}
-
-.page-heading {
-  margin: 0 0 0.5rem;
-  font-size: 25px;
-  font-weight: bold;
-}
-
-.no-margin-text {
-  margin: 0;
-}
-
-.current-value {
-  font-weight: bold;
-}
-
-.buttons-container {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.button {
-  padding: 0.5em 0.75em;
-  background-color: hsl(var(--accent-color-hue), var(--accent-color-saturation), 92%);
-  font-size: 18px;
-  border: none;
-  transition: background-color 0.15s ease;
-}
-
-.button:hover {
-  background-color: hsl(var(--accent-color-hue), var(--accent-color-saturation), 87%);
-}
-
-.button:active {
-  background-color: hsl(var(--accent-color-hue), var(--accent-color-saturation), 82%);
-}
-
-.button:disabled {
-  background-color: var(--disabled-color);
-}
-
-.list-container {
-  margin-top: 1.5rem;
+.container {
+  @apply mt-4
 }
 
 .list-heading {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0 0 0.5rem;
+  @apply text-center text-2xl font-bold
 }
 
 .list {
-  text-align: left;
-  margin: 0 auto;
-  max-width: 300px;
+  @apply flex flex-col mt-4
 }
 
-.list-item:not(:last-child) {
-  margin-bottom: 0.5em;
+.list-item {
+  @apply mt-1 flex w-full items-center justify-between bg-dimmed py-2 px-4 border border-divider shadow
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 10px solid gray;
+  border-radius: 50%;
+  border-left-color: transparent;
+  animation: loader 1s infinite;
+}
+
+@keyframes loader {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
 }
