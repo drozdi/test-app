@@ -1,0 +1,16 @@
+.x-btn {
+    @apply rounded px-6 py-2 text-base font-normal uppercase shadow-xl
+        leading-normal transition duration-150 ease-in-out focus:outline-none
+        bg-blue-900 text-white shadow-black/30 
+        hover:bg-blue-900/75 hover:shadow-strong
+        active:bg-blue-900/90 active:shadow-strong;
+}
+.x-btn--primary {
+    @apply bg-primary hover:bg-primary/75 active:bg-primary/90;
+}
+.x-btn--secondary {
+    @apply bg-secondary;
+}
+.x-btn--warning {
+    @apply bg-warning;
+}

@@ -6,6 +6,6 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App endpoind="https://jsonplaceholder.typicode.com/todos" />
+    <App endpoind="http://localhost:3030/todos" />
   </React.StrictMode>
 );
