@@ -12,7 +12,7 @@ module.exports = {
         'info': '#2196f3',
         'warning': '#fb8c00',
         'success': '#4caf50',
-        'error': '#dc3545',
+        'danger': '#dc3545',
         'dark': '#1d1d1d',
         'surface': '#15171e',
         'dimmed': 'rgba(0, 0, 0, .4)',

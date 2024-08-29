@@ -1,7 +1,8 @@
 import styles from './App.module.css';
 import React, { useState, useEffect } from 'react';
 
-import { Button } from './components/ui/Button/Button';
+import { XButton } from './components/ui/Button/XButton';
+import { XIcon } from './components/ui/Icon/XIcon';
 
 function App({endpoind}) {
   const [todos, setTodos] = useState([]);
@@ -16,7 +17,6 @@ function App({endpoind}) {
   }, [endpoind]);
 
   return (<div className={styles.app}>
-    <Button>dgdg</Button>
     <div className={styles.container}>
       {
       isLoading? 
@@ -26,7 +26,17 @@ function App({endpoind}) {
         {!todos.length && <p>Нет элементов</p>}
         <ul className={styles.list}>
           {todos.map(({ id, title }) => {
-            return <li key={id} className={styles['list-item']}>{title}</li>
+            return <li key={id} className={styles['list-item']}>
+              {title}
+              <div className={styles.actions}>
+                <XButton color="secondary" size="xs" onClick={() => {}} title="Изменить">
+                  <XIcon>mdi-note-edit-outline</XIcon>
+                </XButton>
+                <XButton color="danger" size="xs" onClick={() => {}} title="Удалить">
+                  <XIcon>mdi-note-remove-outline</XIcon>
+                </XButton>
+              </div>
+            </li>
           })}
         </ul>
       </>
