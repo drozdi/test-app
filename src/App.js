@@ -5,35 +5,33 @@ import { XButton } from './components/ui/Button/XButton';
 import { XIcon } from './components/ui/Icon/XIcon';
 import { XInput } from './components/ui/Input/XInput';
 
-import { BaseRepository } from './utils/BaseRepository.js'
-import { debounce } from './utils/debounce.js'
+import { ref, onValue, set, remove, push } from 'firebase/database';
+import { db } from './firebase';
 
 
 function App({endpoint = ''}) {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState({});
   const [computedTodos, setComputedTodos] = useState([]); 
   const [title, setTile] = useState('');
   const [find, setFind] = useState('');
   const [selectedId, setSelectedId] = useState(null);
   const [sort, setSort] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const repository = new BaseRepository(endpoint);
-  
   useEffect(() => {
-    setIsLoading(true);
-    repository.list()
-      .then(res => res.json())
-      .then(setTodos)
-      .finally(() => setIsLoading(false))
-  }, [refresh]);
+    const todoDBRef = ref(db, 'todo');
+    return onValue(todoDBRef, (snapshot) => {
+        const loadedTodos = snapshot.val();
+        setTodos(loadedTodos || {});
+        setIsLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
-    let newTodos = [...todos];
+    let newTodos = Object.entries(todos).map(([id, {title}]) => ({id, title}));
     if (find) {
       newTodos = newTodos.filter(todo => todo.title.includes(find));
     }
@@ -43,7 +41,7 @@ function App({endpoint = ''}) {
       newTodos.sort((a, b) => b.title.localeCompare(a.title))
     }
     setComputedTodos(newTodos);
-  }, [todos, find, sort])
+  }, [todos, find, sort]);
 
 
   const onClickSort = (event) => {
@@ -59,23 +57,18 @@ function App({endpoint = ''}) {
     setFind(event.target.value);
   }
   const headerDelete = (id) => {
-    setIsDeleting(true)
-    repository.delete(id)
-      .then(res => res.json())
+    setIsDeleting(true);
+    setIsLoading(true);
+    const todoDBRef = ref(db, `todo/${id}`);
+    remove(todoDBRef)
       .then((res) => {
         console.log('Уален!', res)
-        setRefresh(!refresh)
       })
       .finally(() => setIsDeleting(false));
   }
   const headerUpdate = (id) => {
     setSelectedId(id);
-    for (let todo of todos) {
-      if (todo.id === id) {
-        setTile(todo.title);
-        break;
-      }
-    }
+    setTile(todos[id].title);
   }
   const onChangeTitle = (event) => {
     setTile(event.target.value);
@@ -84,23 +77,22 @@ function App({endpoint = ''}) {
     if (event.key === 'Enter') {
       if (selectedId) {
         setIsUpdating(true)
-        repository.put(selectedId, {title})
-          .then(res => res.json())
+        const todoDBRef = ref(db, `todo/${selectedId}`);
+        set(todoDBRef, {title})
           .then((res) => {
             console.log('Изменен!', res);
             setTile('');
             setSelectedId(null);
-            setRefresh(!refresh);
           })
           .finally(() => setIsUpdating(false));
       } else if (title.trim()) {
-        setIsCreating(true)
-        repository.post({title: title.trim()})
-          .then(res => res.json())
+        setIsCreating(true);
+        setIsLoading(true);
+        const todoDBRef = ref(db, 'todo');
+        push(todoDBRef, {title})
           .then((res) => {
             console.log('Создан!', res);
             setTile('');
-            setRefresh(!refresh);
           })
           .finally(() => setIsCreating(false));
       }
