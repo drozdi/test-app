@@ -1,4 +1,4 @@
-import React from "react";
+import {createElement as h}  from "react";
 import classNames from "classnames";
 const XIcon = function ({children, name, color, tag = 'i', ...props}) {
     name ||= children
@@ -7,7 +7,7 @@ const XIcon = function ({children, name, color, tag = 'i', ...props}) {
     }
     color &&= color = ' text-'+color
     color ||= ''
-    return React.createElement(tag, {
+    return h(tag, {
         ...props,
         className: classNames('x-icon', name.split('-')[0], name, color),
         'aria-hidden': 'true',

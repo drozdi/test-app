@@ -1,67 +1,44 @@
 import React from "react";
+import styles from './XButton.module.css';
 import classNames from "classnames";
 import PropTypes from 'prop-types'
-import {setBg, setText} from "../../utils/color";
 
 import XIcon from '../icon/XIcon'
 
-class XBtn extends React.Component {
-    render () {
-        const { children,
-            className,
-            icon,
-            iconRight,
-            disabled,
-            flat,
-            outline,
-            rounded,
-            block,
-            square,
-            tonal,
-            text,
-            color,
-            textColor,
-            ...props } = this.props
-
-        if (disabled) {
-            props.disabled = true;
-            props['aria-disabled'] = 'true'
-        } else if (props.href === void 0) {
-            props.role = 'button'
-        }
-
-         const attrs = {
-            ...props,
-             className: classNames('x-btn', className || '', {
-                 'x-btn--disabled': disabled,
-                 'x-btn--flat': flat,
-                 'x-btn--text': text,
-                 'x-btn--tonal': tonal,
-                 'x-btn--block': block,
-                 'x-btn--square': square,
-                 'x-btn--outline': outline,
-                 'x-btn--rounded': rounded,
-             })}
-
-        if (color !== void 0) {
-            if (flat || outline || tonal) {
-                setText(textColor || color, attrs)
-            } else {
-                setBg(color, attrs)
-                setText(textColor || 'white', attrs)
-            }
-        } else if (textColor) {
-            setText(textColor || 'white', attrs)
-        }
-
-        return (
-            <button {...attrs}>
-                <XIcon>{icon}</XIcon>
-                <span className="x-btn__content">{children}</span>
-                <XIcon>{iconRight}</XIcon>
-            </button>
-        );
+// todo add icon support for iconRight
+export function XBtn ({children, size, className, icon, iconRight, disabled, flat, outline, rounded, block, square, tonal, text, color, textColor, ...props}) {
+    const attrs = {
+        type: 'button',
+        ...props,
+        className: classNames(className, styles['x-btn'], {
+            [styles[`x-btn--${color}`]]: !!color,
+            [styles[`x-btn--${size}`]]: !!size,
+            [styles['x-btn--rounded']]: !!rounded,
+            [styles['x-btn--block']]: !!block,
+            [styles['x-btn--disabled']]: !!disabled,
+            [styles['x-btn--flat']]: !!flat,
+            [styles['x-btn--text']]: !!text,
+            [styles['x-btn--tonal']]: !!tonal,
+            [styles['x-btn--square']]: !!square,
+            [styles['x-btn--outline']]: !!outline
+        })
     }
+
+    if (disabled) {
+        attrs.disabled = true;
+        attrs['aria-disabled'] = 'true'
+    } 
+    if (props.href === void 0) {
+        attrs.role = 'button'
+    }
+
+    return (
+        <button {...attrs}>
+            <XIcon>{icon}</XIcon>
+            <span className="x-btn__content">{children}</span>
+            <XIcon>{iconRight}</XIcon>
+        </button>
+    );
 }
 
 XBtn.defaultProps = {
@@ -96,14 +73,3 @@ XBtn.propTypes = {
     textColor: PropTypes.string,
     onClick: PropTypes.func
 }
-
-export default XBtn;
-
-/*
-return React.createElement(tag, {
-        ...props,
-        className: classNames('x-icon', name.split('-')[0], name, color),
-        'aria-hidden': true,
-        role: 'presentation'
-    }, '');
- */
