@@ -4,7 +4,7 @@
     ul {
         @apply flex flex-col;
         > li {
-            @apply flex px-3 py-3.5 hover:bg-gray-50/10
+            @apply flex px-3 py-3.5 hover:bg-gray-50/10;
         }
     }
 }
