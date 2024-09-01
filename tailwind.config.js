@@ -19,6 +19,14 @@ module.exports = {
         dimmed: 'rgba(0,0,0,0.2)',
       },
     },
+    boxShadow: {
+      strong: '0 4px 18px -2px #000000b3'
+    },
+    transitionProperty: {
+      width: 'width',
+      height: 'height',
+      spacing: 'margin, padding',
+    }
   },
   plugins: [],
 }
