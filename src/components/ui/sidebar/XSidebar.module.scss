@@ -1,17 +1,51 @@
-.xSidebar {
-    @apply absolute top-0 bottom-0 overflow-auto left-0 w-64;
-    &__container {
-        @apply absolute left-0 top-0 bottom-0 w-64
-            overflow-y-hidden transition-width duration-300 ease-in-out
-            bg-surface border-solid border-separator;
-        &--collapsed,
-        &--collapsing:not(:hover) {
-            &, & .xSidebar {
-                @apply w-16;
-            }
+$name: '.xSidebar' !default;
+$nameContainer: '#{$name}__container' !default;
+$nameContent: '#{$name}__content' !default;
+
+
+
+%sidebar {
+    @apply absolute top-0 bottom-0 left-0 w-64
+        overflow-auto transition-width duration-300 ease-in-out
+        bg-surface border-solid border-separator;
+}
+%sidebar-container {
+    @apply absolute top-0 bottom-0 left-0 w-64
+        overflow-visible transition-width duration-300 ease-in-out;
+}
+%sidebar-collapsed {
+    @apply w-16;
+}
+%sidebar-container-collapsed {
+    @apply w-16;
+}
+%sidebar-content {
+    @apply max-w-full
+}
+
+
+ #{$name} {
+    @extend %sidebar;
+ }
+#{$nameContainer} {
+    @extend %sidebar-container;
+    
+    &--collapsed,
+    &--collapsing:not(:hover) {
+        @extend %sidebar-container-collapsed;
+        & .xSidebar {
+            @extend %sidebar-collapsed;
         }
     }
 
+    &--overlay#{&}--collapsed,
+    &--overlay#{&}--collapsing {
+        @extend %sidebar-container-collapsed;
+    }
+}
+#{$nameContent} {
+    @extend %sidebar-content;
+}
 
 
 
@@ -19,8 +53,7 @@
 
 
 
-
-
+#{$name} {
     ul {
         @apply flex flex-col max-w-full;
         > li {
@@ -28,7 +61,3 @@
         }
     }
 }
-
-
-
-

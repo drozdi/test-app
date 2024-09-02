@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
-import styles from './XSidebar.module.scss'
 import classNames from 'classnames';
-import {XSidebarContext} from './XSidebarContext'
-import { useResizeObserver } from "../../../hooks/useResizeObserver"
+import { useMemo } from 'react';
+import { useResizeObserver } from "../../../hooks/useResizeObserver";
+import styles from './XSidebar.module.scss';
+import { XSidebarContext } from './XSidebarContext';
 
 export function XSidebar({
     children, 
@@ -40,9 +40,12 @@ export function XSidebar({
         <div ref={containerRef} className={classNames(styles.xSidebar__container, {
             [styles['xSidebar__container--collapsing']]: collapsing,
             [styles['xSidebar__container--collapsed']]: isCollapsed,
+            [styles['xSidebar__container--overlay']]: collapsedForOverlay,
         })} style={style}>
             <div className={styles.xSidebar}>
-                {children}
+                <div className={styles.xSidebar__content}>
+                    {children}
+                </div>
             </div>
         </div>
     </XSidebarContext.Provider>);
