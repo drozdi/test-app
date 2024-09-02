@@ -1,9 +1,3 @@
-$name: '.xSidebar' !default;
-$nameContainer: '#{$name}__container' !default;
-$nameContent: '#{$name}__content' !default;
-
-
-
 %sidebar {
     @apply absolute top-0 bottom-0 left-0 w-64
         overflow-auto transition-width duration-300 ease-in-out
@@ -24,26 +18,30 @@ $nameContent: '#{$name}__content' !default;
 }
 
 
- #{$name} {
-    @extend %sidebar;
- }
-#{$nameContainer} {
+.xSidebar {
+   @extend %sidebar;
+   &--left {
+    @apply border-r; 
+   }
+   &--right {
+    @apply border-l; 
+   }
+}
+.xSidebar__container {
     @extend %sidebar-container;
     
-    &--collapsed,
-    &--collapsing:not(:hover) {
+    &--collapsed {
         @extend %sidebar-container-collapsed;
         & .xSidebar {
             @extend %sidebar-collapsed;
         }
     }
 
-    &--overlay#{&}--collapsed,
-    &--overlay#{&}--collapsing {
+    &--overlay#{&}--collapsed {
         @extend %sidebar-container-collapsed;
     }
 }
-#{$nameContent} {
+.xSidebar__content {
     @extend %sidebar-content;
 }
 
@@ -53,7 +51,7 @@ $nameContent: '#{$name}__content' !default;
 
 
 
-#{$name} {
+.xSidebar {
     ul {
         @apply flex flex-col max-w-full;
         > li {

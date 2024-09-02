@@ -3,7 +3,7 @@ import React from 'react';
 import { XSidebar } from "./components/ui/sidebar/XSidebar";
 
 function App() {
-    return (<XSidebar collapsing={true} collapsedForOverlay={true}>
+    return (<XSidebar collapsing={true} collapsedForOverlay={true} type="left">
       <ul>
           <li>Item 1</li>
           <li>Item 2</li>
