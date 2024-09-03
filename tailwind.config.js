@@ -18,15 +18,16 @@ module.exports = {
         separator: 'rgba(255, 255, 255, .15)',
         dimmed: 'rgba(0,0,0,0.2)',
       },
-    },
-    boxShadow: {
-      strong: '0 4px 18px -2px #000000b3'
-    },
-    transitionProperty: {
-      width: 'width',
-      height: 'height',
-      spacing: 'margin, padding',
+      boxShadow: {
+        strong: '0 4px 18px -2px #000000b3'
+      },
+      transitionProperty: {
+        width: 'width',
+        height: 'height',
+        spacing: 'margin, padding',
+      }
     }
+    
   },
   plugins: [],
 }

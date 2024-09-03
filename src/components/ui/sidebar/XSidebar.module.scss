@@ -1,18 +1,23 @@
 %sidebar {
     @apply absolute top-0 bottom-0 left-0 w-64
         overflow-auto transition-width duration-300 ease-in-out
-        bg-dimmed border-solid border-separator;
+        bg-surface border-solid border-separator;
 }
 %sidebar-container {
-    @apply absolute top-0 bottom-0 left-0 w-64 bg-red-600
+    @apply absolute top-0 bottom-0 left-0 w-64
         overflow-visible transition-width duration-300 ease-in-out;
 }
 
 %sidebar-mini {
     @apply w-16;
 }
-%sidebar-container-mini {
-    @apply w-16;
+
+
+%sidebar-close {
+    @apply w-0;
+}
+%sidebar-container-close {
+    @apply overflow-hidden w-0;
 }
 
 %sidebar-content {
@@ -28,19 +33,31 @@
    &--right {
     @apply border-l;
    }
+   &--mini {
+    @extend %sidebar-mini
+   }
 }
 .xSidebar__container {
     @extend %sidebar-container;
     
     &--mini {
-        @extend %sidebar-container-mini;
-        & .xSidebar {
+        &, & .xSidebar {
             @extend %sidebar-mini;
         }
     }
 
+    
+    &--close {
+        @extend %sidebar-container-close;
+        & .xSidebar {
+            @extend %sidebar-close;
+        }
+    }
     &--overlay {
-        @extend %sidebar-container-mini;
+        @extend %sidebar-mini;
+    }
+    &.xSidebar--overlay {
+        @extend %sidebar-close;
     }
 }
 .xSidebar__content {

@@ -6,6 +6,7 @@ import { XSidebarContext } from './XSidebarContext';
 
 export function XSidebar({
     children, 
+    className,
 
     type = null,
     
@@ -22,12 +23,14 @@ export function XSidebar({
 
     onMouseEnter = () => {},
     onMouseLeave = () => {},
+    onUpM = (v) => {},
     ...props
 }) {
     const [$layout, $update] = useState({
         totalWidth: 1000,
     })
     const containerRef = useResizeObserver((target, entry) => {
+        onUpM(target.offsetWidth);
         //$update(old => ({...old, totalWidth: target.offsetWidth}));
         //$update('footer', 'size', target.offsetHeight)
     })
@@ -50,33 +53,41 @@ export function XSidebar({
 
 
 
-    const isMini = useMemo(() => mini && !belowBreakpoint, [mini, belowBreakpoint])
+    const isMini = useMemo(() => 
+        mini && !belowBreakpoint, [mini, belowBreakpoint])
+
+    //???????????
     const isOpen = useMemo(() => 
-        belowBreakpoint? false :open, [open, belowBreakpoint])
-    console.log(isOpen)
-    const isOverlay = useMemo(() => overlay, [overlay])
-    const isMiniToOverlay = useMemo(() => miniToOverlay, [miniToOverlay])
+        belowBreakpoint? belowBreakpoint && open :open, [open, belowBreakpoint])
+
+    const isOverlay = useMemo(() => 
+        !belowBreakpoint && open && (mini && overlay || miniToOverlay)? false: overlay, 
+        [overlay, mini, open, miniToOverlay, belowBreakpoint])
+    
+    const isMiniToOverlay = useMemo(() => 
+        (miniToOverlay || overlay) && !belowBreakpoint, [miniToOverlay, overlay, belowBreakpoint])
 
 
     const containerStyle = useMemo(() => {
         return {
-            display: isOpen? 'flex' : 'none',
+            //display: isOpen? '' : 'none',
             /*width: collapsing? null: isCollapsed ? minWidth : width,
             maxWidth: maxWidth*/
         }
     }, [isOpen])
 
-    return (<XSidebarContext.Provider value={{ isMini }}>
+    return (<XSidebarContext.Provider value={{ isMini, isOpen }}>
         <div ref={containerRef} className={classNames(styles.xSidebar__container, {
             [styles[`xSidebar--${type}`]]: !!type,
+            [styles[`xSidebar--overlay`]]: isOverlay,
             [styles['xSidebar__container--mini']]: isMini,
             [styles['xSidebar__container--overlay']]: isMiniToOverlay,
+            [styles['xSidebar__container--close']]: !isOpen,
         })} style={containerStyle}>
             <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classNames(styles.xSidebar, {
                 [styles[`xSidebar--${type}`]]: !!type,
-                [styles[`xSidebar--overlay`]]: isOverlay,
             })}>
-                <div className={styles.xSidebar__content}>
+                <div className={classNames(styles.xSidebar__content, className)}>
                     {children}
                 </div>
             </div>
