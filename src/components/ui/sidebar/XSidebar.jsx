@@ -77,17 +77,17 @@ export function XSidebar({
     }, [isOpen])
 
     return (<XSidebarContext.Provider value={{ isMini, isOpen }}>
-        <div ref={containerRef} className={classNames(styles.xSidebar__container, {
+        <div ref={containerRef} className={classNames(styles['xSidebar-container'], {
             [styles[`xSidebar--${type}`]]: !!type,
             [styles[`xSidebar--overlay`]]: isOverlay,
-            [styles['xSidebar__container--mini']]: isMini,
-            [styles['xSidebar__container--overlay']]: isMiniToOverlay,
-            [styles['xSidebar__container--close']]: !isOpen,
+            [styles['xSidebar--mini']]: isMini,
+            [styles['xSidebar--mini-overlay']]: isMiniToOverlay,
+            [styles['xSidebar--close']]: !isOpen,
         })} style={containerStyle}>
             <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classNames(styles.xSidebar, {
                 [styles[`xSidebar--${type}`]]: !!type,
             })}>
-                <div className={classNames(styles.xSidebar__content, className)}>
+                <div className={classNames(styles['xSidebar-content'], className)}>
                     {children}
                 </div>
             </div>

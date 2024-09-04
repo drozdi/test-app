@@ -33,34 +33,31 @@
    &--right {
     @apply border-l;
    }
-   &--mini {
-    @extend %sidebar-mini
-   }
 }
-.xSidebar__container {
+.xSidebar-container {
     @extend %sidebar-container;
-    
-    &--mini {
-        &, & .xSidebar {
-            @extend %sidebar-mini;
-        }
-    }
+}
 
-    
-    &--close {
-        @extend %sidebar-container-close;
-        & .xSidebar {
-            @extend %sidebar-close;
-        }
-    }
-    &--overlay {
+.xSidebar--mini {
+    &, &.xSidebar--overlay:not(.xSidebar--close), & .xSidebar {
         @extend %sidebar-mini;
     }
-    &.xSidebar--overlay {
+
+}
+.xSidebar--mini-overlay {
+    @extend %sidebar-mini;
+}
+.xSidebar--overlay {
+    @extend %sidebar-close;
+}
+.xSidebar--close {
+    @extend %sidebar-container-close;
+    & .xSidebar {
         @extend %sidebar-close;
     }
 }
-.xSidebar__content {
+
+.xSidebar-content {
     @extend %sidebar-content;
 }
 
