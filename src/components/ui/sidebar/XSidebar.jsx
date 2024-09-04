@@ -64,7 +64,7 @@ export function XSidebar({
         mini && !belowBreakpoint, [mini, belowBreakpoint])
     
     const isOverlay = useMemo(() => 
-        !belowBreakpoint && open && (mini && overlay || miniToOverlay)? false: overlay, 
+        !belowBreakpoint && open && (mini && overlay || miniToOverlay)? false: (overlay || miniToOverlay), 
         [overlay, mini, open, miniToOverlay, belowBreakpoint])
     
     const isMiniToOverlay = useMemo(() => 
@@ -91,6 +91,7 @@ export function XSidebar({
             })}>
                 <div {...props} className={classNames(styles['xSidebar-content'], className)}>
                     {children}
+                    isOverlay: {isOverlay? 'true':'false'}<br />
                     belowBreakpoint: {belowBreakpoint? 'true':'false'}<br />
                     isOpenBreakpoint: {isOpenBreakpoint? 'true':'false'}<br />
                 </div>
