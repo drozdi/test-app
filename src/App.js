@@ -9,7 +9,6 @@ function App() {
     const [overlay, setOverlay] = useState(false);
     const [m, setM] = useState(56);
     return (<><XSidebar 
-        type="left"
         mini={mini} 
         open={open}
         overlay={overlay}

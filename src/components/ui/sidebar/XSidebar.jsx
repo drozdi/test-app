@@ -8,7 +8,7 @@ export function XSidebar({
     children, 
     className,
 
-    type = null,
+    type = 'left',
     
     mini = false, 
     miniToOverlay = false,
