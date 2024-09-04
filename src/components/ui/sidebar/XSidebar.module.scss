@@ -7,17 +7,20 @@
     @apply absolute top-0 bottom-0 w-64
         overflow-visible transition-width duration-300 ease-in-out;
 }
-
 %sidebar-mini {
     @apply w-16;
 }
-
-
+%sidebar-left {
+    @apply left-0 border-r;
+}
+%sidebar-right {
+    @apply right-0 border-l;
+}
 %sidebar-close {
-    @apply w-0;
+    @apply w-0 border-0;
 }
 %sidebar-container-close {
-    @apply overflow-hidden w-0;
+    @apply overflow-hidden w-0 border-0;
 }
 
 %sidebar-content {
@@ -28,10 +31,10 @@
 .xSidebar {
    @extend %sidebar;
    &--left {
-    @apply left-0 border-r;
+    @extend %sidebar-left;
    }
    &--right {
-    @apply right-0 border-l;
+    @extend %sidebar-right;
    }
 }
 .xSidebar-container {

@@ -7,15 +7,12 @@ import { XSidebarContext } from './XSidebarContext';
 export function XSidebar({
     children, 
     className,
-
     type = 'left',
-    
     mini = false, 
     miniToOverlay = false,
-
     open = false,
     overlay = false,
-    breakpoint = 600,
+    breakpoint = null,
 
     width = 300,
     minWidth = 56,
@@ -45,28 +42,33 @@ export function XSidebar({
             window.removeEventListener('resize', resss);
         }
     }, []);
-    
+
 
     const belowBreakpoint = useMemo(() => 
         (breakpoint && $layout.totalWidth < breakpoint) || false, [$layout, breakpoint]);
-    
 
-
-
-    const isMini = useMemo(() => 
-        mini && !belowBreakpoint, [mini, belowBreakpoint])
+    const [isOpenBreakpoint, setOpenBreakpoint] = useState(false)
+  
+    useEffect(() => {
+        setOpenBreakpoint(false)
+    }, [belowBreakpoint])
+    useEffect(() => {
+        setOpenBreakpoint(v => !v)
+    }, [open])
 
     //???????????
     const isOpen = useMemo(() => 
-        belowBreakpoint? belowBreakpoint && open :open, [open, belowBreakpoint])
+        belowBreakpoint? isOpenBreakpoint : open, [open, belowBreakpoint, isOpenBreakpoint])
 
+    const isMini = useMemo(() => 
+        mini && !belowBreakpoint, [mini, belowBreakpoint])
+    
     const isOverlay = useMemo(() => 
         !belowBreakpoint && open && (mini && overlay || miniToOverlay)? false: overlay, 
         [overlay, mini, open, miniToOverlay, belowBreakpoint])
     
     const isMiniToOverlay = useMemo(() => 
         (miniToOverlay || overlay) && !belowBreakpoint, [miniToOverlay, overlay, belowBreakpoint])
-
 
     const containerStyle = useMemo(() => {
         return {
@@ -87,8 +89,10 @@ export function XSidebar({
             <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classNames(styles.xSidebar, {
                 [styles[`xSidebar--${type}`]]: !!type,
             })}>
-                <div className={classNames(styles['xSidebar-content'], className)}>
+                <div {...props} className={classNames(styles['xSidebar-content'], className)}>
                     {children}
+                    belowBreakpoint: {belowBreakpoint? 'true':'false'}<br />
+                    isOpenBreakpoint: {isOpenBreakpoint? 'true':'false'}<br />
                 </div>
             </div>
         </div>

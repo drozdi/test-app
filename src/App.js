@@ -9,12 +9,14 @@ function App() {
     const [overlay, setOverlay] = useState(false);
     const [m, setM] = useState(56);
     return (<><XSidebar 
+        type="left"
         mini={mini} 
         open={open}
+        breakpoint={600}
         overlay={overlay}
         miniToOverlay={miniToOverlay}
-        onMouseEnter={() => setMini(false)}
-        onMouseLeave={() => setMini(true)}
+        /*onMouseEnter={() => setMini(false)}
+        onMouseLeave={() => setMini(true)}*/
         onUpM={v=>setM(v)}>
         <ul>
             <li>Item 1</li>
