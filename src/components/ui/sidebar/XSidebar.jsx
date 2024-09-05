@@ -1,6 +1,7 @@
 import classNames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
+import { XLayoutContext } from '../layout/XLayoutContext';
 import styles from './XSidebar.module.scss';
 import { XSidebarContext } from './XSidebarContext';
 
@@ -23,29 +24,14 @@ export function XSidebar({
     onUpM = (v) => {},
     ...props
 }) {
-    const [$layout, $update] = useState({
-        totalWidth: 1000,
-    })
+    const { $layout, $update } = useContext(XLayoutContext)
+
     const containerRef = useResizeObserver((target, entry) => {
-        onUpM(target.offsetWidth);
-        //$update(old => ({...old, totalWidth: target.offsetWidth}));
-        //$update('footer', 'size', target.offsetHeight)
+        $update(type, 'size', target.offsetWidth);
     })
-
-    function resss () {
-        $update(old => ({...old, totalWidth: window.innerWidth}));
-    }
-    useEffect(() => {
-        window.addEventListener('resize', resss);
-        resss();
-        return () => {
-            window.removeEventListener('resize', resss);
-        }
-    }, []);
-
 
     const belowBreakpoint = useMemo(() => 
-        (breakpoint && $layout.totalWidth < breakpoint) || false, [$layout, breakpoint]);
+        (breakpoint && $layout.width < breakpoint) || false, [$layout, breakpoint]);
 
     const [isOpenBreakpoint, setOpenBreakpoint] = useState(false)
   
@@ -70,13 +56,14 @@ export function XSidebar({
     const isMiniToOverlay = useMemo(() => 
         (miniToOverlay || overlay) && !belowBreakpoint, [miniToOverlay, overlay, belowBreakpoint])
 
-    const containerStyle = useMemo(() => {
-        return {
-            //display: isOpen? '' : 'none',
-            /*width: collapsing? null: isCollapsed ? minWidth : width,
-            maxWidth: maxWidth*/
-        }
-    }, [isOpen])
+    const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0] || false;
+    const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0] || false;
+
+    const containerStyle = useMemo(() => ({
+        top: header ? '' : $layout.header.size,
+        bottom: footer ? '' : $layout.footer.size
+    }), [$layout, isOpen])
+
 
     return (<XSidebarContext.Provider value={{ isMini, isOpen }}>
         <div ref={containerRef} className={classNames(styles['xSidebar-container'], {

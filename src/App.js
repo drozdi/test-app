@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 
-import { XHeader, XLayout, XMain } from "./components/ui/layout/XLayout";
+import { XFooter, XHeader, XLayout, XMain } from "./components/ui/layout/XLayout";
 
 import { XSidebar } from "./components/ui/sidebar/XSidebar";
 
 function App() {
     const [mini, setMini] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [miniToOverlay, setMiniToOverlay] = useState(false);
     const [overlay, setOverlay] = useState(false);
     const [m, setM] = useState(56);
-    return (<XLayout>
+    return (<XLayout container={true}>
       <XHeader>
-        sdfsdfsdf
+        header
       </XHeader>
+      <XFooter>
+        footer
+      </XFooter>
       <XSidebar 
         type="left"
         mini={mini} 

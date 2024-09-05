@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import classNames from "classnames";
+import React, { useContext, useMemo, useState } from "react";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
+import styles from "./XLayout.module.scss";
 
 import { XBtn } from '../btn/XBtn';
 
-export const LayoutContext = createContext(null);
+import { XLayoutContext } from "./XLayoutContext";
 
 export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
     const [$layout, set$layout] = useState({
@@ -35,30 +37,34 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
     });
 
 
-    let layout = (<div className="x-layout" ref={ref}>
+    let layout = (<div className={styles.xLayout} ref={ref} style={{
+        paddingTop: $layout.header.size || '',
+        paddingBottom: $layout.footer.size || '',
+        paddingLeft: $layout.left.size || '',
+        paddingRight: $layout.right.size || '',
+    }}>
             {children}
     </div>)
     if (container) {
-        layout = (<div className="x-layout__container">
+        layout = (<div className={styles['xLayout-container']}>
             {layout}
         </div>)
     }
 
-    return (<LayoutContext.Provider value={{ $layout, $update }}>
+    return (<XLayoutContext.Provider value={{ $layout, $update }}>
         {layout}
-    </LayoutContext.Provider>)
+    </XLayoutContext.Provider>)
 }
 
-export function XHeader({ children, className = '' }) {
-    const { $layout, $update } = useContext(LayoutContext)
-    let cn = ['x-header', $layout ? ' x-layout__header' : '', className].join(' ')
+export function XHeader({ children, className }) {
+    const { $layout, $update } = useContext(XLayoutContext)
     const ref = useResizeObserver((target, entry) => {
         $update('header', 'size', target.offsetHeight);
     });
     const onClick = (e) => {
         $update('left', 'open', !$layout.left.open);
     }
-
+    
     const style = useMemo(() => {
         const css = {};
         if ($layout.rows[0][0] === "l") {
@@ -69,15 +75,16 @@ export function XHeader({ children, className = '' }) {
         }
         return css;
     }, [$layout])
-    return (<header ref={ref} className={cn} style={style}>
+    return (<header ref={ref} className={classNames(className, {
+        [styles['xLayout-header']]: $layout
+    })} style={style}>
         <XBtn color="primary" onClick={onClick}>primary</XBtn>
         {children}
     </header>)
 }
 
-export function XFooter({ children, className = '' }) {
-    const { $layout, $update } = useContext(LayoutContext)
-    let cn = ['x-footer', $layout ? ' x-layout__footer' : '', className].join(' ')
+export function XFooter({ children, className }) {
+    const { $layout, $update } = useContext(XLayoutContext)
     const ref = useResizeObserver((target, entry) => {
         $update('footer', 'size', target.offsetHeight)
     })
@@ -91,7 +98,9 @@ export function XFooter({ children, className = '' }) {
         }
         return css;
     }, [$layout])
-    return (<footer ref={ref} className={cn} style={style}>
+    return (<footer ref={ref} className={classNames(className, {
+        [styles['xLayout-footer']]: $layout
+    })} style={style}>
         {children}
     </footer>)
 }
@@ -118,7 +127,7 @@ const foldedMixin = (theme) => ({
     miniBreakpoint = 1023, mini = false,
     type = 'left', width = 200, resize = true }) {
     const theme = useTheme();
-    const { $layout, $update } = useContext(LayoutContext)
+    const { $layout, $update } = useContext(XLayoutContext)
 
     const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
     const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
@@ -185,7 +194,7 @@ const foldedMixin = (theme) => ({
 }*/
 
 export function XMain({ children }) {
-    const { $layout } = useContext(LayoutContext)
+    const { $layout } = useContext(XLayoutContext)
     return (<main className="x-layout__main">
         {children}
     </main>)

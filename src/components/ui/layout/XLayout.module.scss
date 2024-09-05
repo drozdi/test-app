@@ -1,0 +1,17 @@
+.xLayout {
+    @apply w-full h-full;
+}
+.xLayout-container {
+    @apply relative w-full h-full;
+}
+.xLayout-header,
+.xLayout-footer {
+    @apply border-solid border-separate absolute left-0 right-0 bg-dimmed max-w-full min-h-12;
+}
+
+.xLayout-header {
+    @apply top-0 border-b;
+}
+.xLayout-footer {
+    @apply bottom-0 border-t;
+}

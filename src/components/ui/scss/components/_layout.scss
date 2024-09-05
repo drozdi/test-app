@@ -155,7 +155,6 @@ $xLayout-resizer-width: .5rem !default;
   @include name(sidebar) {
     //min-width: $xLayout-sidebar-min-width;
     max-width: $xLayout-sidebar-max-width;
-
   }
 
   @include name(null, core) {
