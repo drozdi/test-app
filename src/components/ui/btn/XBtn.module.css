@@ -43,12 +43,12 @@
 .x-btn--warning {
     @apply bg-warning hover:bg-warning/75 focus:bg-warning/80 focus:shadow-warning/20 active:bg-warning/90;
 }
-.x-btn--danger {
-    @apply bg-danger hover:bg-danger/75 focus:bg-danger/80 focus:shadow-danger/20 active:bg-danger/90;
+.x-btn--negative {
+    @apply bg-negative hover:bg-negative/75 focus:bg-negative/80 focus:shadow-negative/20 active:bg-negative/90;
 }
 .x-btn--info {
     @apply bg-info hover:bg-info/75 focus:bg-info/80 focus:shadow-info/20 active:bg-info/90;
 }
-.x-btn--success {
-    @apply bg-success hover:bg-success/75 focus:bg-success/80 focus:shadow-success/20 active:bg-success/90;
+.x-btn--positive {
+    @apply bg-positive hover:bg-positive/75 focus:bg-positive/80 focus:shadow-positive/20 active:bg-positive/90;
 }

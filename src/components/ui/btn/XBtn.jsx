@@ -1,9 +1,9 @@
-import React from "react";
-import styles from './XButton.module.css';
 import classNames from "classnames";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import React from "react";
+import styles from './XBtn.module.css';
 
-import XIcon from '../icon/XIcon'
+import XIcon from '../icon/XIcon';
 
 // todo add icon support for iconRight
 export function XBtn ({children, size, className, icon, iconRight, disabled, flat, outline, rounded, block, square, tonal, text, color, textColor, ...props}) {
