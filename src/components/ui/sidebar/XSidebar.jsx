@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
 import { XLayoutContext } from '../layout/XLayoutContext';
-import styles from './XSidebar.module.scss';
+
+import './XSidebar.scss';
+
 import { XSidebarContext } from './XSidebarContext';
 
 export function XSidebar({
@@ -21,13 +23,17 @@ export function XSidebar({
 
     onMouseEnter = () => {},
     onMouseLeave = () => {},
-    onUpM = (v) => {},
+    onResize = () => {},
     ...props
 }) {
-    const { $layout, $update } = useContext(XLayoutContext)
+    const { $layout, $update } = useContext(XLayoutContext) || {}
 
     const containerRef = useResizeObserver((target, entry) => {
-        $update(type, 'size', target.offsetWidth);
+        onResize({
+            width: target.offsetWidth,
+            isMini, isOpen
+        })
+        $layout && $update(type, 'size', target.offsetWidth);
     })
 
     const belowBreakpoint = useMemo(() => 
@@ -38,6 +44,7 @@ export function XSidebar({
     useEffect(() => {
         setOpenBreakpoint(false)
     }, [belowBreakpoint])
+    
     useEffect(() => {
         setOpenBreakpoint(v => !v)
     }, [open])
@@ -56,8 +63,8 @@ export function XSidebar({
     const isMiniToOverlay = useMemo(() => 
         (miniToOverlay || overlay) && !belowBreakpoint, [miniToOverlay, overlay, belowBreakpoint])
 
-    const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0] || false;
-    const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0] || false;
+    const header = $layout && $layout.rows[0][type === 'left' ? 0 : 2] === type[0] || false;
+    const footer = $layout && $layout.rows[2][type === 'left' ? 0 : 2] === type[0] || false;
 
     const containerStyle = useMemo(() => ({
         top: header ? '' : $layout.header.size,
@@ -66,17 +73,18 @@ export function XSidebar({
 
 
     return (<XSidebarContext.Provider value={{ isMini, isOpen }}>
-        <div ref={containerRef} className={classNames(styles['xSidebar-container'], {
-            [styles[`xSidebar--${type}`]]: !!type,
-            [styles[`xSidebar--overlay`]]: isOverlay,
-            [styles['xSidebar--mini']]: isMini,
-            [styles['xSidebar--mini-overlay']]: isMiniToOverlay,
-            [styles['xSidebar--close']]: !isOpen,
+        <div ref={containerRef} className={classNames('xSidebar-container', {
+            [`xSidebar--${type}`]: !!type,
+            [`xSidebar--overlay`]: isOverlay,
+            ['xSidebar--mini']: isMini,
+            ['xSidebar--mini-overlay']: isMiniToOverlay,
+            ['xSidebar--close']: !isOpen,
         })} style={containerStyle}>
-            <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classNames(styles.xSidebar, {
-                [styles[`xSidebar--${type}`]]: !!type,
+            <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classNames('xSidebar', {
+                'xLayout-sidebar': !!$layout,
+                [`xSidebar--${type}`]: !!type,
             })}>
-                <div {...props} className={classNames(styles['xSidebar-content'], className)}>
+                <div {...props} className={classNames('xSidebar-content', className)}>
                     {children}
                     isOverlay: {isOverlay? 'true':'false'}<br />
                     belowBreakpoint: {belowBreakpoint? 'true':'false'}<br />

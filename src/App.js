@@ -10,7 +10,7 @@ function App() {
     const [miniToOverlay, setMiniToOverlay] = useState(false);
     const [overlay, setOverlay] = useState(false);
     const [m, setM] = useState(56);
-    return (<XLayout container={true}>
+    return (<XLayout container={true} view="hhh lpr lff">
       <XHeader>
         header
       </XHeader>
@@ -19,14 +19,8 @@ function App() {
       </XFooter>
       <XSidebar 
         type="left"
-        mini={mini} 
-        open={open}
-        breakpoint={600}
-        overlay={overlay}
-        miniToOverlay={miniToOverlay}
-        /*onMouseEnter={() => setMini(false)}
-        onMouseLeave={() => setMini(true)}*/
-        onUpM={v=>setM(v)}>
+        open={true}
+        breakpoint={600}>
         <ul>
             <li>Item 1</li>
             <li>Item 2</li>

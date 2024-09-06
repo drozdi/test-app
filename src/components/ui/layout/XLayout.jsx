@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useContext, useMemo, useState } from "react";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
-import styles from "./XLayout.module.scss";
+import "./XLayout.scss";
 
 import { XBtn } from '../btn/XBtn';
 
@@ -14,9 +14,9 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             return row.split('')
         }),
         header: { size: 0, offset: 0, space: false },
-        right: { size: 0, offset: 0, space: false, open: true },
+        right: { size: 0, offset: 0, space: false, open: true, mini: true },
         footer: { size: 0, offset: 0, space: false },
-        left: { size: 0, offset: 0, space: false, open: true },
+        left: { size: 0, offset: 0, space: false, open: true, mini: true },
         width: 0
     });
     const $update = (part, prop, val) => {
@@ -37,7 +37,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
     });
 
 
-    let layout = (<div className={styles.xLayout} ref={ref} style={{
+    let layout = (<div className="xLayout" ref={ref} style={{
         paddingTop: $layout.header.size || '',
         paddingBottom: $layout.footer.size || '',
         paddingLeft: $layout.left.size || '',
@@ -46,7 +46,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             {children}
     </div>)
     if (container) {
-        layout = (<div className={styles['xLayout-container']}>
+        layout = (<div className="xLayout-container">
             {layout}
         </div>)
     }
@@ -76,7 +76,7 @@ export function XHeader({ children, className }) {
         return css;
     }, [$layout])
     return (<header ref={ref} className={classNames(className, {
-        [styles['xLayout-header']]: $layout
+        ['xLayout-header']: $layout
     })} style={style}>
         <XBtn color="primary" onClick={onClick}>primary</XBtn>
         {children}
@@ -99,99 +99,11 @@ export function XFooter({ children, className }) {
         return css;
     }, [$layout])
     return (<footer ref={ref} className={classNames(className, {
-        [styles['xLayout-footer']]: $layout
+        ['xLayout-footer']: $layout
     })} style={style}>
         {children}
     </footer>)
 }
-
-
-/*
-const openedMixin = (theme, width) => ({
-    width: width,
-});
-const colapsedMixin = (theme, width) => ({
-    width: `calc(${theme.spacing(7)} + 1px)`,
-});
-const closedMixin = (theme) => ({
-    width: 0
-});
-const foldedMixin = (theme) => ({
-    width: `calc(${theme.spacing(7)} + 1px)`,
-})
-/*export function XSideBar({ children, className = '',
-    folding = true, foldingBreakpoint = 1024, folded = false,
-    open = false, breakpoint = 768,
-
-
-    miniBreakpoint = 1023, mini = false,
-    type = 'left', width = 200, resize = true }) {
-    const theme = useTheme();
-    const { $layout, $update } = useContext(XLayoutContext)
-
-    const header = $layout.rows[0][type === 'left' ? 0 : 2] === type[0]
-    const footer = $layout.rows[2][type === 'left' ? 0 : 2] === type[0]
-
-    const [state, setState] = useState({
-        open: $layout ? $layout[type].open : open,
-        mini: $layout.width < miniBreakpoint,
-        hide: $layout.width < breakpoint,
-        show: $layout.width >= breakpoint,
-        width: width
-    })
-
-    const isFolding = useMemo(() => {
-        return folding;
-    }, [folding, $layout]);
-
-    const isFolded = useMemo(() => {
-        return folding && (folded || $layout.width < foldingBreakpoint);
-    }, [folding, $layout]);
-
-    const isOpen = useMemo(() => {
-        return open || $layout.width > breakpoint;
-    }, [open, $layout])
-
-    const ref = useResizeObserver((target, entry) => {
-        $update(type, 'size', target.offsetWidth);
-    });
-
-
-    const [isHover, setIsHover] = useState(false)
-
-    const onMouseEnter = (e) => {
-        setIsHover(true)
-    }
-    const onMouseLeave = (e) => {
-        setIsHover(false)
-    }
-
-    const cl = classNames([className, 'x-sidebar x-sidebar--' + type, {
-        'x-sidebar--folded': isFolded,
-        'x-sidebar--folding': isFolding,
-        'x-layout__sidebar': !!$layout
-    }])
-
-    const style = useMemo(() => ({
-        ...(
-            isFolded ? ()=>{} : isOpen ? openedMixin : closedMixin
-        )(theme, width),
-        top: header ? 0 : $layout.header.size,
-        bottom: footer ? 0 : $layout.footer.size
-    }), [$layout, state, isFolded])
-
-    return (<aside ref={ref}
-        onMouseEnter={onMouseEnter} 
-        onMouseLeave={onMouseLeave} 
-        className={cl} style={style}>
-        {resize && !isFolded && <div className="x-sidebar__res"></div>}
-        <div className="x-sidebar__content" style={(isFolded && isHover ? {
-            width: width
-        }: {}) }>
-            {children}
-        </div>
-    </aside>)
-}*/
 
 export function XMain({ children }) {
     const { $layout } = useContext(XLayoutContext)

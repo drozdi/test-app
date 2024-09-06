@@ -6,7 +6,7 @@
 }
 .xLayout-header,
 .xLayout-footer {
-    @apply border-solid border-separate absolute left-0 right-0 bg-dimmed max-w-full min-h-12;
+    @apply border-solid border-separator absolute left-0 right-0 bg-dimmed max-w-full min-h-12;
 }
 
 .xLayout-header {
@@ -14,4 +14,8 @@
 }
 .xLayout-footer {
     @apply bottom-0 border-t;
+}
+
+.xLayout-sidebar {
+    @apply min-w-16 max-w-96
 }
