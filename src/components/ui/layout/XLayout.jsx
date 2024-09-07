@@ -36,7 +36,6 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
         }
     });
 
-
     let layout = (<div className="xLayout" ref={ref} style={{
         paddingTop: $layout.header.size || '',
         paddingBottom: $layout.footer.size || '',

@@ -28,6 +28,13 @@ export function XSidebar({
 }) {
     const { $layout, $update } = useContext(XLayoutContext) || {}
 
+    const state = useMemo(() => {
+        return {
+            open: $layout? $layout[type].open: false,
+            mini: $layout? $layout[type].mini: false,
+        }
+    }, [$layout[type].open, $layout[type].mini, open, mini])
+
     const containerRef = useResizeObserver((target, entry) => {
         onResize({
             width: target.offsetWidth,

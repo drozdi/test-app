@@ -41,7 +41,7 @@ export function XBtn ({children, size, className, icon, iconRight, disabled, fla
     );
 }
 
-XBtn.defaultProps = {
+/*XBtn.defaultProps = {
     icon: null,
     iconRight: null,
     flat: false,
@@ -57,7 +57,7 @@ XBtn.defaultProps = {
     textColor: '',
     onClick: () => {}
 };
-XBtn.propTypes = {
+/*XBtn.propTypes = {
     icon: PropTypes.string,
     iconRight: PropTypes.string,
     flat: PropTypes.bool,
@@ -72,4 +72,4 @@ XBtn.propTypes = {
     color: PropTypes.string,
     textColor: PropTypes.string,
     onClick: PropTypes.func
-}
+}//*/
