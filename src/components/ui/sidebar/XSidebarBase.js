@@ -16,5 +16,7 @@ export const XSidebarBase = ComponentBase.extend({
         onMouseEnter: () => {},
         onMouseLeave: () => {},
         onResize: () => {},
+        onMini: () => {},
+        onToggle: () => {}
     }
 })

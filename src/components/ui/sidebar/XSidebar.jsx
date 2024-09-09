@@ -24,6 +24,8 @@ export function XSidebar({
     onMouseEnter = () => {},
     onMouseLeave = () => {},
     onResize = () => {},
+    onMini = () => {},
+    onToggle = () => {},
     ...props
 }) {
     /*const props = XSidebarBase.getProps(inProps, {});
@@ -44,7 +46,7 @@ export function XSidebar({
             width: target.offsetWidth,
             isMini, isOpen
         })
-        $layout && $update(type, 'size', target.offsetWidth);
+        //$layout && $update(type, 'size', target.offsetWidth);
     })
 
     const belowBreakpoint = useMemo(() => 

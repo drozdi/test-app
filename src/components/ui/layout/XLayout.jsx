@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useContext, useMemo, useState } from "react";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
-import { createSlots } from "../../../hooks/useSlots";
+import { useSlots } from "../../../hooks/useSlots";
 import "./XLayout.scss";
 
 import { XBtn } from '../btn/XBtn';
@@ -10,12 +10,12 @@ import { XSidebar } from "../sidebar/XSidebar";
 import { XLayoutContext } from "./XLayoutContext";
 
 
-const useSlots = createSlots({
+/*const useSlots = createSlots({
     header: () => null,
     footer: () => null,
     left: () => null,
     right: () => null
-});
+});*/
 
 export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
     const [$layout, set$layout] = useState({
@@ -45,16 +45,17 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
         }
     });
 
-    const [slots, is] = useSlots(children);
+    const [slot, hasSlot] = useSlots(children);
 
     const left = () => {
         return (<XSidebar 
             type="left" 
             open={$layout.left.open} 
             mini={$layout.left.mini} 
+            onResize={({width}) => {$update('left', 'size', width)}}
             onMini={(mini) => $update('left', 'mini', mini)}
             onToggle={(open) => $update('left', 'open', open)}>
-            {slots.left({})}
+            {slot('left', null)}
         </XSidebar>)
     }
     const right = () => {
@@ -62,19 +63,23 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             type="right" 
             open={$layout.right.open} 
             mini={$layout.right.mini}
+            onResize={({width}) => {$update('right', 'size', width)}}
             onMini={(mini) => $update('right', 'mini', mini)} 
             onToggle={(open) => $update('right', 'open', open)}>
-            {slots.right({})}
+            {slot('right', null)}
         </XSidebar>)
     }
     const footer = () => {
-        return (<XFooter>{slots.footer({})}</XFooter>);
+        return (<XFooter>{slot('footer', null)}</XFooter>);
     }
     const header = () => {
-        return (<XHeader>{slots.header({})}</XHeader>);
+        return (<XHeader>
+            <XBtn color="primary" onClick={() => $update('left', 'open', !$layout.left.open)}>left</XBtn>
+            {slot('header', null)}
+        </XHeader>);
     }
     const def = () => {
-        return (<XMain>{slots.default({})}</XMain>);
+        return (<XMain>{slot('', null)}</XMain>);
     }
 
     let layout = (<div className="xLayout" ref={ref} style={{
@@ -83,10 +88,10 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
         paddingRight: $layout.right.size,
         paddingBottom: $layout.footer.size,
     }}>
-        {is.left && left()}
-        {is.right && right()}
-        {is.header && header()}
-        {is.footer && footer()}
+        {hasSlot('left') && left()}
+        {hasSlot('right') && right()}
+        {hasSlot('header') && header()}
+        {hasSlot('footer') && footer()}
         {def()}
     </div>)
     if (container) {
@@ -105,9 +110,6 @@ export function XHeader({ children, className }) {
     const ref = useResizeObserver((target, entry) => {
         $update('header', 'size', target.offsetHeight);
     });
-    const onClick = (e) => {
-        $update('left', 'open', !$layout.left.open);
-    }
     
     const style = useMemo(() => {
         const css = {};
@@ -122,7 +124,6 @@ export function XHeader({ children, className }) {
     return (<header ref={ref} className={classNames(className, {
         ['xLayout-header']: $layout
     })} style={style}>
-        <XBtn color="primary" onClick={onClick}>primary</XBtn>
         {children}
     </header>)
 }
