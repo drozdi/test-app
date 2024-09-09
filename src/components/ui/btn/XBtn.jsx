@@ -1,7 +1,6 @@
 import classNames from "classnames";
-import PropTypes from 'prop-types';
 import React from "react";
-import styles from './XBtn.module.css';
+import './XBtn.css';
 
 import XIcon from '../icon/XIcon';
 
@@ -10,17 +9,18 @@ export function XBtn ({children, size, className, icon, iconRight, disabled, fla
     const attrs = {
         type: 'button',
         ...props,
-        className: classNames(className, styles['x-btn'], {
-            [styles[`x-btn--${color}`]]: !!color,
-            [styles[`x-btn--${size}`]]: !!size,
-            [styles['x-btn--rounded']]: !!rounded,
-            [styles['x-btn--block']]: !!block,
-            [styles['x-btn--disabled']]: !!disabled,
-            [styles['x-btn--flat']]: !!flat,
-            [styles['x-btn--text']]: !!text,
-            [styles['x-btn--tonal']]: !!tonal,
-            [styles['x-btn--square']]: !!square,
-            [styles['x-btn--outline']]: !!outline
+        className: classNames(className, 'x-btn', {
+            [`x-btn--${color}`]: !!color,
+            [`x-btn--${size}`]: !!size,
+            'x-btn--rounded': !!rounded,
+            'x-btn--block': !!block,
+            'x-btn--disabled': !!disabled,
+            'x-btn--flat': !!flat,
+            'x-btn--text': !!text,
+            'x-btn--tonal': !!tonal,
+            'x-btn--square': !!square,
+            'x-btn--outline': !!outline,
+            'x-btn--icon': !!icon
         })
     }
 

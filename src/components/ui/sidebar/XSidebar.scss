@@ -26,7 +26,9 @@
 %sidebar-content {
     @apply max-w-full max-h-full
 }
-
+%sidebar-toggle {
+    @apply w-full border-t border-separator absolute bottom-0 left-0;
+}
 
 .xSidebar {
    @extend %sidebar;
@@ -45,7 +47,6 @@
     &, &.xSidebar--overlay:not(.xSidebar--close), & .xSidebar {
         @extend %sidebar-mini;
     }
-
 }
 .xSidebar--mini-overlay {
     @extend %sidebar-mini;
@@ -63,7 +64,12 @@
 .xSidebar-content {
     @extend %sidebar-content;
 }
-
+.xSidebar-content {
+    @extend %sidebar-content;
+}
+.xSidebar-toggle {
+    @extend %sidebar-toggle;
+}
 
 
 

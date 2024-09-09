@@ -52,6 +52,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             type="left" 
             open={$layout.left.open} 
             mini={$layout.left.mini} 
+            toggle={true}
             onResize={({width}) => {$update('left', 'size', width)}}
             onMini={(mini) => $update('left', 'mini', mini)}
             onToggle={(open) => $update('left', 'open', open)}>
@@ -74,7 +75,8 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
     }
     const header = () => {
         return (<XHeader>
-            <XBtn color="primary" onClick={() => $update('left', 'open', !$layout.left.open)}>left</XBtn>
+            {hasSlot('left') && <XBtn color="primary" onClick={() => $update('left', 'open', !$layout.left.open)}>left</XBtn>}
+            {hasSlot('right') && <XBtn color="primary" onClick={() => $update('right', 'open', !$layout.right.open)}>right</XBtn>}
             {slot('header', null)}
         </XHeader>);
     }

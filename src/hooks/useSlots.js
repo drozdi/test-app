@@ -1,45 +1,13 @@
 import { Fragment, createElement as h, isValidElement, useMemo } from 'react';
 
-export function createSlots (defaults = {}) {
-	return (children) => {
-		if (isValidElement(children)) {
-			return [{
-				...defaults,
-				default: (props) => children
-			}, {
-				default: true
-			}];
-		}
-		if (Array.isArray(children)) { 
-			let is = {};
-			
-			return [children.filter((e) => !isValidElement(e)).reduce((acc, elements) => {
-				is = {...is, 
-					...Object.fromEntries(Object.keys(elements).map((slot) => [slot, true]))
-				};
-				return {
-					...acc,
-					...elements
-				};
-			}, {
-				...defaults,
-				default: (props) => children.filter(isValidElement)
-			}), is];
-		}
-		return [{
-			...defaults,
-			default: (props) => null,
-			...children
-		}, Object.fromEntries(Object.keys(children).map((slot) => [slot, true]))];
-	}
-}
-
 export function useSlots (children) {
 	const slots = useMemo(() => {
 		let tmpChildren = children;
+
 		if (children?.type === Fragment) {
 			tmpChildren = children.props.children;
 		}
+		
 		tmpChildren = Array.isArray(tmpChildren) ? tmpChildren : [tmpChildren];
 		const collect = {
 			default: []
@@ -61,6 +29,7 @@ export function useSlots (children) {
 				}
 			}
 		}
+
 		return collect;
 	}, [children]);
 
@@ -81,6 +50,6 @@ export function useSlots (children) {
 	const has = (slot) => {
 		return slots.hasOwnProperty(slot) && slots[slot].length > 0;
 	};
-	console.log(slots);
+
 	return [slot, has]
 }

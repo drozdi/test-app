@@ -29,10 +29,13 @@
     @apply px-3
 }
 .x-btn--block {
-    @apply block;
+    @apply block w-full;
 }
 .x-btn--rounded {
     @apply rounded-full
+}
+.x-btn--square {
+    @apply rounded-none;
 }
 .x-btn--primary {
     @apply bg-primary hover:bg-primary/75 focus:bg-primary/80 focus:shadow-primary/20 active:bg-primary/90;
@@ -51,4 +54,7 @@
 }
 .x-btn--positive {
     @apply bg-positive hover:bg-positive/75 focus:bg-positive/80 focus:shadow-positive/20 active:bg-positive/90;
+}
+.x-btn--dimmed {
+    @apply bg-dimmed
 }
