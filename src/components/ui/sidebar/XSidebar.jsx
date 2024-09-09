@@ -26,6 +26,10 @@ export function XSidebar({
     onResize = () => {},
     ...props
 }) {
+    /*const props = XSidebarBase.getProps(inProps, {});
+    const {children, className, type, mini, miniToOverlay, open, overlay, breakpoint, onMouseEnter, onMouseLeave, onResize } = props;*/
+
+
     const { $layout, $update } = useContext(XLayoutContext) || {}
 
     const state = useMemo(() => {

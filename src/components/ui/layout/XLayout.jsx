@@ -1,11 +1,21 @@
 import classNames from "classnames";
 import React, { useContext, useMemo, useState } from "react";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
+import { createSlots } from "../../../hooks/useSlots";
 import "./XLayout.scss";
 
 import { XBtn } from '../btn/XBtn';
 
+import { XSidebar } from "../sidebar/XSidebar";
 import { XLayoutContext } from "./XLayoutContext";
+
+
+const useSlots = createSlots({
+    header: () => null,
+    footer: () => null,
+    left: () => null,
+    right: () => null
+});
 
 export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
     const [$layout, set$layout] = useState({
@@ -29,20 +39,55 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff' }) {
             }))
         }
     }
-
     const ref = useResizeObserver((target, entry) => {
         if ($layout.width !== target.offsetWidth) {
             set$layout(v => ({ ...v, width: target.offsetWidth }))
         }
     });
 
+    const [slots, is] = useSlots(children);
+
+    const left = () => {
+        return (<XSidebar 
+            type="left" 
+            open={$layout.left.open} 
+            mini={$layout.left.mini} 
+            onMini={(mini) => $update('left', 'mini', mini)}
+            onToggle={(open) => $update('left', 'open', open)}>
+            {slots.left({})}
+        </XSidebar>)
+    }
+    const right = () => {
+        return (<XSidebar 
+            type="right" 
+            open={$layout.right.open} 
+            mini={$layout.right.mini}
+            onMini={(mini) => $update('right', 'mini', mini)} 
+            onToggle={(open) => $update('right', 'open', open)}>
+            {slots.right({})}
+        </XSidebar>)
+    }
+    const footer = () => {
+        return (<XFooter>{slots.footer({})}</XFooter>);
+    }
+    const header = () => {
+        return (<XHeader>{slots.header({})}</XHeader>);
+    }
+    const def = () => {
+        return (<XMain>{slots.default({})}</XMain>);
+    }
+
     let layout = (<div className="xLayout" ref={ref} style={{
-        paddingTop: $layout.header.size || '',
-        paddingBottom: $layout.footer.size || '',
-        paddingLeft: $layout.left.size || '',
-        paddingRight: $layout.right.size || '',
+        paddingTop: $layout.header.size, 
+        paddingLeft: $layout.left.size, 
+        paddingRight: $layout.right.size,
+        paddingBottom: $layout.footer.size,
     }}>
-            {children}
+        {is.left && left()}
+        {is.right && right()}
+        {is.header && header()}
+        {is.footer && footer()}
+        {def()}
     </div>)
     if (container) {
         layout = (<div className="xLayout-container">
