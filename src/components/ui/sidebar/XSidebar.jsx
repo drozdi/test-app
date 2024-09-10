@@ -23,8 +23,6 @@ export function XSidebar({
     minWidth = 56,
     maxWidth = 400,
 
-    onMouseEnter = () => {},
-    onMouseLeave = () => {},
     onResize = () => {},
     onMini = () => {},
     onToggle = () => {},
@@ -79,10 +77,17 @@ export function XSidebar({
         top: header ? '' : $layout.header.size,
         bottom: footer ? '' : $layout.footer.size
     }), [$layout])
-    
+
+    const onMouseEnter = () => {
+        !toggle && onMini(false);
+    }
+    const onMouseLeave = () => {
+        !toggle && onMini(true);
+    }
 
     return (<XSidebarContext.Provider value={{ isMini, isOpen }}>
         <div ref={containerRef} className={classNames('xSidebar-container', {
+            'xLayout-sidebar': !!$layout,
             [`xSidebar--${type}`]: !!type,
             [`xSidebar--overlay`]: isOverlay,
             ['xSidebar--mini']: isMini,
