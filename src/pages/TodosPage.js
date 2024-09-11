@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from '../App.module.css';
 
 import { XButton } from '../components/ui/Button/XButton.js';
 import { XIcon } from '../components/ui/Icon/XIcon.js';
 import { XInput } from '../components/ui/Input/XInput.js';
 
-import { BaseRepository } from '../utils/BaseRepository.js';
+import todoRepository from '../repositories/todoRepository.js';
 
 export function TodosPage () {
 	const [todos, setTodos] = useState([]);
@@ -15,15 +16,13 @@ export function TodosPage () {
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const repository = useMemo(() => new BaseRepository('http://localhost:3030/todos'), []);
-
 	useEffect(() => {
     setIsLoading(true);
-    repository.list()
+    todoRepository.list()
       .then(res => res.json())
       .then(setTodos)
       .finally(() => setIsLoading(false))
-  }, [refresh, repository]);
+  }, [refresh]);
 
   const computedTodos = useMemo(() => {
     let newTodos = [...todos];
@@ -57,7 +56,7 @@ export function TodosPage () {
   }
   const onKeyPressTitle = (event) => {
     if (event.key === 'Enter') {
-      repository.post({title: title.trim()})
+      todoRepository.post({title: title.trim()})
         .then(res => res.json())
         .then((res) => {
           console.log('Создан!', res);
@@ -92,7 +91,7 @@ export function TodosPage () {
         <ul className={styles.list}>
           {computedTodos.map(({ id, title }) => {
             return <li key={id} className={styles['list-item']}>
-              {title}
+              <NavLink to={`/todo/${id}`}>{title}</NavLink>
             </li>
           })}
         </ul>

@@ -1,5 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import styles from './App.module.css';
+import { NotFoundPage } from './pages/NotFoundPage.js';
+import { TodoPage } from './pages/TodoPage.js';
 import { TodosPage } from './pages/TodosPage.js';
 
 
@@ -9,6 +11,8 @@ function App({endpoint = ''}) {
     <div className={styles.container}>
       <Routes>
         <Route path="/" element={<TodosPage />} />
+        <Route path="/todo/:id" element={<TodoPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   </div>)
