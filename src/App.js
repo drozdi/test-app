@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './App.module.css';
 import { NotFoundPage } from './pages/NotFoundPage.js';
 import { TodoPage } from './pages/TodoPage.js';
@@ -12,7 +12,8 @@ function App({endpoint = ''}) {
       <Routes>
         <Route path="/" element={<TodosPage />} />
         <Route path="/todo/:id" element={<TodoPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
     </div>
   </div>)
