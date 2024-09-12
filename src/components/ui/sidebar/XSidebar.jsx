@@ -75,7 +75,8 @@ export function XSidebar({
 
     const containerStyle = useMemo(() => ({
         top: header ? '' : $layout.header.size,
-        bottom: footer ? '' : $layout.footer.size
+        bottom: footer ? '' : $layout.footer.size,
+        minWidth: isOpen? '': 0
     }), [$layout])
 
     const onMouseEnter = () => {
@@ -89,10 +90,10 @@ export function XSidebar({
         <div ref={containerRef} className={classNames('xSidebar-container', {
             'xLayout-sidebar': !!$layout,
             [`xSidebar--${type}`]: !!type,
-            [`xSidebar--overlay`]: isOverlay,
-            ['xSidebar--mini']: isMini,
-            ['xSidebar--mini-overlay']: isMiniToOverlay,
-            ['xSidebar--close']: !isOpen,
+            'xSidebar--overlay': isOverlay,
+            'xSidebar--close': !isOpen,
+            'xSidebar--mini': isMini,
+            'xSidebar--mini-overlay': isMiniToOverlay,
         })} style={containerStyle}>
             <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classNames('xSidebar', {
                 'xLayout-sidebar': !!$layout,

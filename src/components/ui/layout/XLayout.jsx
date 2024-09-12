@@ -58,7 +58,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff', bre
             breakpoint={breakpoint}
             overlay={belowBreakpoint}
             miniToOverlay={true}
-            onResize={({width}) => {$update('left', 'size', width)}}
+            onResize={({width}) => $update('left', 'size', width)}
             onMini={(mini) => $update('left', 'mini', mini)}
             onToggle={(open) => $update('left', 'open', open)}>
             {slot('left', null)}
@@ -73,7 +73,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff', bre
             breakpoint={breakpoint}
             overlay={belowBreakpoint}
             miniToOverlay={true}
-            onResize={({width}) => {$update('right', 'size', width)}}
+            onResize={({width}) => $update('right', 'size', width)}
             onMini={(mini) => $update('right', 'mini', mini)} 
             onToggle={(open) => $update('right', 'open', open)}>
             {slot('right', null)}
