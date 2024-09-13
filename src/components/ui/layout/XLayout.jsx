@@ -6,7 +6,9 @@ import "./XLayout.scss";
 
 import { XBtn } from '../btn/XBtn';
 
-import { XSidebar } from "../sidebar/XSidebar";
+import { XSidebar } from "../Sidebar/XSidebar";
+import { XHeader } from "../Header/XHeader";
+import { XFooter } from "../Footer/XFooter";
 import { XLayoutContext } from "./XLayoutContext";
 
 
@@ -114,51 +116,6 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff', bre
     return (<XLayoutContext.Provider value={{ $layout, $update }}>
         {layout}
     </XLayoutContext.Provider>)
-}
-
-export function XHeader({ children, className }) {
-    const { $layout, $update } = useContext(XLayoutContext)
-    const ref = useResizeObserver((target, entry) => {
-        $update('header', 'size', target.offsetHeight);
-    });
-    
-    const style = useMemo(() => {
-        const css = {};
-        if ($layout.rows[0][0] === "l") {
-            css.left = $layout.left.size;
-        }
-        if ($layout.rows[0][2] === "r") {
-            css.right = $layout.right.size;
-        }
-        return css;
-    }, [$layout])
-    return (<header ref={ref} className={classNames(className, 'xHeader', {
-        ['xLayout-header']: $layout
-    })} style={style}>
-        {children}
-    </header>)
-}
-
-export function XFooter({ children, className }) {
-    const { $layout, $update } = useContext(XLayoutContext)
-    const ref = useResizeObserver((target, entry) => {
-        $update('footer', 'size', target.offsetHeight)
-    })
-    const style = useMemo(() => {
-        const css = {};
-        if ($layout.rows[2][0] === "l") {
-            css.left = $layout.left.size;
-        }
-        if ($layout.rows[2][2] === "r") {
-            css.right = $layout.right.size;
-        }
-        return css;
-    }, [$layout])
-    return (<footer ref={ref} className={classNames(className, 'xFooter', {
-        ['xLayout-footer']: $layout
-    })} style={style}>
-        {children}
-    </footer>)
 }
 
 export function XMain({ children }) {
