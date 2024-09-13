@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo } from "react";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
-import "./XFooter.scss";
 import { XLayoutContext } from "../layout/XLayoutContext";
+import "./XFooter.scss";
 
 export function XFooter({ children, className }) {
     const { $layout, $update } = useContext(XLayoutContext)
