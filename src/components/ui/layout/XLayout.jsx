@@ -1,14 +1,13 @@
-import classNames from "classnames";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useResizeObserver } from "../../../hooks/useResizeObserver";
 import { useSlots } from "../../../hooks/useSlots";
 import "./XLayout.scss";
 
 import { XBtn } from '../btn/XBtn';
 
-import { XSidebar } from "../Sidebar/XSidebar";
-import { XHeader } from "../Header/XHeader";
-import { XFooter } from "../Footer/XFooter";
+import { XFooter } from "../footer/XFooter";
+import { XHeader } from "../header/XHeader";
+import { XSidebar } from "../sidebar/XSidebar";
 import { XLayoutContext } from "./XLayoutContext";
 
 
@@ -49,37 +48,35 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff', bre
     const belowBreakpoint = useMemo(() => 
         (breakpoint && $layout.width < breakpoint) || false, [$layout, breakpoint]);
 
-    const [slot, hasSlot] = useSlots(children);
+    const [slot, hasSlot, wrapSlot] = useSlots(children);
 
     const left = () => {
-        return (<XSidebar 
-            type="left" 
-            open={!belowBreakpoint || $layout.left.open} 
-            mini={!belowBreakpoint && $layout.left.mini} 
-            toggle={!belowBreakpoint}
-            breakpoint={breakpoint}
-            overlay={belowBreakpoint}
-            miniToOverlay={true}
-            onResize={({width}) => $update('left', 'size', width)}
-            onMini={(mini) => $update('left', 'mini', mini)}
-            onToggle={(open) => $update('left', 'open', open)}>
-            {slot('left', null)}
-        </XSidebar>)
+        return wrapSlot(slot('right', null), XSidebar, {
+            type: 'left',
+            open:!belowBreakpoint || $layout.left.open,
+            mini:!belowBreakpoint && $layout.left.mini,
+            toggle:!belowBreakpoint,
+            breakpoint: breakpoint,
+            overlay: belowBreakpoint,
+            miniToOverlay: true,
+            onResize: ({width}) => $update('left', 'size', width),
+            onMini: (mini) => $update('left', 'mini', mini),
+            onToggle: (open) => $update('left', 'open', open) 
+        });
     }
     const right = () => {
-        return (<XSidebar 
-            type="right" 
-            open={!belowBreakpoint || $layout.right.open} 
-            mini={!belowBreakpoint && $layout.right.mini}
-            toggle={!belowBreakpoint}
-            breakpoint={breakpoint}
-            overlay={belowBreakpoint}
-            miniToOverlay={true}
-            onResize={({width}) => $update('right', 'size', width)}
-            onMini={(mini) => $update('right', 'mini', mini)} 
-            onToggle={(open) => $update('right', 'open', open)}>
-            {slot('right', null)}
-        </XSidebar>)
+        return wrapSlot(slot('right', null), XSidebar, {
+            type: 'right',
+            open: !belowBreakpoint || $layout.right.open,
+            mini: !belowBreakpoint && $layout.right.mini,
+            toggle: !belowBreakpoint,
+            breakpoint: breakpoint,
+            overlay: belowBreakpoint,
+            miniToOverlay: true,
+            onResize: ({width}) => $update('right', 'size', width),
+            onMini: (mini) => $update('right', 'mini', mini),
+            onToggle: (open) => $update('right', 'open', open)
+        });
     }
     const footer = () => {
         return (<XFooter>{slot('footer', null)}</XFooter>);
@@ -119,7 +116,7 @@ export function XLayout({ children, container = false, view = 'hhh lpr fff', bre
 }
 
 export function XMain({ children }) {
-    const { $layout, $update } = useContext(XLayoutContext)
+    //const { $layout, $update } = useContext(XLayoutContext)
     return (<main className="x-layout__main">
         {children}
     </main>)

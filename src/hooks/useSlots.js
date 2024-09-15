@@ -1,4 +1,4 @@
-import { Fragment, createElement as h, isValidElement, useMemo } from 'react';
+import { cloneElement, Fragment, createElement as h, isValidElement, useMemo } from 'react';
 
 export function useSlots (children) {
 	const slots = useMemo(() => {
@@ -38,18 +38,37 @@ export function useSlots (children) {
 
 		const children = slots[name] ?? (Array.isArray(defaultChildren)? defaultChildren: [defaultChildren]);
 		
-		return h(Fragment, {}, children.map((child) => {
+		name ==="header" && console.log(children)
+
+		function genSlot (child, ...args) {
 			if (isValidElement(child)) {
 				return child;
 			} else if (typeof child === 'function') {
 				return child(...args);
+			} else {
+				return child;
 			}
-		}));
+		}
+
+		if (children.length > 1) {
+			return h(Fragment, {}, children.map((child) => {
+				return genSlot(child, ...args);
+			}));
+		}
+		return genSlot(children[0], ...args);
 	};
 
 	const has = (slot) => {
 		return slots.hasOwnProperty(slot) && slots[slot].length > 0;
 	};
 
-	return [slot, has]
+	const wrap = (slot, componentName, props = {}) => {
+		if (slot.type === componentName) {
+				return cloneElement(slot, props);
+		}
+		return h(componentName, props, slot);
+	
+	}
+
+	return [slot, has, wrap];
 }
