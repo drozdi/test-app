@@ -1,15 +1,14 @@
-import React, { useMemo, useState } from "react";
-import { useResizeObserver } from "../../../hooks/useResizeObserver";
-import { useSlots } from "../../../hooks/useSlots";
-import "./XLayout.scss";
+import React, { useMemo, useState } from 'react';
+import { useResizeObserver } from '../../../hooks/useResizeObserver';
+import { useSlots } from '../../../hooks/useSlots';
+import './XLayout.scss';
 
 import { XBtn } from '../btn/XBtn';
 
-import { XFooter } from "../footer/XFooter";
-import { XHeader } from "../header/XHeader";
-import { XSidebar } from "../sidebar/XSidebar";
-import { XLayoutContext } from "./XLayoutContext";
-
+import { XFooter } from '../footer/XFooter';
+import { XHeader } from '../header/XHeader';
+import { XSidebar } from '../sidebar/XSidebar';
+import { XLayoutContext } from './XLayoutContext';
 
 /*const useSlots = createSlots({
     header: () => null,
@@ -18,106 +17,136 @@ import { XLayoutContext } from "./XLayoutContext";
     right: () => null
 });*/
 
-export function XLayout({ children, container = false, view = 'hhh lpr fff', breakpoint = 600 }) {
-    const [$layout, set$layout] = useState({
-        isContainer: container,
-        rows: view.split(' ').map(row => {
-            return row.split('')
-        }),
-        header: { size: 0, offset: 0, space: false },
-        right: { size: 0, offset: 0, space: false, open: true, mini: true },
-        footer: { size: 0, offset: 0, space: false },
-        left: { size: 0, offset: 0, space: false, open: true, mini: true },
-        width: 0
-    });
-    const $update = (part, prop, val) => {
-        if ($layout[part][prop] !== val) {
-            set$layout(v => ({
-                ...v, [part]: {
-                    ...v[part],
-                    [prop]: val
-                }
-            }))
-        }
-    }
-    const ref = useResizeObserver((target, entry) => {
-        if ($layout.width !== target.offsetWidth) {
-            set$layout(v => ({ ...v, width: target.offsetWidth }))
-        }
-    });
-    const belowBreakpoint = useMemo(() => 
-        (breakpoint && $layout.width < breakpoint) || false, [$layout, breakpoint]);
+export function XLayout({
+	children,
+	container = false,
+	view = 'hhh lpr fff',
+	breakpoint = 600,
+	overlay = false,
+}) {
+	const [$layout, set$layout] = useState({
+		isContainer: container,
+		rows: view.split(' ').map((row) => {
+			return row.split('');
+		}),
+		header: { size: 0, offset: 0, space: false },
+		right: { size: 0, offset: 0, space: false, open: true, mini: true },
+		footer: { size: 0, offset: 0, space: false },
+		left: { size: 0, offset: 0, space: false, open: true, mini: true },
+		width: 0,
+	});
+	const $update = (part, prop, val) => {
+		if ($layout[part][prop] !== val) {
+			set$layout((v) => ({
+				...v,
+				[part]: {
+					...v[part],
+					[prop]: val,
+				},
+			}));
+		}
+	};
+	const ref = useResizeObserver((target, entry) => {
+		if ($layout.width !== target.offsetWidth) {
+			set$layout((v) => ({ ...v, width: target.offsetWidth }));
+		}
+	});
+	const belowBreakpoint = useMemo(
+		() => (breakpoint && $layout.width < breakpoint) || false,
+		[$layout, breakpoint],
+	);
 
-    const [slot, hasSlot, wrapSlot] = useSlots(children);
+	const [slot, hasSlot, wrapSlot] = useSlots(children);
 
-    const left = () => {
-        return wrapSlot(slot('right', null), XSidebar, {
-            type: 'left',
-            open:!belowBreakpoint || $layout.left.open,
-            mini:!belowBreakpoint && $layout.left.mini,
-            toggle:!belowBreakpoint,
-            breakpoint: breakpoint,
-            overlay: belowBreakpoint,
-            miniToOverlay: true,
-            onResize: ({width}) => $update('left', 'size', width),
-            onMini: (mini) => $update('left', 'mini', mini),
-            onToggle: (open) => $update('left', 'open', open) 
-        });
-    }
-    const right = () => {
-        return wrapSlot(slot('right', null), XSidebar, {
-            type: 'right',
-            open: !belowBreakpoint || $layout.right.open,
-            mini: !belowBreakpoint && $layout.right.mini,
-            toggle: !belowBreakpoint,
-            breakpoint: breakpoint,
-            overlay: belowBreakpoint,
-            miniToOverlay: true,
-            onResize: ({width}) => $update('right', 'size', width),
-            onMini: (mini) => $update('right', 'mini', mini),
-            onToggle: (open) => $update('right', 'open', open)
-        });
-    }
-    const footer = () => {
-        return (<XFooter>{slot('footer', null)}</XFooter>);
-    }
-    const header = () => {
-        return (<XHeader>
-            {hasSlot('left') && belowBreakpoint && <XBtn color="primary" onClick={() => $update('left', 'open', !$layout.left.open)}>left</XBtn>}
-            {hasSlot('right') && belowBreakpoint && <XBtn color="primary" onClick={() => $update('right', 'open', !$layout.right.open)}>right</XBtn>}
-            {slot('header', null)}
-        </XHeader>);
-    }
-    const def = () => {
-        return (<XMain>{slot('', null)}</XMain>);
-    }
+	const left = () => {
+		return wrapSlot(slot('left', null), XSidebar, {
+			type: 'left',
+			open: !belowBreakpoint || $layout.left.open,
+			resizeable: true,
+			//mini: !belowBreakpoint && $layout.left.mini,
+			//toggle: !belowBreakpoint,
+			breakpoint: breakpoint,
+			overlay: overlay && belowBreakpoint,
+			miniToOverlay: overlay || belowBreakpoint,
+			onResize: (width) => $update('left', 'size', width),
+			//onMini: (mini) => $update('left', 'mini', mini),
+			onToggle: (open) => $update('left', 'open', open),
+		});
+	};
+	const right = () => {
+		return wrapSlot(slot('right', null), XSidebar, {
+			type: 'right',
+			open: !belowBreakpoint || $layout.right.open,
+			mini: !belowBreakpoint && $layout.right.mini,
+			//toggle: !belowBreakpoint,
+			breakpoint: breakpoint,
+			overlay: overlay && belowBreakpoint,
+			miniToOverlay: overlay || belowBreakpoint,
+			onResize: (width) => $update('right', 'size', width),
+			onMini: (mini) => $update('right', 'mini', mini),
+			onToggle: (open) => $update('right', 'open', open),
+		});
+	};
+	const footer = () => {
+		return <XFooter>{slot('footer', null)}</XFooter>;
+	};
+	const header = () => {
+		return (
+			<XHeader>
+				{hasSlot('left') && belowBreakpoint && (
+					<XBtn
+						color="primary"
+						onClick={() => $update('left', 'open', !$layout.left.open)}
+					>
+						left
+					</XBtn>
+				)}
+				{hasSlot('right') && belowBreakpoint && (
+					<XBtn
+						color="primary"
+						onClick={() => $update('right', 'open', !$layout.right.open)}
+					>
+						right
+					</XBtn>
+				)}
+				{slot('header', null)}
+			</XHeader>
+		);
+	};
+	const def = () => {
+		return <XMain>{slot('', null)}</XMain>;
+	};
 
-    let layout = (<div className="xLayout" ref={ref} style={{
-        paddingTop: $layout.header.size, 
-        paddingLeft: $layout.left.size, 
-        paddingRight: $layout.right.size,
-        paddingBottom: $layout.footer.size,
-    }}>
-        {hasSlot('left') && left()}
-        {hasSlot('right') && right()}
-        {hasSlot('header') && header()}
-        {hasSlot('footer') && footer()}
-        {def()}
-    </div>)
-    if (container) {
-        layout = (<div className="xLayout-container">
-            {layout}
-        </div>)
-    }
+	let layout = (
+		<div
+			className="xLayout"
+			ref={ref}
+			style={{
+				paddingTop: $layout.header.size,
+				paddingLeft: $layout.left.size,
+				paddingRight: $layout.right.size,
+				paddingBottom: $layout.footer.size,
+			}}
+		>
+			{hasSlot('left') && left()}
+			{hasSlot('right') && right()}
+			{hasSlot('header') && header()}
+			{hasSlot('footer') && footer()}
+			{def()}
+		</div>
+	);
+	if (container) {
+		layout = <div className="xLayout-container">{layout}</div>;
+	}
 
-    return (<XLayoutContext.Provider value={{ $layout, $update }}>
-        {layout}
-    </XLayoutContext.Provider>)
+	return (
+		<XLayoutContext.Provider value={{ $layout, $update }}>
+			{layout}
+		</XLayoutContext.Provider>
+	);
 }
 
 export function XMain({ children }) {
-    //const { $layout, $update } = useContext(XLayoutContext)
-    return (<main className="x-layout__main">
-        {children}
-    </main>)
+	//const { $layout, $update } = useContext(XLayoutContext)
+	return <main className="x-layout__main">{children}</main>;
 }

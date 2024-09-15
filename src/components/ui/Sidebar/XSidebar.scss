@@ -1,87 +1,103 @@
 %sidebar {
-    @apply absolute top-0 bottom-0 w-64
-        overflow-auto transition-width duration-300 ease-in-out
+	@apply absolute top-0 bottom-0 w-64
+        overflow-hidden transition-width duration-300 ease-in-out
         bg-surface border-solid border-separator
         grid grid-cols-1 grid-rows-2;
 }
 %sidebar-container {
-    @apply absolute top-0 bottom-0 w-64
+	@apply absolute top-0 bottom-0 w-64
         overflow-visible transition-width duration-300 ease-in-out;
 }
 %sidebar-mini {
-    @apply w-16;
+	@apply w-16;
 }
 %sidebar-left {
-    @apply left-0 border-r;
+	@apply left-0 border-r;
 }
 %sidebar-right {
-    @apply right-0 border-l;
+	@apply right-0 border-l;
 }
 %sidebar-close {
-    @apply w-0 border-0;
+	@apply w-0 border-0;
 }
 %sidebar-container-close {
-    @apply overflow-hidden w-0 border-0;
+	@apply overflow-hidden w-0 border-0;
 }
 
 %sidebar-content {
-    @apply max-w-full max-h-full row-span-full overflow-auto;
+	@apply max-w-full max-h-full row-span-full overflow-auto;
 }
 %sidebar-toggle {
-    @apply w-full border-t border-separator row-span-1;
+	@apply w-full border-t border-separator row-span-1;
+}
+%sidebar-res {
+	@apply w-2 cursor-col-resize bg-transparent absolute top-0 bottom-0;
+	z-index: 1000;
+}
+%sidebar-res-left {
+	@apply -right-1;
+}
+%sidebar-res-right {
+	@apply -left-1;
 }
 
 .xSidebar {
-   @extend %sidebar;
-   &--left {
-    @extend %sidebar-left;
-   }
-   &--right {
-    @extend %sidebar-right;
-   }
+	@extend %sidebar;
+	&--left {
+		@extend %sidebar-left;
+		.xSidebar-res {
+			@extend %sidebar-res-left;
+		}
+	}
+	&--right {
+		@extend %sidebar-right;
+		.xSidebar-res {
+			@extend %sidebar-res-right;
+		}
+	}
 }
 .xSidebar-container {
-    @extend %sidebar-container;
+	@extend %sidebar-container;
 }
 
 .xSidebar--mini {
-    &, &.xSidebar--overlay:not(.xSidebar--close), & .xSidebar {
-        @extend %sidebar-mini;
-    }
+	&,
+	&.xSidebar--overlay:not(.xSidebar--close),
+	& .xSidebar {
+		@extend %sidebar-mini;
+	}
 }
 .xSidebar--mini-overlay {
-    @extend %sidebar-mini;
+	@extend %sidebar-mini;
 }
 .xSidebar--overlay {
-    @extend %sidebar-close;
+	@extend %sidebar-close;
 }
 .xSidebar--close {
-    @extend %sidebar-container-close;
-    & .xSidebar {
-        @extend %sidebar-close;
-    }
+	@extend %sidebar-container-close;
+	& .xSidebar {
+		@extend %sidebar-close;
+	}
 }
 
 .xSidebar-content {
-    @extend %sidebar-content;
+	@extend %sidebar-content;
 }
 .xSidebar-content {
-    @extend %sidebar-content;
+	@extend %sidebar-content;
 }
 .xSidebar-toggle {
-    @extend %sidebar-toggle;
+	@extend %sidebar-toggle;
+}
+.xSidebar-res {
+	@extend %sidebar-res;
 }
 
-
-
-
-
-
 .xSidebar {
-    ul {
-        @apply flex flex-col max-w-full;
-        > li {
-            @apply flex px-3 py-3.5 max-w-full whitespace-nowrap text-ellipsis overflow-hidden hover:bg-gray-50/10;
-        }
-    }
+	ul {
+		@apply flex flex-col max-w-full;
+		> li {
+			@apply flex px-3 py-3.5 max-w-full whitespace-nowrap text-ellipsis overflow-hidden hover:bg-gray-50/10;
+		}
+	}
 }
