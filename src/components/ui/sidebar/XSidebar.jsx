@@ -96,14 +96,16 @@ export function XSidebar({
 
 	const start = {};
 	const onStartResize = (e) => {
-		start.x = e.pageX;
+		e.preventDefault();
+		console.log(e)
+		start.x = e.clientX;
 		start.w = width;
 		window.addEventListener("mousemove", onDragResize);
 		window.addEventListener("mouseup", onStopResize);
 	};
 	const onDragResize = (e) => {
-		const d = e.pageX - start.x;
-		setWidth(start.w+start.x);
+		const d = e.clientX - start.x;
+		setWidth(() => start.w+d);
 		console.log(d);
 	};
 	const onStopResize = (e) => {
