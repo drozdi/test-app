@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { XLayoutContext } from '../layout/XLayoutContext';
 
@@ -76,8 +76,8 @@ export function XSidebar({
 	);
 
 	const isResizeable = useMemo(
-		() => resizeable && !toggle && !belowBreakpoint, 
-		[resizeable, toggle, belowBreakpoint]
+		() => resizeable && !toggle && !belowBreakpoint,
+		[resizeable, toggle, belowBreakpoint],
 	);
 
 	const header =
@@ -92,40 +92,48 @@ export function XSidebar({
 		!toggle && onMini(true);
 	};
 
-	
+	const node = useRef(null);
 
-	const start = {};
-	const onStartResize = (e) => {
-		e.preventDefault();
-		console.log(e)
-		start.x = e.clientX;
-		start.w = width;
-		window.addEventListener("mousemove", onDragResize);
-		window.addEventListener("mouseup", onStopResize);
-	};
-	const onDragResize = (e) => {
-		const d = e.clientX - start.x;
-		setWidth(() => start.w+d);
-		console.log(d);
-	};
-	const onStopResize = (e) => {
-		window.removeEventListener("mousemove", onDragResize);
-		window.removeEventListener("mouseup", onStopResize);
-	};
+	const handleMouseDown = React.useCallback(
+		(e) => {
+			if (!node.current) {
+				return;
+			}
+			if (!e.target.classList.contains('xSidebar-res')) {
+				return;
+			}
 
+			const startX = e.clientX;
+			const startW = width;
+
+			const handleMouseMove = (e) => {
+				const dx = e.clientX - startX;
+				setWidth(startW + dx);
+			};
+
+			const handleMouseUp = () => {
+				document.removeEventListener('mousemove', handleMouseMove);
+				document.removeEventListener('mouseup', handleMouseUp);
+			};
+
+			document.addEventListener('mousemove', handleMouseMove);
+			document.addEventListener('mouseup', handleMouseUp);
+		},
+		[node],
+	);
 
 	const containerStyle = useMemo(
 		() => ({
 			top: header ? '' : $layout.header.size,
 			bottom: footer ? '' : $layout.footer.size,
 			minWidth: isOpen ? '' : 0,
-			width: isOpen && isResizeable? width: '',
+			width: isOpen && isResizeable ? width : '',
 		}),
-		[$layout, header, footer, width, isOpen, isResizeable]
+		[$layout, header, footer, width, isOpen, isResizeable],
 	);
 	const style = useMemo(
-		() => ({ width: isOpen && isResizeable? width: '' }), 
-		[width, isOpen, isResizeable]
+		() => ({ width: isOpen && isResizeable ? width : '' }),
+		[width, isOpen, isResizeable],
 	);
 
 	return (
@@ -144,6 +152,8 @@ export function XSidebar({
 				<div
 					onMouseEnter={onMouseEnter}
 					onMouseLeave={onMouseLeave}
+					onMouseDown={handleMouseDown}
+					ref={node}
 					className={classNames('xSidebar', {
 						'xLayout-sidebar': !!$layout,
 						'xSidebar--toggle': toggle,
@@ -182,16 +192,12 @@ export function XSidebar({
 							/>
 						</div>
 					)}
-					{isResizeable && (
-						<div className="xSidebar-res" 
-							onMouseDown={onStartResize}></div>
-					)}
+					{isResizeable && <div className="xSidebar-res"></div>}
 				</div>
 			</div>
 		</XSidebarContext.Provider>
 	);
 }
-
 
 /*
 // obj for inline CSS
