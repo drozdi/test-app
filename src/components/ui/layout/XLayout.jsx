@@ -30,9 +30,9 @@ export function XLayout({
 			return row.split('');
 		}),
 		header: { size: 0, offset: 0, space: false },
-		right: { size: 0, offset: 0, space: false, open: true, mini: true },
 		footer: { size: 0, offset: 0, space: false },
-		left: { size: 0, offset: 0, space: false, open: true, mini: true },
+		left: { size: 300, offset: 0, space: false, open: true, mini: true },
+		right: { size: 300, offset: 0, space: false, open: true, mini: true },
 		width: 0,
 	});
 	const $update = (part, prop, val) => {
@@ -63,6 +63,7 @@ export function XLayout({
 			type: 'left',
 			open: !belowBreakpoint || $layout.left.open,
 			resizeable: true,
+			w: $layout.left.size,
 			//mini: !belowBreakpoint && $layout.left.mini,
 			//toggle: !belowBreakpoint,
 			breakpoint: breakpoint,
@@ -70,7 +71,7 @@ export function XLayout({
 			miniToOverlay: overlay || belowBreakpoint,
 			onResize: (width) => $update('left', 'size', width),
 			//onMini: (mini) => $update('left', 'mini', mini),
-			onToggle: (open) => $update('left', 'open', open),
+			//onToggle: (open) => $update('left', 'open', open),
 		});
 	};
 	const right = () => {
@@ -78,7 +79,7 @@ export function XLayout({
 			type: 'right',
 			open: !belowBreakpoint || $layout.right.open,
 			mini: !belowBreakpoint && $layout.right.mini,
-			//toggle: !belowBreakpoint,
+			toggle: !belowBreakpoint,
 			breakpoint: breakpoint,
 			overlay: overlay && belowBreakpoint,
 			miniToOverlay: overlay || belowBreakpoint,
@@ -129,7 +130,7 @@ export function XLayout({
 			}}
 		>
 			{hasSlot('left') && left()}
-			{hasSlot('right') && right()}
+			{/*hasSlot('right') && right()*/}
 			{hasSlot('header') && header()}
 			{hasSlot('footer') && footer()}
 			{def()}

@@ -10,43 +10,6 @@ function App() {
 						<li>Item 2</li>
 						<li>Item 3</li>
 						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
-						<li>Item 4</li>
 					</ul>
 				),
 				right: (props) => (

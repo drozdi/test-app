@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { DraggableCore } from 'react-draggable';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { XLayoutContext } from '../layout/XLayoutContext';
 
@@ -22,7 +21,7 @@ export function XSidebar({
 
 	resizeable = false,
 
-	w = 300,
+	w = null,
 
 	onResize = () => {},
 	onMini = () => {},
@@ -33,6 +32,8 @@ export function XSidebar({
     const {children, className, type, mini, miniToOverlay, open, overlay, breakpoint, onMouseEnter, onMouseLeave, onResize, onMini, onToggle } = props;*/
 
 	const { $layout, $update } = useContext(XLayoutContext) || {};
+
+	const [width, setWidth] = useState(w);
 
 	const containerRef = useResizeObserver((target, entry) => {
 		onResize(target.offsetWidth);
@@ -74,9 +75,10 @@ export function XSidebar({
 		[miniToOverlay, overlay, belowBreakpoint],
 	);
 
-	const isResizeable = useMemo(() => {
-		return resizeable && !toggle && !belowBreakpoint;
-	}, [resizeable, toggle, belowBreakpoint]);
+	const isResizeable = useMemo(
+		() => resizeable && !toggle && !belowBreakpoint, 
+		[resizeable, toggle, belowBreakpoint]
+	);
 
 	const header =
 		($layout && $layout.rows[0][type === 'left' ? 0 : 2] === type[0]) || false;
@@ -90,34 +92,45 @@ export function XSidebar({
 		!toggle && onMini(true);
 	};
 
-	const [width, setWidth] = useState(w);
+	
 
-	const onStartResize = (...args) => {
-		console.log(args);
+	const start = {};
+	const onStartResize = (e) => {
+		start.x = e.pageX;
+		start.w = width;
+		window.addEventListener("mousemove", onDragResize);
+		window.addEventListener("mouseup", onStopResize);
 	};
-	const onDragResize = (e, { deltaX }) => {
-		setWidth((w) => w + deltaX);
+	const onDragResize = (e) => {
+		const d = e.pageX - start.x;
+		setWidth(start.w+start.x);
+		console.log(d);
 	};
-	const onStopResize = (...args) => {
-		console.log(args);
+	const onStopResize = (e) => {
+		window.removeEventListener("mousemove", onDragResize);
+		window.removeEventListener("mouseup", onStopResize);
 	};
+
+
 	const containerStyle = useMemo(
 		() => ({
 			top: header ? '' : $layout.header.size,
 			bottom: footer ? '' : $layout.footer.size,
 			minWidth: isOpen ? '' : 0,
-			width: width,
+			width: isOpen && isResizeable? width: '',
 		}),
-		[$layout, width],
+		[$layout, header, footer, width, isOpen, isResizeable]
 	);
-	const style = useMemo(() => ({ width: width }), [width]);
+	const style = useMemo(
+		() => ({ width: isOpen && isResizeable? width: '' }), 
+		[width, isOpen, isResizeable]
+	);
 
 	return (
-		<XSidebarContext.Provider value={{ isMini, isOpen }}>
+		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
 				ref={containerRef}
 				className={classNames('xSidebar-container', {
-					'xLayout-sidebar': !!$layout,
 					[`xSidebar--${type}`]: !!type,
 					'xSidebar--overlay': isOverlay,
 					'xSidebar--close': !isOpen,
@@ -138,7 +151,13 @@ export function XSidebar({
 				>
 					<div {...props} className={classNames('xSidebar-content', className)}>
 						{children}
+						isOpen: {isOpen ? 'true' : 'false'}
+						<br />
+						isMini: {isMini ? 'true' : 'false'}
+						<br />
 						isOverlay: {isOverlay ? 'true' : 'false'}
+						<br />
+						isMiniToOverlay: {isMiniToOverlay ? 'true' : 'false'}
 						<br />
 						belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
 						<br />
@@ -162,17 +181,30 @@ export function XSidebar({
 						</div>
 					)}
 					{isResizeable && (
-						<DraggableCore
-							grid={[1, 1]}
-							onStart={onStartResize}
-							onStop={onStopResize}
-							onDrag={onDragResize}
-						>
-							<div className="xSidebar-res"></div>
-						</DraggableCore>
+						<div className="xSidebar-res" 
+							onMouseDown={onStartResize}></div>
 					)}
 				</div>
 			</div>
 		</XSidebarContext.Provider>
 	);
 }
+
+
+/*
+// obj for inline CSS
+  const [width, setWidth] = useState({ "--width": "200px" });
+
+  const handleWindowMouseMove = useCallback((event) => {
+    // console.log(event.clientX)
+    setWidth({ "--width": `${event.clientX}px` });
+  }, []);
+
+  function hadnleMouseDown() {
+    window.addEventListener("mousemove", handleWindowMouseMove);
+  }
+
+  function hadnleMouseUp() {
+    window.removeEventListener("mousemove", handleWindowMouseMove);
+  }
+		*/
