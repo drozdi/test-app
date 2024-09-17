@@ -10,13 +10,6 @@ import { XHeader } from '../header/XHeader';
 import { XSidebar } from '../sidebar/XSidebar';
 import { XLayoutContext } from './XLayoutContext';
 
-/*const useSlots = createSlots({
-    header: () => null,
-    footer: () => null,
-    left: () => null,
-    right: () => null
-});*/
-
 export function XLayout({
 	children,
 	container = false,
@@ -63,13 +56,12 @@ export function XLayout({
 			type: 'left',
 			open: !belowBreakpoint || $layout.left.open,
 			resizeable: true,
-			w: $layout.left.size,
 			//mini: !belowBreakpoint && $layout.left.mini,
-			//toggle: !belowBreakpoint,
-			breakpoint: breakpoint,
-			overlay: overlay && belowBreakpoint,
-			miniToOverlay: overlay || belowBreakpoint,
-			onResize: (width) => $update('left', 'size', width),
+			toggle: !belowBreakpoint,
+			//breakpoint: breakpoint,
+			//overlay: overlay && belowBreakpoint,
+			//miniToOverlay: overlay || belowBreakpoint,
+			//onResize: (width) => $update('left', 'size', width),
 			//onMini: (mini) => $update('left', 'mini', mini),
 			//onToggle: (open) => $update('left', 'open', open),
 		});
@@ -119,16 +111,7 @@ export function XLayout({
 	};
 
 	let layout = (
-		<div
-			className="xLayout"
-			ref={ref}
-			style={{
-				paddingTop: $layout.header.size,
-				paddingLeft: $layout.left.size,
-				paddingRight: $layout.right.size,
-				paddingBottom: $layout.footer.size,
-			}}
-		>
+		<div className="xLayout" ref={ref}>
 			{hasSlot('left') && left()}
 			{/*hasSlot('right') && right()*/}
 			{hasSlot('header') && header()}

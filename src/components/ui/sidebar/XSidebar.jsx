@@ -141,13 +141,14 @@ export function XSidebar({
 			<div
 				ref={containerRef}
 				className={classNames('xSidebar-container', {
+					'xLayout-sidebar': !!$layout,
+					[`xLayout-sidebar--${type}`]: !!$layout && !!type,
 					[`xSidebar--${type}`]: !!type,
 					'xSidebar--overlay': isOverlay,
 					'xSidebar--close': !isOpen,
 					'xSidebar--mini': isMini,
 					'xSidebar--mini-overlay': isMiniToOverlay,
 				})}
-				style={containerStyle}
 			>
 				<div
 					onMouseEnter={onMouseEnter}
@@ -155,7 +156,6 @@ export function XSidebar({
 					onMouseDown={handleMouseDown}
 					ref={node}
 					className={classNames('xSidebar', {
-						'xLayout-sidebar': !!$layout,
 						'xSidebar--toggle': toggle,
 						[`xSidebar--${type}`]: !!type,
 					})}

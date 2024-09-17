@@ -1,56 +1,29 @@
 @tailwind base;
 
 @layer base {
-  body {
-      background-color: #002650;
-      color: rgba(255,255,255, .7);
-  }
-  a {
-      color: #00aeff;
-      text-decoration: none;
-  }
-  a:hover {
-      color: #fff;
-      text-decoration: underlined;
-  }
-  * {
-    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2);
-    scrollbar-width: thin
-  }
-  *::-moz-selection,
-  *::selection {
-    color: #eee;
-    background: #006a9b;
-  }
+	body {
+		background-color: #002650;
+		color: rgba(255, 255, 255, 0.7);
+	}
+	a {
+		color: #00aeff;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #fff;
+		text-decoration: underlined;
+	}
+	* {
+		scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2);
+		scrollbar-width: thin;
+	}
+	*::-moz-selection,
+	*::selection {
+		color: #eee;
+		background: #006a9b;
+	}
 }
 
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
-
-
-._grid {
-  @apply grid gap-2 w-full h-full;
-  grid-template-columns: minmax(min-content, auto) 1fr minmax(min-content, auto);
-  grid-template-rows: minmax(min-content, auto) 1fr minmax(min-content, auto);
-}
-.div1 {
-	grid-area: 1 / 2 / 2 / 3;
-	background-color: rgba(190,155,100, 0.5);
-}
-.div2 {
-	grid-area: 1/1/3/2;
-	background-color: rgba(245,137,116, 0.5);
-}
-.div3 {
-	grid-area: 1/3/4/4;
-	background-color: rgba(158,25,58, 0.5);
-}
-.div4 {
-	grid-area: 3 / 1 / 4 / 3;
-	background-color: rgba(207,92,118, 0.5);
-}
-.div5 {
-	grid-area: 2/2/3/3;
-	background-color: rgba(14,100,95, 0.5);
-}
