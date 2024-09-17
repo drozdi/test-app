@@ -21,6 +21,18 @@ module.exports = {
       boxShadow: {
         strong: '0 4px 18px -2px #000000b3'
       },
+      gridTemplateRows: {
+        'layout': 'auto auto auto',
+        '1fr': '1fr',
+        '1fr-auto': '1fr auto',
+        'auto-1fr': 'auto 1fr'
+      },
+      gridTemplateColumns: {
+        'layout': 'auto auto auto',
+        '1fr': '1fr',
+        '1fr-auto': '1fr auto',
+        'auto-1fr': 'auto 1fr'
+      },
       transitionProperty: {
         width: 'width',
         height: 'height',

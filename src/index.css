@@ -28,3 +28,29 @@
 @tailwind utilities;
 @tailwind variants;
 
+
+._grid {
+  @apply grid gap-2 w-full h-full;
+  grid-template-columns: minmax(min-content, auto) 1fr minmax(min-content, auto);
+  grid-template-rows: minmax(min-content, auto) 1fr minmax(min-content, auto);
+}
+.div1 {
+	grid-area: 1 / 2 / 2 / 3;
+	background-color: rgba(190,155,100, 0.5);
+}
+.div2 {
+	grid-area: 1/1/3/2;
+	background-color: rgba(245,137,116, 0.5);
+}
+.div3 {
+	grid-area: 1/3/4/4;
+	background-color: rgba(158,25,58, 0.5);
+}
+.div4 {
+	grid-area: 3 / 1 / 4 / 3;
+	background-color: rgba(207,92,118, 0.5);
+}
+.div5 {
+	grid-area: 2/2/3/3;
+	background-color: rgba(14,100,95, 0.5);
+}
