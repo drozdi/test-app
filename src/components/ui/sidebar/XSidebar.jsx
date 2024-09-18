@@ -23,6 +23,7 @@ export function XSidebar({
 	resizeable = false,
 
 	w = null,
+	mW = null,
 
 	onResize = () => {},
 	onMini = () => {},
@@ -35,9 +36,11 @@ export function XSidebar({
 	const { $layout, $update } = useContext(XLayoutContext) || {};
 
 	const [width, setWidth] = useState(w);
+	const [miniWidth, setMiniWidth] = useState(mW);
+	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
 
 	const containerRef = useResizeObserver((target, entry) => {
-		onResize(target.offsetWidth);
+		//onResize(target.offsetWidth);
 		//$layout && $update(type, 'size', target.offsetWidth);
 	});
 
@@ -45,8 +48,6 @@ export function XSidebar({
 		() => (breakpoint && $layout.width < breakpoint) || false,
 		[$layout, breakpoint],
 	);
-
-	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
 
 	useEffect(() => {
 		setOpenBreakpoint(false);
@@ -76,15 +77,12 @@ export function XSidebar({
 		[miniToOverlay, overlay, belowBreakpoint],
 	);
 
-	const isResizeable = useMemo(
-		() => resizeable && !toggleMini && !belowBreakpoint,
-		[resizeable, toggleMini, belowBreakpoint],
-	);
+	const isMouseEvent = useMemo(() => mouseMini && !toggleMini, [toggleMini, mouseMini]);
 
-	const isMouseEvent = useMemo(
-		() => mouseMini && !toggleMini, 
-		[toggleMini, mouseMini]
-	)
+	const isResizeable = useMemo(
+		() => resizeable && !toggleMini && !isMouseEvent && !isMini && !belowBreakpoint,
+		[resizeable, toggleMini, isMouseEvent, isMini, belowBreakpoint],
+	);
 
 	const onMouseEnter = () => {
 		isMouseEvent && onMini(false);
@@ -94,7 +92,6 @@ export function XSidebar({
 	};
 
 	const node = useRef(null);
-
 	const handleMouseDown = React.useCallback(
 		(e) => {
 			if (!node.current) {
@@ -104,17 +101,23 @@ export function XSidebar({
 				return;
 			}
 
-			const startX = e.clientX;
-			const startW = width;
+			const start = {
+				x: e.clientX,
+				w: parseInt(window.getComputedStyle(node.current).width || 0, 10),
+			};
+			document.body.style.userSelect = 'none';
 
 			const handleMouseMove = (e) => {
-				const dx = e.clientX - startX;
-				setWidth(startW + dx);
+				const dx = e.clientX - start.x;
+				node.current.style.width = `${start.w + dx}px`;
 			};
 
-			const handleMouseUp = () => {
+			const handleMouseUp = (e) => {
+				const dx = e.clientX - start.x;
 				document.removeEventListener('mousemove', handleMouseMove);
 				document.removeEventListener('mouseup', handleMouseUp);
+				document.body.style.removeProperty('user-select');
+				setWidth(start.w + dx);
 			};
 
 			document.addEventListener('mousemove', handleMouseMove);
@@ -126,9 +129,14 @@ export function XSidebar({
 	const containerStyle = useMemo(
 		() => ({
 			minWidth: isOpen ? '' : 0,
-			width: isOpen && isResizeable ? width : '',
+			width:
+				isOpen && isMini
+					? miniWidth
+					: isOpen && (isResizeable || (!!width && !isMiniToOverlay))
+						? width
+						: '',
 		}),
-		[width, isOpen, isResizeable],
+		[width, miniWidth, isMini, isOpen, isMiniToOverlay, isResizeable],
 	);
 	const style = useMemo(
 		() => ({ width: isOpen && isResizeable ? width : '' }),
@@ -147,6 +155,7 @@ export function XSidebar({
 					'xSidebar--mini': isMini,
 					'xSidebar--mini-overlay': isMiniToOverlay,
 				})}
+				style={containerStyle}
 			>
 				<div
 					onMouseEnter={onMouseEnter}
