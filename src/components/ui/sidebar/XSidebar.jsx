@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { DraggableCore } from 'react-draggable';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { XLayoutContext } from '../layout/XLayoutContext';
 
@@ -143,6 +144,10 @@ export function XSidebar({
 		[width, isOpen, isResizeable],
 	);
 
+	const onDrag = (e, p) => {
+		console.log(e, p);
+	};
+
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
@@ -161,7 +166,6 @@ export function XSidebar({
 					onMouseEnter={onMouseEnter}
 					onMouseLeave={onMouseLeave}
 					onMouseDown={handleMouseDown}
-					ref={node}
 					className={classNames('xSidebar', {
 						'xSidebar--toggle': toggleMini,
 						[`xSidebar--${type}`]: !!type,
@@ -199,7 +203,11 @@ export function XSidebar({
 							/>
 						</div>
 					)}
-					{isResizeable && <div className="xSidebar-res"></div>}
+					{isResizeable && (
+						<DraggableCore onDrag={onDrag}>
+							<div className="xSidebar-res"></div>
+						</DraggableCore>
+					)}
 				</div>
 			</div>
 		</XSidebarContext.Provider>
