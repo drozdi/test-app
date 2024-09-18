@@ -1,3 +1,16 @@
+.w3-animate-left{
+  position:relative;
+  animation:animateleft 0.4s
+}
+@keyframes animateleft{
+  from{
+    left:-300px;opacity:0
+  } 
+  to{
+    left:0;opacity:1
+  }
+}
+
 <template>
   <q-layout :view="view" :container="container" :class="[className()]">
     <q-header v-if="isHeader" reveal bordered :class="className('header')">

@@ -27,7 +27,7 @@ module.exports = {
 				layout: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',
 			},
 			gridTemplateColumns: {
-				layout: 'minmax(min-content, auto) 1fr minmax(min-content, auto)',
+				layout: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',
 			},
 			transitionProperty: {
 				width: 'width',

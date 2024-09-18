@@ -56,13 +56,14 @@ export function XLayout({
 			type: 'left',
 			open: !belowBreakpoint || $layout.left.open,
 			resizeable: true,
-			//mini: !belowBreakpoint && $layout.left.mini,
-			toggle: !belowBreakpoint,
+			mini: !belowBreakpoint && $layout.left.mini,
+			toggleMini: !belowBreakpoint,
+			//mouseMini: true,
 			//breakpoint: breakpoint,
 			//overlay: overlay && belowBreakpoint,
-			//miniToOverlay: overlay || belowBreakpoint,
+			miniToOverlay: overlay || belowBreakpoint,
 			//onResize: (width) => $update('left', 'size', width),
-			//onMini: (mini) => $update('left', 'mini', mini),
+			onMini: (mini) => $update('left', 'mini', mini),
 			//onToggle: (open) => $update('left', 'open', open),
 		});
 	};

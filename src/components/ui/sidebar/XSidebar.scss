@@ -2,6 +2,7 @@
 	@apply w-64 flex flex-col justify-between max-h-full h-full
         overflow-hidden transition-width duration-300 ease-in-out
         bg-surface border-solid border-separator;
+				z-index: 9999;
 }
 %sidebar-left {
 	@apply border-r;
@@ -10,7 +11,8 @@
 	@apply border-l;
 }
 %sidebar-container {
-	@apply w-64 overflow-hidden transition-width duration-300 ease-in-out relative border-0;
+	@apply w-64 transition-width duration-300 ease-in-out relative border-0 max-h-full;
+	overflow: hidden;
 }
 %sidebar-mini {
 	@apply w-16;

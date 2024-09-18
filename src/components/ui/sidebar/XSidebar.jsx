@@ -16,9 +16,10 @@ export function XSidebar({
 	miniToOverlay = false,
 	open = false,
 	overlay = false,
-	toggle = false,
 	breakpoint = null,
 
+	mouseMini = false,
+	toggleMini = false,
 	resizeable = false,
 
 	w = null,
@@ -76,20 +77,20 @@ export function XSidebar({
 	);
 
 	const isResizeable = useMemo(
-		() => resizeable && !toggle && !belowBreakpoint,
-		[resizeable, toggle, belowBreakpoint],
+		() => resizeable && !toggleMini && !belowBreakpoint,
+		[resizeable, toggleMini, belowBreakpoint],
 	);
 
-	const header =
-		($layout && $layout.rows[0][type === 'left' ? 0 : 2] === type[0]) || false;
-	const footer =
-		($layout && $layout.rows[2][type === 'left' ? 0 : 2] === type[0]) || false;
+	const isMouseEvent = useMemo(
+		() => mouseMini && !toggleMini, 
+		[toggleMini, mouseMini]
+	)
 
 	const onMouseEnter = () => {
-		!toggle && onMini(false);
+		isMouseEvent && onMini(false);
 	};
 	const onMouseLeave = () => {
-		!toggle && onMini(true);
+		isMouseEvent && onMini(true);
 	};
 
 	const node = useRef(null);
@@ -124,12 +125,10 @@ export function XSidebar({
 
 	const containerStyle = useMemo(
 		() => ({
-			top: header ? '' : $layout.header.size,
-			bottom: footer ? '' : $layout.footer.size,
 			minWidth: isOpen ? '' : 0,
 			width: isOpen && isResizeable ? width : '',
 		}),
-		[$layout, header, footer, width, isOpen, isResizeable],
+		[width, isOpen, isResizeable],
 	);
 	const style = useMemo(
 		() => ({ width: isOpen && isResizeable ? width : '' }),
@@ -139,7 +138,6 @@ export function XSidebar({
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
-				ref={containerRef}
 				className={classNames('xSidebar-container', {
 					'xLayout-sidebar': !!$layout,
 					[`xLayout-sidebar--${type}`]: !!$layout && !!type,
@@ -156,7 +154,7 @@ export function XSidebar({
 					onMouseDown={handleMouseDown}
 					ref={node}
 					className={classNames('xSidebar', {
-						'xSidebar--toggle': toggle,
+						'xSidebar--toggle': toggleMini,
 						[`xSidebar--${type}`]: !!type,
 					})}
 					style={style}
@@ -176,7 +174,7 @@ export function XSidebar({
 						isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
 						<br />
 					</div>
-					{toggle && (
+					{toggleMini && (
 						<div className="xSidebar-toggle">
 							<XBtn
 								color="dimmed"
