@@ -1,52 +1,110 @@
-import React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-export const useDraggable = () => {
-	const [node, setNode] = React.useState(null);
-	const [{ dx, dy }, setOffset] = React.useState({
-		dx: 0,
-		dy: 0,
-	});
-	const ref = React.useCallback((nodeEle) => {
-		setNode(nodeEle);
-	}, []);
+export function useDraggable({
+	axis = 'xy',
+	disabled = false,
+  initial = [0, 0],
+  min = [0, 0],
+  max = [null, null],
+	onStart = () => {},
+	onMove = () => {},
+	onEnd = () => {}
+}) {
+	const runConstraints = (width, height) => {
+    if (!min && !max) {
+			return [width, height]
+		};
+    if (min) {
+      width = Math.max(min[0], width);
+      height = Math.max(min[1], height);
+    }
+    if (max) {
+      width = Math.min(max[0], width);
+      height = Math.min(max[1], height);
+    }
+    return [width, height];
+  }
 
-	const handleMouseDown = React.useCallback(
-		(e) => {
-			const startX = e.clientX - dx;
-			const startY = e.clientY - dy;
+	const initialPosition = runConstraints(...initial);
 
-			const handleMouseMove = (e) => {
-				setOffset({
-					dx: e.clientX - startX,
-					dy: e.clientY - startY,
-				});
-			};
-			const handleMouseUp = () => {
-				document.removeEventListener('mousemove', handleMouseMove);
-				document.removeEventListener('mouseup', handleMouseUp);
-			};
+	const [position, setPosition] = useState(initialPosition);
+	const [isDragging, setDragging] = useState(false);
 
-			document.addEventListener('mousemove', handleMouseMove);
-			document.addEventListener('mouseup', handleMouseUp);
-		},
-		[dx, dy],
-	);
+	const canX = useMemo(() => axis.includes('x'), [axis]);
+	const canY = useMemo(() => axis.includes('y'), [axis]);
 
-	React.useEffect(() => {
-		if (node) {
-			node.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
-		}
-	}, [node, dx, dy]);
+	const startPosition = { 
+		x: 0, 
+		y: 0 
+	};
 
-	React.useEffect(() => {
-		if (!node) {
+	const handleMove = useCallback((event) => {
+		const dx = canX? event.clientX-startPosition.x: 0;
+		const dy = canY? event.clientY-startPosition.y: 0;
+		if (!(Math.abs(dx) > 0 || Math.abs(dy) > 0)) {
 			return;
 		}
-		node.addEventListener('mousedown', handleMouseDown);
-		return () => {
-			node.removeEventListener('mousedown', handleMouseDown);
-		};
-	}, [node, dx, dy]);
 
-	return [ref];
-};
+		const newPosition = [position[0] + dx, position[1] + dy]
+
+		onMove(event, {
+			start: startPosition,
+			position: newPosition,
+			deltaX: dx, 
+			deltaY: dy
+		})
+
+		setPosition(newPosition)
+	}, [canX, canY, position]);
+
+	const handleUp = useCallback((event) => {
+		document.removeEventListener('pointermove', handleMove);
+		document.removeEventListener('pointerup', handleUp);
+		onEnd(event, {
+			start: startPosition,
+			position: position
+		})
+		setDragging(false)
+	}, []);
+
+	const handleDown = useCallback((event) => {
+		if (disabled) {
+			return;
+		}
+		event.stopPropagation();
+    event.preventDefault();
+
+		if (!canX && !canY) {
+			return;
+		}
+
+		setDragging(true);
+
+		startPosition.x = event.clientX;
+		startPosition.y = event.clientY;
+		
+		onStart(event, {
+			start: startPosition,
+			position,
+			deltaX: 0, 
+			deltaY: 0
+		})
+
+		document.addEventListener('pointermove', handleMove);
+		document.addEventListener('pointerup', handleUp);
+	}, [disabled, canX, canY]);
+
+	
+
+	
+	
+
+	return {
+		position,
+		setPosition,
+		isDragging,
+		events: {
+			'onPointerDown': handleDown
+		}
+	}
+}

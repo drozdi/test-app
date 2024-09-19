@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { DraggableCore } from 'react-draggable';
+import { useDraggable } from '../../../hooks/useDraggable.js';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { XLayoutContext } from '../layout/XLayoutContext';
 
@@ -36,7 +36,7 @@ export function XSidebar({
 
 	const { $layout, $update } = useContext(XLayoutContext) || {};
 
-	const [width, setWidth] = useState(w);
+	const [width, setWidth] = useState('');
 	const [miniWidth, setMiniWidth] = useState(mW);
 	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
 
@@ -45,25 +45,31 @@ export function XSidebar({
 		//$layout && $update(type, 'size', target.offsetWidth);
 	});
 
+	const { position, setPosition, events } = useDraggable({
+		axis: 'x',
+		initial: [width, 0],
+		onStart: (e, p) => console.log(p),
+		onMove: (e, p) => {
+			console.log(p)
+			//setWidth(position[0]);
+		},
+		onEnd: (e, p) => console.log(p),
+	})
+
 	const belowBreakpoint = useMemo(
 		() => (breakpoint && $layout.width < breakpoint) || false,
 		[$layout, breakpoint],
 	);
-
-	useEffect(() => {
-		setOpenBreakpoint(false);
-	}, [belowBreakpoint]);
-
-	useEffect(() => {
-		setOpenBreakpoint((v) => !v);
-	}, [open]);
 
 	const isOpen = useMemo(
 		() => (belowBreakpoint ? isOpenBreakpoint : open),
 		[open, belowBreakpoint, isOpenBreakpoint],
 	);
 
-	const isMini = useMemo(() => mini && !belowBreakpoint, [mini, belowBreakpoint]);
+	const isMini = useMemo(
+		() => mini && !belowBreakpoint, 
+		[mini, belowBreakpoint]
+	);
 
 	const isOverlay = useMemo(
 		() =>
@@ -78,7 +84,10 @@ export function XSidebar({
 		[miniToOverlay, overlay, belowBreakpoint],
 	);
 
-	const isMouseEvent = useMemo(() => mouseMini && !toggleMini, [toggleMini, mouseMini]);
+	const isMouseEvent = useMemo(
+		() => mouseMini && !toggleMini, 
+		[toggleMini, mouseMini]
+	);
 
 	const isResizeable = useMemo(
 		() => resizeable && !toggleMini && !isMouseEvent && !isMini && !belowBreakpoint,
@@ -93,39 +102,25 @@ export function XSidebar({
 	};
 
 	const node = useRef(null);
-	const handleMouseDown = React.useCallback(
-		(e) => {
-			if (!node.current) {
-				return;
-			}
-			if (!e.target.classList.contains('xSidebar-res')) {
-				return;
-			}
+	useEffect(() => {
+		setTimeout(() => {
+			console.log(window.getComputedStyle(node.current))
+			console.log(window.getComputedStyle(node.current).width)
+			console.log(parseInt(window.getComputedStyle(node.current).width || 0, 10))
+			setPosition([
+				parseInt(window.getComputedStyle(node.current).width || 0, 10), 
+				0
+			]);
+		}, 1000)
+	}, [node.current])
 
-			const start = {
-				x: e.clientX,
-				w: parseInt(window.getComputedStyle(node.current).width || 0, 10),
-			};
-			document.body.style.userSelect = 'none';
+	useEffect(() => {
+		setOpenBreakpoint(false);
+	}, [belowBreakpoint]);
 
-			const handleMouseMove = (e) => {
-				const dx = e.clientX - start.x;
-				node.current.style.width = `${start.w + dx}px`;
-			};
-
-			const handleMouseUp = (e) => {
-				const dx = e.clientX - start.x;
-				document.removeEventListener('mousemove', handleMouseMove);
-				document.removeEventListener('mouseup', handleMouseUp);
-				document.body.style.removeProperty('user-select');
-				setWidth(start.w + dx);
-			};
-
-			document.addEventListener('mousemove', handleMouseMove);
-			document.addEventListener('mouseup', handleMouseUp);
-		},
-		[node],
-	);
+	useEffect(() => {
+		setOpenBreakpoint((v) => !v);
+	}, [open]);
 
 	const containerStyle = useMemo(
 		() => ({
@@ -144,10 +139,6 @@ export function XSidebar({
 		[width, isOpen, isResizeable],
 	);
 
-	const onDrag = (e, p) => {
-		console.log(e, p);
-	};
-
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
@@ -165,7 +156,7 @@ export function XSidebar({
 				<div
 					onMouseEnter={onMouseEnter}
 					onMouseLeave={onMouseLeave}
-					onMouseDown={handleMouseDown}
+					ref={node}
 					className={classNames('xSidebar', {
 						'xSidebar--toggle': toggleMini,
 						[`xSidebar--${type}`]: !!type,
@@ -203,11 +194,7 @@ export function XSidebar({
 							/>
 						</div>
 					)}
-					{isResizeable && (
-						<DraggableCore onDrag={onDrag}>
-							<div className="xSidebar-res"></div>
-						</DraggableCore>
-					)}
+					{isResizeable && <div className="xSidebar-res" {...events}></div>}
 				</div>
 			</div>
 		</XSidebarContext.Provider>
