@@ -50,11 +50,14 @@ export function XSidebar({
 		initial: [width, 0],
 		onStart: (e, p) => console.log(p),
 		onMove: (e, p) => {
-			console.log(p)
+			console.log(p);
 			//setWidth(position[0]);
 		},
-		onEnd: (e, p) => console.log(p),
-	})
+		onEnd: (e, p) => {
+			console.log(e, p);
+			setWidth(position[0]);
+		},
+	});
 
 	const belowBreakpoint = useMemo(
 		() => (breakpoint && $layout.width < breakpoint) || false,
@@ -66,10 +69,7 @@ export function XSidebar({
 		[open, belowBreakpoint, isOpenBreakpoint],
 	);
 
-	const isMini = useMemo(
-		() => mini && !belowBreakpoint, 
-		[mini, belowBreakpoint]
-	);
+	const isMini = useMemo(() => mini && !belowBreakpoint, [mini, belowBreakpoint]);
 
 	const isOverlay = useMemo(
 		() =>
@@ -84,10 +84,7 @@ export function XSidebar({
 		[miniToOverlay, overlay, belowBreakpoint],
 	);
 
-	const isMouseEvent = useMemo(
-		() => mouseMini && !toggleMini, 
-		[toggleMini, mouseMini]
-	);
+	const isMouseEvent = useMemo(() => mouseMini && !toggleMini, [toggleMini, mouseMini]);
 
 	const isResizeable = useMemo(
 		() => resizeable && !toggleMini && !isMouseEvent && !isMini && !belowBreakpoint,
@@ -104,15 +101,15 @@ export function XSidebar({
 	const node = useRef(null);
 	useEffect(() => {
 		setTimeout(() => {
-			console.log(window.getComputedStyle(node.current))
-			console.log(window.getComputedStyle(node.current).width)
-			console.log(parseInt(window.getComputedStyle(node.current).width || 0, 10))
+			console.log(window.getComputedStyle(node.current));
+			console.log(window.getComputedStyle(node.current).width);
+			console.log(parseInt(window.getComputedStyle(node.current).width || 0, 10));
 			setPosition([
-				parseInt(window.getComputedStyle(node.current).width || 0, 10), 
-				0
+				parseInt(window.getComputedStyle(node.current).width || 0, 10),
+				0,
 			]);
-		}, 1000)
-	}, [node.current])
+		}, 1000);
+	}, [node.current]);
 
 	useEffect(() => {
 		setOpenBreakpoint(false);
