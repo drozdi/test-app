@@ -11,19 +11,19 @@ export function useDraggable({
 	onEnd = () => {}
 }) {
 	const runConstraints = (width, height) => {
-    if (!min && !max) {
+		if (!min && !max) {
 			return [width, height]
 		};
-    if (min) {
-      width = Math.max(min[0], width);
-      height = Math.max(min[1], height);
-    }
-    if (max) {
-      width = Math.min(max[0], width);
-      height = Math.min(max[1], height);
-    }
-    return [width, height];
-  }
+		if (min) {
+			width = Math.max(min[0], width);
+			height = Math.max(min[1], height);
+		}
+		if (max) {
+			width = Math.min(max[0], width);
+			height = Math.min(max[1], height);
+		}
+		return [width, height];
+	}
 
 	const initialPosition = runConstraints(...initial);
 

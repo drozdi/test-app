@@ -22,8 +22,7 @@
 }
 
 .xLayout-sidebar {
-	@apply min-w-16 max-w-96;
-	@apply row-start-2 row-end-3;
+	@apply min-w-16 max-w-96 row-start-2 row-end-3;
 	z-index: 1000;
 }
 .xLayout-sidebar--left {
