@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 import { XButton } from '../ui/Button/XButton';
 import { XIcon } from '../ui/Icon/XIcon';
@@ -6,9 +6,8 @@ import { XIcon } from '../ui/Icon/XIcon';
 import { OrderContext } from './OrderContext';
 
 export function OrderBtn() {
-	const context = useContext(OrderContext);
-	console.log(context);
-	const [sort, setSort] = useState(false);
+	const [sort, setSort] = useContext(OrderContext);
+
 	const onClickSort = () => {
 		if (sort === 'asc') {
 			setSort('desc');

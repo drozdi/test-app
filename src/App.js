@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './App.module.css';
 
 import { XButton } from './components/ui/Button/XButton';
 import { XIcon } from './components/ui/Icon/XIcon';
 import { XInput } from './components/ui/Input/XInput';
 
-import { OrderBtn } from './components/order/OrderBtn';
+import { OrderBtn, OrderContext } from './components/order';
+import { Search, SearchContext } from './components/search';
+
 import { BaseRepository } from './utils/BaseRepository.js';
 
 function App({ endpoint = '' }) {
 	const [todos, setTodos] = useState([]);
-	const [computedTodos, setComputedTodos] = useState([]);
 	const [title, setTile] = useState('');
 	const [find, setFind] = useState('');
 	const [selectedId, setSelectedId] = useState(null);
@@ -32,7 +33,7 @@ function App({ endpoint = '' }) {
 			.finally(() => setIsLoading(false));
 	}, [refresh]);
 
-	useEffect(() => {
+	const computedTodos = useMemo(() => {
 		let newTodos = [...todos];
 		if (find) {
 			newTodos = newTodos.filter((todo) => todo.title.includes(find));
@@ -42,21 +43,9 @@ function App({ endpoint = '' }) {
 		} else if (sort === 'desc') {
 			newTodos.sort((a, b) => b.title.localeCompare(a.title));
 		}
-		setComputedTodos(newTodos);
+		return newTodos;
 	}, [todos, find, sort]);
 
-	const onClickSort = (event) => {
-		if (sort === 'asc') {
-			setSort('desc');
-		} else if (sort === 'desc') {
-			setSort(false);
-		} else {
-			setSort('asc');
-		}
-	};
-	const onChangeFind = (event) => {
-		setFind(event.target.value);
-	};
 	const headerDelete = (id) => {
 		setIsDeleting(true);
 		repository
@@ -122,24 +111,14 @@ function App({ endpoint = '' }) {
 						/>
 					</div>
 					<div className="col-span-4">
-						<XInput
-							value={find}
-							label="Найти"
-							onChange={onChangeFind}
-							placeholder="Что ищим?"
-						/>
+						<SearchContext.Provider value={[find, setFind]}>
+							<Search />
+						</SearchContext.Provider>
 					</div>
 					<div className="col-span-1">
-						<OrderBtn />
-						<XButton icon={true} onClick={onClickSort}>
-							<XIcon>
-								{sort === 'asc'
-									? 'mdi-sort-ascending'
-									: sort === 'desc'
-										? 'mdi-sort-descending'
-										: 'mdi-sort'}
-							</XIcon>
-						</XButton>
+						<OrderContext.Provider value={[sort, setSort]}>
+							<OrderBtn />
+						</OrderContext.Provider>
 					</div>
 				</div>
 				{isLoading ? (
