@@ -1,24 +1,12 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Второе дело 2",
-      "completed": false
+      "title": "rtyrtytry",
+      "id": 1
     },
     {
-      "title": "Новое дело 22",
-      "completed": false,
+      "title": "gsdgsdg",
       "id": 2
-    },
-    {
-      "title": "Новое дело 64",
-      "completed": false,
-      "id": 7
-    },
-    {
-      "title": "ААААА",
-      "completed": false,
-      "id": 8
     }
   ]
 }
