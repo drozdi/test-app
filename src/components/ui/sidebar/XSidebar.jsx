@@ -1,7 +1,5 @@
 import classNames from 'classnames';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useDraggable } from '../../../hooks/useDraggable.js';
-import { useResizeObserver } from '../../../hooks/useResizeObserver';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { XLayoutContext } from '../layout/XLayoutContext';
 
 import './XSidebar.scss';
@@ -13,19 +11,17 @@ export function XSidebar({
 	children,
 	className,
 	type = 'left',
-	mini = false,
-	miniToOverlay = false,
 	open = false,
 	overlay = false,
 	breakpoint = null,
+	mini = false,
+	miniToOverlay = false,
+	miniMouse = false,
+	miniToggle = false,
 
-	mouseMini = false,
-	toggleMini = false,
 	resizeable = false,
-
 	w = null,
 	mW = null,
-
 	onResize = () => {},
 	onMini = () => {},
 	onToggle = () => {},
@@ -36,28 +32,9 @@ export function XSidebar({
 
 	const { $layout, $update } = useContext(XLayoutContext) || {};
 
-	const [width, setWidth] = useState('');
+	const [width, setWidth] = useState(w);
 	const [miniWidth, setMiniWidth] = useState(mW);
 	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
-
-	const containerRef = useResizeObserver((target, entry) => {
-		//onResize(target.offsetWidth);
-		//$layout && $update(type, 'size', target.offsetWidth);
-	});
-
-	const { position, setPosition, events } = useDraggable({
-		axis: 'x',
-		initial: [width, 0],
-		onStart: (e, p) => console.log(p),
-		onMove: (e, p) => {
-			console.log(p);
-			//setWidth(position[0]);
-		},
-		onEnd: (e, p) => {
-			console.log(e, p);
-			setWidth(position[0]);
-		},
-	});
 
 	const belowBreakpoint = useMemo(
 		() => (breakpoint && $layout.width < breakpoint) || false,
@@ -84,11 +61,11 @@ export function XSidebar({
 		[miniToOverlay, overlay, belowBreakpoint],
 	);
 
-	const isMouseEvent = useMemo(() => mouseMini && !toggleMini, [toggleMini, mouseMini]);
+	const isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniToggle, miniMouse]);
 
 	const isResizeable = useMemo(
-		() => resizeable && !toggleMini && !isMouseEvent && !isMini && !belowBreakpoint,
-		[resizeable, toggleMini, isMouseEvent, isMini, belowBreakpoint],
+		() => resizeable && !miniToggle && !isMouseEvent && !isMini && !belowBreakpoint,
+		[resizeable, miniToggle, isMouseEvent, isMini, belowBreakpoint],
 	);
 
 	const onMouseEnter = () => {
@@ -97,19 +74,6 @@ export function XSidebar({
 	const onMouseLeave = () => {
 		isMouseEvent && onMini(true);
 	};
-
-	const node = useRef(null);
-	useEffect(() => {
-		setTimeout(() => {
-			console.log(window.getComputedStyle(node.current));
-			console.log(window.getComputedStyle(node.current).width);
-			console.log(parseInt(window.getComputedStyle(node.current).width || 0, 10));
-			setPosition([
-				parseInt(window.getComputedStyle(node.current).width || 0, 10),
-				0,
-			]);
-		}, 1000);
-	}, [node.current]);
 
 	useEffect(() => {
 		setOpenBreakpoint(false);
@@ -153,9 +117,8 @@ export function XSidebar({
 				<div
 					onMouseEnter={onMouseEnter}
 					onMouseLeave={onMouseLeave}
-					ref={node}
 					className={classNames('xSidebar', {
-						'xSidebar--toggle': toggleMini,
+						'xSidebar--toggle': miniToggle,
 						[`xSidebar--${type}`]: !!type,
 					})}
 					style={style}
@@ -175,7 +138,7 @@ export function XSidebar({
 						isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
 						<br />
 					</div>
-					{toggleMini && (
+					{miniToggle && (
 						<div className="xSidebar-toggle">
 							<XBtn
 								color="dimmed"
@@ -191,27 +154,8 @@ export function XSidebar({
 							/>
 						</div>
 					)}
-					{isResizeable && <div className="xSidebar-res" {...events}></div>}
 				</div>
 			</div>
 		</XSidebarContext.Provider>
 	);
 }
-
-/*
-// obj for inline CSS
-  const [width, setWidth] = useState({ "--width": "200px" });
-
-  const handleWindowMouseMove = useCallback((event) => {
-    // console.log(event.clientX)
-    setWidth({ "--width": `${event.clientX}px` });
-  }, []);
-
-  function hadnleMouseDown() {
-    window.addEventListener("mousemove", handleWindowMouseMove);
-  }
-
-  function hadnleMouseUp() {
-    window.removeEventListener("mousemove", handleWindowMouseMove);
-  }
-		*/

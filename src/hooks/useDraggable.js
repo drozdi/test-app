@@ -68,7 +68,6 @@ export function useDraggable({
 			if (!(Math.abs(deltaX) > 0 || Math.abs(deltaY) > 0)) {
 				return;
 			}
-			console.log(deltaX, deltaY);
 
 			const newPosition = runConstraints(
 				position[0] + (reverse ? -deltaX : deltaX),
@@ -93,12 +92,12 @@ export function useDraggable({
 				position: positionRef.current,
 			});
 			dragging.current = false;
-			setDragging(false);
-			console.log(position, positionRef.current);
+			setDragging(() => false);
+
 			setPosition(() => positionRef.current);
 			setEndPosition(() => positionRef.current);
 		},
-		[handleMove, position, reverse, onEnd],
+		[handleMove, onEnd],
 	);
 
 	const handleDown = useCallback(
@@ -128,11 +127,22 @@ export function useDraggable({
 			onStart(event, {
 				position,
 			});
-			console.log(position, positionRef.current);
+
 			document.addEventListener('pointermove', handleMove);
 			document.addEventListener('pointerup', handleUp);
 		},
-		[disabled, handle, cancel, canX, canY, reverse, onStart, handleMove, handleUp],
+		[
+			disabled,
+			handle,
+			cancel,
+			canX,
+			canY,
+			reverse,
+			position,
+			onStart,
+			handleMove,
+			handleUp,
+		],
 	);
 
 	const handleKeyDown = useCallback(
@@ -140,7 +150,6 @@ export function useDraggable({
 			if (disabled) {
 				return;
 			}
-			console.log('key', position, positionRef.current);
 			if (event.key === 'Enter') {
 				setPosition(() => initialPosition);
 				positionRef.current = initialPosition;
@@ -152,7 +161,6 @@ export function useDraggable({
 			) {
 				return;
 			}
-			console.log(3);
 
 			if (onStart) {
 				onStart(event, {
@@ -168,7 +176,6 @@ export function useDraggable({
 				position[0] + (canX ? changeStep * dir : 0),
 				position[1] + (canY ? changeStep * dir : 0),
 			);
-			console.log('key', position, newPosition);
 			setPosition(() => newPosition);
 			positionRef.current = newPosition;
 
@@ -205,7 +212,7 @@ export function useDraggable({
 				containerRef.current.removeEventListener('keydown', handleKeyDown);
 			}
 		};
-	}, [containerRef]);
+	}, [containerRef, handleDown, handleKeyDown]);
 
 	return {
 		position,

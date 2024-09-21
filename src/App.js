@@ -1,21 +1,59 @@
-import { useDraggable } from './hooks/useDraggable';
 function App() {
+	/*const leftBar = useRef(null);
+	const rightBar = useRef(null);
+
+	const [leftOpts, setLeftOpts] = useState({
+		axis: 'x',
+		initial: [0, 0],
+		min: [0, 0],
+		max: [null, null],
+	});
+	const [rightOpts, setRightOpts] = useState({
+		axis: 'x',
+		reverse: true,
+		initial: [0, 0],
+		min: [0, 0],
+		max: [null, null],
+	});
+
 	const {
 		position: [leftWidth],
 		events: leftEvents,
-	} = useDraggable({
-		axis: 'x',
-		initial: [128, 0],
-	});
+	} = useDraggable(leftOpts);
 
 	const {
 		position: [rightWidth],
 		events: rightEvents,
-	} = useDraggable({
-		axis: 'x',
-		reverse: true,
-		initial: [128, 0],
-	});
+	} = useDraggable(rightOpts);
+
+	useEffect(() => {
+		if (leftBar.current) {
+			const style = window.getComputedStyle(leftBar.current);
+			const width = parseInt(style.width || 0, 10) || 0;
+			const minWidth = parseInt(style.minWidth || 0, 10) || 0;
+			const maxWidth = parseInt(style.maxWidth || 0, 10) || 0;
+			setLeftOpts((v) => ({
+				...v,
+				initial: [width, 0],
+				min: [minWidth, 0],
+				max: [maxWidth, null],
+			}));
+		}
+	}, [leftBar]);
+	useEffect(() => {
+		if (rightBar.current) {
+			const style = window.getComputedStyle(rightBar.current);
+			const width = parseInt(style.width || 0, 10) || 0;
+			const minWidth = parseInt(style.minWidth || 0, 10) || 0;
+			const maxWidth = parseInt(style.maxWidth || 0, 10) || 0;
+			setRightOpts((v) => ({
+				...v,
+				initial: [width, 0],
+				min: [minWidth, 0],
+				max: [maxWidth, null],
+			}));
+		}
+	}, [rightBar]);
 	return (
 		<div className="grid grid-rows-layout grid-cols-layout gap-2 w-full h-full">
 			<div className="row-start-1 row-end-2 col-start-1 col-end-4 max-w-full min-h-12 bg-bgmb1" />
@@ -23,6 +61,7 @@ function App() {
 			<div
 				className="row-start-2 row-end-3 col-start-1 col-end-2 min-w-32 max-w-96 bg-bgmb3 relative"
 				style={{ width: leftWidth }}
+				ref={leftBar}
 			>
 				<div
 					className="w-2 cursor-col-resize absolute top-0 bottom-0 right-0 bg-primary"
@@ -33,6 +72,7 @@ function App() {
 			<div
 				className="row-start-2 row-end-3 col-start-3 col-end-4 min-w-32 max-w-96 bg-bgmb4 relative"
 				style={{ width: rightWidth }}
+				ref={rightBar}
 			>
 				<div
 					className="w-2 cursor-col-resize absolute top-0 bottom-0 left-0 bg-primary"
@@ -42,8 +82,7 @@ function App() {
 			</div>
 			<div className="row-start-2 row-end-3 col-start-2 col-end-3 bg-bgmb5" />
 		</div>
-	);
-
+	);*/
 	/*return (
 		<XLayout container={true} overlay={true} view="hhh lpr lff">
 			{{

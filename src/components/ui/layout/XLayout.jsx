@@ -55,16 +55,17 @@ export function XLayout({
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
 			open: !belowBreakpoint || $layout.left.open,
-			resizeable: true,
-			//mini: !belowBreakpoint && $layout.left.mini,
-			//toggleMini: !belowBreakpoint,
-			//mouseMini: true,
+			overlay: overlay && belowBreakpoint,
 			breakpoint: breakpoint,
-			//overlay: overlay && belowBreakpoint,
-			//miniToOverlay: overlay || belowBreakpoint,
-			//onResize: (width) => $update('left', 'size', width),
-			//onMini: (mini) => $update('left', 'mini', mini),
-			//onToggle: (open) => $update('left', 'open', open),
+			mini: !belowBreakpoint && $layout.left.mini,
+			miniToOverlay: overlay || belowBreakpoint,
+			miniMouse: true,
+			miniToggle: !belowBreakpoint,
+
+			//resizeable: true,
+
+			onMini: (mini) => $update('left', 'mini', mini),
+			onToggle: (open) => $update('left', 'open', open),
 		});
 	};
 	const right = () => {
