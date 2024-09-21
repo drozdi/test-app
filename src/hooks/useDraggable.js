@@ -1,5 +1,13 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { matchesSelectorToParentElements } from '../utils/domFns';
+
+export const KEYS_LEFT = ['ArrowLeft', 'Left'];
+export const KEYS_RIGHT = ['ArrowRight', 'Right'];
+export const KEYS_UP = ['ArrowUp', 'Up'];
+export const KEYS_DOWN = ['ArrowDown', 'Down'];
+export const KEYS_AXIS_X = [...KEYS_LEFT, ...KEYS_RIGHT];
+export const KEYS_AXIS_Y = [...KEYS_UP, ...KEYS_DOWN];
+export const KEYS_POSITIVE = [...KEYS_RIGHT, ...KEYS_DOWN];
 
 export function useDraggable({
 	axis = 'xy',
@@ -10,27 +18,34 @@ export function useDraggable({
 	max = [null, null],
 	handle = '',
 	cancel = '',
+	step = 10,
+	shiftStep = 50,
 	onStart = () => {},
 	onMove = () => {},
 	onEnd = () => {},
 }) {
-	const runConstraints = (width, height) => {
-		if (!min && !max) {
+	const runConstraints = useCallback(
+		(width, height) => {
+			if (!min && !max) {
+				return [width, height];
+			}
+			if (min) {
+				width = Math.max(min[0], width);
+				height = Math.max(min[1], height);
+			}
+			if (max) {
+				width = Math.min(max[0] || width, width);
+				height = Math.min(max[1] || height, height);
+			}
 			return [width, height];
-		}
-		if (min) {
-			width = Math.max(min[0], width);
-			height = Math.max(min[1], height);
-		}
+		},
+		[min, max],
+	);
 
-		if (max) {
-			width = Math.min(max[0] || width, width);
-			height = Math.min(max[1] || height, height);
-		}
-		return [width, height];
-	};
-
-	const initialPosition = runConstraints(...initial);
+	const initialPosition = useMemo(
+		() => runConstraints(...initial),
+		[runConstraints, initial],
+	);
 
 	const [position, setPosition] = useState(initialPosition);
 	const [endPosition, setEndPosition] = useState(initialPosition);
@@ -53,20 +68,21 @@ export function useDraggable({
 			if (!(Math.abs(deltaX) > 0 || Math.abs(deltaY) > 0)) {
 				return;
 			}
+			console.log(deltaX, deltaY);
 
 			const newPosition = runConstraints(
-				position[0] + reverse ? -deltaX : deltaX,
-				position[1] + reverse ? -deltaY : deltaY,
+				position[0] + (reverse ? -deltaX : deltaX),
+				position[1] + (reverse ? -deltaY : deltaY),
 			);
 
 			onMove(event, {
 				position: newPosition,
 			});
 
-			setPosition(newPosition);
+			setPosition(() => newPosition);
 			positionRef.current = newPosition;
 		},
-		[canX, canY, position, onMove],
+		[canX, canY, reverse, position, runConstraints, onMove],
 	);
 
 	const handleUp = useCallback(
@@ -78,9 +94,11 @@ export function useDraggable({
 			});
 			dragging.current = false;
 			setDragging(false);
-			setEndPosition(positionRef.current);
+			console.log(position, positionRef.current);
+			setPosition(() => positionRef.current);
+			setEndPosition(() => positionRef.current);
 		},
-		[handleMove, onEnd],
+		[handleMove, position, reverse, onEnd],
 	);
 
 	const handleDown = useCallback(
@@ -109,23 +127,95 @@ export function useDraggable({
 
 			onStart(event, {
 				position,
-				deltaX: 0,
-				deltaY: 0,
 			});
-
+			console.log(position, positionRef.current);
 			document.addEventListener('pointermove', handleMove);
 			document.addEventListener('pointerup', handleUp);
 		},
-		[disabled, canX, canY, handleMove, handleUp, onStart, handle, cancel],
+		[disabled, handle, cancel, canX, canY, reverse, onStart, handleMove, handleUp],
 	);
+
+	const handleKeyDown = useCallback(
+		(event) => {
+			if (disabled) {
+				return;
+			}
+			console.log('key', position, positionRef.current);
+			if (event.key === 'Enter') {
+				setPosition(() => initialPosition);
+				positionRef.current = initialPosition;
+				return;
+			}
+			if (
+				(canX && !KEYS_AXIS_X.includes(event.key)) ||
+				(canY && !KEYS_AXIS_Y.includes(event.key))
+			) {
+				return;
+			}
+			console.log(3);
+
+			if (onStart) {
+				onStart(event, {
+					position: positionRef.current,
+				});
+			}
+
+			const changeStep = event.shiftKey ? shiftStep : step;
+			const reversed = reverse ? -1 : 1;
+			const dir = KEYS_POSITIVE.includes(event.key) ? reversed : -1 * reversed;
+
+			const newPosition = runConstraints(
+				position[0] + (canX ? changeStep * dir : 0),
+				position[1] + (canY ? changeStep * dir : 0),
+			);
+			console.log('key', position, newPosition);
+			setPosition(() => newPosition);
+			positionRef.current = newPosition;
+
+			if (onEnd) {
+				onEnd(event, {
+					position: positionRef.current,
+				});
+			}
+		},
+		[
+			disabled,
+			initialPosition,
+			runConstraints,
+			onStart,
+			onEnd,
+			position,
+			canX,
+			canY,
+			step,
+			shiftStep,
+			reverse,
+		],
+	);
+
+	const containerRef = useRef(null);
+	useEffect(() => {
+		if (containerRef.current) {
+			containerRef.current.addEventListener('pointerdown', handleDown);
+			containerRef.current.addEventListener('keydown', handleKeyDown);
+		}
+		return () => {
+			if (containerRef.current) {
+				containerRef.current.removeEventListener('pointerdown', handleDown);
+				containerRef.current.removeEventListener('keydown', handleKeyDown);
+			}
+		};
+	}, [containerRef]);
 
 	return {
 		position,
 		setPosition,
 		endPosition,
 		isDragging,
+		containerRef,
 		events: {
 			onPointerDown: handleDown,
+			onKeyDown: handleKeyDown,
 		},
 	};
 }

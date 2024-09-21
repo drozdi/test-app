@@ -5,7 +5,7 @@ function App() {
 		events: leftEvents,
 	} = useDraggable({
 		axis: 'x',
-		initial: [0, 0],
+		initial: [128, 0],
 	});
 
 	const {
@@ -14,8 +14,7 @@ function App() {
 	} = useDraggable({
 		axis: 'x',
 		reverse: true,
-		initial: [0, 0],
-		onMove: (e, p) => console.log(p),
+		initial: [128, 0],
 	});
 	return (
 		<div className="grid grid-rows-layout grid-cols-layout gap-2 w-full h-full">
@@ -28,6 +27,7 @@ function App() {
 				<div
 					className="w-2 cursor-col-resize absolute top-0 bottom-0 right-0 bg-primary"
 					{...leftEvents}
+					tabIndex={0}
 				></div>
 			</div>
 			<div
@@ -37,6 +37,7 @@ function App() {
 				<div
 					className="w-2 cursor-col-resize absolute top-0 bottom-0 left-0 bg-primary"
 					{...rightEvents}
+					tabIndex={0}
 				></div>
 			</div>
 			<div className="row-start-2 row-end-3 col-start-2 col-end-3 bg-bgmb5" />
