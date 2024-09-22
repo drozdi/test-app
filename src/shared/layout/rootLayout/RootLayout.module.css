@@ -1,5 +1,5 @@
 .root {
-	@apply grid grid-cols-3 grid-rows-3 min-h-full grid-cols-layout grid-rows-layout bg-center bg-cover;
+	@apply grid grid-cols-3 grid-rows-3 gap-5 min-h-full grid-cols-layout grid-rows-layout bg-center bg-cover;
 	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url('https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 }
@@ -22,8 +22,8 @@
 }
 
 .main {
-	@apply col-start-2 col-end-3;
+	@apply col-start-2 col-end-3 flex flex-col items-center;
 }
 .content {
-	@apply flex flex-col items-center max-w-7xl;
+	@apply flex flex-col items-center max-w-5xl;
 }

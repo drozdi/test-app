@@ -1,6 +1,3 @@
 .SwitchMoviesList {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 25px;
+	@apply flex flex-wrap justify-center gap-6;
 }

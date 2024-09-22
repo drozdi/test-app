@@ -1,16 +1,16 @@
 .MoveCard {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	color: azure;
-
-	img {
-		height: 160px;
-		width: 140px;
-	}
+	@apply relative;
 
 	svg {
-		width: 40px;
-		height: 40px;
+		@apply w-8 h-8;
 	}
+}
+.preview {
+	@apply aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-dimmed;
+	img {
+		@apply h-full w-full object-cover object-center lg:h-full lg:w-full;
+	}
+}
+.info {
+	@apply mt-4 flex justify-between space-x-2;
 }
