@@ -1,0 +1,29 @@
+.root {
+	@apply grid grid-cols-3 grid-rows-3 min-h-full grid-cols-layout grid-rows-layout bg-center bg-cover;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url('https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=2030&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+.header {
+	@apply col-start-1 col-end-4 row-start-1 row-end-2 h-16;
+}
+.footer {
+	@apply col-start-1 col-end-4 row-start-3 row-end-4 h-16;
+}
+.main,
+.left,
+.right {
+	@apply row-start-2 row-end-3;
+}
+.left {
+	@apply col-start-1 col-end-2;
+}
+.right {
+	@apply col-start-3 col-end-4;
+}
+
+.main {
+	@apply col-start-2 col-end-3;
+}
+.content {
+	@apply flex flex-col items-center max-w-7xl;
+}

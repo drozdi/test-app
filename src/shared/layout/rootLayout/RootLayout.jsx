@@ -1,13 +1,15 @@
+import style from './RootLayout.module.css';
+
 export function RootLayout({ content, header, footer }) {
 	return (
-		<>
-			<header>{header}</header>
-			<main>
-				<div>left</div>
-				{content}
-				<div>rigtht</div>
+		<div className={style.root}>
+			<header className={style.header}>{header}</header>
+			<aside className={style.left}>left</aside>
+			<main className={style.main}>
+				<div className={style.content}>{content}</div>
 			</main>
-			<footer>{footer}</footer>
-		</>
+			<aside className={style.right}>rigtht</aside>
+			<footer className={style.footer}>{footer}</footer>
+		</div>
 	);
 }
