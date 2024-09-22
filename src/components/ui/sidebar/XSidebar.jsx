@@ -1,10 +1,17 @@
 import classNames from 'classnames';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import { XLayoutContext } from '../layout/XLayoutContext';
 
-import './XSidebar.scss';
-
+import { DraggableCore } from 'react-draggable';
 import { XBtn } from '../btn/XBtn';
+import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
 
 export function XSidebar({
@@ -100,6 +107,22 @@ export function XSidebar({
 		[width, isOpen, isResizeable],
 	);
 
+	const ref = useRef(null);
+
+	const handleDrag = useCallback((e, ui) => {
+		setWidth((width) => width + ui.deltaX);
+		/*const { direction } = this.props;
+		const factor = direction === 'e' || direction === 's' ? -1 : 1;
+
+		// modify the size based on the drag delta
+		let delta = this.isHorizontal() ? ui.deltaX : ui.deltaY;
+		this.setState((s, p) => ({ size: Math.max(10, s.size - delta * factor) }));*/
+	}, []);
+
+	const handleDragEnd = useCallback((e, ui) => {
+		setWidth(ref.current.getBoundingClientRect().width);
+	}, []);
+
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
@@ -122,6 +145,7 @@ export function XSidebar({
 						[`xSidebar--${type}`]: !!type,
 					})}
 					style={style}
+					ref={ref}
 				>
 					<div {...props} className={classNames('xSidebar-content', className)}>
 						{children}
@@ -153,6 +177,11 @@ export function XSidebar({
 								className="text-2xl py-0"
 							/>
 						</div>
+					)}
+					{isResizeable && (
+						<DraggableCore onDrag={handleDrag} onStop={handleDragEnd}>
+							<div className="xSidebar-res"></div>
+						</DraggableCore>
 					)}
 				</div>
 			</div>

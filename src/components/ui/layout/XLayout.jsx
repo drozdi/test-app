@@ -57,12 +57,12 @@ export function XLayout({
 			open: !belowBreakpoint || $layout.left.open,
 			overlay: overlay && belowBreakpoint,
 			breakpoint: breakpoint,
-			mini: !belowBreakpoint && $layout.left.mini,
-			miniToOverlay: overlay || belowBreakpoint,
-			miniMouse: true,
-			miniToggle: !belowBreakpoint,
+			//mini: !belowBreakpoint && $layout.left.mini,
+			//miniToOverlay: overlay || belowBreakpoint,
+			//miniMouse: true,
+			//miniToggle: !belowBreakpoint,
 
-			//resizeable: true,
+			resizeable: true,
 
 			onMini: (mini) => $update('left', 'mini', mini),
 			onToggle: (open) => $update('left', 'open', open),
