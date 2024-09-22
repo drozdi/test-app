@@ -12,6 +12,7 @@ module.exports = {
 				info: '#2196f3',
 				warning: '#fb8c00',
 				surface: '#15171e',
+				body: '#002650',
 				separator: 'rgba(255, 255, 255, .15)',
 				dimmed: 'rgba(0,0,0,0.2)',
 				bgmb1: 'rgba(190,155,100, 0.5)',

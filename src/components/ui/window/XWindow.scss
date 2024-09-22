@@ -1,0 +1,11 @@
+.xWindow {
+	@apply absolute m-0 p-0 border border-separator flex flex-col justify-between bg-surface w-96 h-96;
+}
+.xWindow-title {
+	@apply mx-2 my-2 truncate;
+}
+.xWindow-bar {
+	@apply h-8;
+}
+.xWindow-content {
+}
