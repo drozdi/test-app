@@ -5,6 +5,7 @@ import './XLayout.scss';
 
 import { XBtn } from '../btn/XBtn';
 
+import classNames from 'classnames';
 import { XFooter } from '../footer/XFooter';
 import { XHeader } from '../header/XHeader';
 import { XSidebar } from '../sidebar/XSidebar';
@@ -65,21 +66,24 @@ export function XLayout({
 			resizeable: true,
 
 			onMini: (mini) => $update('left', 'mini', mini),
-			onToggle: (open) => $update('left', 'open', open),
+			//onToggle: (open) => $update('left', 'open', open),
 		});
 	};
 	const right = () => {
 		return wrapSlot(slot('right', null), XSidebar, {
 			type: 'right',
 			open: !belowBreakpoint || $layout.right.open,
-			mini: !belowBreakpoint && $layout.right.mini,
-			toggle: !belowBreakpoint,
-			breakpoint: breakpoint,
 			overlay: overlay && belowBreakpoint,
-			miniToOverlay: overlay || belowBreakpoint,
-			onResize: (width) => $update('right', 'size', width),
+			breakpoint: breakpoint,
+			mini: !belowBreakpoint && $layout.right.mini,
+			//miniToOverlay: overlay || belowBreakpoint,
+			//miniMouse: true,
+			miniToggle: !belowBreakpoint,
+
+			resizeable: true,
+
 			onMini: (mini) => $update('right', 'mini', mini),
-			onToggle: (open) => $update('right', 'open', open),
+			//onToggle: (open) => $update('right', 'open', open),
 		});
 	};
 	const footer = () => {
@@ -111,11 +115,22 @@ export function XLayout({
 	const def = () => {
 		return <XMain>{slot('', null)}</XMain>;
 	};
-
+	const isHl = useMemo(() => $layout.rows[0][0] === 'l', [$layout.rows]);
+	const isHr = useMemo(() => $layout.rows[0][2] === 'r', [$layout.rows]);
+	const isFl = useMemo(() => $layout.rows[2][0] === 'l', [$layout.rows]);
+	const isFr = useMemo(() => $layout.rows[2][2] === 'r', [$layout.rows]);
 	let layout = (
-		<div className="xLayout" ref={ref}>
+		<div
+			className={classNames('xLayout', {
+				'xLayout--hl': isHl,
+				'xLayout--hr': isHr,
+				'xLayout--fl': isFl,
+				'xLayout--fr': isFr,
+			})}
+			ref={ref}
+		>
 			{hasSlot('left') && left()}
-			{/*hasSlot('right') && right()*/}
+			{hasSlot('right') && right()}
 			{hasSlot('header') && header()}
 			{hasSlot('footer') && footer()}
 			{def()}

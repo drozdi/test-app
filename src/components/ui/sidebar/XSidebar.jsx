@@ -25,10 +25,11 @@ export function XSidebar({
 	miniToOverlay = false,
 	miniMouse = false,
 	miniToggle = false,
+	miniW = null,
 
 	resizeable = false,
 	w = null,
-	mW = null,
+
 	onResize = () => {},
 	onMini = () => {},
 	onToggle = () => {},
@@ -39,8 +40,10 @@ export function XSidebar({
 
 	const { $layout, $update } = useContext(XLayoutContext) || {};
 
+	const isLayout = useMemo(() => !!$layout, [$layout]);
+
 	const [width, setWidth] = useState(w);
-	const [miniWidth, setMiniWidth] = useState(mW);
+	const [miniWidth, setMiniWidth] = useState(miniW);
 	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
 
 	const belowBreakpoint = useMemo(
@@ -82,14 +85,6 @@ export function XSidebar({
 		isMouseEvent && onMini(true);
 	};
 
-	useEffect(() => {
-		setOpenBreakpoint(false);
-	}, [belowBreakpoint]);
-
-	useEffect(() => {
-		setOpenBreakpoint((v) => !v);
-	}, [open]);
-
 	const containerStyle = useMemo(
 		() => ({
 			minWidth: isOpen ? '' : 0,
@@ -107,35 +102,50 @@ export function XSidebar({
 		[width, isOpen, isResizeable],
 	);
 
-	const ref = useRef(null);
+	const reverse = useMemo(() => type === 'right', [type]);
+	const containerRef = useRef(null);
+	const handleDrag = useCallback(
+		(e, ui) => setWidth((width) => width + (reverse ? -ui.deltaX : ui.deltaX)),
+		[reverse],
+	);
+	const handleDragEnd = useCallback(
+		(e, ui) => setWidth(containerRef.current.getBoundingClientRect().width),
+		[],
+	);
 
-	const handleDrag = useCallback((e, ui) => {
-		setWidth((width) => width + ui.deltaX);
-		/*const { direction } = this.props;
-		const factor = direction === 'e' || direction === 's' ? -1 : 1;
-
-		// modify the size based on the drag delta
-		let delta = this.isHorizontal() ? ui.deltaX : ui.deltaY;
-		this.setState((s, p) => ({ size: Math.max(10, s.size - delta * factor) }));*/
-	}, []);
-
-	const handleDragEnd = useCallback((e, ui) => {
-		setWidth(ref.current.getBoundingClientRect().width);
-	}, []);
+	useEffect(() => {
+		setOpenBreakpoint(false);
+	}, [belowBreakpoint]);
+	useEffect(() => {
+		setOpenBreakpoint((v) => !v);
+	}, [open]);
+	useEffect(() => {
+		if (containerRef.current) {
+			setTimeout(() => {
+				const style = window.getComputedStyle(containerRef.current);
+				const width = parseInt(style.width || 0, 10) || 0;
+				const minWidth = parseInt(style.minWidth || 0, 10) || 0;
+				setWidth(width);
+				setMiniWidth(minWidth);
+			}, 0);
+		}
+	}, [containerRef]);
 
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
 				className={classNames('xSidebar-container', {
-					'xLayout-sidebar': !!$layout,
-					[`xLayout-sidebar--${type}`]: !!$layout && !!type,
+					'xLayout-sidebar': isLayout,
+					[`xLayout-sidebar--${type}`]: isLayout && !!type,
 					[`xSidebar--${type}`]: !!type,
 					'xSidebar--overlay': isOverlay,
 					'xSidebar--close': !isOpen,
 					'xSidebar--mini': isMini,
 					'xSidebar--mini-overlay': isMiniToOverlay,
+					'xSidebar--animate': !isResizeable,
 				})}
 				style={containerStyle}
+				ref={containerRef}
 			>
 				<div
 					onMouseEnter={onMouseEnter}
@@ -143,12 +153,13 @@ export function XSidebar({
 					className={classNames('xSidebar', {
 						'xSidebar--toggle': miniToggle,
 						[`xSidebar--${type}`]: !!type,
+						'xSidebar--animate': !isResizeable,
 					})}
 					style={style}
-					ref={ref}
 				>
 					<div {...props} className={classNames('xSidebar-content', className)}>
 						{children}
+						<br />
 						isOpen: {isOpen ? 'true' : 'false'}
 						<br />
 						isMini: {isMini ? 'true' : 'false'}

@@ -1,8 +1,10 @@
 %sidebar {
 	@apply w-64 flex flex-col justify-between max-h-full h-full absolute top-0 bottom-0 
-        overflow-hidden transition-width duration-300 ease-in-out
-        bg-surface border-solid border-separator;
+        overflow-hidden bg-surface border-solid border-separator;
 	z-index: 9999;
+}
+%sidebar-animate {
+	@apply transition-width duration-300 ease-in-out;
 }
 %sidebar-left {
 	@apply left-0 border-r;
@@ -11,7 +13,7 @@
 	@apply right-0 border-l;
 }
 %sidebar-container {
-	@apply w-64 transition-width duration-300 ease-in-out relative border-0 max-h-full;
+	@apply w-64 relative border-0 max-h-full;
 }
 %sidebar-mini {
 	@apply w-16;
@@ -57,6 +59,9 @@
 }
 .xSidebar-container {
 	@extend %sidebar-container;
+}
+.xSidebar--animate {
+	@extend %sidebar-animate;
 }
 
 .xSidebar--mini {

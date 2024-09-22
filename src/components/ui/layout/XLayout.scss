@@ -31,3 +31,36 @@
 .xLayout-sidebar--right {
 	@apply col-start-3 col-end-4;
 }
+
+.xLayout--hl {
+	.xLayout-header {
+		@apply col-start-2;
+	}
+	.xLayout-sidebar--left {
+		@apply row-start-1;
+	}
+}
+.xLayout--hr {
+	.xLayout-header {
+		@apply col-end-3;
+	}
+	.xLayout-sidebar--right {
+		@apply row-start-1;
+	}
+}
+.xLayout--fl {
+	.xLayout-footer {
+		@apply col-start-2;
+	}
+	.xLayout-sidebar--left {
+		@apply row-end-4;
+	}
+}
+.xLayout--fr {
+	.xLayout-footer {
+		@apply col-end-3;
+	}
+	.xLayout-sidebar--right {
+		@apply row-end-4;
+	}
+}
