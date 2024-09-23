@@ -1,6 +1,5 @@
 .xWindow {
-	@apply absolute m-0 p-0 border border-separator bg-surface w-96 h-96
-	grid grid-rows-window;
+	@apply absolute m-0 p-0 border border-separator bg-surface w-96 h-96 grid grid-rows-window;
 }
 .xWindow-title {
 	@apply mx-2 my-2 truncate;
@@ -10,4 +9,63 @@
 }
 .xWindow-content {
 	@apply max-h-full;
+}
+
+.xWindow-res {
+	position: absolute;
+	z-index: 100;
+	display: none;
+	&--n,
+	&--s {
+		@apply h-2 left-0 right-0 cursor-n-resize;
+	}
+	&--e,
+	&--w {
+		@apply w-2 top-0 bottom-0 cursor-e-resize;
+	}
+	&--se,
+	&--sw,
+	&--ne,
+	&--nw {
+		@apply w-2 h-2;
+		z-index: 110;
+	}
+	&--nw {
+		@apply cursor-nw-resize;
+	}
+	&--ne {
+		@apply cursor-ne-resize;
+	}
+	&--se {
+		@apply cursor-se-resize;
+	}
+	&--sw {
+		@apply cursor-sw-resize;
+	}
+	&--n,
+	&--nw,
+	&--ne {
+		@apply -top-1;
+	}
+	&--e,
+	&--ne,
+	&--se {
+		@apply -right-1;
+	}
+	&--s,
+	&--se,
+	&--sw {
+		@apply -bottom-1;
+	}
+	&--w,
+	&--nw,
+	&--sw {
+		@apply -left-1;
+	}
+}
+
+.xWindow {
+	&--resizable > &-res {
+		@apply block;
+	}
 }
