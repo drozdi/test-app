@@ -68,4 +68,7 @@
 	&--resizable > &-res {
 		@apply block;
 	}
+	&--draggable &-bar {
+		@apply cursor-move;
+	}
 }
