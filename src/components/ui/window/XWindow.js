@@ -7,7 +7,7 @@ import './XWindow.scss';
 const changeHandle = {
 	e(rect, dx) {
 		return {
-			width: rect.w + dx,
+			width: rect.width - dx,
 		};
 	},
 	w(rect, dx) {
@@ -24,7 +24,7 @@ const changeHandle = {
 	},
 	s(rect, dx, dy) {
 		return {
-			height: rect.height + dy,
+			height: rect.height - dy,
 		};
 	},
 	se(rect, dx, dy) {
@@ -58,10 +58,6 @@ export function XWindow({
 		width: w,
 		height: h,
 	});
-	const [top, setTop] = useState(x);
-	const [left, setLeft] = useState(y);
-	const [width, setWidth] = useState(w);
-	const [height, setHeight] = useState(h);
 
 	const onDragStart = useCallback(() => {}, []);
 	const onDragMove = useCallback((e, { deltaX, deltaY }) => {
@@ -74,15 +70,12 @@ export function XWindow({
 	const onDragStop = useCallback(() => {}, []);
 	//
 	const onResizeStart = useCallback(() => {}, []);
-	const onResizeMove = useCallback(
-		(e, { handle, size }) => {
-			setPosition((v) => ({
-				...v,
-				...changeHandle[handle](v, v.width - size.width, v.height - size.height),
-			}));
-		},
-		[position],
-	);
+	const onResizeMove = useCallback((e, { handle, size }) => {
+		setPosition((v) => ({
+			...v,
+			...changeHandle[handle](v, v.width - size.width, v.height - size.height),
+		}));
+	}, []);
 	const onResizeStop = useCallback(() => {}, []);
 
 	return (
@@ -98,8 +91,8 @@ export function XWindow({
 				draggableOpts={{
 					disabled: !resizable,
 				}}
-				width={w}
-				height={h}
+				width={position.width}
+				height={position.height}
 				onResizeStart={onResizeStart}
 				onResize={onResizeMove}
 				onResizeStop={onResizeStop}
