@@ -7,24 +7,24 @@ import './XWindow.scss';
 const changeHandle = {
 	e(rect, dx) {
 		return {
-			w: rect.w + dx,
+			width: rect.w + dx,
 		};
 	},
 	w(rect, dx) {
 		return {
-			x: rect.x + dx,
-			w: rect.w - dx,
+			left: rect.left + dx,
+			width: rect.width - dx,
 		};
 	},
 	n(rect, dx, dy) {
 		return {
-			y: rect.y + dy,
-			h: rect.h - dy,
+			top: rect.top + dy,
+			height: rect.height - dy,
 		};
 	},
 	s(rect, dx, dy) {
 		return {
-			h: rect.h + dy,
+			height: rect.height + dy,
 		};
 	},
 	se(rect, dx, dy) {
@@ -72,15 +72,17 @@ export function XWindow({
 		}));
 	}, []);
 	const onDragStop = useCallback(() => {}, []);
-
+	//
 	const onResizeStart = useCallback(() => {}, []);
-	const onResizeMove = useCallback((e, d) => {
-		setPosition((v) => ({
-			...v,
-			...d.size,
-		}));
-		console.log(d);
-	}, []);
+	const onResizeMove = useCallback(
+		(e, { handle, size }) => {
+			setPosition((v) => ({
+				...v,
+				...changeHandle[handle](v, v.width - size.width, v.height - size.height),
+			}));
+		},
+		[position],
+	);
 	const onResizeStop = useCallback(() => {}, []);
 
 	return (
