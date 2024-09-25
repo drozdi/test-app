@@ -63,48 +63,27 @@ export function XWindow({
 		height: h,
 	});
 	const [fullscreen, setFullscreen] = useState(false);
+	const [collapse, setCollapse] = useState(false);
 
-	/*function icon (type) {
-		if (type === "collapse") {
-			return {
-				onClick: () => collapse.value = true,
-				icon: 'minimize',
-				title: 'Свернуть',
-				//icon: collapse.value? 'mdi-arrow-collapse-up': 'mdi-arrow-collapse-down'
-			}
-		} else if (type === "fullscreen") {
-			return {
-				onClick: () => fullscreen.value = !fullscreen.value,
-				icon: fullscreen.value? 'mdi-fullscreen-exit': 'mdi-fullscreen',
-				title: fullscreen.value? $i18n.t('btn.unFullscreen'): $i18n.t('btn.fullscreen'),
-			}
-		} else if (type === "close") {
-			return {
-				onClick: onClose,
-				color: "red",
-				icon: "close",
-				title: $i18n.t('btn.close'),
-				//icon: "mdi-close",
-			}
-		} else if (type === "reload") {
-			return {
-				onClick: onReload,
-				icon: "mdi-reload",
-				title: $i18n.t('btn.reload'),
-			}
-		}
-		return null;
-	}*/
+	const canDo = useCallback((type) => {
+		return icons.includes(type)
+	}, [icons]);
+
+	const style = useMemo(()=> {
+		return fullscreen || collapse? {}: position;
+	}, [fullscreen, collapse, position])
 
 	const onFullscreen = (event) => {
+		if (!canDo('fullscreen')) {
+			return;
+		}
+		if (!fullscreen) {
+			setCollapse(false);
+		}
 		setFullscreen((v) => !v);
-		setPosition((v) => ({
-			...v,
-			top: 0,
-			left: 0,
-			width: window.innerWidth,
-			height: window.innerHeight,
-		}));
+	};
+	const onCollapse = (event) => {
+		setCollapse((v) => !v);
 	};
 
 	const mixIcons = useMemo(
@@ -115,10 +94,12 @@ export function XWindow({
 						return (
 							<XBtn
 								key={type}
+								className={'bg-red-700/60 hover:bg-red-700/40'}
 								color="dark"
 								size="sm"
 								icon="mdi-close"
 								flat={true}
+								square={true}
 								title="Закрыть"
 							/>
 						);
@@ -130,6 +111,7 @@ export function XWindow({
 								size="sm"
 								icon="mdi-reload"
 								flat={true}
+								square={true}
 								title="Обновить"
 							/>
 						);
@@ -144,10 +126,22 @@ export function XWindow({
 									fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'
 								}
 								flat={true}
+								square={true}
 								title={fullscreen ? 'Свернуть в окно' : 'Развернуть'}
 							/>
 						);
-					}
+					} else if (type === "collapse") {
+						return (<XBtn
+								onClick={onCollapse}
+								key={type}
+								color="dark"
+								size="sm"
+								icon="mdi-window-minimize"
+								flat={true}
+								square={true}
+								title="Свернуть"
+							/>)
+					} 
 					return null;
 				})}
 			</div>
@@ -157,12 +151,12 @@ export function XWindow({
 
 	const onDragStart = useCallback(() => {}, []);
 	const onDragMove = useCallback((e, { deltaX, deltaY }) => {
-		setPosition((v) => ({
+		!fullscreen && setPosition((v) => ({
 			...v,
 			top: v.top + deltaY,
 			left: v.left + deltaX,
 		}));
-	}, []);
+	}, [fullscreen]);
 	const onDragStop = useCallback(() => {}, []);
 	//
 	const onResizeStart = useCallback(() => {}, []);
@@ -176,7 +170,7 @@ export function XWindow({
 
 	return (
 		<DraggableCore
-			disabled={!draggable}
+			disabled={!draggable && fullscreen}
 			onDragStart={onDragStart}
 			onDrag={onDragMove}
 			onDragStop={onDragStop}
@@ -185,7 +179,7 @@ export function XWindow({
 		>
 			<Resizable
 				draggableOpts={{
-					disabled: !resizable,
+					disabled: !resizable && (fullscreen || collapse),
 				}}
 				width={position.width}
 				height={position.height}
@@ -197,19 +191,24 @@ export function XWindow({
 					<div className={`xWindow-res xWindow-res--${handleAxis}`} ref={ref} />
 				)}
 			>
+				
 				<div
 					className={classNames('xWindow', className, {
-						'xWindow--resizable': resizable,
-						'xWindow--draggable': draggable,
+						'xWindow--resizable': resizable && !fullscreen && !collapse,
+						'xWindow--draggable': draggable && !fullscreen,
+						'xWindow--fullscreen': fullscreen,
+						'xWindow--collapse': collapse
 					})}
-					style={position}
+					style={style}
 				>
-					<div className="xWindow-bar">
+					<div className="xWindow-bar"
+						onDoubleClick={onFullscreen}>
 						{title && <div className="xWindow-title">{title}</div>}
 						{mixIcons}
 					</div>
 					<div className="xWindow-content">{children}</div>
 				</div>
+				
 			</Resizable>
 		</DraggableCore>
 	); //*/
