@@ -65,23 +65,24 @@ export function XWindow({
 	const [fullscreen, setFullscreen] = useState(false);
 	const [collapse, setCollapse] = useState(false);
 
-	const canDo = useCallback((type) => {
-		return icons.includes(type)
-	}, [icons]);
+	const canDo = useCallback((type) => icons.includes(type), [icons]);
 
-	const style = useMemo(()=> {
-		return fullscreen || collapse? {}: position;
-	}, [fullscreen, collapse, position])
+	const style = useMemo(() => {
+		return fullscreen || collapse ? {} : position;
+	}, [fullscreen, collapse, position]);
 
-	const onFullscreen = (event) => {
-		if (!canDo('fullscreen')) {
-			return;
-		}
-		if (!fullscreen) {
-			setCollapse(false);
-		}
-		setFullscreen((v) => !v);
-	};
+	const onFullscreen = useCallback(
+		(event) => {
+			if (!canDo('fullscreen')) {
+				return;
+			}
+			if (!fullscreen) {
+				setCollapse(false);
+			}
+			setFullscreen((v) => !v);
+		},
+		[canDo, fullscreen],
+	);
 	const onCollapse = (event) => {
 		setCollapse((v) => !v);
 	};
@@ -99,6 +100,7 @@ export function XWindow({
 								size="sm"
 								icon="mdi-close"
 								flat={true}
+								tonal={true}
 								square={true}
 								title="Закрыть"
 							/>
@@ -111,6 +113,7 @@ export function XWindow({
 								size="sm"
 								icon="mdi-reload"
 								flat={true}
+								tonal={true}
 								square={true}
 								title="Обновить"
 							/>
@@ -126,37 +129,45 @@ export function XWindow({
 									fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'
 								}
 								flat={true}
+								tonal={true}
 								square={true}
 								title={fullscreen ? 'Свернуть в окно' : 'Развернуть'}
 							/>
 						);
-					} else if (type === "collapse") {
-						return (<XBtn
+					} else if (type === 'collapse') {
+						return (
+							<XBtn
 								onClick={onCollapse}
 								key={type}
 								color="dark"
 								size="sm"
 								icon="mdi-window-minimize"
 								flat={true}
+								tonal={true}
 								square={true}
 								title="Свернуть"
-							/>)
-					} 
+							/>
+						);
+					}
 					return null;
 				})}
 			</div>
 		),
-		[icons, fullscreen],
+		[icons, fullscreen, onFullscreen],
 	);
 
 	const onDragStart = useCallback(() => {}, []);
-	const onDragMove = useCallback((e, { deltaX, deltaY }) => {
-		!fullscreen && setPosition((v) => ({
-			...v,
-			top: v.top + deltaY,
-			left: v.left + deltaX,
-		}));
-	}, [fullscreen]);
+	const onDragMove = useCallback(
+		(e, { deltaX, deltaY }) => {
+			!fullscreen &&
+				setPosition((v) => ({
+					...v,
+					top: v.top + deltaY,
+					left: v.left + deltaX,
+				}));
+		},
+		[fullscreen],
+	);
 	const onDragStop = useCallback(() => {}, []);
 	//
 	const onResizeStart = useCallback(() => {}, []);
@@ -191,24 +202,21 @@ export function XWindow({
 					<div className={`xWindow-res xWindow-res--${handleAxis}`} ref={ref} />
 				)}
 			>
-				
 				<div
 					className={classNames('xWindow', className, {
 						'xWindow--resizable': resizable && !fullscreen && !collapse,
 						'xWindow--draggable': draggable && !fullscreen,
 						'xWindow--fullscreen': fullscreen,
-						'xWindow--collapse': collapse
+						'xWindow--collapse': collapse,
 					})}
 					style={style}
 				>
-					<div className="xWindow-bar"
-						onDoubleClick={onFullscreen}>
+					<div className="xWindow-bar" onDoubleClick={onFullscreen}>
 						{title && <div className="xWindow-title">{title}</div>}
 						{mixIcons}
 					</div>
 					<div className="xWindow-content">{children}</div>
 				</div>
-				
 			</Resizable>
 		</DraggableCore>
 	); //*/

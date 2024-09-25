@@ -38,7 +38,7 @@ export function XSidebar({
 	/*const props = XSidebarBase.getProps(inProps, {});
     const {children, className, type, mini, miniToOverlay, open, overlay, breakpoint, onMouseEnter, onMouseLeave, onResize, onMini, onToggle } = props;*/
 
-	const { $layout, $update } = useContext(XLayoutContext) || {};
+	const { $layout } = useContext(XLayoutContext) || {};
 
 	const isLayout = useMemo(() => !!$layout, [$layout]);
 
@@ -73,7 +73,7 @@ export function XSidebar({
 
 	const isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniToggle, miniMouse]);
 
-	const isResizeable = useMemo(
+	const canResized = useMemo(
 		() => resizeable && !miniToggle && !isMouseEvent && !isMini && !belowBreakpoint,
 		[resizeable, miniToggle, isMouseEvent, isMini, belowBreakpoint],
 	);
@@ -91,15 +91,15 @@ export function XSidebar({
 			width:
 				isOpen && isMini
 					? miniWidth
-					: isOpen && (isResizeable || (!!width && !isMiniToOverlay))
+					: isOpen && (canResized || (!!width && !isMiniToOverlay))
 						? width
 						: '',
 		}),
-		[width, miniWidth, isMini, isOpen, isMiniToOverlay, isResizeable],
+		[width, miniWidth, isMini, isOpen, isMiniToOverlay, canResized],
 	);
 	const style = useMemo(
-		() => ({ width: isOpen && isResizeable ? width : '' }),
-		[width, isOpen, isResizeable],
+		() => ({ width: isOpen && canResized ? width : '' }),
+		[width, isOpen, canResized],
 	);
 
 	const reverse = useMemo(() => type === 'right', [type]);
@@ -142,7 +142,7 @@ export function XSidebar({
 					'xSidebar--close': !isOpen,
 					'xSidebar--mini': isMini,
 					'xSidebar--mini-overlay': isMiniToOverlay,
-					'xSidebar--animate': !isResizeable,
+					'xSidebar--animate': !canResized,
 				})}
 				style={containerStyle}
 				ref={containerRef}
@@ -153,7 +153,7 @@ export function XSidebar({
 					className={classNames('xSidebar', {
 						'xSidebar--toggle': miniToggle,
 						[`xSidebar--${type}`]: !!type,
-						'xSidebar--animate': !isResizeable,
+						'xSidebar--animate': !canResized,
 					})}
 					style={style}
 				>
@@ -189,7 +189,7 @@ export function XSidebar({
 							/>
 						</div>
 					)}
-					{isResizeable && (
+					{canResized && (
 						<DraggableCore onDrag={handleDrag} onStop={handleDragEnd}>
 							<div className="xSidebar-res"></div>
 						</DraggableCore>

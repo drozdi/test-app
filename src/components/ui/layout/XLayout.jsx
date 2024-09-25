@@ -115,23 +115,35 @@ export function XLayout({
 	const def = () => {
 		return <XMain>{slot('', null)}</XMain>;
 	};
-	const isHl = useMemo(() => $layout.rows[0][0] === 'l' || !hasSlot('header'), [$layout.rows]);
-	const isHr = useMemo(() => $layout.rows[0][2] === 'r' || !hasSlot('header'), [$layout.rows]);
-	const isFl = useMemo(() => $layout.rows[2][0] === 'l' || !hasSlot('footer'), [$layout.rows]);
-	const isFr = useMemo(() => $layout.rows[2][2] === 'r' || !hasSlot('footer'), [$layout.rows]);
+	const isHl = useMemo(
+		() => $layout.rows[0][0] === 'l' || !hasSlot('header'),
+		[$layout.rows, hasSlot],
+	);
+	const isHr = useMemo(
+		() => $layout.rows[0][2] === 'r' || !hasSlot('header'),
+		[$layout.rows, hasSlot],
+	);
+	const isFl = useMemo(
+		() => $layout.rows[2][0] === 'l' || !hasSlot('footer'),
+		[$layout.rows, hasSlot],
+	);
+	const isFr = useMemo(
+		() => $layout.rows[2][2] === 'r' || !hasSlot('footer'),
+		[$layout.rows, hasSlot],
+	);
 
-	const classes = useMemo(() => ({
-		'xLayout--hl': isHl,
-		'xLayout--hr': isHr,
-		'xLayout--fl': isFl,
-		'xLayout--fr': isFr,
-	}), [isHl, isHr, isFl, isFr]);
+	const classes = useMemo(
+		() => ({
+			'xLayout--hl': isHl,
+			'xLayout--hr': isHr,
+			'xLayout--fl': isFl,
+			'xLayout--fr': isFr,
+		}),
+		[isHl, isHr, isFl, isFr],
+	);
 
 	let layout = (
-		<div
-			className={classNames('xLayout', classes)}
-			ref={ref}
-		>
+		<div className={classNames('xLayout', classes)} ref={ref}>
 			{hasSlot('left') && left()}
 			{hasSlot('right') && right()}
 			{hasSlot('header') && header()}
@@ -152,5 +164,9 @@ export function XLayout({
 
 export function XMain({ children }) {
 	//const { $layout, $update } = useContext(XLayoutContext)
-	return <main className="x-layout__main">{children}</main>;
+	return (
+		<main className="xLayout-main">
+			<div className="xLayout-content">{children}</div>
+		</main>
+	);
 }

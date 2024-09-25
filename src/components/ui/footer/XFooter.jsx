@@ -1,14 +1,15 @@
 import classNames from 'classnames';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { XLayoutContext } from '../layout/XLayoutContext';
 import './XFooter.scss';
 
 export function XFooter({ children, className }) {
-	const { $layout, $update } = useContext(XLayoutContext);
+	const { $layout } = useContext(XLayoutContext);
+	const isLayout = useMemo(() => !!$layout, [$layout]);
 	return (
 		<footer
 			className={classNames(className, 'xFooter', {
-				['xLayout-footer']: $layout,
+				'xLayout-footer': isLayout,
 			})}
 		>
 			{children}

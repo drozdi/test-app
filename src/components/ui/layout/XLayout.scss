@@ -11,8 +11,11 @@
 	z-index: 100;
 }
 .xLayout-main {
-	@apply col-start-2 col-end-3 row-start-2 row-end-3;
+	@apply col-start-2 col-end-3 row-start-2 row-end-3 overflow-hidden relative;
 	z-index: 10;
+}
+.xLayout-content {
+	@apply absolute top-0 bottom-0 left-0 right-0 overflow-auto;
 }
 .xLayout-header {
 	@apply row-start-1 row-end-2 border-b;
