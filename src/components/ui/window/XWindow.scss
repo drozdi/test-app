@@ -5,7 +5,7 @@
 	@apply mx-2 my-2 truncate;
 }
 .xWindow-bar {
-	@apply min-h-8;
+	@apply min-h-8 flex flex-row justify-between border-b border-separator;
 }
 .xWindow-content {
 	@apply max-h-full;
