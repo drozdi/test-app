@@ -20,6 +20,7 @@ export function XSidebar({
 	type = 'left',
 	open = false,
 	overlay = false,
+	w = null,
 	breakpoint = null,
 	mini = false,
 	miniToOverlay = false,
@@ -28,7 +29,6 @@ export function XSidebar({
 	miniW = null,
 
 	resizeable = false,
-	w = null,
 
 	onResize = () => {},
 	onMini = () => {},
@@ -48,7 +48,7 @@ export function XSidebar({
 
 	const belowBreakpoint = useMemo(
 		() => (breakpoint && $layout.width < breakpoint) || false,
-		[$layout, breakpoint],
+		[$layout.width, breakpoint],
 	);
 
 	const isOpen = useMemo(
@@ -113,12 +113,7 @@ export function XSidebar({
 		[],
 	);
 
-	useEffect(() => {
-		setOpenBreakpoint(false);
-	}, [belowBreakpoint]);
-	useEffect(() => {
-		setOpenBreakpoint((v) => !v);
-	}, [open]);
+	
 	useEffect(() => {
 		if (containerRef.current) {
 			setTimeout(() => {
@@ -127,9 +122,16 @@ export function XSidebar({
 				const minWidth = parseInt(style.minWidth || 0, 10) || 0;
 				setWidth(width);
 				setMiniWidth(minWidth);
+				setOpenBreakpoint(() => !belowBreakpoint);
 			}, 0);
 		}
 	}, [containerRef]);
+	useEffect(() => {
+		setOpenBreakpoint(false);
+	}, [belowBreakpoint]);
+	useEffect(() => {
+		setOpenBreakpoint((v) => !v);
+	}, [open]);
 
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>

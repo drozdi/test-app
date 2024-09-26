@@ -62,26 +62,26 @@ export function XWindow({
 		width: w,
 		height: h,
 	});
-	const [fullscreen, setFullscreen] = useState(false);
-	const [collapse, setCollapse] = useState(false);
+	const [isFullscreen, setFullscreen] = useState(false);
+	const [isCollapse, setCollapse] = useState(false);
 
 	const canDo = useCallback((type) => icons.includes(type), [icons]);
 
 	const style = useMemo(() => {
-		return fullscreen || collapse ? {} : position;
-	}, [fullscreen, collapse, position]);
+		return isFullscreen || isCollapse ? {} : position;
+	}, [isFullscreen, isCollapse, position]);
 
 	const onFullscreen = useCallback(
 		(event) => {
 			if (!canDo('fullscreen')) {
 				return;
 			}
-			if (!fullscreen) {
+			if (!isFullscreen) {
 				setCollapse(false);
 			}
 			setFullscreen((v) => !v);
 		},
-		[canDo, fullscreen],
+		[canDo, isFullscreen],
 	);
 	const onCollapse = (event) => {
 		setCollapse((v) => !v);
@@ -126,12 +126,12 @@ export function XWindow({
 								color="dark"
 								size="sm"
 								icon={
-									fullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'
+									isFullscreen ? 'mdi-fullscreen-exit' : 'mdi-fullscreen'
 								}
 								flat={true}
 								tonal={true}
 								square={true}
-								title={fullscreen ? 'Свернуть в окно' : 'Развернуть'}
+								title={isFullscreen ? 'Свернуть в окно' : 'Развернуть'}
 							/>
 						);
 					} else if (type === 'collapse') {
@@ -153,20 +153,20 @@ export function XWindow({
 				})}
 			</div>
 		),
-		[icons, fullscreen, onFullscreen],
+		[icons, isFullscreen, onFullscreen],
 	);
 
 	const onDragStart = useCallback(() => {}, []);
 	const onDragMove = useCallback(
 		(e, { deltaX, deltaY }) => {
-			!fullscreen &&
+			!isFullscreen &&
 				setPosition((v) => ({
 					...v,
 					top: v.top + deltaY,
 					left: v.left + deltaX,
 				}));
 		},
-		[fullscreen],
+		[isFullscreen],
 	);
 	const onDragStop = useCallback(() => {}, []);
 	//
@@ -181,7 +181,7 @@ export function XWindow({
 
 	return (
 		<DraggableCore
-			disabled={!draggable && fullscreen}
+			disabled={!draggable && isFullscreen}
 			onDragStart={onDragStart}
 			onDrag={onDragMove}
 			onDragStop={onDragStop}
@@ -190,7 +190,7 @@ export function XWindow({
 		>
 			<Resizable
 				draggableOpts={{
-					disabled: !resizable && (fullscreen || collapse),
+					disabled: !resizable && (isFullscreen || isCollapse),
 				}}
 				width={position.width}
 				height={position.height}
@@ -204,10 +204,10 @@ export function XWindow({
 			>
 				<div
 					className={classNames('xWindow', className, {
-						'xWindow--resizable': resizable && !fullscreen && !collapse,
-						'xWindow--draggable': draggable && !fullscreen,
-						'xWindow--fullscreen': fullscreen,
-						'xWindow--collapse': collapse,
+						'xWindow--resizable': resizable && !isFullscreen && !isCollapse,
+						'xWindow--draggable': draggable && !isFullscreen,
+						'xWindow--fullscreen': isFullscreen,
+						'xWindow--collapse': isCollapse,
 					})}
 					style={style}
 				>
