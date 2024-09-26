@@ -92,23 +92,45 @@ export function XLayout({
 	const header = () => {
 		return (
 			<XHeader>
-				{hasSlot('left') && belowBreakpoint && (
-					<XBtn
-						color="primary"
-						onClick={() => $update('left', 'open', !$layout.left.open)}
-					>
-						left
-					</XBtn>
-				)}
-				{hasSlot('right') && belowBreakpoint && (
-					<XBtn
-						color="primary"
-						onClick={() => $update('right', 'open', !$layout.right.open)}
-					>
-						right
-					</XBtn>
-				)}
-				{slot('header', null)}
+				{{
+					prepend: (props) => {
+						return (
+							hasSlot('left') &&
+							belowBreakpoint && (
+								<XBtn
+									color="primary"
+									className="float-start self-center"
+									icon="mdi-dock-left"
+									size="sm"
+									square={true}
+									onClick={() =>
+										$update('left', 'open', !$layout.left.open)
+									}
+								/>
+							)
+						);
+					},
+					append: (props) => {
+						return (
+							hasSlot('right') &&
+							belowBreakpoint && (
+								<XBtn
+									color="primary"
+									icon="mdi-dock-right"
+									className="float-end self-center"
+									size="sm"
+									square={true}
+									onClick={() =>
+										$update('right', 'open', !$layout.right.open)
+									}
+								/>
+							)
+						);
+					},
+					default: (props) => {
+						return slot('header', null);
+					},
+				}}
 			</XHeader>
 		);
 	};
