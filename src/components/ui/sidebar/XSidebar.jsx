@@ -113,7 +113,6 @@ export function XSidebar({
 		[],
 	);
 
-	
 	useEffect(() => {
 		if (containerRef.current) {
 			setTimeout(() => {
@@ -125,10 +124,8 @@ export function XSidebar({
 				setOpenBreakpoint(() => !belowBreakpoint);
 			}, 0);
 		}
-	}, [containerRef]);
-	useEffect(() => {
-		setOpenBreakpoint(false);
-	}, [belowBreakpoint]);
+	}, [belowBreakpoint, containerRef]);
+
 	useEffect(() => {
 		setOpenBreakpoint((v) => !v);
 	}, [open]);

@@ -1,9 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { useSlots } from '../../../hooks/useSlots';
-import './XLayout.scss';
-
 import { XBtn } from '../btn/XBtn';
+import './XLayout.scss';
 
 import classNames from 'classnames';
 import { XFooter } from '../footer/XFooter';

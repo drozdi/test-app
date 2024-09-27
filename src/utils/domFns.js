@@ -10,13 +10,15 @@ export function matchesSelectorToParentElements(el, selector, baseNode) {
 		'msMatchesSelector',
 		'oMatchesSelector',
 	].find((func) => isFunction(node[func]));
-
 	if (!isFunction(node[matchesSelectorFunc])) {
 		return false;
 	}
 
 	do {
-		if (node[matchesSelectorFunc](selector)) {
+		if (
+			isFunction(node[matchesSelectorFunc]) &&
+			node[matchesSelectorFunc](selector)
+		) {
 			return true;
 		}
 		if (node === baseNode) {
