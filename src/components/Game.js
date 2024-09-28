@@ -36,14 +36,16 @@ function Game() {
 		if (isGameEnded) {
 			return;
 		}
+		let win = false;
 		for (let combination of WIN_COMBINATIONS) {
 			let [a, b, c] = combination;
 			if (field[a] && field[a] === field[b] && field[b] === field[c]) {
+				win = true;
 				dispatch(setIsGameEnded(true));
 				dispatch(setCurrentPlayer(field[a]));
 			}
 		}
-		if (field.every((cell) => cell !== '')) {
+		if (!win && field.every((cell) => cell !== '')) {
 			dispatch(setIsDraw(true));
 			dispatch(setIsGameEnded(true));
 		}
