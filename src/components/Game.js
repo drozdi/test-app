@@ -1,12 +1,20 @@
-import React from 'react';
-import { setCurrentPlayer, setField, setIsDraw, setIsGameEnded } from '../actions';
+import React, { useEffect, useState } from 'react';
+import {
+	restartGame,
+	setCurrentPlayer,
+	setField,
+	setIsDraw,
+	setIsGameEnded,
+} from '../actions';
 import store from '../store';
 import Field from './Field';
 import style from './Game.module.css';
 import Information from './Information';
+import { XBtn } from './ui/btn/XBtn';
 
 function Game() {
-	const { isGameEnded, field, currentPlayer, isDraw } = store.getState();
+	const [state, setState] = useState(store.getState());
+	const { isGameEnded, field, currentPlayer, isDraw } = state;
 	const { dispatch } = store;
 	const WIN_COMBINATIONS = [
 		[0, 1, 2],
@@ -49,25 +57,20 @@ function Game() {
 		dispatch(setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X'));
 		dispatch(setField(newField));
 	};
-	const reloadClick = () => {
-		dispatch(setField(Array(9).fill('')));
-		dispatch(setIsGameEnded(false));
-		dispatch(setIsDraw(false));
-		dispatch(setCurrentPlayer('X'));
-	};
+
 	checkWinner();
+
+	useEffect(() => {
+		return store.subscribe(() => setState(store.getState()));
+	}, []);
 
 	return (
 		<div className={style.game}>
-			<Information
-				isDraw={isDraw}
-				isGameEnded={isGameEnded}
-				currentPlayer={currentPlayer}
-			/>
+			<Information />
 			<Field field={field} setFieldValue={setFieldValue} />
-			<button disabled={!isGameEnded} onClick={reloadClick}>
+			<XBtn disabled={!isGameEnded} onClick={() => dispatch(restartGame())}>
 				Начать заново
-			</button>
+			</XBtn>
 		</div>
 	);
 }
