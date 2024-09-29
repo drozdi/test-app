@@ -1,6 +1,13 @@
 @tailwind base;
 
 @layer base {
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
 	body {
 		background-color: #002650;
 		color: rgba(255, 255, 255, 0.7);

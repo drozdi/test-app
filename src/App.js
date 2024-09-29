@@ -1,12 +1,15 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { XLayout } from './components/ui/layout';
 import { XSidebar } from './components/ui/sidebar';
 import { XWindow } from './components/ui/window';
-
 function App() {
+	const ref = useRef(null);
+	useEffect(() => {
+		console.log(ref);
+	}, [ref]);
 	return (
 		<>
-			<XWindow className="bg-blue-900" title="test">
+			<XWindow ref={ref} className="bg-blue-900" title="test">
 				<XLayout container={true} overlay={true} view="hhr lpr lff">
 					{{
 						left: (props) => (
