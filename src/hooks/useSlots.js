@@ -68,16 +68,16 @@ export function useSlots(children) {
 		return genSlot(children[0], ...args);
 	};
 
-	const has = (slot) => {
+	const hasSlot = (slot) => {
 		return slots.hasOwnProperty(slot) && slots[slot].length > 0;
 	};
 
-	const wrap = (slot, componentName, props = {}) => {
+	const wrapSlot = (slot, componentName, props = {}) => {
 		if (slot.type === componentName) {
 			return cloneElement(slot, props);
 		}
 		return h(componentName, props, slot);
 	};
 
-	return [slot, has, wrap];
+	return { slot, hasSlot, wrapSlot };
 }

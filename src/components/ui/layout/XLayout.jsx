@@ -49,7 +49,7 @@ export function XLayout({
 		[$layout, breakpoint],
 	);
 
-	const [slot, hasSlot, wrapSlot] = useSlots(children);
+	const { slot, hasSlot, wrapSlot } = useSlots(children);
 
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {

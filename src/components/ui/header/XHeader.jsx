@@ -7,16 +7,16 @@ import './XHeader.scss';
 export function XHeader({ children, className }) {
 	const { $layout } = useContext(XLayoutContext);
 	const isLayout = useMemo(() => !!$layout, [$layout]);
-	const [slot, hasSlot, wrapSlot] = useSlots(children);
+	const { slot } = useSlots(children);
 	return (
 		<header
 			className={classNames(className, 'xHeader', {
 				'xLayout-header': isLayout,
 			})}
 		>
-			<div className="xHeader-prepend">{slot('prepend')}</div>
+			<div className="xHeader-prepend">{slot('prepend', null)}</div>
 			<div className="xHeader-content">{slot('', null)}</div>
-			<div className="xHeader-append">{slot('append')}</div>
+			<div className="xHeader-append">{slot('append', null)}</div>
 		</header>
 	);
 }
