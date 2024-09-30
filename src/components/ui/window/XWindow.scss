@@ -68,7 +68,7 @@
 	&--resizable > &-res {
 		@apply block;
 	}
-	&--draggable:not(&--fullscreen):not(&--collapse) &-bar {
+	&--draggable:not(&--fullscreen):not(&--collapsed) &-bar {
 		@apply cursor-move;
 	}
 	&--fullscreen {

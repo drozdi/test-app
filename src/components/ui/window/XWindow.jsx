@@ -6,8 +6,9 @@ import { Resizable } from 'react-resizable';
 import { getComputedSize } from '../../../utils/domFns';
 import { minMax } from '../../../utils/fns';
 import { isString } from '../../../utils/is';
+import { AppContext } from '../../app';
+import { XStorage } from '../../app/hooks/useXStorage';
 import { XBtn } from '../btn/XBtn';
-import { XStorage } from '../../../hooks/useXStorage';
 import './XWindow.scss';
 
 const changeHandle = {
@@ -48,6 +49,7 @@ const changeHandle = {
 };
 
 export class XWindow extends Component {
+	static contextType = AppContext;
 	static propTypes = {
 		parent: PropTypes.any,
 		children: PropTypes.node,
@@ -78,26 +80,21 @@ export class XWindow extends Component {
 		resizable: true,
 		draggable: true,
 	};
-	state = {
-		position: {
-			top: this.props.y,
-			left: this.props.x,
-			width: this.props.w,
-			height: this.props.h,
-		},
-		isFullscreen: false,
-		isCollapse: false,
-	};
 	constructor(props) {
 		super(props);
 		this.$sm = XStorage('WINDOW', 'app-1');
-		this.$sm.active = true;
-		console.log(this.$sm)
-		/*this.setState((v) => ({
-			...v,
-			position: this.$sm.get('position',this.state.position)
-		}));//*/
+		this.state = {
+			isFullscreen: this.$sm.get('isFullscreen', false),
+			isCollapsed: this.$sm.get('isCollapsed', false),
+			position: this.$sm.get('position', {
+				top: this.props.y,
+				left: this.props.x,
+				width: this.props.w,
+				height: this.props.h,
+			}),
+		};
 		//console.log(this);
+		this.$sm.active = true;
 	}
 
 	onDragStart = () => {};
@@ -128,23 +125,14 @@ export class XWindow extends Component {
 			return;
 		}
 		if (!this.state.isFullscreen) {
-			this.setState((v) => ({
-				...v,
-				isCollapse: false,
-			}));
+			this.isCollapsed = false;
 		}
-		this.setState((v) => ({
-			...v,
-			isFullscreen: !v.isFullscreen,
-		}));
+		this.isFullscreen = !this.isFullscreen;
 	};
 	onCollapse = (event) => {
-		this.setState({
-			...this.state,
-			isCollapse: this.state.isCollapse,
-		});
+		this.isCollapsed = !this.isCollapsed;
 	};
-	renderIcon = () => {
+	get mixIcon() {
 		return (
 			<div className="xWindow-drag-no">
 				{(this.props.icons || '').split(/\s+/).map((type) => {
@@ -216,7 +204,7 @@ export class XWindow extends Component {
 				})}
 			</div>
 		);
-	};
+	}
 
 	get position() {
 		return this.state.position;
@@ -229,7 +217,26 @@ export class XWindow extends Component {
 				...value,
 			}),
 		}));
-		
+	}
+
+	get isFullscreen() {
+		return this.state.isFullscreen;
+	}
+	set isFullscreen(val) {
+		this.setState((v) => ({
+			...v,
+			isFullscreen: this.$sm.set('isFullscreen', val),
+		}));
+	}
+
+	get isCollapsed() {
+		return this.state.isCollapsed;
+	}
+	set isCollapsed(val) {
+		this.setState((v) => ({
+			...v,
+			isCollapsed: this.$sm.set('isCollapsed', val),
+		}));
 	}
 
 	get x() {
@@ -311,14 +318,14 @@ export class XWindow extends Component {
 	}
 
 	get style() {
-		return this.state.isFullscreen || this.state.isCollapse
+		return this.state.isFullscreen || this.state.isCollapsed
 			? {}
 			: this.state.position;
 	}
 
 	render() {
 		const { draggable, resizable, title, className, children } = this.props;
-		const { position, isFullscreen, isCollapse } = this.state;
+		const { position, isFullscreen, isCollapsed } = this.state;
 		return (
 			<DraggableCore
 				disabled={!draggable && isFullscreen}
@@ -330,7 +337,7 @@ export class XWindow extends Component {
 			>
 				<Resizable
 					draggableOpts={{
-						disabled: !resizable && (isFullscreen || isCollapse),
+						disabled: !resizable && (isFullscreen || isCollapsed),
 					}}
 					width={position.width}
 					height={position.height}
@@ -348,16 +355,16 @@ export class XWindow extends Component {
 					<div
 						className={classNames('xWindow', className, {
 							'xWindow--resizable':
-								resizable && !isFullscreen && !isCollapse,
+								resizable && !isFullscreen && !isCollapsed,
 							'xWindow--draggable': draggable && !isFullscreen,
-							'xWindow--fullscreen': isFullscreen,
-							'xWindow--collapse': isCollapse,
+							'xWindow--fullscreen': isFullscreen && !isCollapsed,
+							'xWindow--collapsed': isCollapsed,
 						})}
 						style={this.style}
 					>
 						<div className="xWindow-bar" onDoubleClick={this.onFullscreen}>
 							{title && <div className="xWindow-title">{title}</div>}
-							{this.renderIcon()}
+							{this.mixIcon}
 						</div>
 						<div className="xWindow-content">{children}</div>
 					</div>

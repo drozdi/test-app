@@ -1,23 +1,8 @@
-import { useEffect, useState, createContext } from 'react';
-import settingManager from '../core/setting-manager';
+import { createContext, useEffect, useState } from 'react';
+import settingManager from '../../../core/setting-manager';
+import { cached } from '../../../utils/cached';
 
-const XStorageContext = createContext({
-	get (key, def, type = null) {
-		return def;
-	},
-	set (key, val) {
-		return val;
-	}
-});
-export function XStorageProvider({children, type, key}) {
-	return (
-		<XStorageContext.Provider value={XStorage(type, key)}>
-			{children}
-		</XStorageContext.Provider>
-	);
-}
-
-export function XStorage(type, key) {
+export const XStorage = cached(function XStorage(type, key) {
 	let smActive = false;
 	let sm = {
 		set(key, val) {
@@ -34,18 +19,14 @@ export function XStorage(type, key) {
 		sm = settingManager['APP'].sub(key);
 	}
 	return {
-		active: {
-			get () {
-				return smActive;
-			},
-			set (val) {
-				smActive = val	
-			}
+		get active() {
+			return smActive;
+		},
+		set active(val) {
+			smActive = val;
 		},
 		set(key, val) {
-			if (smActive) {
-				sm.set(key, val);
-			}
+			smActive && sm.set(key, val);
 			return val;
 		},
 		get(key, val, type = null) {
@@ -57,19 +38,29 @@ export function XStorage(type, key) {
 			fn(...args);
 			smActive = old;
 		},
-		noSave(fn = () => {}, ...args) {
+		no(fn = () => {}, ...args) {
 			let old = smActive;
 			smActive = false;
 			fn(...args);
 			smActive = old;
 		},
-		use (name, initial = null) {
-			const [state, setState] = useState(initial);
-			useEffect(() => {
-				this.set(name, state);
-			}, [state]);
-		}
 	};
+});
+
+export const XStorageContext = createContext({
+	get(key, def, type = null) {
+		return def;
+	},
+	set(key, val) {
+		return val;
+	},
+});
+export function XStorageProvider({ children, type, key }) {
+	return (
+		<XStorageContext.Provider value={XStorage(type, key)}>
+			{children}
+		</XStorageContext.Provider>
+	);
 }
 
 export function useXStorage(type, key) {
