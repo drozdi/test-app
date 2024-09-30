@@ -1,5 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import settingManager from '../core/setting-manager';
+
+const XStorageContext = createContext({
+	get (key, def, type = null) {
+		return def;
+	},
+	set (key, val) {
+		return val;
+	}
+});
+export function XStorageProvider({children, type, key}) {
+	return (
+		<XStorageContext.Provider value={XStorage(type, key)}>
+			{children}
+		</XStorageContext.Provider>
+	);
+}
 
 export function XStorage(type, key) {
 	let smActive = false;
@@ -7,37 +23,52 @@ export function XStorage(type, key) {
 		set(key, val) {
 			return val;
 		},
-		get(key, val, type = null) {
-			return val;
+		get(key, def, type = null) {
+			return def;
 		},
 		remove(key) {},
 	};
-	sm = settingManager[type].sub(key);
+	if (settingManager[type] && key) {
+		sm = settingManager[type].sub(key);
+	} else if (key === 'core') {
+		sm = settingManager['APP'].sub(key);
+	}
 	return {
-		active(active = true) {
-			smActive = active;
+		active: {
+			get () {
+				return smActive;
+			},
+			set (val) {
+				smActive = val	
+			}
 		},
 		set(key, val) {
-			smActive && sm.set(key, val);
+			if (smActive) {
+				sm.set(key, val);
+			}
 			return val;
 		},
 		get(key, val, type = null) {
 			return sm.get(key, val, type);
 		},
-		save(fn = async () => {}) {
-			let args = [].slice.call(arguments, 1);
+		save(fn = () => {}, ...args) {
 			let old = smActive;
 			smActive = true;
 			fn(...args);
 			smActive = old;
 		},
-		noSave(fn = async () => {}) {
-			let args = [].slice.call(arguments, 1);
+		noSave(fn = () => {}, ...args) {
 			let old = smActive;
 			smActive = false;
 			fn(...args);
 			smActive = old;
 		},
+		use (name, initial = null) {
+			const [state, setState] = useState(initial);
+			useEffect(() => {
+				this.set(name, state);
+			}, [state]);
+		}
 	};
 }
 

@@ -7,6 +7,7 @@ import { getComputedSize } from '../../../utils/domFns';
 import { minMax } from '../../../utils/fns';
 import { isString } from '../../../utils/is';
 import { XBtn } from '../btn/XBtn';
+import { XStorage } from '../../../hooks/useXStorage';
 import './XWindow.scss';
 
 const changeHandle = {
@@ -48,7 +49,7 @@ const changeHandle = {
 
 export class XWindow extends Component {
 	static propTypes = {
-		parent: PropTypes.node,
+		parent: PropTypes.any,
 		children: PropTypes.node,
 		className: PropTypes.string,
 		x: PropTypes.number,
@@ -89,7 +90,14 @@ export class XWindow extends Component {
 	};
 	constructor(props) {
 		super(props);
-		console.log(this);
+		this.$sm = XStorage('WINDOW', 'app-1');
+		this.$sm.active = true;
+		console.log(this.$sm)
+		/*this.setState((v) => ({
+			...v,
+			position: this.$sm.get('position',this.state.position)
+		}));//*/
+		//console.log(this);
 	}
 
 	onDragStart = () => {};
@@ -216,11 +224,12 @@ export class XWindow extends Component {
 	set position(value) {
 		this.setState((v) => ({
 			...v,
-			position: {
+			position: this.$sm.set('position', {
 				...v.position,
 				...value,
-			},
+			}),
 		}));
+		
 	}
 
 	get x() {

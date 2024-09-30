@@ -5,7 +5,7 @@ import { XWindow } from './components/ui/window';
 function App() {
 	const ref = useRef(null);
 	useEffect(() => {
-		console.log(ref);
+		//console.log(ref);
 
 		/*setTimeout(() => {
 			ref.current.w = '50%';
