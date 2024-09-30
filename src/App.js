@@ -6,6 +6,19 @@ function App() {
 	const ref = useRef(null);
 	useEffect(() => {
 		console.log(ref);
+
+		/*setTimeout(() => {
+			ref.current.w = '50%';
+		}, 1000);
+		setTimeout(() => {
+			ref.current.x = 'center';
+		}, 2000);
+		setTimeout(() => {
+			ref.current.y = 'center';
+		}, 3000);
+		setTimeout(() => {
+			ref.current.h = '50%';
+		}, 4000);*/
 	}, [ref]);
 	return (
 		<>

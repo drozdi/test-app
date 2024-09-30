@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { DraggableCore } from 'react-draggable';
 import { Resizable } from 'react-resizable';
+import { getComputedSize } from '../../../utils/domFns';
+import { minMax } from '../../../utils/fns';
+import { isString } from '../../../utils/is';
 import { XBtn } from '../btn/XBtn';
 import './XWindow.scss';
 
@@ -41,60 +44,6 @@ const changeHandle = {
 	nw(rect, dx, dy) {
 		return Object.assign(changeHandle.n(rect, dx, dy), changeHandle.w(rect, dx, dy));
 	},
-};
-
-const moveHorizontally = (val) => {
-	if (val === 'center') {
-		//const [pWidth] = getComputedSize(root.value.parentNode);
-		const [pWidth] = getComputedSize(parent.value);
-		val = (pWidth - width.value) / 2;
-	} else if (val === 'right') {
-		//const [pWidth] = getComputedSize(root.value.parentNode);
-		const [pWidth] = getComputedSize(parent.value);
-		val = pWidth - width.value;
-	} else if (val === 'left') {
-		val = 0;
-	}
-	left.value = val;
-};
-const moveVertically = (val) => {
-	if (val === 'center') {
-		//const [, pHeight] = getComputedSize(root.value.parentNode);
-		const [, pHeight] = getComputedSize(parent.value);
-		val = (pHeight - height.value) / 2;
-	} else if (val === 'bottom') {
-		//const [, pHeight] = getComputedSize(root.value.parentNode);
-		const [, pHeight] = getComputedSize(parent.value);
-		val = pHeight - height.value;
-	} else if (val === 'top') {
-		val = 0;
-	}
-	top.value = val;
-};
-
-const changeWidth = (val) => {
-	if (!val) {
-		return;
-	}
-	if (isString(val) && val.substr(-1) === '%') {
-		val = Math.ceil((getComputedSize(parent.value)[0] * parseInt(val, 10)) / 100);
-	}
-	width.value = minMax(val, limits.value.minWidth, limits.value.maxWidth);
-	if (props.lockAspectRatio) {
-		height.value = width.value * aspectFactor.value;
-	}
-};
-const changeHeight = (val) => {
-	if (!val) {
-		return;
-	}
-	if (isString(val) && val.substr(-1) === '%') {
-		val = Math.ceil((getComputedSize(parent.value)[1] * parseInt(val, 10)) / 100);
-	}
-	height.value = minMax(val, limits.value.minHeight, limits.value.maxHeight);
-	if (props.lockAspectRatio) {
-		width.value = height.value / aspectFactor.value;
-	}
 };
 
 export class XWindow extends Component {
@@ -260,6 +209,7 @@ export class XWindow extends Component {
 			</div>
 		);
 	};
+
 	get position() {
 		return this.state.position;
 	}
@@ -272,11 +222,91 @@ export class XWindow extends Component {
 			},
 		}));
 	}
+
+	get x() {
+		return this.state.position.left;
+	}
+	set x(val) {
+		const { parent } = this.props;
+		const pos = { ...this.position };
+		const [width] = getComputedSize(parent);
+		if (val === 'center') {
+			pos.left = (width - pos.width) / 2;
+		} else if (val === 'right') {
+			pos.left = width - pos.width;
+		} else if (val === 'left') {
+			pos.left = 0;
+		} else if (isString(val) && val.substr(-1) === '%') {
+			pos.left = Math.ceil((width * parseInt(val, 10)) / 100);
+		} else {
+			pos.left = val;
+		}
+		this.position = pos;
+	}
+	get y() {
+		return this.state.position.top;
+	}
+	set y(val) {
+		const { parent } = this.props;
+		const pos = { ...this.position };
+		const [, height] = getComputedSize(parent);
+		if (val === 'center') {
+			pos.top = (height - pos.height) / 2;
+		} else if (val === 'bottom') {
+			pos.top = height - pos.height;
+		} else if (val === 'top') {
+			pos.top = 0;
+		} else if (isString(val) && val.substr(-1) === '%') {
+			pos.top = Math.ceil((height * parseInt(val, 10)) / 100);
+		} else {
+			pos.top = val;
+		}
+		this.position = pos;
+	}
+
+	get w() {
+		return this.state.position.width;
+	}
+	set w(val) {
+		if (!val) {
+			return;
+		}
+		const { aspectFactor, parent } = this.props;
+		const pos = { ...this.position };
+		if (isString(val) && val.substr(-1) === '%') {
+			val = Math.ceil((getComputedSize(parent)[0] * parseInt(val, 10)) / 100);
+		}
+		pos.width = minMax(val, 0, 10000);
+		if (aspectFactor) {
+			//pos.height = pos.width * aspectFactor;
+		}
+		this.position = pos;
+	}
+	get h() {
+		return this.state.position.height;
+	}
+	set h(val) {
+		if (!val) {
+			return;
+		}
+		const { aspectFactor, parent } = this.props;
+		const pos = { ...this.position };
+		if (isString(val) && val.substr(-1) === '%') {
+			val = Math.ceil((getComputedSize(parent)[1] * parseInt(val, 10)) / 100);
+		}
+		pos.height = minMax(val, 0, 10000);
+		if (aspectFactor) {
+			//pos.width = pos.height / aspectFactor;
+		}
+		this.position = pos;
+	}
+
 	get style() {
 		return this.state.isFullscreen || this.state.isCollapse
 			? {}
 			: this.state.position;
 	}
+
 	render() {
 		const { draggable, resizable, title, className, children } = this.props;
 		const { position, isFullscreen, isCollapse } = this.state;
