@@ -5,6 +5,7 @@ import { XBtn } from '../btn/XBtn';
 import './XLayout.scss';
 
 import classNames from 'classnames';
+import { useApp } from '../../app/hooks/useApp';
 import { XFooter } from '../footer/XFooter';
 import { XHeader } from '../header/XHeader';
 import { XSidebar } from '../sidebar/XSidebar';
@@ -17,6 +18,11 @@ export function XLayout({
 	breakpoint = 600,
 	overlay = false,
 }) {
+	const $s = useApp().$sm('LAYOUT');
+	const [ls, setLs] = $s.useState('left', { size: 300, open: true, mini: true });
+	const [rs, setRs] = $s.useState('right', { size: 300, open: true, mini: true });
+	$s.active = true;
+
 	const [$layout, set$layout] = useState({
 		isContainer: container,
 		rows: view.split(' ').map((row) => {
@@ -54,35 +60,35 @@ export function XLayout({
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
-			open: !belowBreakpoint || $layout.left.open,
+			open: !belowBreakpoint || ls.open,
 			overlay: overlay && belowBreakpoint,
 			breakpoint: breakpoint,
-			//mini: !belowBreakpoint && $layout.left.mini,
+			//mini: !belowBreakpoint && ls.mini,
 			//miniToOverlay: overlay || belowBreakpoint,
 			//miniMouse: true,
 			//miniToggle: !belowBreakpoint,
 
 			resizeable: true,
 
-			onMini: (mini) => $update('left', 'mini', mini),
-			//onToggle: (open) => $update('left', 'open', open),
+			onMini: (mini) => setLs({ ...ls, mini }),
+			//onToggle: (open) => setLs{...ls, open}),
 		});
 	};
 	const right = () => {
 		return wrapSlot(slot('right', null), XSidebar, {
 			type: 'right',
-			open: !belowBreakpoint || $layout.right.open,
+			open: !belowBreakpoint || rs.open,
 			overlay: overlay && belowBreakpoint,
 			breakpoint: breakpoint,
-			mini: !belowBreakpoint && $layout.right.mini,
+			mini: !belowBreakpoint && rs.mini,
 			//miniToOverlay: overlay || belowBreakpoint,
 			//miniMouse: true,
 			miniToggle: !belowBreakpoint,
 
 			resizeable: true,
 
-			onMini: (mini) => $update('right', 'mini', mini),
-			//onToggle: (open) => $update('right', 'open', open),
+			onMini: (mini) => setRs({ ...rs, mini }),
+			//onToggle: (open) => setRs({...rs, open}),
 		});
 	};
 	const footer = () => {
@@ -102,9 +108,7 @@ export function XLayout({
 									icon="mdi-dock-left"
 									size="sm"
 									square={true}
-									onClick={() =>
-										$update('left', 'open', !$layout.left.open)
-									}
+									onClick={() => setLs({ ...ls, open: !ls.open })}
 								/>
 							)
 						);
@@ -119,9 +123,7 @@ export function XLayout({
 									className="float-end self-center"
 									size="sm"
 									square={true}
-									onClick={() =>
-										$update('right', 'open', !$layout.right.open)
-									}
+									onClick={() => setRs({ ...rs, open: !rs.open })}
 								/>
 							)
 						);

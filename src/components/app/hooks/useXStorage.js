@@ -32,6 +32,9 @@ export const XStorage = cached(function XStorage(type, key) {
 		get(key, val, type = null) {
 			return sm.get(key, val, type);
 		},
+		remove(key) {
+			smActive && sm.remove(key);
+		},
 		save(fn = () => {}, ...args) {
 			let old = smActive;
 			smActive = true;
@@ -44,6 +47,13 @@ export const XStorage = cached(function XStorage(type, key) {
 			fn(...args);
 			smActive = old;
 		},
+		useState(name, initial) {
+			const [state, setState] = useState(initial);
+			useEffect(() => {
+				this.set(name, state);
+			}, [state]);
+			return [state, setState];
+		},
 	};
 });
 
@@ -54,6 +64,13 @@ export const XStorageContext = createContext({
 	set(key, val) {
 		return val;
 	},
+	save(fn = () => {}, ...args) {
+		fn(...args);
+	},
+	no(fn = () => {}, ...args) {
+		fn(...args);
+	},
+	remove(key) {},
 });
 export function XStorageProvider({ children, type, key }) {
 	return (

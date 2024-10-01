@@ -7,7 +7,7 @@ function App() {
 	const ref = useRef(null);
 	const [title] = useState('test');
 	useEffect(() => {
-		console.log(ref);
+		//console.log(ref);
 		/*setTimeout(() => {
 			ref.current.w = '50%';
 		}, 1000);

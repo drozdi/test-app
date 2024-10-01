@@ -7,7 +7,6 @@ import { getComputedSize } from '../../../utils/domFns';
 import { minMax } from '../../../utils/fns';
 import { isString } from '../../../utils/is';
 import { AppContext } from '../../app';
-import { XStorage } from '../../app/hooks/useXStorage';
 import { XBtn } from '../btn/XBtn';
 import './XWindow.scss';
 
@@ -82,19 +81,34 @@ export class XWindow extends Component {
 	};
 	constructor(props) {
 		super(props);
-		this.$sm = XStorage('WINDOW', 'app-1');
 		this.state = {
-			isFullscreen: this.$sm.get('isFullscreen', false),
-			isCollapsed: this.$sm.get('isCollapsed', false),
-			position: this.$sm.get('position', {
+			isFullscreen: false,
+			isCollapsed: false,
+			position: {
 				top: this.props.y,
 				left: this.props.x,
 				width: this.props.w,
 				height: this.props.h,
-			}),
+			},
 		};
-		//console.log(this);
-		this.$sm.active = true;
+	}
+	componentDidMount() {
+		if ((this.$sm = this.context?.$sm('WINDOW'))) {
+			this.setState({
+				isFullscreen: this.$sm.get('isFullscreen', false),
+				isCollapsed: this.$sm.get('isCollapsed', false),
+				position: this.$sm.get('position', {
+					top: this.props.y,
+					left: this.props.x,
+					width: this.props.w,
+					height: this.props.h,
+				}),
+			});
+			this.$sm.active = true;
+		}
+	}
+	componentWillUnmount() {
+		this.$sm && this.$sm.remove();
 	}
 
 	onDragStart = () => {};
