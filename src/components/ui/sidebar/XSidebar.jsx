@@ -1,5 +1,8 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {
+	Component,
+	createRef,
 	useCallback,
 	useContext,
 	useEffect,
@@ -13,6 +16,55 @@ import { DraggableCore } from 'react-draggable';
 import { XBtn } from '../btn/XBtn';
 import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
+
+export class XXSidebar extends Component {
+	static propTypes = {
+		children: PropTypes.any,
+		className: PropTypes.string,
+		type: PropTypes.string,
+        mini: PropTypes.bool, 
+        miniToOverlay: PropTypes.bool,
+		miniToggle: PropTypes.bool,
+		miniMouse: PropTypes.bool,
+		miniW: PropTypes.number,
+		open: PropTypes.bool,
+        overlay: PropTypes.bool,
+        breakpoint: PropTypes.number,
+
+        w: PropTypes.number,
+
+		resizeable: PropTypes.bool,
+
+        onResize: PropTypes.func,
+        onMini: PropTypes.func,
+        onToggle: PropTypes.func
+	};
+	static defaultProps = {
+		children: '',
+		className: '',
+
+		type: 'left',
+        mini: false, 
+        miniToOverlay: false,
+		miniToggle: false,
+		miniMouse: false,
+		miniW: 56,
+        open: false,
+        overlay: false,
+        breakpoint: null,
+		resizeable: false,
+        w: 300,
+
+        onResize: () => {},
+        onMini: () => {},
+        onToggle: () => {}
+	};
+	containerRef = createRef(null)
+	sidebarRef = createRef(null)
+	constructor (props) {
+		super(props)
+	}	
+}
 
 export function XSidebar({
 	children,
