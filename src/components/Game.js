@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import {
-	restartGame,
-	setCurrentPlayer,
-	setField,
-	setIsDraw,
-	setIsGameEnded,
-} from '../actions';
-import store from '../store';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { restartGame, setCurrentPlayer, setIsDraw, setIsGameEnded } from '../actions';
+import { selectField, selectIsGameEnd } from '../selectors';
 import Field from './Field';
 import style from './Game.module.css';
 import Information from './Information';
 import { XBtn } from './ui/btn/XBtn';
 
 function Game() {
-	const [state, setState] = useState(store.getState());
-	const { isGameEnded, field, currentPlayer, isDraw } = state;
-	const { dispatch } = store;
+	const field = useSelector(selectField);
+	const isGameEnded = useSelector(selectIsGameEnd);
+
+	const dispatch = useDispatch();
+
 	const WIN_COMBINATIONS = [
 		[0, 1, 2],
 		[3, 4, 5],
@@ -26,12 +23,6 @@ function Game() {
 		[0, 4, 8],
 		[6, 4, 2],
 	];
-
-	/*const [field, setField] = useState(Array(9).fill(''));
-	const [currentPlayer, setCurrentPlayer] = useState('X');
-	const [isGameEnded, setIsGameEnded] = useState(false);
-	const [isDraw, setIsDraw] = useState(false);*/
-
 	const checkWinner = () => {
 		if (isGameEnded) {
 			return;
@@ -50,26 +41,13 @@ function Game() {
 			dispatch(setIsGameEnded(true));
 		}
 	};
-	const setFieldValue = (i) => {
-		if (isGameEnded || field[i]) {
-			return;
-		}
-		let newField = field.slice();
-		newField[i] = currentPlayer;
-		dispatch(setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X'));
-		dispatch(setField(newField));
-	};
 
 	checkWinner();
-
-	useEffect(() => {
-		return store.subscribe(() => setState(store.getState()));
-	}, []);
 
 	return (
 		<div className={style.game}>
 			<Information />
-			<Field field={field} setFieldValue={setFieldValue} />
+			<Field />
 			<XBtn disabled={!isGameEnded} onClick={() => dispatch(restartGame())}>
 				Начать заново
 			</XBtn>
