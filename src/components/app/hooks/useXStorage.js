@@ -50,7 +50,7 @@ export const XStorage = cached(function XStorage(type, key) {
 			smActive = old;
 		},
 		useState(name, initial) {
-			const [state, setState] = useState(initial);
+			const [state, setState] = useState(this.get(name, initial));
 			useEffect(() => {
 				this.set(name, state);
 			}, [state]);
