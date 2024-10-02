@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AppProvider } from './components/app';
 import { XLayout } from './components/ui/layout';
 import { XSidebar } from './components/ui/sidebar';
 import { XWindow } from './components/ui/window';
 function App() {
 	const ref = useRef(null);
-	const [title] = useState('test');
 	useEffect(() => {
 		//console.log(ref);
 		/*setTimeout(() => {
@@ -24,7 +23,7 @@ function App() {
 	return (
 		<>
 			<AppProvider config={{ smKey: 'app-1' }}>
-				<XWindow ref={ref} className="bg-blue-900" title={title}>
+				<XWindow ref={ref} className="bg-blue-900" title="win">
 					<XLayout container={true} overlay={true} view="hhr lpr lff">
 						{{
 							left: (props) => (

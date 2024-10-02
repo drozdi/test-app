@@ -79,36 +79,29 @@ export class XWindow extends Component {
 		resizable: true,
 		draggable: true,
 	};
+	state = {
+		isFullscreen: false,
+		isCollapsed: false,
+		position: {
+			top: this.props.y,
+			left: this.props.x,
+			width: this.props.w,
+			height: this.props.h,
+		},
+	};
 	constructor(props) {
 		super(props);
-		this.state = {
-			isFullscreen: false,
-			isCollapsed: false,
-			position: {
-				top: this.props.y,
-				left: this.props.x,
-				width: this.props.w,
-				height: this.props.h,
-			},
-		};
 	}
 	componentDidMount() {
-		if ((this.$sm = this.context?.$sm('WINDOW'))) {
-			this.setState({
-				isFullscreen: this.$sm.get('isFullscreen', false),
-				isCollapsed: this.$sm.get('isCollapsed', false),
-				position: this.$sm.get('position', {
-					top: this.props.y,
-					left: this.props.x,
-					width: this.props.w,
-					height: this.props.h,
-				}),
-			});
-			this.$sm.active = true;
+		if ((this.$s = this.context?.$sm('WINDOW'))) {
+			this.isFullscreen = this.$s.get('isFullscreen', false);
+			this.isCollapsed = this.$s.get('isCollapsed', false);
+			this.position = this.$s.get('position');
+			this.$s.active = true;
 		}
 	}
 	componentWillUnmount() {
-		this.$sm && this.$sm.remove();
+		this.$s && this.$s.remove();
 	}
 
 	onDragStart = () => {};
@@ -226,9 +219,9 @@ export class XWindow extends Component {
 	set position(value) {
 		this.setState((v) => ({
 			...v,
-			position: this.$sm.set('position', {
+			position: this.$s.set('position', {
 				...v.position,
-				...value,
+				...(value || {}),
 			}),
 		}));
 	}
@@ -239,7 +232,7 @@ export class XWindow extends Component {
 	set isFullscreen(val) {
 		this.setState((v) => ({
 			...v,
-			isFullscreen: this.$sm.set('isFullscreen', val),
+			isFullscreen: this.$s.set('isFullscreen', val),
 		}));
 	}
 
@@ -249,7 +242,7 @@ export class XWindow extends Component {
 	set isCollapsed(val) {
 		this.setState((v) => ({
 			...v,
-			isCollapsed: this.$sm.set('isCollapsed', val),
+			isCollapsed: this.$s.set('isCollapsed', val),
 		}));
 	}
 

@@ -42,7 +42,9 @@ Setting.prototype = {
 	},
 	get: function (name, def, type = null) {
 		let result, val;
+
 		result = val = storageLocal.get(this.key(name), null);
+
 		while (typeof result === 'string' && result.substr(0, 1) === '@') {
 			result = val = result.substr(1);
 			val = storageLocal.get(this.key(val), null);

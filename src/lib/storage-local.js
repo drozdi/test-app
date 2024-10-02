@@ -7,8 +7,12 @@ export const storageLocal = {
 	},
 	get(key, def) {
 		let result = localStorage.getItem(key);
-		if (result) {
-			return JSON.parse(result);
+		try {
+			if (result) {
+				return JSON.parse(result);
+			}
+		} catch (e) {
+			return def;
 		}
 		return def;
 	},

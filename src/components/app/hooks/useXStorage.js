@@ -19,6 +19,8 @@ export const XStorage = cached(function XStorage(type, key) {
 		sm = settingManager['APP'].sub(key);
 	}
 	return {
+		type,
+		key,
 		get active() {
 			return smActive;
 		},
