@@ -23,7 +23,7 @@ function App() {
 	return (
 		<>
 			<AppProvider config={{ smKey: 'app-1' }}>
-				<XWindow ref={ref} className="bg-blue-900" title="win">
+				<XWindow className="bg-blue-900" title="win">
 					<XLayout container={true} overlay={true} view="hhr lpr lff">
 						{{
 							left: (props) => (

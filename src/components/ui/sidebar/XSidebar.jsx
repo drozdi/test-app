@@ -1,23 +1,15 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {
-	Component,
-	createRef,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import { XLayoutContext } from '../layout/XLayoutContext';
+import React, { Component, createRef } from 'react';
 
 import { DraggableCore } from 'react-draggable';
 import { XBtn } from '../btn/XBtn';
 import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
 
-export class XXSidebar extends Component {
+export class XSidebar extends Component {
+	static containerRef = createRef(null);
+	static sidebarRef = createRef(null);
 	static contextType = XSidebarContext;
 	static propTypes = {
 		children: PropTypes.any,
@@ -60,8 +52,7 @@ export class XXSidebar extends Component {
 		onMini: () => {},
 		onToggle: () => {},
 	};
-	containerRef = createRef(null);
-	sidebarRef = createRef(null);
+
 	state = {
 		width: this.props.w,
 		miniWidth: this.props.miniW,
@@ -70,234 +61,176 @@ export class XXSidebar extends Component {
 	constructor(props) {
 		super(props);
 	}
-	componentDidMount() {}
-
-	onMouseEnter = () => {
-		this.props.isMouseEvent && onMini(false);
-	};
-	onMouseLeave = () => {
-		this.props.isMouseEvent && onMini(true);
-	};
 
 	get w() {
 		return this.state.width;
+	}
+	set w(width) {
+		this.setState((v) => ({
+			...v,
+			width,
+		}));
 	}
 	get isLayout() {
 		return !!this.context;
 	}
 	get belowBreakpoint() {
-		return (breakpoint && this.isLayout && this.context.width < breakpoint) || false;
+		return (
+			(this.props.breakpoint &&
+				this.isLayout &&
+				this.context?.width < this.props.breakpoint) ||
+			false
+		);
 	}
 	get isOpen() {
-		return belowBreakpoint ? isOpenBreakpoint : open;
+		return this.belowBreakpoint ? this.isOpenBreakpoint : open;
 	}
 	get isMini() {
 		return this.props.mini && !this.belowBreakpoint;
 	}
 
-	get isOverlayuseMemo () {
-			return !this.belowBreakpoint && this.props.open && ((this.props.mini && this.props.overlay) || this.props.miniToOverlay)
-				? false
-				: this.props.overlay || this.props.miniToOverlay,
-}
+	get isOverlayuseMemo() {
+		return !this.belowBreakpoint &&
+			this.props.open &&
+			((this.props.mini && this.props.overlay) || this.props.miniToOverlay)
+			? false
+			: this.props.overlay || this.props.miniToOverlay;
+	}
 
+	get isMiniToOverlay() {
+		return (this.props.miniToOverlay || this.props.overlay) && !this.belowBreakpoint;
+	}
 
-	isMiniToOverlay = useMemo(
-		() => (miniToOverlay || overlay) && !belowBreakpoint,
-		[miniToOverlay, overlay, belowBreakpoint],
-	);
+	get isMouseEvent() {
+		return this.props.miniMouse && !this.props.miniToggle;
+	}
 
-	isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniToggle, miniMouse]);
+	get canResized() {
+		return (
+			this.props.resizeable &&
+			!this.props.miniToggle &&
+			!this.isMouseEvent &&
+			!this.isMini &&
+			!this.belowBreakpoint
+		);
+	}
 
-	canResized = useMemo(
-		() => resizeable && !miniToggle && !isMouseEvent && !isMini && !belowBreakpoint,
-		[resizeable, miniToggle, isMouseEvent, isMini, belowBreakpoint],
-	);
-
-	render() {}
-}
-
-export function XSidebar({
-	children,
-	className,
-	type = 'left',
-	open = false,
-	overlay = false,
-	w = null,
-	breakpoint = null,
-	mini = false,
-	miniToOverlay = false,
-	miniMouse = false,
-	miniToggle = false,
-	miniW = null,
-
-	resizeable = false,
-
-	onResize = () => {},
-	onMini = () => {},
-	onToggle = () => {},
-	...props
-}) {
-	/*const props = XSidebarBase.getProps(inProps, {});
-    const {children, className, type, mini, miniToOverlay, open, overlay, breakpoint, onMouseEnter, onMouseLeave, onResize, onMini, onToggle } = props;*/
-
-	const { $layout } = useContext(XLayoutContext) || {};
-
-	const isLayout = useMemo(() => !!$layout, [$layout]);
-
-	const [width, setWidth] = useState(w);
-	const [miniWidth, setMiniWidth] = useState(miniW);
-	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
-
-	const belowBreakpoint = useMemo(
-		() => (breakpoint && $layout.width < breakpoint) || false,
-		[$layout.width, breakpoint],
-	);
-
-	const isOpen = useMemo(
-		() => (belowBreakpoint ? isOpenBreakpoint : open),
-		[open, belowBreakpoint, isOpenBreakpoint],
-	);
-
-	const isMini = useMemo(() => mini && !belowBreakpoint, [mini, belowBreakpoint]);
-
-	const isOverlay = useMemo(
-		() =>
-			!belowBreakpoint && open && ((mini && overlay) || miniToOverlay)
-				? false
-				: overlay || miniToOverlay,
-		[overlay, mini, open, miniToOverlay, belowBreakpoint],
-	);
-
-	const isMiniToOverlay = useMemo(
-		() => (miniToOverlay || overlay) && !belowBreakpoint,
-		[miniToOverlay, overlay, belowBreakpoint],
-	);
-
-	const isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniToggle, miniMouse]);
-
-	const canResized = useMemo(
-		() => resizeable && !miniToggle && !isMouseEvent && !isMini && !belowBreakpoint,
-		[resizeable, miniToggle, isMouseEvent, isMini, belowBreakpoint],
-	);
-
-	const onMouseEnter = () => {
-		isMouseEvent && onMini(false);
-	};
-	const onMouseLeave = () => {
-		isMouseEvent && onMini(true);
-	};
-
-	const containerStyle = useMemo(
-		() => ({
-			minWidth: isOpen ? '' : 0,
+	get containerStyle() {
+		return {
+			minWidth: this.isOpen ? '' : 0,
 			width:
-				isOpen && isMini
-					? miniWidth
-					: isOpen && (canResized || (!!width && !isMiniToOverlay))
-						? width
+				this.isOpen && this.isMini
+					? this.state.miniWidth
+					: this.isOpen &&
+						  (this.canResized || (!!this.w && !this.isMiniToOverlay))
+						? this.w
 						: '',
-		}),
-		[width, miniWidth, isMini, isOpen, isMiniToOverlay, canResized],
-	);
-	const style = useMemo(
-		() => ({ width: isOpen && canResized ? width : '' }),
-		[width, isOpen, canResized],
-	);
+		};
+	}
 
-	const reverse = useMemo(() => type === 'right', [type]);
-	const containerRef = useRef(null);
-	const handleDrag = useCallback(
-		(e, ui) => setWidth((width) => width + (reverse ? -ui.deltaX : ui.deltaX)),
-		[reverse],
-	);
-	const handleDragEnd = useCallback(
-		(e, ui) => setWidth(containerRef.current.getBoundingClientRect().width),
-		[],
-	);
+	get style() {
+		return { width: this.isOpen && this.canResized ? this.w : '' };
+	}
 
-	useEffect(() => {
-		if (containerRef.current) {
-			setTimeout(() => {
-				const style = window.getComputedStyle(containerRef.current);
-				const width = parseInt(style.width || 0, 10) || 0;
-				const minWidth = parseInt(style.minWidth || 0, 10) || 0;
-				setWidth(width);
-				setMiniWidth(minWidth);
-				setOpenBreakpoint(() => !belowBreakpoint);
-			}, 0);
-		}
-	}, [belowBreakpoint, containerRef]);
+	get reverse() {
+		return this.props.type === 'right';
+	}
 
-	useEffect(() => {
-		setOpenBreakpoint((v) => !v);
-	}, [open]);
+	onHandleDrag = (e, ui) => {
+		this.w = this.w + (this.reverse ? -ui.deltaX : ui.deltaX);
+	};
+	onHandleDragEnd = (e, ui) => {
+		console.log(containerRef);
+		this.w = this.containerRef.current.getBoundingClientRect().width;
+	};
+	onMouseEnter = () => {
+		this.isMouseEvent && onMini(false);
+	};
+	onMouseLeave = () => {
+		this.isMouseEvent && onMini(true);
+	};
+	componentDidMount() {}
 
-	return (
-		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
-			<div
-				className={classNames('xSidebar-container', {
-					'xLayout-sidebar': isLayout,
-					[`xLayout-sidebar--${type}`]: isLayout && !!type,
-					[`xSidebar--${type}`]: !!type,
-					'xSidebar--overlay': isOverlay,
-					'xSidebar--close': !isOpen,
-					'xSidebar--mini': isMini,
-					'xSidebar--mini-overlay': isMiniToOverlay,
-					'xSidebar--animate': !canResized,
-				})}
-				style={containerStyle}
-				ref={containerRef}
-			>
+	render() {
+		const {
+			belowBreakpoint,
+			isLayout,
+			isMini,
+			isOpen,
+			isOverlay,
+			isMiniToOverlay,
+			isOpenBreakpoint,
+			canResized,
+			onHandleDrag = () => {},
+			onHandleDragEnd = () => {},
+		} = this;
+		const { children, type, className, miniToggle } = this.props;
+		return (
+			<XSidebarContext.Provider value={{ width: this.w, isMini, isOpen }}>
 				<div
-					onMouseEnter={onMouseEnter}
-					onMouseLeave={onMouseLeave}
-					className={classNames('xSidebar', {
-						'xSidebar--toggle': miniToggle,
+					className={classNames('xSidebar-container', {
+						'xLayout-sidebar': isLayout,
+						[`xLayout-sidebar--${type}`]: isLayout && !!type,
 						[`xSidebar--${type}`]: !!type,
+						'xSidebar--overlay': isOverlay,
+						'xSidebar--close': !isOpen,
+						'xSidebar--mini': isMini,
+						'xSidebar--mini-overlay': isMiniToOverlay,
 						'xSidebar--animate': !canResized,
 					})}
-					style={style}
+					style={this.containerStyle}
+					ref={this.containerRef}
 				>
-					<div {...props} className={classNames('xSidebar-content', className)}>
-						{children}
-						<br />
-						isOpen: {isOpen ? 'true' : 'false'}
-						<br />
-						isMini: {isMini ? 'true' : 'false'}
-						<br />
-						isOverlay: {isOverlay ? 'true' : 'false'}
-						<br />
-						isMiniToOverlay: {isMiniToOverlay ? 'true' : 'false'}
-						<br />
-						belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
-						<br />
-						isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
-						<br />
-					</div>
-					{miniToggle && (
-						<div className="xSidebar-toggle">
-							<XBtn
-								color="dimmed"
-								block={true}
-								square={true}
-								icon={
-									isMini
-										? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
-										: `mdi-arrow-${type}-bold-box-outline`
-								}
-								onClick={() => onMini(!mini)}
-								className="text-2xl py-0"
-							/>
+					<div
+						onMouseEnter={this.onMouseEnter}
+						onMouseLeave={this.onMouseLeave}
+						className={classNames('xSidebar', {
+							'xSidebar--toggle': miniToggle,
+							[`xSidebar--${type}`]: !!type,
+							'xSidebar--animate': !canResized,
+						})}
+						style={this.style}
+					>
+						<div className={classNames('xSidebar-content', className)}>
+							{children}
+							<br />
+							isOpen: {isOpen ? 'true' : 'false'}
+							<br />
+							isMini: {isMini ? 'true' : 'false'}
+							<br />
+							isOverlay: {isOverlay ? 'true' : 'false'}
+							<br />
+							isMiniToOverlay: {isMiniToOverlay ? 'true' : 'false'}
+							<br />
+							belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
+							<br />
+							isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
+							<br />
 						</div>
-					)}
-					{canResized && (
-						<DraggableCore onDrag={handleDrag} onStop={handleDragEnd}>
-							<div className="xSidebar-res"></div>
-						</DraggableCore>
-					)}
+						{miniToggle && (
+							<div className="xSidebar-toggle">
+								<XBtn
+									color="dimmed"
+									block={true}
+									square={true}
+									icon={
+										isMini
+											? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
+											: `mdi-arrow-${type}-bold-box-outline`
+									}
+									onClick={() => this.onMini(!mini)}
+									className="text-2xl py-0"
+								/>
+							</div>
+						)}
+						{canResized && (
+							<DraggableCore onDrag={onHandleDrag} onStop={onHandleDragEnd}>
+								<div className="xSidebar-res"></div>
+							</DraggableCore>
+						)}
+					</div>
 				</div>
-			</div>
-		</XSidebarContext.Provider>
-	);
+			</XSidebarContext.Provider>
+		);
+	}
 }
