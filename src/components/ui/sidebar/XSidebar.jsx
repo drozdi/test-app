@@ -8,9 +8,9 @@ import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
 
 export class XSidebar extends Component {
-	static containerRef = createRef(null);
-	static sidebarRef = createRef(null);
-	static contextType = XSidebarContext;
+	containerRef = createRef(null);
+	sidebarRef = createRef(null);
+	contextType = XSidebarContext;
 	static propTypes = {
 		children: PropTypes.any,
 		className: PropTypes.string,
@@ -140,7 +140,6 @@ export class XSidebar extends Component {
 		this.w = this.w + (this.reverse ? -ui.deltaX : ui.deltaX);
 	};
 	onHandleDragEnd = (e, ui) => {
-		console.log(containerRef);
 		this.w = this.containerRef.current.getBoundingClientRect().width;
 	};
 	onMouseEnter = () => {
@@ -164,7 +163,7 @@ export class XSidebar extends Component {
 			onHandleDrag = () => {},
 			onHandleDragEnd = () => {},
 		} = this;
-		const { children, type, className, miniToggle } = this.props;
+		const { children, type, className, miniToggle, mini } = this.props;
 		return (
 			<XSidebarContext.Provider value={{ width: this.w, isMini, isOpen }}>
 				<div
@@ -218,7 +217,7 @@ export class XSidebar extends Component {
 											? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
 											: `mdi-arrow-${type}-bold-box-outline`
 									}
-									onClick={() => this.onMini(!mini)}
+									onClick={() => this.props.onMini(!mini)}
 									className="text-2xl py-0"
 								/>
 							</div>
