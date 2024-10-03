@@ -18,52 +18,103 @@ import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
 
 export class XXSidebar extends Component {
+	static contextType = XSidebarContext;
 	static propTypes = {
 		children: PropTypes.any,
 		className: PropTypes.string,
 		type: PropTypes.string,
-        mini: PropTypes.bool, 
-        miniToOverlay: PropTypes.bool,
+		mini: PropTypes.bool,
+		miniToOverlay: PropTypes.bool,
 		miniToggle: PropTypes.bool,
 		miniMouse: PropTypes.bool,
 		miniW: PropTypes.number,
 		open: PropTypes.bool,
-        overlay: PropTypes.bool,
-        breakpoint: PropTypes.number,
+		overlay: PropTypes.bool,
+		breakpoint: PropTypes.number,
 
-        w: PropTypes.number,
+		w: PropTypes.number,
 
 		resizeable: PropTypes.bool,
 
-        onResize: PropTypes.func,
-        onMini: PropTypes.func,
-        onToggle: PropTypes.func
+		onResize: PropTypes.func,
+		onMini: PropTypes.func,
+		onToggle: PropTypes.func,
 	};
 	static defaultProps = {
 		children: '',
 		className: '',
 
 		type: 'left',
-        mini: false, 
-        miniToOverlay: false,
+		mini: false,
+		miniToOverlay: false,
 		miniToggle: false,
 		miniMouse: false,
 		miniW: 56,
-        open: false,
-        overlay: false,
-        breakpoint: null,
+		open: false,
+		overlay: false,
+		breakpoint: null,
 		resizeable: false,
-        w: 300,
+		w: 300,
 
-        onResize: () => {},
-        onMini: () => {},
-        onToggle: () => {}
+		onResize: () => {},
+		onMini: () => {},
+		onToggle: () => {},
 	};
-	containerRef = createRef(null)
-	sidebarRef = createRef(null)
-	constructor (props) {
-		super(props)
-	}	
+	containerRef = createRef(null);
+	sidebarRef = createRef(null);
+	state = {
+		width: this.props.w,
+		miniWidth: this.props.miniW,
+		isOpenBreakpoint: false,
+	};
+	constructor(props) {
+		super(props);
+	}
+	componentDidMount() {}
+
+	onMouseEnter = () => {
+		this.props.isMouseEvent && onMini(false);
+	};
+	onMouseLeave = () => {
+		this.props.isMouseEvent && onMini(true);
+	};
+
+	get w() {
+		return this.state.width;
+	}
+	get isLayout() {
+		return !!this.context;
+	}
+	get belowBreakpoint() {
+		return (breakpoint && this.isLayout && this.context.width < breakpoint) || false;
+	}
+	get isOpen() {
+		return belowBreakpoint ? isOpenBreakpoint : open;
+	}
+	get isMini() {
+		return this.props.mini && !this.belowBreakpoint;
+	}
+
+	get isOverlayuseMemo () {
+			return !this.belowBreakpoint && this.props.open && ((this.props.mini && this.props.overlay) || this.props.miniToOverlay)
+				? false
+				: this.props.overlay || this.props.miniToOverlay,
+}
+
+
+	isMiniToOverlay = useMemo(
+		() => (miniToOverlay || overlay) && !belowBreakpoint,
+		[miniToOverlay, overlay, belowBreakpoint],
+	);
+
+	isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniToggle, miniMouse]);
+
+	canResized = useMemo(
+		() => resizeable && !miniToggle && !isMouseEvent && !isMini && !belowBreakpoint,
+		[resizeable, miniToggle, isMouseEvent, isMini, belowBreakpoint],
+	);
+
+	render() {}
 }
 
 export function XSidebar({
