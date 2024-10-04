@@ -82,6 +82,7 @@ export class XWindow extends Component {
 	state = {
 		isFullscreen: false,
 		isCollapsed: false,
+		active: true,
 		position: {
 			top: this.props.y,
 			left: this.props.x,
@@ -323,6 +324,15 @@ export class XWindow extends Component {
 		}
 		this.position = pos;
 	}
+	get active() {
+		return this.state.active;
+	}
+	set active(val) {
+		this.setState((v) => ({
+			...v,
+			active: val,
+		}));
+	}
 
 	get style() {
 		return this.state.isFullscreen || this.state.isCollapsed
@@ -332,7 +342,7 @@ export class XWindow extends Component {
 
 	render() {
 		const { draggable, resizable, title, className, children } = this.props;
-		const { position, isFullscreen, isCollapsed } = this.state;
+		const { position, isFullscreen, isCollapsed, active } = this.state;
 		return (
 			<DraggableCore
 				disabled={!draggable && isFullscreen}
@@ -361,6 +371,7 @@ export class XWindow extends Component {
 				>
 					<div
 						className={classNames('xWindow', className, {
+							'xWindow--active': active,
 							'xWindow--resizable':
 								resizable && !isFullscreen && !isCollapsed,
 							'xWindow--draggable': draggable && !isFullscreen,

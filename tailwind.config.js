@@ -37,6 +37,10 @@ module.exports = {
 				height: 'height',
 				spacing: 'margin, padding',
 			},
+			borderWidth: {
+				9: '9px',
+				10: '10px',
+			},
 		},
 	},
 	plugins: [],

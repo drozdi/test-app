@@ -75,3 +75,25 @@
 		@apply top-0 left-0 w-full h-full;
 	}
 }
+.xWindow {
+	--x-window-line-offset: 6rem;
+	/* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.07) inset;*/
+	&:before {
+		content: ' ';
+		@apply block h-0 absolute top-0 border-9 border-b-0 border-transparent border-t-separator;
+		left: var(--x-window-line-offset);
+		right: var(--x-window-line-offset);
+	}
+	&:after {
+		content: ' ';
+		@apply block h-0 absolute top-0 border-8 border-b-0 border-transparent border-t-info/50;
+		@apply block h-0 absolute top-0;
+		left: calc(var(--x-window-line-offset) + 1px);
+		right: calc(var(--x-window-line-offset) + 1px);
+	}
+}
+.xWindow--active {
+	&:after {
+		@apply border-t-primary;
+	}
+}
