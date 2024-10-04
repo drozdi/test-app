@@ -1,3 +1,3 @@
 import { BaseRepository } from '../utils/BaseRepository';
 
-export const repository = new BaseRepository('http://localhost:3030/todos');
+export const todoRepository = new BaseRepository('http://localhost:3030/todos');

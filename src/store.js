@@ -1,9 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
-import { todosReducer } from './reducers';
+import { optionsReducer, todosReducer } from './reducers';
 
 const reducer = combineReducers({
 	todos: todosReducer,
+	options: optionsReducer,
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));

@@ -1,3 +1,3 @@
-export * from './btn';
-export * from './icon';
-export * from './input';
+export { XBtn } from './btn';
+export { XIcon } from './icon';
+export { XInput } from './input';

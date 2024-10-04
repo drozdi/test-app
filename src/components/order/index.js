@@ -1,2 +1,1 @@
-export { OrderBtn } from './OrderBtn';
-export { OrderContext } from './OrderContext';
+export * from './OrderBtn';

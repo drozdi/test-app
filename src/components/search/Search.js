@@ -1,17 +1,25 @@
-import { useContext } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ACTION_TYPE } from '../../actions';
+import { selectSearch } from '../../selectors';
+import { debounce } from '../../utils';
 import { XInput } from '../ui/input';
-import { SearchContext } from './SearchContext';
 
 export function Search() {
-	const [find, setFind] = useContext(SearchContext);
-	const onChangeFind = (event) => {
-		setFind(event.target.value);
+	const dispatch = useDispatch();
+	const [search, setSearch] = useState(useSelector(selectSearch));
+	const find = debounce((search) => {
+		dispatch({ type: ACTION_TYPE.SET_SEARCH, payload: search });
+	}, 1000);
+	const onChange = ({ target }) => {
+		setSearch(target.value);
+		find(target.value);
 	};
 	return (
 		<XInput
-			value={find}
+			value={search}
 			label="Найти"
-			onChange={onChangeFind}
+			onChange={onChange}
 			placeholder="Что ищим?"
 		/>
 	);
