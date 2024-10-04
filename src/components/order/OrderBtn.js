@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 
-import { XButton } from '../ui/Button/XButton';
-import { XIcon } from '../ui/Icon/XIcon';
+import { XBtn, XIcon } from '../ui';
 
 import { OrderContext } from './OrderContext';
 
@@ -19,7 +18,7 @@ export function OrderBtn() {
 	};
 
 	return (
-		<XButton icon={true} onClick={onClickSort}>
+		<XBtn icon={true} onClick={onClickSort}>
 			<XIcon>
 				{sort === 'asc'
 					? 'mdi-sort-ascending'
@@ -27,6 +26,6 @@ export function OrderBtn() {
 						? 'mdi-sort-descending'
 						: 'mdi-sort'}
 			</XIcon>
-		</XButton>
+		</XBtn>
 	);
 }

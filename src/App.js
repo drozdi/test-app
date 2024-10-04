@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styles from './App.module.css';
 
-import { XButton } from './components/ui/Button/XButton';
-import { XIcon } from './components/ui/Icon/XIcon';
-import { XInput } from './components/ui/Input/XInput';
+import { XBtn, XIcon, XInput } from './components/ui';
 
 import { OrderBtn, OrderContext } from './components/order';
 import { Search, SearchContext } from './components/search';
@@ -135,7 +133,7 @@ function App({ endpoint = '' }) {
 									<li key={id} className={styles['list-item']}>
 										{title}
 										<div className={styles.actions}>
-											<XButton
+											<XBtn
 												disabled={isUpdating}
 												color="secondary"
 												size="xs"
@@ -145,8 +143,8 @@ function App({ endpoint = '' }) {
 												title="Изменить"
 											>
 												<XIcon>mdi-note-edit-outline</XIcon>
-											</XButton>
-											<XButton
+											</XBtn>
+											<XBtn
 												disabled={isDeleting}
 												color="danger"
 												size="xs"
@@ -156,7 +154,7 @@ function App({ endpoint = '' }) {
 												title="Удалить"
 											>
 												<XIcon>mdi-note-remove-outline</XIcon>
-											</XButton>
+											</XBtn>
 										</div>
 									</li>
 								);

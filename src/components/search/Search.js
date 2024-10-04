@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { XInput } from '../ui/Input/XInput';
+import { XInput } from '../ui/input';
 import { SearchContext } from './SearchContext';
 
 export function Search() {
