@@ -1,6 +1,0 @@
-// Box sizing
-$default-box-sizing: border-box !default;
-@mixin box-sizing ($box-model: $default-box-sizing) {
-	$box-model: unquote($box-model);
-	@include prefixed-properties(css-box-sizing, (box-sizing: $box-model));
-}
