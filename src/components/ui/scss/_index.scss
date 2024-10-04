@@ -1,8 +1,0 @@
-@charset "UTF-8";
-$ENABBLE-PREFIX: false !default;
-$enable-important-utilities: true !default;
-
-@import "./vars";
-@import "./base";
-@import "./components";
-@import "./utilities";
