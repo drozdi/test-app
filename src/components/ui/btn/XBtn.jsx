@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import React from 'react';
 import './XBtn.css';
 
 import XIcon from '../icon/XIcon';

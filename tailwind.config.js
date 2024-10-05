@@ -15,6 +15,7 @@ module.exports = {
 				body: '#002650',
 				dark: '#15171e',
 				separator: 'rgba(255, 255, 255, .15)',
+				divider: 'rgba(255, 255, 255, .15)',
 				dimmed: 'rgba(0,0,0,0.2)',
 				bgmb1: 'rgba(190,155,100, 0.5)',
 				bgmb2: 'rgba(245,137,116, 0.5)',
@@ -24,6 +25,9 @@ module.exports = {
 			},
 			boxShadow: {
 				strong: '0 4px 18px -2px #000000b3',
+			},
+			borderRadius: {
+				inherit: 'inherit',
 			},
 			gridTemplateRows: {
 				layout: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',

@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react';
-import { AppProvider } from './components/app';
-import { XLayout } from './components/ui/layout';
-import { XSidebar } from './components/ui/sidebar';
-import { XWindow } from './components/ui/window';
+import { XBtn, XInput } from './components/ui';
 function App() {
-	const ref = useRef(null);
+	return (
+		<div className="w-80 absolute top-40 left-1/2 transform -translate-x-1/2">
+			<XInput label="Label" placeholder="Placeholder" />
+			<hr className="my-2" />
+			<XBtn block={true}>Button</XBtn>
+		</div>
+	);
+	/*const ref = useRef(null);
 	useEffect(() => {
 		//console.log(ref);
 		/*setTimeout(() => {
@@ -19,7 +22,7 @@ function App() {
 		setTimeout(() => {
 			ref.current.h = '50%';
 		}, 4000);*/
-	}, [ref]);
+	/*}, [ref]);
 	return (
 		<>
 			<AppProvider config={{ smKey: 'app-1' }}>

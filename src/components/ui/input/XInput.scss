@@ -1,0 +1,39 @@
+.x-input__wrap {
+	@apply relative border-divider rounded;
+}
+.x-input {
+	@apply block w-full bg-dimmed p-2 outline-none transition-all duration-200 ease-linear [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+}
+.x-input__label {
+	@apply pointer-events-none absolute left-4 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2  transition-all duration-200 ease-out opacity-70;
+}
+.x-input__outline {
+	@apply border-inherit rounded-inherit flex contain-layout items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0;
+}
+.x-input__outline_start {
+	@apply border-l border-y border-inherit flex-[0_0_12px] rounded-l-inherit;
+}
+.x-input__outline_notch {
+	@apply border-y border-inherit flex-none;
+}
+.x-input__outline_end {
+	@apply border-r border-y border-inherit flex-[1] rounded-r-inherit;
+}
+
+.x-input:focus {
+}
+.x-input__wrap {
+	@apply has-[:focus]:border-blue-600;
+}
+.x-input:focus ~ .x-input__label {
+	@apply text-blue-600;
+}
+.x-input:focus ~ .x-input__label,
+.x-input:not(:placeholder-shown) ~ .x-input__label {
+	@apply opacity-100 scale-[0.8] top-[1px];
+}
+
+.x-input:focus ~ .x-input__outline > .x-input__outline_notch,
+.x-input:not(:placeholder-shown) ~ .x-input__outline > .x-input__outline_notch {
+	@apply border-t-0;
+}
