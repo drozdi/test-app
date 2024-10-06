@@ -5,6 +5,8 @@ import './XInput.scss';
 export function XInput({
 	outline = false,
 	field = false,
+	prepend = '',
+	append = '',
 	type = 'text',
 	label = '',
 	...props
@@ -19,34 +21,39 @@ export function XInput({
 	return (
 		<div className="x-input-wrap">
 			<div className="x-input-container">
-				<div className="x-input-control"></div>
-			</div>
-			<input
-				type={type}
-				className={classNames('x-input', {
-					'x-input--outline': outline,
-					'x-input--field': field,
-					//"x-input--field--outline": field && outline
-				})}
-				{...props}
-			/>
-
-			{label && (
-				<label ref={labelRef} htmlFor={props.id} className="x-input__label">
-					{label}
-				</label>
-			)}
-
-			{outline && (
-				<div className="x-input__outline">
-					<div className="x-input__outline_start"></div>
-					<div
-						className="x-input__outline_notch"
-						style={{ width: labelWidth }}
-					></div>
-					<div className="x-input__outline_end"></div>
+				{prepend && <div className="x-input-prepend">{prepend}</div>}
+				<div className="x-input-control">
+					<input
+						type={type}
+						className={classNames('x-input', {
+							'x-input--outline': outline,
+							'x-input--field': field,
+							//"x-input--field--outline": field && outline
+						})}
+						{...props}
+					/>
+					{label && (
+						<label
+							ref={labelRef}
+							htmlFor={props.id}
+							className="x-input__label"
+						>
+							{label}
+						</label>
+					)}
 				</div>
-			)}
+				{append && <div className="x-input-append">{append}</div>}
+				{outline && (
+					<div className="x-input__outline">
+						<div className="x-input__outline_start"></div>
+						<div
+							className="x-input__outline_notch"
+							style={{ width: labelWidth }}
+						></div>
+						<div className="x-input__outline_end"></div>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

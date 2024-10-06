@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import './XBtn.css';
 
-import XIcon from '../icon/XIcon';
+import { XIcon } from '../icon';
 
 // todo add icon support for iconRight
 export function XBtn({

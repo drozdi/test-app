@@ -1,46 +1,56 @@
-.x-input-wrap {
-	@apply relative border-divider rounded;
+.x-input {
+	@apply relative flex border-divider rounded;
 }
 .x-input-container {
+	@apply relative flex-1 flex border-divider rounded-inherit;
 }
 .x-input-control {
+	@apply relative flex-1 border-divider rounded-inherit;
 }
-.x-input {
+.x-input-before,
+.x-input-after,
+.x-input-prepend,
+.x-input-append {
+	@apply flex items-center content-center px-2;
+}
+
+.x-input-native {
 	@apply block w-full bg-transparent p-2 outline-none transition-all duration-200 ease-linear [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
 }
-.x-input--field {
-	@apply bg-dimmed;
-}
-.x-input__label {
+.x-input-label {
 	@apply pointer-events-none absolute left-4 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2  transition-all duration-200 ease-out opacity-70;
 }
-.x-input__outline {
+.x-input-outline {
 	@apply border-inherit rounded-inherit flex contain-layout items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0;
 }
-.x-input__outline_start {
+.x-input-outline-start {
 	@apply border-l border-y border-inherit flex-[0_0_12px] rounded-l-inherit;
 }
-.x-input__outline_notch {
+.x-input-outline-notch {
 	@apply border-y border-inherit flex-none;
 }
-.x-input__outline_end {
+.x-input-outline-end {
 	@apply border-r border-y border-inherit flex-[1] rounded-r-inherit;
 }
 
+.x-input--field {
+	@apply bg-dimmed;
+}
 .x-input:focus {
 }
-.x-input-wrap {
+.x-input {
 	@apply has-[:focus]:border-blue-600;
 }
-.x-input:focus ~ .x-input__label {
+.x-input-native:focus ~ .x-input-label {
 	@apply text-blue-600;
 }
-.x-input:focus ~ .x-input__label,
-.x-input:not(:placeholder-shown) ~ .x-input__label {
+.x-input-native:focus ~ .x-input-label,
+.x-input-native:not(:placeholder-shown) ~ .x-input-label {
 	@apply opacity-100 scale-[0.8] top-[1px];
 }
-
-.x-input:focus ~ .x-input__outline > .x-input__outline_notch,
-.x-input:not(:placeholder-shown) ~ .x-input__outline > .x-input__outline_notch {
+.x-input-control:has(:focus) ~ .x-input-outline > .x-input-outline-notch,
+.x-input-control:has(input:not(:placeholder-shown))
+	~ .x-input-outline
+	> .x-input-outline-notch {
 	@apply border-t-0;
 }

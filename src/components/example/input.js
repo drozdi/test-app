@@ -1,7 +1,45 @@
-import { XInput } from '../ui';
+import { XIcon, XInput } from '../ui';
 export function InputExample() {
 	return (
 		<div className="max-w-5xl m-auto mt-2">
+			<hr className="my-2" />
+			<div className="p-5">
+				<div className="x-input">
+					<div className="x-input-before">
+						<XIcon>mdi-close</XIcon>
+					</div>
+					<div className="x-input-container">
+						<div className="x-input-prepend">
+							<XIcon>mdi-close</XIcon>
+						</div>
+						<div className="x-input-control">
+							<input
+								type="text"
+								className="x-input-native"
+								placeholder="Placeholder"
+							/>
+							<label className="x-input-label">Label</label>
+						</div>
+						<div className="x-input-append">
+							<XIcon>mdi-close</XIcon>
+						</div>
+						<div className="x-input-outline">
+							<div className="x-input-outline-start"></div>
+							<div
+								className="x-input-outline-notch"
+								style={{ width: 30 }}
+							></div>
+							<div className="x-input-outline-end"></div>
+						</div>
+					</div>
+					<div className="x-input-after">
+						<XIcon>mdi-close</XIcon>
+					</div>
+				</div>
+			</div>
+			<hr className="my-2" />
+
+			<hr className="my-2" />
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
 					<tr className="*:text-center">
