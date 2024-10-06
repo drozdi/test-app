@@ -1,8 +1,15 @@
-.x-input__wrap {
+.x-input-wrap {
 	@apply relative border-divider rounded;
 }
+.x-input-container {
+}
+.x-input-control {
+}
 .x-input {
-	@apply block w-full bg-dimmed p-2 outline-none transition-all duration-200 ease-linear [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	@apply block w-full bg-transparent p-2 outline-none transition-all duration-200 ease-linear [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+}
+.x-input--field {
+	@apply bg-dimmed;
 }
 .x-input__label {
 	@apply pointer-events-none absolute left-4 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2  transition-all duration-200 ease-out opacity-70;
@@ -22,7 +29,7 @@
 
 .x-input:focus {
 }
-.x-input__wrap {
+.x-input-wrap {
 	@apply has-[:focus]:border-blue-600;
 }
 .x-input:focus ~ .x-input__label {

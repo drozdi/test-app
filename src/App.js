@@ -1,12 +1,6 @@
-import { XBtn, XInput } from './components/ui';
+import { InputExample } from './components/example';
 function App() {
-	return (
-		<div className="w-80 absolute top-40 left-1/2 transform -translate-x-1/2">
-			<XInput label="Label" placeholder="Placeholder" />
-			<hr className="my-2" />
-			<XBtn block={true}>Button</XBtn>
-		</div>
-	);
+	return <InputExample />;
 	/*const ref = useRef(null);
 	useEffect(() => {
 		//console.log(ref);
