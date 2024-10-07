@@ -24,17 +24,17 @@
 	@apply border-inherit rounded-inherit flex items-stretch pointer-events-none contain-layout h-full w-full absolute top-0 left-0 right-0;
 }
 .x-input-outline-start {
-	@apply border-l border-y border-inherit flex-[0_0_12px] rounded-l-inherit;
+	@apply border-l border-y border-inherit flex-[0_0_0.75rem] rounded-l-inherit;
 }
 .x-input-outline-notch {
-	@apply border-y border-t-0 border-inherit relative flex-none;
+	@apply border-y border-inherit relative flex-none;
 }
 .x-input-outline-end {
 	@apply border-r border-y border-inherit flex-[1] rounded-r-inherit;
 }
 
 .x-input-outline .x-input-label {
-	@apply scale-[0.8] -mt-4;
+	@apply invisible scale-75 static mx-1 -translate-y-full;
 }
 
 .x-input--field {
@@ -50,7 +50,7 @@
 }
 .x-input-native:focus ~ .x-input-label,
 .x-input-native:not(:placeholder-shown) ~ .x-input-label {
-	@apply opacity-100 scale-[0.8] top-[1px];
+	@apply opacity-100 scale-75 -left-3 top-[1px];
 }
 .x-input-control:has(:focus) ~ .x-input-outline > .x-input-outline-notch,
 .x-input-control:has(input:not(:placeholder-shown))
