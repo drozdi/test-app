@@ -21,16 +21,20 @@
 	@apply pointer-events-none absolute left-4 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2  transition-all duration-200 ease-out opacity-70;
 }
 .x-input-outline {
-	@apply border-inherit rounded-inherit flex contain-layout items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0;
+	@apply border-inherit rounded-inherit flex items-stretch pointer-events-none contain-layout h-full w-full absolute top-0 left-0 right-0;
 }
 .x-input-outline-start {
 	@apply border-l border-y border-inherit flex-[0_0_12px] rounded-l-inherit;
 }
 .x-input-outline-notch {
-	@apply border-y border-inherit flex-none;
+	@apply border-y border-t-0 border-inherit relative flex-none;
 }
 .x-input-outline-end {
 	@apply border-r border-y border-inherit flex-[1] rounded-r-inherit;
+}
+
+.x-input-outline .x-input-label {
+	@apply scale-[0.8] -mt-4;
 }
 
 .x-input--field {

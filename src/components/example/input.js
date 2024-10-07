@@ -25,10 +25,9 @@ export function InputExample() {
 						</div>
 						<div className="x-input-outline">
 							<div className="x-input-outline-start"></div>
-							<div
-								className="x-input-outline-notch"
-								style={{ width: 30 }}
-							></div>
+							<div className="x-input-outline-notch">
+								<label className="x-input-label">Label</label>
+							</div>
 							<div className="x-input-outline-end"></div>
 						</div>
 					</div>
