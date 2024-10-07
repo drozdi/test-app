@@ -2,10 +2,10 @@
 	@apply relative flex border-divider rounded;
 }
 .x-input-container {
-	@apply relative flex-1 flex border-divider rounded-inherit;
+	@apply relative flex-1 flex border-inherit rounded-inherit;
 }
 .x-input-control {
-	@apply relative flex-1 border-divider rounded-inherit;
+	@apply relative flex-1 border-inherit rounded-inherit;
 }
 .x-input-before,
 .x-input-after,
@@ -24,35 +24,46 @@
 	@apply border-inherit rounded-inherit flex items-stretch pointer-events-none contain-layout h-full w-full absolute top-0 left-0 right-0;
 }
 .x-input-outline-start {
-	@apply border-l border-y border-inherit flex-[0_0_0.75rem] rounded-l-inherit;
+	@apply border-l border-y border-inherit transition-border flex-[0_0_0.75rem] rounded-l-inherit;
 }
 .x-input-outline-notch {
-	@apply border-y border-inherit relative flex-none;
+	@apply border-y border-inherit transition-border relative max-w-[calc(100%-0.75rem)] flex-none;
 }
 .x-input-outline-end {
-	@apply border-r border-y border-inherit flex-[1] rounded-r-inherit;
+	@apply border-r border-y border-inherit transition-border flex-[1] rounded-r-inherit;
 }
 
 .x-input-outline .x-input-label {
 	@apply invisible scale-75 static mx-1 -translate-y-full;
 }
 
-.x-input--field {
+.x-input--field .x-input-container {
 	@apply bg-dimmed;
 }
-.x-input:focus {
+.x-input--square {
+	@apply rounded-none;
 }
-.x-input {
-	@apply has-[:focus]:border-blue-600;
+
+.x-input:has(input:focus) {
+	@apply border-blue-600;
 }
 .x-input-native:focus ~ .x-input-label {
-	@apply text-blue-600;
+	@apply opacity-100 text-blue-600;
 }
+
 .x-input-native:focus ~ .x-input-label,
 .x-input-native:not(:placeholder-shown) ~ .x-input-label {
-	@apply opacity-100 scale-75 -left-3 top-[1px];
+	@apply text-xs top-0;
 }
-.x-input-control:has(:focus) ~ .x-input-outline > .x-input-outline-notch,
+
+.x-input-container:has(*.x-input-prepend) .x-input-native:focus ~ .x-input-label,
+.x-input-container:has(*.x-input-prepend)
+	.x-input-native:not(:placeholder-shown)
+	~ .x-input-label {
+	@apply left-1;
+}
+
+.x-input-control:has(input:focus) ~ .x-input-outline > .x-input-outline-notch,
 .x-input-control:has(input:not(:placeholder-shown))
 	~ .x-input-outline
 	> .x-input-outline-notch {

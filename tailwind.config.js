@@ -37,6 +37,7 @@ module.exports = {
 				layout: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',
 			},
 			transitionProperty: {
+				border: 'border',
 				width: 'width',
 				height: 'height',
 				spacing: 'margin, padding',
