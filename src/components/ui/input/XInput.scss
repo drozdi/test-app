@@ -18,7 +18,7 @@
 	@apply block w-full bg-transparent p-2 outline-none transition-all duration-200 ease-linear [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
 }
 .x-input-label {
-	@apply pointer-events-none absolute left-4 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2  transition-all duration-200 ease-out opacity-70;
+	@apply pointer-events-none absolute left-5 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2  transition-all duration-200 ease-out opacity-70;
 }
 .x-input-outline {
 	@apply border-inherit rounded-inherit flex items-stretch pointer-events-none contain-layout h-full w-full absolute top-0 left-0 right-0;
@@ -27,14 +27,14 @@
 	@apply border-l border-y border-inherit transition-border flex-[0_0_0.75rem] rounded-l-inherit;
 }
 .x-input-outline-notch {
-	@apply border-y border-inherit transition-border relative max-w-[calc(100%-0.75rem)] flex-none;
+	@apply border-y border-t-0 border-inherit transition-border relative max-w-[calc(100%-0.75rem)] flex-none;
 }
 .x-input-outline-end {
 	@apply border-r border-y border-inherit transition-border flex-[1] rounded-r-inherit;
 }
 
 .x-input-outline .x-input-label {
-	@apply invisible scale-75 static mx-1 -translate-y-full;
+	@apply static scale-75 origin-[0_0] mx-1 -translate-y-full;
 }
 
 .x-input--field .x-input-container {
@@ -53,7 +53,7 @@
 
 .x-input-native:focus ~ .x-input-label,
 .x-input-native:not(:placeholder-shown) ~ .x-input-label {
-	@apply text-xs top-0;
+	@apply scale-75 top-0;
 }
 
 .x-input-container:has(*.x-input-prepend) .x-input-native:focus ~ .x-input-label,
