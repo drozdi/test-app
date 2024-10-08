@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XInput } from '../ui';
+import { XIcon, XInput } from '../ui';
 export function InputExample() {
 	const [inputProps, setInputProps] = useState({
 		label: '',
@@ -16,6 +16,40 @@ export function InputExample() {
 	};
 	return (
 		<div className="max-w-4xl m-auto mt-2">
+			<div className="x-input x-input--outline x-input--field">
+				<div className="x-input-before">
+					<XIcon>mdi-close</XIcon>
+				</div>
+				<div className="x-input-container">
+					{true && (
+						<div className="x-input-prepend">
+							<XIcon>mdi-close</XIcon>
+						</div>
+					)}
+					<div className="x-input-control">
+						<input
+							type="text"
+							className="x-input-native"
+							placeholder="Placeholder"
+						/>
+						<label className="x-input-label">Labelrtrty</label>
+					</div>
+					<div className="x-input-append">
+						<XIcon>mdi-close</XIcon>
+					</div>
+					<div className="x-input-outline">
+						<div className="x-input-outline-start"></div>
+						<div className="x-input-outline-notch">
+							<label className="x-input-label">Labelrtrty</label>
+						</div>
+						<div className="x-input-outline-end"></div>
+					</div>
+				</div>
+				<div className="x-input-after">
+					<XIcon>mdi-close</XIcon>
+				</div>
+			</div>
+			<hr className="my-3" />
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
 					<tr className="*:text-center">
