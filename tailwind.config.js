@@ -43,6 +43,7 @@ module.exports = {
 				spacing: 'margin, padding',
 			},
 			borderWidth: {
+				3: '3px',
 				9: '9px',
 				10: '10px',
 			},

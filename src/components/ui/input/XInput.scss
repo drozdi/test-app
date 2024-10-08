@@ -5,39 +5,31 @@
 	@apply relative flex-1 flex border-inherit rounded-inherit;
 }
 .x-input-control {
-	@apply flex-1 flex border-inherit rounded-inherit;
+	@apply relative flex-1 flex border-inherit rounded-inherit;
 }
 .x-input-before,
 .x-input-after,
 .x-input-prepend,
 .x-input-append {
-	@apply flex items-center content-center px-2;
+	@apply flex items-center content-center;
+}
+.x-input-before,
+.x-input-after {
+	@apply px-2;
+}
+.x-input-prepend {
+	@apply pl-2;
+}
+.x-input-append {
+	@apply pr-2;
 }
 
 .x-input-native {
-	@apply block w-full bg-transparent p-2 outline-none transition-all duration-200 ease-linear [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	@apply block w-full bg-transparent p-2 outline-none [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
 }
 .x-input-label {
-	@apply pointer-events-none absolute ml-4 left-4 top-1/2 mb-0 max-w-[90%] origin-[0_0] truncate -translate-y-1/2 
-	transition-all duration-200 ease-out opacity-70;
+	@apply pointer-events-none absolute left-2 top-1/2 max-w-[calc(100%-2rem)] truncate -translate-y-1/2 opacity-70;
 }
-.x-input-outline {
-	@apply border-inherit rounded-inherit flex items-stretch pointer-events-none h-full w-full absolute top-0 left-0 ;
-}
-.x-input-outline-start {
-	@apply border-l border-y border-inherit transition-border flex-[0_0_0.75rem] rounded-l-inherit;
-}
-.x-input-outline-notch {
-	@apply border-y border-inherit border-t-transparent transition-border contain-content flex-none max-w-[calc(100%-0.75rem)];
-}
-.x-input-outline-end {
-	@apply border-r border-y border-inherit transition-border flex-[1] rounded-r-inherit;
-}
-
-.x-input-outline .x-input-label {
-	@apply invisible static text-xs transition-all origin-[0_0] mx-1 -translate-y-full;
-}
-
 .x-input--field .x-input-container {
 	@apply bg-dimmed;
 }
@@ -48,29 +40,82 @@
 .x-input:has(input:focus) {
 	@apply border-blue-600;
 }
-.x-input-native:focus ~ .x-input-label {
-	@apply opacity-100 text-blue-600;
+.x-input-container:has(input:focus) .x-input-label {
+	@apply text-blue-600;
 }
 
 .x-input-native:focus ~ .x-input-label,
 .x-input-native:not(:placeholder-shown) ~ .x-input-label {
-	@apply text-xs top-0 opacity-100 ml-0;
+	@apply text-[0.8em] top-0 opacity-100;
 }
 
-.x-input-control:has(input:focus) {
-	@apply static;
+.x-input-outline {
+	@apply hidden border-inherit rounded-inherit items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0;
+}
+.x-input-outline > * {
+	@apply border-y border-inherit;
+}
+.x-input-outline > *:first-child {
+	@apply border-l rounded-l-inherit;
+}
+.x-input-outline > *:last-child {
+	@apply border-r rounded-r-inherit;
+}
+.x-input-outline-start {
+	@apply flex-[0_0_0.75rem];
+}
+.x-input-outline-notch {
+	@apply flex-none max-w-[calc(100%-0.75rem)];
+}
+.x-input-outline-end {
+	@apply flex-[1];
+}
+.x-input-outline .x-input-label {
+	@apply invisible text-[0.8em] mx-1 relative -top-[calc(50%-0.4em)] left-0;
 }
 
-.x-input-container:has(*.x-input-prepend) .x-input-native:focus ~ .x-input-label,
-.x-input-container:has(*.x-input-prepend)
-	.x-input-native:not(:placeholder-shown)
-	~ .x-input-label {
-		@apply invisible;
+.x-input--outline {
+	.x-input-outline {
+		@apply flex;
+	}
+	.x-input-control:has(input:focus) .x-input-label,
+	.x-input-control:has(input:not(:placeholder-shown)) .x-input-label {
+		@apply invisible left-4;
+	}
+	.x-input-control:has(input:focus) ~ .x-input-outline .x-input-label,
+	.x-input-control:has(input:not(:placeholder-shown))
+		~ .x-input-outline
+		.x-input-label {
+		@apply visible;
+	}
+	.x-input-control:has(input:focus) ~ .x-input-outline > .x-input-outline-notch,
+	.x-input-control:has(input:not(:placeholder-shown))
+		~ .x-input-outline
+		> .x-input-outline-notch {
+		@apply border-t-transparent;
+	}
 }
 
-.x-input-control:has(input:focus) ~ .x-input-outline > .x-input-outline-notch,
-.x-input-control:has(input:not(:placeholder-shown))
-	~ .x-input-outline
-	> .x-input-outline-notch {
-	@apply border-t-transparent;
+.x-input--underlined {
+	.x-input-container {
+		@apply after:border-b after:border-inherit after:absolute after:left-0 after:right-0 after:bottom-0;
+	}
+	.x-input-container:has(input:focus) {
+		@apply after:border-b-3;
+	}
+}
+.x-input--underlined:not(.x-input--outline) {
+	@apply rounded-none;
+}
+.x-input--solo {
+	.x-input-native {
+		@apply pt-4 pb-2;
+	}
+	.x-input-native:focus ~ .x-input-label,
+	.x-input-native:not(:placeholder-shown) ~ .x-input-label {
+		@apply top-2;
+	}
+	.x-input-outline .x-input-label {
+		@apply -top-[calc(50%-0.8em)];
+	}
 }

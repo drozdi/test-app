@@ -7,6 +7,8 @@ export function InputExample() {
 		outline: false,
 		field: false,
 		square: false,
+		underlined: false,
+		solo: false,
 	});
 	const onChangeText = (prop, value) => {
 		setInputProps((v) => ({ ...v, [prop]: value }));
@@ -17,12 +19,14 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto mt-2">
 			<hr className="my-4" />
-			<div className="x-input x-input--outline x-input--field">
-				{false && (<div className="x-input-before">
-					<XIcon>mdi-close</XIcon>
-				</div>)}
+			<div className="x-input x-input--solo x-input--field">
+				{true && (
+					<div className="x-input-before">
+						<XIcon>mdi-close</XIcon>
+					</div>
+				)}
 				<div className="x-input-container">
-					{false && (
+					{true && (
 						<div className="x-input-prepend">
 							<XIcon>mdi-close</XIcon>
 						</div>
@@ -35,9 +39,11 @@ export function InputExample() {
 						/>
 						<label className="x-input-label">Labelrtrty</label>
 					</div>
-					{false && (<div className="x-input-append">
-						<XIcon>mdi-close</XIcon>
-					</div>)}
+					{true && (
+						<div className="x-input-append">
+							<XIcon>mdi-close</XIcon>
+						</div>
+					)}
 					<div className="x-input-outline">
 						<div className="x-input-outline-start"></div>
 						<div className="x-input-outline-notch">
@@ -46,9 +52,11 @@ export function InputExample() {
 						<div className="x-input-outline-end"></div>
 					</div>
 				</div>
-				{false && (<div className="x-input-after">
-					<XIcon>mdi-close</XIcon>
-				</div>)}
+				{true && (
+					<div className="x-input-after">
+						<XIcon>mdi-close</XIcon>
+					</div>
+				)}
 			</div>
 			<hr className="my-3" />
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
@@ -58,7 +66,7 @@ export function InputExample() {
 						<td>standart</td>
 						<td>field</td>
 						<td>outline</td>
-						<td>flat</td>
+						<td>underlined</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -83,7 +91,11 @@ export function InputExample() {
 						</td>
 
 						<td>
-							<XInput label="Label" placeholder="Placeholder" />
+							<XInput
+								underlined={true}
+								label="Label"
+								placeholder="Placeholder"
+							/>
 						</td>
 					</tr>
 				</tbody>
@@ -146,6 +158,26 @@ export function InputExample() {
 							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Square</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="underlined"
+							checked={inputProps.underlined}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">
+							Underlined
+						</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="solo"
+							checked={inputProps.solo}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Solo</span>
 					</label>
 				</div>
 			</div>
