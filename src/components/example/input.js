@@ -16,12 +16,13 @@ export function InputExample() {
 	};
 	return (
 		<div className="max-w-4xl m-auto mt-2">
+			<hr className="my-4" />
 			<div className="x-input x-input--outline x-input--field">
-				<div className="x-input-before">
+				{false && (<div className="x-input-before">
 					<XIcon>mdi-close</XIcon>
-				</div>
+				</div>)}
 				<div className="x-input-container">
-					{true && (
+					{false && (
 						<div className="x-input-prepend">
 							<XIcon>mdi-close</XIcon>
 						</div>
@@ -34,9 +35,9 @@ export function InputExample() {
 						/>
 						<label className="x-input-label">Labelrtrty</label>
 					</div>
-					<div className="x-input-append">
+					{false && (<div className="x-input-append">
 						<XIcon>mdi-close</XIcon>
-					</div>
+					</div>)}
 					<div className="x-input-outline">
 						<div className="x-input-outline-start"></div>
 						<div className="x-input-outline-notch">
@@ -45,9 +46,9 @@ export function InputExample() {
 						<div className="x-input-outline-end"></div>
 					</div>
 				</div>
-				<div className="x-input-after">
+				{false && (<div className="x-input-after">
 					<XIcon>mdi-close</XIcon>
-				</div>
+				</div>)}
 			</div>
 			<hr className="my-3" />
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
