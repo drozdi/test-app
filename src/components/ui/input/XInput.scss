@@ -109,11 +109,11 @@
 }
 .x-input--solo {
 	.x-input-native {
-		@apply pt-4 pb-2;
+		@apply pt-5 pb-1;
 	}
 	.x-input-native:focus ~ .x-input-label,
 	.x-input-native:not(:placeholder-shown) ~ .x-input-label {
-		@apply top-2;
+		@apply top-0 translate-y-0;
 	}
 	.x-input-outline .x-input-label {
 		@apply -top-[calc(50%-0.8em)];
