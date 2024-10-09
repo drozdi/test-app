@@ -8,7 +8,8 @@ export function InputExample() {
 		field: false,
 		square: false,
 		underlined: false,
-		solo: false,
+		dense: false,
+		stackLabel: false,
 	});
 	const onChangeText = (prop, value) => {
 		setInputProps((v) => ({ ...v, [prop]: value }));
@@ -19,7 +20,7 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto mt-2">
 			<hr className="my-4" />
-			<div className="x-input x-input--field">
+			<div className="x-input x-input--field x-input--outline x-input--dense x-input--stack-label">
 				{true && (
 					<div className="x-input-before">
 						<XIcon>mdi-close</XIcon>
@@ -44,13 +45,15 @@ export function InputExample() {
 							<XIcon>mdi-close</XIcon>
 						</div>
 					)}
-					<div className="x-input-outline">
-						<div className="x-input-outline-start"></div>
-						<div className="x-input-outline-notch">
-							<label className="x-input-label">Label</label>
+					{true && (
+						<div className="x-input-outline">
+							<div className="x-input-outline-start"></div>
+							<div className="x-input-outline-notch">
+								<label className="x-input-label">Label</label>
+							</div>
+							<div className="x-input-outline-end"></div>
 						</div>
-						<div className="x-input-outline-end"></div>
-					</div>
+					)}
 				</div>
 				{true && (
 					<div className="x-input-after">
@@ -173,11 +176,22 @@ export function InputExample() {
 					<label className="block">
 						<input
 							type="checkbox"
-							name="solo"
-							checked={inputProps.solo}
+							name="dense"
+							checked={inputProps.dense}
 							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
-						<span className="ml-3 font-medium text-slate-500">Solo</span>
+						<span className="ml-3 font-medium text-slate-500">Dense</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="stackLabel"
+							checked={inputProps.stackLabel}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">
+							Stack Label
+						</span>
 					</label>
 				</div>
 			</div>
