@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import './XInput.scss';
 export function XInput({
 	solo = false,
+	dense = false,
 	outline = false,
 	field = false,
 	square = false,
@@ -24,6 +25,7 @@ export function XInput({
 				'x-input--square': square,
 				'x-input--underlined': underlined,
 				'x-input--solo': solo,
+				'x-input--dense': dense,
 			})}
 		>
 			{before && <div className="x-input-before">{before}</div>}

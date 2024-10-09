@@ -19,7 +19,7 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto mt-2">
 			<hr className="my-4" />
-			<div className="x-input x-input--outline x-input--underlined1 x-input--square1 x-input--solo1 x-input--field">
+			<div className="x-input x-input--field">
 				{true && (
 					<div className="x-input-before">
 						<XIcon>mdi-close</XIcon>
@@ -37,7 +37,7 @@ export function InputExample() {
 							className="x-input-native"
 							placeholder="Placeholder"
 						/>
-						<label className="x-input-label">Labelrtrty</label>
+						<label className="x-input-label">Label</label>
 					</div>
 					{true && (
 						<div className="x-input-append">
@@ -47,7 +47,7 @@ export function InputExample() {
 					<div className="x-input-outline">
 						<div className="x-input-outline-start"></div>
 						<div className="x-input-outline-notch">
-							<label className="x-input-label">Labelrtrty</label>
+							<label className="x-input-label">Label</label>
 						</div>
 						<div className="x-input-outline-end"></div>
 					</div>
