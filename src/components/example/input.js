@@ -19,7 +19,7 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto mt-2">
 			<hr className="my-4" />
-			<div className="x-input x-input--solo x-input--field">
+			<div className="x-input x-input--outline x-input--underlined1 x-input--square1 x-input--solo1 x-input--field">
 				{true && (
 					<div className="x-input-before">
 						<XIcon>mdi-close</XIcon>

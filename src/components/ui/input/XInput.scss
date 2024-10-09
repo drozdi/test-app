@@ -1,11 +1,8 @@
 .x-input {
 	@apply relative flex border-divider rounded;
 }
-.x-input-container {
-	@apply relative flex-1 flex border-inherit rounded-inherit;
-}
-.x-input-control {
-	@apply relative flex-1 flex border-inherit rounded-inherit;
+.x-input * {
+	@apply transition-all duration-200 ease-out;
 }
 .x-input-before,
 .x-input-after,
@@ -13,40 +10,45 @@
 .x-input-append {
 	@apply flex items-center content-center;
 }
-.x-input-before,
+.x-input-before {
+	@apply mr-2;
+}
 .x-input-after {
+	@apply ml-2;
+}
+.x-input-prepend,
+.x-input-append {
 	@apply px-2;
 }
-.x-input-prepend {
-	@apply pl-2;
+
+.x-input-container {
+	@apply relative flex-1 flex border-inherit rounded-inherit;
 }
-.x-input-append {
-	@apply pr-2;
+.x-input-control {
+	@apply relative flex-1 flex border-inherit rounded-inherit;
 }
 
 .x-input-native {
-	@apply block w-full bg-transparent p-2 outline-none [&]:placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	@apply block w-full bg-transparent p-2 outline-none placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
 }
 .x-input-label {
-	@apply pointer-events-none absolute left-2 top-1/2 max-w-[calc(100%-2rem)] truncate -translate-y-1/2 opacity-70;
+	@apply pointer-events-none opacity-70 truncate absolute left-2 top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2;
 }
-.x-input--field .x-input-container {
-	@apply bg-dimmed;
-}
-.x-input--square {
-	@apply rounded-none;
+.x-input-prepend + .x-input-control:has(input:focus),
+.x-input-prepend + .x-input-control:has(input:not(:placeholder-shown)) {
+	@apply static;
 }
 
 .x-input:has(input:focus) {
 	@apply border-blue-600;
 }
 .x-input-container:has(input:focus) .x-input-label {
-	@apply text-blue-600;
+	@apply text-blue-600 opacity-100;
 }
 
 .x-input-native:focus ~ .x-input-label,
 .x-input-native:not(:placeholder-shown) ~ .x-input-label {
-	@apply text-[0.8em] top-0 opacity-100;
+	@apply text-[0.8em] top-0;
 }
 
 .x-input-outline {
@@ -118,4 +120,11 @@
 	.x-input-outline .x-input-label {
 		@apply -top-[calc(50%-0.8em)];
 	}
+}
+
+.x-input--field .x-input-container {
+	@apply bg-dimmed;
+}
+.x-input--square {
+	@apply rounded-none;
 }

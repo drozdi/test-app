@@ -7,6 +7,7 @@ export function XInput({
 	field = false,
 	square = false,
 	underlined = false,
+	stackLabel = false,
 	before = '',
 	after = '',
 	prepend = '',
