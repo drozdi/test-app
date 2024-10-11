@@ -1,5 +1,6 @@
 //todo add styles label over border
 import classNames from 'classnames';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './XInput.scss';
 export function XInput({
 	dense = false,
@@ -18,6 +19,27 @@ export function XInput({
 	bg = '',
 	...props
 }) {
+	const labelRef = useRef();
+	const controlRef = useRef();
+	const prependRef = useRef();
+	const [shiftLabel, setShiftLabel] = useState(0);
+	useEffect(() => {
+		if (prependRef.current) {
+			console.log(prependRef.current.offsetWidth);
+			setShiftLabel(-1 * parseInt(prependRef.current.offsetWidth, 10));
+		}
+	}, [prependRef]);
+	//todo add focus input
+	const isShift = useMemo(
+		() => stackLabel || (outline && dense),
+		[outline, dense, stackLabel],
+	);
+	const labelStyle = useMemo(
+		() => ({
+			left: isShift ? shiftLabel : '',
+		}),
+		[isShift, shiftLabel],
+	);
 	return (
 		<div
 			className={classNames('x-input', {
@@ -37,11 +59,20 @@ export function XInput({
 					[`x-bg-${bg}`]: !!bg,
 				})}
 			>
-				{prepend && <div className="x-input-prepend">{prepend}</div>}
-				<div className="x-input-control">
+				{prepend && (
+					<div className="x-input-prepend" ref={prependRef}>
+						{prepend}
+					</div>
+				)}
+				<div className="x-input-control" ref={controlRef}>
 					<input {...props} type={type} className="x-input-native" />
 					{label && (
-						<label htmlFor={props.id} className="x-input-label">
+						<label
+							htmlFor={props.id}
+							className="x-input-label"
+							ref={labelRef}
+							style={labelStyle}
+						>
 							{label}
 						</label>
 					)}

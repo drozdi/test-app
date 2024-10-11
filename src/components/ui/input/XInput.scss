@@ -80,30 +80,21 @@
 	@apply flex-[1];
 }
 .x-input-outline .x-input-label {
-	@apply hidden invisible text-[0.8em] mx-1 relative -top-[calc(50%-0.4em)] left-0;
+	@apply invisible text-[0.8em] mx-1 relative -top-[calc(50%-0.4em)] left-0;
 }
 .x-input--outline .x-input-outline {
 	@apply flex;
 }
 
 .x-input--outline.x-input--dense {
-	.x-input-outline .x-input-label {
-		@apply inline;
-	}
 	.x-input-control .x-input-native {
 		@apply py-2;
 	}
 	.x-input-control:has(input:focus) .x-input-label,
 	.x-input-control:has(input:not(:placeholder-shown)) .x-input-label {
-		@apply invisible left-0;
+		@apply top-0 left-0 ml-4;
 	}
 
-	.x-input-control:has(input:focus) ~ .x-input-outline .x-input-label,
-	.x-input-control:has(input:not(:placeholder-shown))
-		~ .x-input-outline
-		.x-input-label {
-		@apply visible;
-	}
 	.x-input-control:has(input:focus) ~ .x-input-outline > .x-input-outline-notch,
 	.x-input-control:has(input:not(:placeholder-shown))
 		~ .x-input-outline
@@ -116,13 +107,12 @@
 		@apply py-2;
 	}
 	.x-input-native ~ .x-input-label {
-		@apply invisible;
+		@apply top-0 left-4;
 	}
 	.x-input-outline .x-input-outline-notch {
 		@apply border-t-transparent;
 	}
 	.x-input-outline .x-input-label {
-		@apply visible;
 	}
 }
 

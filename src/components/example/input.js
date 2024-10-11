@@ -13,7 +13,7 @@ export function InputExample() {
 		dense: false,
 		stackLabel: false,
 	});
-	console.log(inputProps);
+	//console.log(inputProps);
 	const onChangeSelect = (prop, value) => {
 		setInputProps((v) => ({ ...v, [prop]: value }));
 	};
@@ -26,47 +26,16 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto mt-2">
 			<hr className="my-24" />
-			<div className="x-input x-input--field x-input--outline x-input--dense">
-				{true && (
-					<div className="x-input-before">
-						<XIcon>mdi-close</XIcon>
-					</div>
-				)}
-				<div className="x-input-container">
-					{true && (
-						<div className="x-input-prepend">
-							<XIcon>mdi-close</XIcon>
-						</div>
-					)}
-					<div className="x-input-control">
-						<input
-							type="text"
-							className="x-input-native"
-							placeholder="Placeholder"
-						/>
-						<label className="x-input-label">Label</label>
-					</div>
-					{true && (
-						<div className="x-input-append">
-							<XIcon>mdi-close</XIcon>
-						</div>
-					)}
-					{true && (
-						<div className="x-input-outline">
-							<div className="x-input-outline-start"></div>
-							<div className="x-input-outline-notch">
-								<label className="x-input-label">Label</label>
-							</div>
-							<div className="x-input-outline-end"></div>
-						</div>
-					)}
-				</div>
-				{true && (
-					<div className="x-input-after">
-						<XIcon>mdi-close</XIcon>
-					</div>
-				)}
-			</div>
+			<XInput
+				label="Label"
+				placeholder="Placeholder"
+				dense={true}
+				outline={true}
+				before={<XIcon>mdi-close</XIcon>}
+				prepend={<XIcon>mdi-close</XIcon>}
+				after={<XIcon>mdi-close</XIcon>}
+				append={<XIcon>mdi-close</XIcon>}
+			/>
 			<hr className="my-3" />
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
