@@ -3,7 +3,9 @@ import { XIcon, XInput } from '../ui';
 export function InputExample() {
 	const [inputProps, setInputProps] = useState({
 		label: '',
+		bg: '',
 		placeholder: '',
+		color: '',
 		outline: false,
 		field: false,
 		square: false,
@@ -11,6 +13,10 @@ export function InputExample() {
 		dense: false,
 		stackLabel: false,
 	});
+	console.log(inputProps);
+	const onChangeSelect = (prop, value) => {
+		setInputProps((v) => ({ ...v, [prop]: value }));
+	};
 	const onChangeText = (prop, value) => {
 		setInputProps((v) => ({ ...v, [prop]: value }));
 	};
@@ -19,8 +25,8 @@ export function InputExample() {
 	};
 	return (
 		<div className="max-w-4xl m-auto mt-2">
-			<hr className="my-4" />
-			<div className="x-input x-input--field x-input--outline x-input--dense x-input--stack-label">
+			<hr className="my-24" />
+			<div className="x-input x-input--field x-input--outline x-input--dense">
 				{true && (
 					<div className="x-input-before">
 						<XIcon>mdi-close</XIcon>
@@ -109,6 +115,61 @@ export function InputExample() {
 					<XInput {...inputProps} />
 				</div>
 				<div>
+					<label className="block">
+						<span className="ml-3 font-medium text-slate-500">Color</span>
+						<select
+							className=" block bg-slate-700 border border-blue-900 p-2"
+							name="color"
+							value={inputProps.color}
+							defaultValue={inputProps.color}
+							onChange={({ target }) =>
+								onChangeSelect(target.name, target.value)
+							}
+						>
+							<option value="">default</option>
+							{[
+								'primary',
+								'secondary',
+								'accent',
+								'positive',
+								'negative',
+								'info',
+								'warning',
+							].map((color, index) => (
+								<option key={index} value={color}>
+									{color}
+								</option>
+							))}
+						</select>
+					</label>
+					<label className="block">
+						<span className="ml-3 font-medium text-slate-500">BG</span>
+						<select
+							className=" block bg-slate-700 border border-blue-900 p-2"
+							name="bg"
+							value={inputProps.bg}
+							defaultValue={inputProps.bg}
+							onChange={({ target }) =>
+								onChangeSelect(target.name, target.value)
+							}
+						>
+							<option value="">default</option>
+							{[
+								'primary',
+								'secondary',
+								'accent',
+								'positive',
+								'negative',
+								'info',
+								'warning',
+							].map((color, index) => (
+								<option key={index} value={color}>
+									{color}
+								</option>
+							))}
+						</select>
+					</label>
+
 					<label className="block">
 						<span className="block font-medium text-slate-500">Label</span>
 						<input

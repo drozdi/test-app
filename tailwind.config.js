@@ -1,6 +1,18 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 module.exports = {
 	content: ['./public/index.html', './src/**/*.{js,jsx,ts,tsx}'],
+	//important: true,
+	safelist: [
+		'x-bg-primary',
+		'x-bg-secondary',
+		'x-bg-accent',
+		'x-bg-positive',
+		'x-bg-negative',
+		'x-bg-info',
+		'x-bg-warning',
+		'x-bg-surface',
+	],
 	theme: {
 		extend: {
 			colors: {
@@ -49,5 +61,20 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		plugin(function ({ addUtilities, theme }) {
+			const utilities = {};
+
+			'primary secondary accent positive negative info warning surface body dark'
+				.split(/\s+/)
+				.forEach((color) => {
+					utilities[`.x-bg-${color}`] = {
+						'background-color': theme(`colors.${color}`),
+						color: theme('colors.white'),
+					};
+				});
+
+			addUtilities(utilities);
+		}),
+	],
 };

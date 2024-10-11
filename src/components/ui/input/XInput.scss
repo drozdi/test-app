@@ -24,10 +24,10 @@
 }
 
 .x-input-native {
-	@apply block w-full bg-transparent px-2 pt-6 pb-2 outline-none placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	@apply block w-full bg-transparent px-2 pt-6 pb-2 outline-none transition-all ease-in-out duration-200 placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
 }
 .x-input-label {
-	@apply pointer-events-none opacity-70 truncate absolute left-2 top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2;
+	@apply pointer-events-none opacity-70 truncate absolute left-2 top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2 transition-all ease-in-out duration-200;
 }
 
 .x-input-control:not(:has(*.x-input-label)) .x-input-native {
@@ -59,10 +59,10 @@
 }
 
 .x-input-outline {
-	@apply hidden border-inherit rounded-inherit items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0;
+	@apply hidden border-inherit rounded-inherit items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0 transition-border ease-in-out duration-200;
 }
 .x-input-outline > * {
-	@apply border-y border-inherit;
+	@apply border-y border-inherit transition-border ease-in-out duration-200;
 }
 .x-input-outline > *:first-child {
 	@apply border-l rounded-l-inherit;
@@ -95,7 +95,7 @@
 	}
 	.x-input-control:has(input:focus) .x-input-label,
 	.x-input-control:has(input:not(:placeholder-shown)) .x-input-label {
-		@apply invisible;
+		@apply invisible left-0;
 	}
 
 	.x-input-control:has(input:focus) ~ .x-input-outline .x-input-label,
@@ -150,4 +150,47 @@
 }
 .x-input--field .x-input-container {
 	@apply bg-dimmed;
+}
+
+.x-input--primary:has(input:focus) {
+	@apply border-primary;
+}
+.x-input--primary:has(input:focus) .x-input-label {
+	@apply text-primary opacity-100;
+}
+.x-input--secondary:has(input:focus) {
+	@apply border-secondary;
+}
+.x-input--secondary:has(input:focus) .x-input-label {
+	@apply text-secondary opacity-100;
+}
+.x-input--accent:has(input:focus) {
+	@apply border-accent;
+}
+.x-input--accent:has(input:focus) .x-input-label {
+	@apply text-accent opacity-100;
+}
+.x-input--positive:has(input:focus) {
+	@apply border-positive;
+}
+.x-input--positive:has(input:focus) .x-input-label {
+	@apply text-positive opacity-100;
+}
+.x-input--negative:has(input:focus) {
+	@apply border-negative;
+}
+.x-input--negative:has(input:focus) .x-input-label {
+	@apply text-negative opacity-100;
+}
+.x-input--info:has(input:focus) {
+	@apply border-info;
+}
+.x-input--info:has(input:focus) .x-input-label {
+	@apply text-info opacity-100;
+}
+.x-input--warning:has(input:focus) {
+	@apply border-warning;
+}
+.x-input--warning:has(input:focus) .x-input-label {
+	@apply text-warning opacity-100;
 }

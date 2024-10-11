@@ -14,6 +14,8 @@ export function XInput({
 	append = '',
 	type = 'text',
 	label = '',
+	color = '',
+	bg = '',
 	...props
 }) {
 	return (
@@ -25,10 +27,16 @@ export function XInput({
 				'x-input--underlined': underlined,
 				'x-input--dense': dense,
 				'x-input--stack-label': stackLabel,
+				[`x-input--${color}`]: !!color,
 			})}
 		>
 			{before && <div className="x-input-before">{before}</div>}
-			<div className="x-input-container">
+			<div
+				className={classNames('x-input-container', {
+					rrr: !!bg,
+					[`x-bg-${bg}`]: !!bg,
+				})}
+			>
 				{prepend && <div className="x-input-prepend">{prepend}</div>}
 				<div className="x-input-control">
 					<input {...props} type={type} className="x-input-native" />
