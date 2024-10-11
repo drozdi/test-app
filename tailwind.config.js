@@ -12,6 +12,8 @@ module.exports = {
 		'x-bg-info',
 		'x-bg-warning',
 		'x-bg-surface',
+		'x-bg-body',
+		'x-bg-dark',
 	],
 	theme: {
 		extend: {
@@ -62,14 +64,45 @@ module.exports = {
 		},
 	},
 	plugins: [
-		plugin(function ({ addUtilities, theme }) {
+		plugin(function ({ addBase, addUtilities, theme }) {
 			const utilities = {};
+
+			addBase({
+				'*': {
+					margin: 0,
+					padding: 0,
+					scrollbarColor: 'rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2)',
+					scrollbarWidth: 'thin',
+					'&::selection,&::-moz-selection': {
+						backgroundColor: '#cc1f1a'
+					},
+				},
+				'html,body': {
+					margin: 0,
+					padding: 0,
+					width: '100%',
+					height: '100%'
+				},
+				body: {
+					backgroundColor: theme('colors.body'),
+					color: 'rgba(255,255,255,0.7)',
+				},
+				a: {
+					color: '#00aeff',
+					textDecoration: 'none',
+				},
+				'a:hover': {
+					color: theme('colors.white'),
+					textDecoration: 'underlined'
+				}
+			});
+			
 
 			'primary secondary accent positive negative info warning surface body dark'
 				.split(/\s+/)
 				.forEach((color) => {
 					utilities[`.x-bg-${color}`] = {
-						'background-color': theme(`colors.${color}`),
+						backgroundColor: theme(`colors.${color}`),
 						color: theme('colors.white'),
 					};
 				});
