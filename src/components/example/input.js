@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { XIcon, XInput } from '../ui';
+import { useMemo, useState } from 'react';
+import { isBoolean } from '../../utils/is';
+import { XInput } from '../ui';
 export function InputExample() {
 	const [inputProps, setInputProps] = useState({
 		label: '',
-		bg: '',
+		labelColor: '',
 		placeholder: '',
 		color: '',
 		outline: false,
@@ -12,6 +13,16 @@ export function InputExample() {
 		underlined: false,
 		dense: false,
 		stackLabel: false,
+	});
+	const [danses, setDanses] = useState({
+		default: false,
+		primary: false,
+		secondary: false,
+		accent: false,
+		positive: false,
+		negative: false,
+		info: false,
+		warning: false,
 	});
 	//console.log(inputProps);
 	const onChangeSelect = (prop, value) => {
@@ -23,20 +34,23 @@ export function InputExample() {
 	const onChangeCheckbox = (prop) => {
 		setInputProps((v) => ({ ...v, [prop]: !v[prop] }));
 	};
+	const exampleCode = useMemo(() => {
+		let str = '<XInput';
+		for (let prop in inputProps) {
+			if (inputProps[prop]) {
+				if (isBoolean(inputProps[prop])) {
+					str += `\n ${prop}={${inputProps[prop]}}`;
+				} else {
+					str += `\n ${prop}="${inputProps[prop]}"`;
+				}
+			}
+		}
+		str += ' />';
+		return str;
+	}, [inputProps]);
 	return (
-		<div className="max-w-4xl m-auto mt-2">
-			<hr className="my-24" />
-			<XInput
-				label="Label"
-				placeholder="Placeholder"
-				dense={true}
-				outline={true}
-				before={<XIcon>mdi-close</XIcon>}
-				prepend={<XIcon>mdi-close</XIcon>}
-				after={<XIcon>mdi-close</XIcon>}
-				append={<XIcon>mdi-close</XIcon>}
-			/>
-			<hr className="my-3" />
+		<div className="max-w-4xl m-auto py-4">
+			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
 					<tr className="*:text-center">
@@ -48,46 +62,82 @@ export function InputExample() {
 					</tr>
 				</thead>
 				<tbody>
-					<tr className="*:border *:border-separator *:p-2">
-						<td>default</td>
-						<td>
-							<XInput label="Label" placeholder="Placeholder" />
-						</td>
-						<td>
-							<XInput
-								field={true}
-								label="Label"
-								placeholder="Placeholder"
-							/>
-						</td>
-						<td>
-							<XInput
-								outline={true}
-								label="Label"
-								placeholder="Placeholder"
-							/>
-						</td>
+					{'default primary secondary accent positive negative info warning'
+						.split(/\s+/)
+						.map((color) => (
+							<tr key={color} className="*:border *:border-separator *:p-2">
+								<td>
+									{color}
+									<label className="block">
+										<input
+											type="checkbox"
+											name={color}
+											checked={danses[color]}
+											onChange={({ target }) =>
+												setDanses((v) => ({
+													...v,
+													[target.name]: !v[target.name],
+												}))
+											}
+										/>
+										<span className="ml-3 font-medium text-slate-500">
+											Dense
+										</span>
+									</label>
+								</td>
+								<td>
+									<XInput
+										color={color !== 'default' ? color : ''}
+										dense={danses[color]}
+										label="Label"
+										placeholder="Placeholder"
+									/>
+								</td>
+								<td>
+									<XInput
+										color={color !== 'default' ? color : ''}
+										dense={danses[color]}
+										field={true}
+										label="Label"
+										placeholder="Placeholder"
+									/>
+								</td>
+								<td>
+									<XInput
+										color={color !== 'default' ? color : ''}
+										dense={danses[color]}
+										outline={true}
+										label="Label"
+										placeholder="Placeholder"
+									/>
+								</td>
 
-						<td>
-							<XInput
-								underlined={true}
-								label="Label"
-								placeholder="Placeholder"
-							/>
-						</td>
-					</tr>
+								<td>
+									<XInput
+										color={color !== 'default' ? color : ''}
+										dense={danses[color]}
+										underlined={true}
+										label="Label"
+										placeholder="Placeholder"
+									/>
+								</td>
+							</tr>
+						))}
 				</tbody>
 			</table>
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XInput {...inputProps} />
+					<XInput {...inputProps} className="text-white" />
+					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+						{exampleCode}
+					</pre>
 				</div>
 				<div>
 					<label className="block">
 						<span className="ml-3 font-medium text-slate-500">Color</span>
 						<select
-							className=" block bg-slate-700 border border-blue-900 p-2"
+							className="block bg-slate-700 border border-blue-900 p-2"
 							name="color"
 							value={inputProps.color}
 							defaultValue={inputProps.color}
@@ -112,12 +162,14 @@ export function InputExample() {
 						</select>
 					</label>
 					<label className="block">
-						<span className="ml-3 font-medium text-slate-500">BG</span>
+						<span className="ml-3 font-medium text-slate-500">
+							labelColor
+						</span>
 						<select
 							className=" block bg-slate-700 border border-blue-900 p-2"
-							name="bg"
-							value={inputProps.bg}
-							defaultValue={inputProps.bg}
+							name="labelColor"
+							value={inputProps.labelColor}
+							defaultValue={inputProps.labelColor}
 							onChange={({ target }) =>
 								onChangeSelect(target.name, target.value)
 							}
@@ -138,7 +190,6 @@ export function InputExample() {
 							))}
 						</select>
 					</label>
-
 					<label className="block">
 						<span className="block font-medium text-slate-500">Label</span>
 						<input

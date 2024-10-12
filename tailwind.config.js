@@ -4,6 +4,28 @@ module.exports = {
 	content: ['./public/index.html', './src/**/*.{js,jsx,ts,tsx}'],
 	//important: true,
 	safelist: [
+		'.text-primary',
+		'.text-secondary',
+		'.text-accent',
+		'.text-positive',
+		'.text-negative',
+		'.text-info',
+		'.text-warning',
+		'.text-surface',
+		'.text-body',
+		'.text-dark',
+
+		'border-primary',
+		'border-secondary',
+		'border-accent',
+		'border-positive',
+		'border-negative',
+		'border-info',
+		'border-warning',
+		'border-surface',
+		'border-body',
+		'border-dark',
+
 		'x-bg-primary',
 		'x-bg-secondary',
 		'x-bg-accent',
@@ -74,14 +96,15 @@ module.exports = {
 					scrollbarColor: 'rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2)',
 					scrollbarWidth: 'thin',
 					'&::selection,&::-moz-selection': {
-						backgroundColor: '#cc1f1a'
+						color: '#eee',
+						background: 'rgba(255, 255, 255, 0.3)',
 					},
 				},
 				'html,body': {
 					margin: 0,
 					padding: 0,
 					width: '100%',
-					height: '100%'
+					height: '100%',
 				},
 				body: {
 					backgroundColor: theme('colors.body'),
@@ -93,17 +116,16 @@ module.exports = {
 				},
 				'a:hover': {
 					color: theme('colors.white'),
-					textDecoration: 'underlined'
-				}
+					textDecoration: 'underlined',
+				},
 			});
-			
 
 			'primary secondary accent positive negative info warning surface body dark'
 				.split(/\s+/)
 				.forEach((color) => {
 					utilities[`.x-bg-${color}`] = {
-						backgroundColor: theme(`colors.${color}`),
-						color: theme('colors.white'),
+						backgroundColor: theme(`colors.${color}`) + ' !important',
+						color: theme('colors.white') + ' !important',
 					};
 				});
 

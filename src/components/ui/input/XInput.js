@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './XInput.scss';
 export function XInput({
+	className = '',
 	dense = false,
 	outline = false,
 	field = false,
@@ -15,6 +16,7 @@ export function XInput({
 	append = '',
 	type = 'text',
 	label = '',
+	labelColor = '',
 	color = '',
 	bg = '',
 	onFocus = () => {},
@@ -66,15 +68,11 @@ export function XInput({
 				'x-input--dense': dense,
 				'x-input--stack-label': stackLabel,
 				[`x-input--${color}`]: !!color,
+				[`border-${color}`]: !!color,
 			})}
 		>
 			{before && <div className="x-input-before">{before}</div>}
-			<div
-				className={classNames('x-input-container', {
-					rrr: !!bg,
-					[`x-bg-${bg}`]: !!bg,
-				})}
-			>
+			<div className="x-input-container">
 				{prepend && (
 					<div className="x-input-prepend" ref={prependRef}>
 						{prepend}
@@ -84,14 +82,19 @@ export function XInput({
 					<input
 						{...props}
 						type={type}
-						className="x-input-native"
+						className={classNames('x-input-native', className)}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 					/>
 					{label && (
 						<label
 							htmlFor={props.id}
-							className="x-input-label"
+							className={classNames(
+								'x-input-label',
+								labelColor || color
+									? 'text-' + (labelColor || color)
+									: '',
+							)}
 							style={labelStyle}
 						>
 							{label}

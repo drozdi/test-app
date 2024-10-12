@@ -30,6 +30,6 @@
 	*::-moz-selection,
 	*::selection {
 		color: #eee;
-		background: #006a9b;
+		background: rgba(255, 255, 255, 0.2);
 	}
 }
