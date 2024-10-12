@@ -1,0 +1,83 @@
+.x-btn {
+	@apply rounded px-6 py-2 text-base font-normal uppercase box-border relative shadow-xl
+        leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0 focus:shadow-sm
+        bg-blue-600 text-white shadow-black 
+        hover:bg-blue-600/75 hover:shadow-strong
+        focus:bg-blue-600/80 focus:shadow-blue-600/20 
+        active:bg-blue-600/90 active:shadow-strong
+        disabled:pointer-events-none disabled:opacity-80 disabled:cursor-not-allowed;
+}
+.x-btn--xs {
+	@apply rounded px-2 py-1 text-xs;
+}
+.x-btn--sm {
+	@apply rounded px-4 py-1 text-sm;
+}
+.x-btn--lg {
+	@apply rounded px-7 py-3 text-lg;
+}
+.x-btn--icon {
+	@apply px-2;
+}
+.x-btn--icon.x-btn--xs {
+	@apply px-1;
+}
+.x-btn--icon.x-btn--sm {
+	@apply px-1;
+}
+.x-btn--icon.x-btn--lg {
+	@apply px-3;
+}
+.x-btn--block {
+	@apply block w-full;
+}
+.x-btn--rounded {
+	@apply rounded-full;
+}
+.x-btn--square {
+	@apply rounded-none;
+}
+
+$colors: primary, secondary, accent, positive, negative, info, warning, surface, body,
+	dark;
+
+@each $color in $colors {
+	.x-btn--#{$color} {
+		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 focus:shadow-#{$color}/20 active:bg-#{$color}/90;
+	}
+	.x-btn--#{$color}.x-btn--text,
+	.x-btn--#{$color}.x-btn--outline {
+		@apply text-#{$color};
+	}
+}
+
+.x-btn--dimmed {
+	@apply bg-dimmed;
+}
+
+.x-btn--tonal,
+.x-btn--text,
+.x-btn--outline {
+	@apply bg-transparent;
+}
+.x-btn--text {
+	@apply hover:bg-transparent focus:bg-transparent active:bg-transparent;
+}
+
+.x-btn--outline {
+	@apply before:border before:border-current before:absolute before:top-0 before:left-0 before:w-full before:h-full before:rounded-inherit;
+}
+
+.x-btn--disabled {
+	@apply opacity-70 pointer-events-none;
+}
+.x-btn--flat {
+	@apply shadow-none hover:shadow-none focus:shadow-none active:shadow-none;
+}
+
+.x-btn--round {
+	border-radius: 50%;
+	padding: 0;
+	min-width: 3em;
+	min-height: 3em;
+}
