@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import './XBtn.scss';
 
+import { useMemo } from 'react';
 import { XIcon } from '../icon';
 
 /** todo
@@ -30,13 +31,18 @@ export function XBtn({
 	icon,
 	iconRight,
 	color,
-	textColor,
 	...props
 }) {
+	const isIcon = useMemo(
+		() =>
+			(!!icon != !!iconRight && !children) ||
+			(children?.type === XIcon && !icon && !iconRight),
+		[children, icon, iconRight],
+	);
 	const attrs = {
 		type: 'button',
 		...props,
-		className: classNames(className, 'x-btn', {
+		className: classNames('x-btn', {
 			'x-btn--flat': flat,
 			'x-btn--text': text,
 			'x-btn--tonal': tonal,
@@ -49,7 +55,7 @@ export function XBtn({
 
 			[`x-btn--${color}`]: !!color,
 			[`x-btn--${size}`]: !!size,
-			'x-btn--icon': !!icon,
+			'x-btn--icon': isIcon,
 		}),
 	};
 
@@ -63,8 +69,15 @@ export function XBtn({
 
 	return (
 		<button {...attrs}>
+			<div className="x-btn-outline"></div>
+			<div className="x-btn-backdor"></div>
+
 			<XIcon>{icon}</XIcon>
-			{children && <span className="x-btn__content">{children}</span>}
+			{children && (
+				<span className={classNames('x-btn__content', className)}>
+					{children}
+				</span>
+			)}
 			<XIcon>{iconRight}</XIcon>
 		</button>
 	);

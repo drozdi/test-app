@@ -5,11 +5,15 @@ export function BtnExample() {
 	const [btnProps, setBtnProps] = useState({
 		label: '',
 		color: '',
+		flat: false,
 		outline: false,
-		text: false,
 		tonal: false,
+		text: false,
+		plain: false,
+		icon: false,
+		iconRight: false,
 	});
-	const [danses, setDanses] = useState({
+	const [disables, setDisables] = useState({
 		default: false,
 		primary: false,
 		secondary: false,
@@ -19,6 +23,7 @@ export function BtnExample() {
 		info: false,
 		warning: false,
 	});
+
 	//console.log(btnProps);
 	const onChangeSelect = (prop, value) => {
 		setBtnProps((v) => ({ ...v, [prop]: value }));
@@ -31,7 +36,7 @@ export function BtnExample() {
 	};
 	const exampleCode = useMemo(() => {
 		return '';
-		/*let str = '<XInput';
+		/*let str = '<XBtn';
 		for (let prop in btnProps) {
 			if (btnProps[prop]) {
 				if (isBoolean(btnProps[prop])) {
@@ -41,71 +46,16 @@ export function BtnExample() {
 				}
 			}
 		}
-		str += ' />';
+		str += '>Example</XBtn>';
 		return str;*/
 	}, [btnProps]);
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn</h2>
-			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
-				<thead>
-					<tr className="*:text-center">
-						<td>color</td>
-						<td>standart</td>
-						<td>flat</td>
-						<td>outline</td>
-						<td>tonal</td>
-						<td>text</td>
-						<td>plain</td>
-					</tr>
-				</thead>
-				<tbody>
-					{'default primary secondary accent positive negative info warning'
-						.split(/\s+/)
-						.map((color) => (
-							<tr
-								key={color}
-								className="*:border *:border-separator *:p-2 *:text-center"
-							>
-								<td>{color}</td>
-								<td>
-									<XBtn color={color}>Default</XBtn>
-								</td>
-								<td>
-									<XBtn color={color} flat={true}>
-										Flat
-									</XBtn>
-								</td>
-								<td>
-									<XBtn color={color} outline={true}>
-										Outline
-									</XBtn>
-								</td>
-								<td>
-									<XBtn color={color} tonal={true}>
-										Tonal
-									</XBtn>
-								</td>
-								<td>
-									<XBtn color={color} text={true}>
-										Text
-									</XBtn>
-								</td>
-								<td>
-									<XBtn color={color} plain={true}>
-										Plain
-									</XBtn>
-								</td>
-							</tr>
-						))}
-				</tbody>
-			</table>
-			<hr className="my-2" />
+
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XBtn {...btnProps} className="text-white">
-						example
-					</XBtn>
+					<XBtn {...btnProps}>Example</XBtn>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 						{exampleCode}
 					</pre>
@@ -139,23 +89,35 @@ export function BtnExample() {
 						</select>
 					</label>
 					<label className="block">
-						<span className="block font-medium text-slate-500">Label</span>
 						<input
-							className="bg-slate-700 border border-blue-900 p-2"
-							type="text"
-							name="label"
-							value={btnProps.label}
+							type="checkbox"
+							name="icon"
+							value="mdi-icon"
+							checked={btnProps.icon}
 							onChange={({ target }) =>
-								onChangeText(target.name, target.value)
+								onChangeSelect(
+									target.name,
+									!btnProps.icon ? target.value : false,
+								)
 							}
 						/>
+						<span className="ml-3 font-medium text-slate-500">Icon</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="flat"
+							checked={btnProps.flat}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Flat</span>
 					</label>
 					<label className="block">
 						<input
 							type="checkbox"
 							name="outline"
 							checked={btnProps.outline}
-							onChange={({ target }) => onChangeCheckbox(target.outline)}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Outline</span>
 					</label>
@@ -176,6 +138,15 @@ export function BtnExample() {
 							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Text</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="plain"
+							checked={btnProps.plain}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Plain</span>
 					</label>
 				</div>
 			</div>
