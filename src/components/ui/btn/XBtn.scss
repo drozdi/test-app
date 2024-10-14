@@ -1,11 +1,11 @@
 .x-btn {
 	@apply inline-flex items-center relative rounded px-6 py-2 text-base font-normal uppercase box-border transition duration-150 ease-in-out focus:outline-none
-	shadow-md hover:shadow-lg focus:shadow-none active:shadow-none disabled:shadow-none 
+	shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md 
         bg-blue-600 text-white shadow-black/50
-        hover:bg-blue-600/75 
-        focus:bg-blue-600/80 focus:shadow-blue-600/20 
-        active:bg-blue-600/90 
-        disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed;
+        hover:bg-blue-600/75 hover:shadow-black/20 
+        focus:bg-blue-600/80 focus:shadow-black/20
+        active:bg-blue-600/90 active:shadow-black/10
+        disabled:pointer-events-none disabled:shadow-none disabled:opacity-50 disabled:cursor-not-allowed;
 	/*
 	shadow-primary-3 hover:shadow-primary-2 focus:shadow-primary-2 active:shadow-primary-2
 	shadow-success-3 hover:shadow-success-2 focus:shadow-success-2 active:shadow-success-2
@@ -30,7 +30,7 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 
 @each $color in $colors {
 	.x-btn--#{$color} {
-		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 focus:shadow-#{$color}/30 active:bg-#{$color}/90;
+		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 active:bg-#{$color}/90 hover:shadow-#{$color}/20 focus:shadow-#{$color}/20;
 	}
 	.x-btn--#{$color}.x-btn--text,
 	.x-btn--#{$color}.x-btn--tonal,
@@ -67,7 +67,7 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 }
 
 .x-btn--disabled {
-	@apply opacity-50 pointer-events-none cursor-not-allowed;
+	@apply shadow-none opacity-50 pointer-events-none cursor-not-allowed;
 }
 
 .x-btn--xs {
