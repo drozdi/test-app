@@ -13,8 +13,19 @@ export function InputExample() {
 		underlined: false,
 		dense: false,
 		stackLabel: false,
+		disabled: false,
 	});
 	const [danses, setDanses] = useState({
+		default: false,
+		primary: false,
+		secondary: false,
+		accent: false,
+		positive: false,
+		negative: false,
+		info: false,
+		warning: false,
+	});
+	const [disables, setDisables] = useState({
 		default: false,
 		primary: false,
 		secondary: false,
@@ -54,7 +65,7 @@ export function InputExample() {
 			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
 					<tr className="*:text-center">
-						<td>color</td>
+						<td className="w-32">color</td>
 						<td>standart</td>
 						<td>field</td>
 						<td>outline</td>
@@ -84,11 +95,28 @@ export function InputExample() {
 											Dense
 										</span>
 									</label>
+									<label className="block">
+										<input
+											type="checkbox"
+											name={color}
+											checked={disables[color]}
+											onChange={({ target }) =>
+												setDisables((v) => ({
+													...v,
+													[target.name]: !v[target.name],
+												}))
+											}
+										/>
+										<span className="ml-3 font-medium text-slate-500">
+											Disabled
+										</span>
+									</label>
 								</td>
 								<td>
 									<XInput
 										color={color !== 'default' ? color : ''}
 										dense={danses[color]}
+										disabled={disables[color]}
 										label="Label"
 										placeholder="Placeholder"
 									/>
@@ -97,6 +125,7 @@ export function InputExample() {
 									<XInput
 										color={color !== 'default' ? color : ''}
 										dense={danses[color]}
+										disabled={disables[color]}
 										field={true}
 										label="Label"
 										placeholder="Placeholder"
@@ -106,6 +135,7 @@ export function InputExample() {
 									<XInput
 										color={color !== 'default' ? color : ''}
 										dense={danses[color]}
+										disabled={disables[color]}
 										outline={true}
 										label="Label"
 										placeholder="Placeholder"
@@ -116,6 +146,7 @@ export function InputExample() {
 									<XInput
 										color={color !== 'default' ? color : ''}
 										dense={danses[color]}
+										disabled={disables[color]}
 										underlined={true}
 										label="Label"
 										placeholder="Placeholder"
@@ -273,6 +304,15 @@ export function InputExample() {
 						<span className="ml-3 font-medium text-slate-500">
 							Stack Label
 						</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="disabled"
+							checked={inputProps.disabled}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Disabled</span>
 					</label>
 				</div>
 			</div>

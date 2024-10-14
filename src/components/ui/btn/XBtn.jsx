@@ -71,14 +71,13 @@ export function XBtn({
 		<button {...attrs}>
 			<div className="x-btn-outline"></div>
 			<div className="x-btn-backdor"></div>
-
-			<XIcon>{icon}</XIcon>
+			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
 			{children && (
 				<span className={classNames('x-btn__content', className)}>
 					{children}
 				</span>
 			)}
-			<XIcon>{iconRight}</XIcon>
+			{iconRight && <XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>}
 		</button>
 	);
 }

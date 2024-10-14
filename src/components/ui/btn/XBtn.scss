@@ -31,7 +31,7 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 		@apply text-#{$color};
 	}
 	.x-btn--#{$color}.x-btn--plain {
-		@apply text-#{$color}/80;
+		@apply text-#{$color}/80 hover:text-#{$color}/100;
 	}
 }
 

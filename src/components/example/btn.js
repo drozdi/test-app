@@ -1,15 +1,20 @@
 import { useMemo, useState } from 'react';
+import { isBoolean } from '../../utils/is';
 import { XBtn } from '../ui';
 
 export function BtnExample() {
+	const [label, setLabel] = useState('Example');
 	const [btnProps, setBtnProps] = useState({
-		label: '',
 		color: '',
 		flat: false,
 		outline: false,
 		tonal: false,
 		text: false,
 		plain: false,
+		block: false,
+		square: false,
+		rounded: false,
+		disabled: false,
 		icon: false,
 		iconRight: false,
 	});
@@ -24,7 +29,7 @@ export function BtnExample() {
 		warning: false,
 	});
 
-	//console.log(btnProps);
+	console.log(btnProps);
 	const onChangeSelect = (prop, value) => {
 		setBtnProps((v) => ({ ...v, [prop]: value }));
 	};
@@ -35,8 +40,7 @@ export function BtnExample() {
 		setBtnProps((v) => ({ ...v, [prop]: !v[prop] }));
 	};
 	const exampleCode = useMemo(() => {
-		return '';
-		/*let str = '<XBtn';
+		let str = '<XBtn';
 		for (let prop in btnProps) {
 			if (btnProps[prop]) {
 				if (isBoolean(btnProps[prop])) {
@@ -46,9 +50,10 @@ export function BtnExample() {
 				}
 			}
 		}
-		str += '>Example</XBtn>';
-		return str;*/
-	}, [btnProps]);
+		str += '>' + label + '</XBtn>';
+		return str;
+	}, [label, btnProps]);
+
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn</h2>
@@ -148,12 +153,21 @@ export function BtnExample() {
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XBtn {...btnProps}></XBtn>
+					<XBtn {...btnProps}>{label}</XBtn>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 						{exampleCode}
 					</pre>
 				</div>
 				<div>
+					<label className="block">
+						<span className="block font-medium text-slate-500">label</span>
+						<input
+							className="bg-slate-700 border border-blue-900 p-2"
+							type="text"
+							value={label}
+							onChange={({ target }) => setLabel(target.value)}
+						/>
+					</label>
 					<label className="block">
 						<span className="ml-3 font-medium text-slate-500">Color</span>
 						<select
@@ -185,16 +199,31 @@ export function BtnExample() {
 						<input
 							type="checkbox"
 							name="icon"
-							value="mdi-icon"
+							value="mdi-map-marker"
 							checked={btnProps.icon}
 							onChange={({ target }) =>
-								onChangeSelect(
+								onChangeText(
 									target.name,
 									!btnProps.icon ? target.value : false,
 								)
 							}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Icon</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="iconRight"
+							value="mdi-close"
+							checked={btnProps.iconRight}
+							onChange={({ target }) =>
+								onChangeText(
+									target.name,
+									!btnProps.iconRight ? target.value : false,
+								)
+							}
+						/>
+						<span className="ml-3 font-medium text-slate-500">IconRight</span>
 					</label>
 					<label className="block">
 						<input
@@ -240,6 +269,43 @@ export function BtnExample() {
 							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Plain</span>
+					</label>
+
+					<label className="block">
+						<input
+							type="checkbox"
+							name="block"
+							checked={btnProps.block}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Block</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="square"
+							checked={btnProps.square}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Square</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="rounded"
+							checked={btnProps.rounded}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Rounded</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="disabled"
+							checked={btnProps.disabled}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Disabled</span>
 					</label>
 				</div>
 			</div>

@@ -1,6 +1,11 @@
-import { BtnExample } from './components/example';
+import { BtnExample, InputExample } from './components/example';
 function App() {
-	return <BtnExample />;
+	return (
+		<>
+			<BtnExample />
+			<InputExample />
+		</>
+	);
 	/*const ref = useRef(null);
 	useEffect(() => {
 		//console.log(ref);

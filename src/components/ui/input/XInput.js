@@ -19,12 +19,11 @@ export function XInput({
 	labelColor = '',
 	color = '',
 	bg = '',
+	disabled = false,
 	onFocus = () => {},
 	onBlur = () => {},
 	...props
 }) {
-	const labelRef = useRef();
-	const controlRef = useRef();
 	const prependRef = useRef();
 	const [isFocus, setFocus] = useState(false);
 	const [shiftLabel, setShiftLabel] = useState(0);
@@ -58,6 +57,16 @@ export function XInput({
 		},
 		[onBlur],
 	);
+
+	const attrs = {
+		type: 'text',
+		...props,
+		disabled: disabled,
+		className: classNames('x-input-native', className),
+		onFocus: handleFocus,
+		onBlur: handleBlur,
+	};
+
 	return (
 		<div
 			className={classNames('x-input', {
@@ -67,6 +76,7 @@ export function XInput({
 				'x-input--underlined': underlined,
 				'x-input--dense': dense,
 				'x-input--stack-label': stackLabel,
+				'x-input--disabled': disabled,
 				[`x-input--${color}`]: !!color,
 				[`border-${color}`]: !!color,
 			})}
@@ -79,13 +89,7 @@ export function XInput({
 					</div>
 				)}
 				<div className="x-input-control">
-					<input
-						{...props}
-						type={type}
-						className={classNames('x-input-native', className)}
-						onFocus={handleFocus}
-						onBlur={handleBlur}
-					/>
+					<input {...attrs} />
 					{label && (
 						<label
 							htmlFor={props.id}
@@ -115,6 +119,8 @@ export function XInput({
 						<div className="x-input-outline-end"></div>
 					</div>
 				)}
+				<div className="x-input-backdor"></div>
+				<div className="x-input-underlined"></div>
 			</div>
 			{after && <div className="x-input-after">{after}</div>}
 		</div>
