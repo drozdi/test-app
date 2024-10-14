@@ -4,33 +4,26 @@ import './XBtn.scss';
 import { useMemo } from 'react';
 import { XIcon } from '../icon';
 
-/** todo
- * flat - Removes button shadow
- * tonal - Background color is a lowered opacity of the current text color
- * outlined	- Applies a thin border with the current text color
- * text - Removes the background and removes shadow
- * plain - Removes the background and lowers the opacity until hovered
- */
-
-// todo add icon support for iconRight
 export function XBtn({
 	children,
 	className,
+	dimmed = false,
 	flat = false,
 	text = false,
 	tonal = false,
 	plain = false,
 	outline = false,
 
+	round = false,
 	block = false,
 	square = false,
 	rounded = false,
 	disabled = false,
 
-	size,
 	icon,
 	iconRight,
 	color,
+	size,
 	...props
 }) {
 	const isIcon = useMemo(
@@ -41,6 +34,7 @@ export function XBtn({
 	);
 	const attrs = {
 		type: 'button',
+		tabindex: 0,
 		...props,
 		className: classNames('x-btn', {
 			'x-btn--flat': flat,
@@ -50,17 +44,18 @@ export function XBtn({
 			'x-btn--outline': outline,
 			'x-btn--block': block,
 			'x-btn--square': square,
+			'x-btn--round': round,
 			'x-btn--rounded': rounded,
-			'x-btn--disabled': disabled,
-
-			[`x-btn--${color}`]: !!color,
-			[`x-btn--${size}`]: !!size,
+			'x-btn--dimmed': dimmed,
 			'x-btn--icon': isIcon,
+			[`x-btn--${color}`]: color,
+			[`x-btn--${size}`]: size,
 		}),
 	};
 
 	if (disabled) {
 		attrs.disabled = true;
+		attrs.tabindex = -1;
 		attrs['aria-disabled'] = 'true';
 	}
 	if (props.href === void 0) {
@@ -73,9 +68,7 @@ export function XBtn({
 			<div className="x-btn-backdor"></div>
 			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
 			{children && (
-				<span className={classNames('x-btn__content', className)}>
-					{children}
-				</span>
+				<span className={classNames('x-btn-content', className)}>{children}</span>
 			)}
 			{iconRight && <XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>}
 		</button>

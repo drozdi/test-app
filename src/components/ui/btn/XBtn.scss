@@ -5,14 +5,7 @@
         hover:bg-blue-600/75 hover:shadow-black/20 
         focus:bg-blue-600/80 focus:shadow-black/20
         active:bg-blue-600/90 active:shadow-black/10
-        disabled:pointer-events-none disabled:shadow-none disabled:opacity-50 disabled:cursor-not-allowed;
-	/*
-	shadow-primary-3 hover:shadow-primary-2 focus:shadow-primary-2 active:shadow-primary-2
-	shadow-success-3 hover:shadow-success-2 focus:shadow-success-2 active:shadow-success-2
-
-	shadow-md hover:shadow-lg focus:shadow-none active:shadow-none disabled:shadow-none  
-
-		*/
+        disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
 }
 .x-btn-outline,
 .x-btn-backdor {
@@ -30,19 +23,21 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 
 @each $color in $colors {
 	.x-btn--#{$color} {
-		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 active:bg-#{$color}/90 hover:shadow-#{$color}/20 focus:shadow-#{$color}/20;
+		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 active:bg-#{$color}/90;
 	}
-	.x-btn--#{$color}.x-btn--text,
 	.x-btn--#{$color}.x-btn--tonal,
 	.x-btn--#{$color}.x-btn--outline {
 		@apply text-#{$color};
 	}
+	.x-btn--#{$color}.x-btn--text,
 	.x-btn--#{$color}.x-btn--plain {
 		@apply text-#{$color}/80 hover:text-#{$color}/100;
 	}
 }
 
-.x-btn--flat {
+.x-btn--flat,
+.x-btn--plain,
+.x-btn--text {
 	@apply shadow-none hover:shadow-none focus:shadow-none active:shadow-none;
 }
 
@@ -66,8 +61,14 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 	@apply block;
 }
 
-.x-btn--disabled {
-	@apply shadow-none opacity-50 pointer-events-none cursor-not-allowed;
+.x-btn--dimmed {
+	@apply uppercase !bg-dimmed;
+}
+.x-btn--dimmed .x-btn-outline {
+	@apply border border-separator !bg-transparent;
+}
+.x-btn--dimmed .x-btn-backdor {
+	@apply hidden;
 }
 
 .x-btn--xs {
@@ -100,13 +101,6 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 .x-btn--square {
 	@apply rounded-none;
 }
-.x-btn--dimmed {
-	@apply bg-dimmed;
-}
-
 .x-btn--round {
-	border-radius: 50%;
-	padding: 0;
-	min-width: 3em;
-	min-height: 3em;
+	@apply p-0 items-center justify-center rounded-[50%] min-w-8 min-h-8;
 }

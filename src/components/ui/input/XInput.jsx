@@ -14,7 +14,6 @@ export function XInput({
 	after = '',
 	prepend = '',
 	append = '',
-	type = 'text',
 	label = '',
 	labelColor = '',
 	color = '',
