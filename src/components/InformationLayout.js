@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 
-function InformationLayout({ message = '' }) {
-    return <h2>{message}</h2>;
+export class InformationLayout extends React.Component {
+	static propTypes = {
+		message: PropTypes.string,
+	};
+	static defaultProps = {
+		message: '',
+	};
+	render() {
+		return <h2>{this.props.message}</h2>;
+	}
 }
-
-InformationLayout.propTypes = {
-    message: PropTypes.string
-};
-
-export default InformationLayout;

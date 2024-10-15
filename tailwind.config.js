@@ -1,6 +1,42 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 module.exports = {
 	content: ['./public/index.html', './src/**/*.{js,jsx,ts,tsx}'],
+	//important: true,
+	safelist: [
+		'.text-primary',
+		'.text-secondary',
+		'.text-accent',
+		'.text-positive',
+		'.text-negative',
+		'.text-info',
+		'.text-warning',
+		'.text-surface',
+		'.text-body',
+		'.text-dark',
+
+		'border-primary',
+		'border-secondary',
+		'border-accent',
+		'border-positive',
+		'border-negative',
+		'border-info',
+		'border-warning',
+		'border-surface',
+		'border-body',
+		'border-dark',
+
+		'x-bg-primary',
+		'x-bg-secondary',
+		'x-bg-accent',
+		'x-bg-positive',
+		'x-bg-negative',
+		'x-bg-info',
+		'x-bg-warning',
+		'x-bg-surface',
+		'x-bg-body',
+		'x-bg-dark',
+	],
 	theme: {
 		extend: {
 			colors: {
@@ -15,6 +51,7 @@ module.exports = {
 				body: '#002650',
 				dark: '#15171e',
 				separator: 'rgba(255, 255, 255, .15)',
+				divider: 'rgba(255, 255, 255, .15)',
 				dimmed: 'rgba(0,0,0,0.2)',
 				bgmb1: 'rgba(190,155,100, 0.5)',
 				bgmb2: 'rgba(245,137,116, 0.5)',
@@ -25,6 +62,9 @@ module.exports = {
 			boxShadow: {
 				strong: '0 4px 18px -2px #000000b3',
 			},
+			borderRadius: {
+				inherit: 'inherit',
+			},
 			gridTemplateRows: {
 				layout: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',
 				window: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',
@@ -33,9 +73,15 @@ module.exports = {
 				layout: 'minmax(min-content, auto) minmax(auto, 1fr) minmax(min-content, auto)',
 			},
 			transitionProperty: {
+				border: 'border',
 				width: 'width',
 				height: 'height',
 				spacing: 'margin, padding',
+			},
+			borderWidth: {
+				3: '3px',
+				9: '9px',
+				10: '10px',
 			},
 		},
 	},

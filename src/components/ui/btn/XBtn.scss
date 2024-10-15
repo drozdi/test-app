@@ -1,0 +1,106 @@
+.x-btn {
+	@apply inline-flex items-center relative rounded px-6 py-2 text-base font-normal uppercase box-border transition duration-150 ease-in-out focus:outline-none
+	shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md 
+        bg-blue-600 text-white shadow-black/50
+        hover:bg-blue-600/75 hover:shadow-black/20 
+        focus:bg-blue-600/80 focus:shadow-black/20
+        active:bg-blue-600/90 active:shadow-black/10
+        disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
+}
+.x-btn-outline,
+.x-btn-backdor {
+	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-2 border-transparent rounded-inherit contain-layout;
+}
+.x-btn-outline {
+	@apply border-current;
+}
+.x-btn-backdor {
+	@apply bg-current opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20;
+}
+
+$colors: primary, secondary, accent, positive, negative, info, warning, surface, body,
+	dark;
+
+@each $color in $colors {
+	.x-btn--#{$color} {
+		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 active:bg-#{$color}/90;
+	}
+	.x-btn--#{$color}.x-btn--tonal,
+	.x-btn--#{$color}.x-btn--outline {
+		@apply text-#{$color};
+	}
+	.x-btn--#{$color}.x-btn--text,
+	.x-btn--#{$color}.x-btn--plain {
+		@apply text-#{$color}/80 hover:text-#{$color}/100;
+	}
+}
+
+.x-btn--flat,
+.x-btn--plain,
+.x-btn--text {
+	@apply shadow-none hover:shadow-none focus:shadow-none active:shadow-none;
+}
+
+.x-btn--tonal,
+.x-btn--outline,
+.x-btn--plain,
+.x-btn--text {
+	@apply bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent;
+}
+
+.x-btn--tonal .x-btn-backdor,
+.x-btn--plain .x-btn-backdor,
+.x-btn--outline .x-btn-backdor {
+	@apply block;
+}
+.x-btn--tonal .x-btn-backdor {
+	@apply bg-current opacity-10 hover:opacity-20 focus:opacity-20 active:opacity-30;
+}
+
+.x-btn--outline .x-btn-outline {
+	@apply block;
+}
+
+.x-btn--dimmed {
+	@apply uppercase !bg-dimmed;
+}
+.x-btn--dimmed .x-btn-outline {
+	@apply border border-separator !bg-transparent;
+}
+.x-btn--dimmed .x-btn-backdor {
+	@apply hidden;
+}
+
+.x-btn--xs {
+	@apply rounded px-2 py-1 text-xs;
+}
+.x-btn--sm {
+	@apply rounded px-4 py-1 text-sm;
+}
+.x-btn--lg {
+	@apply rounded px-7 py-3 text-lg;
+}
+.x-btn--icon {
+	@apply px-2;
+}
+.x-btn--icon.x-btn--xs {
+	@apply px-1;
+}
+.x-btn--icon.x-btn--sm {
+	@apply px-1;
+}
+.x-btn--icon.x-btn--lg {
+	@apply px-3;
+}
+.x-btn--block {
+	@apply block w-full;
+}
+.x-btn--rounded {
+	@apply rounded-full;
+}
+.x-btn--square {
+	@apply rounded-none;
+}
+.x-btn--round {
+	@apply p-0 items-center justify-center rounded-[50%] min-w-8 min-h-8;
+}

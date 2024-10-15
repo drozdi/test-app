@@ -5,7 +5,7 @@ import { selectField, selectIsGameEnd } from '../selectors';
 import Field from './Field';
 import style from './Game.module.css';
 import Information from './Information';
-import { XBtn } from './ui/btn/XBtn';
+import { XBtn } from './ui';
 
 function Game() {
 	const field = useSelector(selectField);

@@ -1,48 +1,61 @@
 import classNames from 'classnames';
-import React from 'react';
-import './XBtn.css';
+import './XBtn.scss';
 
-import XIcon from '../icon/XIcon';
+import { useMemo } from 'react';
+import { XIcon } from '../icon';
 
-// todo add icon support for iconRight
 export function XBtn({
 	children,
-	size,
 	className,
+	dimmed = false,
+	flat = false,
+	text = false,
+	tonal = false,
+	plain = false,
+	outline = false,
+
+	round = false,
+	block = false,
+	square = false,
+	rounded = false,
+	disabled = false,
+
 	icon,
 	iconRight,
-	disabled,
-	flat,
-	outline,
-	rounded,
-	block,
-	square,
-	tonal,
-	text,
 	color,
-	textColor,
+	size,
 	...props
 }) {
+	const isIcon = useMemo(
+		() =>
+			(!!icon != !!iconRight && !children) ||
+			(children?.type === XIcon && !icon && !iconRight),
+		[children, icon, iconRight],
+	);
 	const attrs = {
 		type: 'button',
+		tabIndex: 0,
 		...props,
-		className: classNames(className, 'x-btn', {
-			[`x-btn--${color}`]: !!color,
-			[`x-btn--${size}`]: !!size,
-			'x-btn--rounded': !!rounded,
-			'x-btn--block': !!block,
-			'x-btn--disabled': !!disabled,
-			'x-btn--flat': !!flat,
-			'x-btn--text': !!text,
-			'x-btn--tonal': !!tonal,
-			'x-btn--square': !!square,
-			'x-btn--outline': !!outline,
-			'x-btn--icon': !!icon,
+		className: classNames('x-btn', {
+			'x-btn--flat': flat,
+			'x-btn--text': text,
+			'x-btn--tonal': tonal,
+			'x-btn--plain': plain,
+			'x-btn--outline': outline,
+			'x-btn--block': block,
+			'x-btn--square': square,
+			'x-btn--round': round,
+			'x-btn--rounded': rounded,
+			'x-btn--dimmed': dimmed,
+			'x-btn--icon': isIcon,
+			[`x-btn--${color}`]: color,
+			[`x-btn--${size}`]: size,
 		}),
 	};
 
 	if (disabled) {
 		attrs.disabled = true;
+		attrs.tabIndex = -1;
 		attrs['aria-disabled'] = 'true';
 	}
 	if (props.href === void 0) {
@@ -51,9 +64,13 @@ export function XBtn({
 
 	return (
 		<button {...attrs}>
-			<XIcon>{icon}</XIcon>
-			{children && <span className="x-btn__content">{children}</span>}
-			<XIcon>{iconRight}</XIcon>
+			<div className="x-btn-outline"></div>
+			<div className="x-btn-backdor"></div>
+			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
+			{children && (
+				<span className={classNames('x-btn-content', className)}>{children}</span>
+			)}
+			{iconRight && <XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>}
 		</button>
 	);
 }
