@@ -59,4 +59,8 @@ const mapStateToProps = (state) => ({
 	isGameEnded: state.isGameEnded,
 	field: state.field,
 });
-export default connect(mapStateToProps)(Field);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	onAgeIncrease: () => dispatch(setCurrentPlayer(ownProps.currentPlayer === 'X' ? 'O' : 'X')),
+	onAgeReset: () => dispatch(setField(newField)),
+  });
+export default connect(mapStateToProps, mapDispatchToProps)(Field);
