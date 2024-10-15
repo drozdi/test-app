@@ -34,7 +34,7 @@ export function XBtn({
 	);
 	const attrs = {
 		type: 'button',
-		tabindex: 0,
+		tabIndex: 0,
 		...props,
 		className: classNames('x-btn', {
 			'x-btn--flat': flat,
@@ -55,7 +55,7 @@ export function XBtn({
 
 	if (disabled) {
 		attrs.disabled = true;
-		attrs.tabindex = -1;
+		attrs.tabIndex = -1;
 		attrs['aria-disabled'] = 'true';
 	}
 	if (props.href === void 0) {
