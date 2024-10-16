@@ -1,27 +1,15 @@
 .game {
-    text-align: center;
+	@apply text-center;
 }
 
 .board {
-    text-align: center;
-    width: 200px;
-    height: 200px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin: auto;
+	@apply text-center grid grid-cols-3 m-auto w-52 h-52;
 }
 
 .info {
-    text-align: center;
+	@apply text-center;
 }
 
 .board button {
-    float: left;
-    font-size: 24px;
-    width: 50px;
-    height: 50px;
-    margin: 5px;
-    color: #fff;
-    background: rgba(0, 0, 0, .4);
-    border-color: rgba(255, 255, 255, .15);
+	@apply float-left text-2xl w-12 h-12 m-1 text-white bg-black/40 border border-white/15;
 }
