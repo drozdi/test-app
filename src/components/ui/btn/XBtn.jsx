@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import './XBtn.scss';
 
-import { memo, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
-let i = 0;
-export const XBtn = memo(function XBtn(parametrs = {}) {
+
+export const XBtn = forwardRef(function XBtn(parametrs = {}) {
 	const {
 		children,
 		className,
@@ -26,9 +26,10 @@ export const XBtn = memo(function XBtn(parametrs = {}) {
 		iconRight,
 		color,
 		size,
+		...props
 	} = parametrs;
 
-	console.log(i++);
+	let { attrs: btnAttrs } = useBtn(parametrs);
 
 	const isIcon = useMemo(
 		() =>
@@ -37,7 +38,7 @@ export const XBtn = memo(function XBtn(parametrs = {}) {
 		[children, icon, iconRight],
 	);
 	const attrs = {
-		...useBtn(parametrs),
+		...btnAttrs,
 		className: classNames('x-btn', {
 			'x-btn--flat': flat,
 			'x-btn--text': text,
@@ -49,7 +50,6 @@ export const XBtn = memo(function XBtn(parametrs = {}) {
 			'x-btn--round': round,
 			'x-btn--rounded': rounded,
 			'x-btn--dimmed': dimmed,
-			'x-btn--disabled': disabled,
 			'x-btn--icon': isIcon,
 			[`x-btn--${color}`]: color,
 			[`x-btn--${size}`]: size,
@@ -57,7 +57,7 @@ export const XBtn = memo(function XBtn(parametrs = {}) {
 	};
 
 	return (
-		<button {...attrs} onClick={(e) => console.log(e)}>
+		<button {...attrs}>
 			<div className="x-btn-outline"></div>
 			<div className="x-btn-backdor"></div>
 			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}

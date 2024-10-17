@@ -1,14 +1,8 @@
-import { memo } from 'react';
 import { BtnExample, InputExample } from './components/example';
-let i = 0;
-const BBB = memo(function BBB() {
-	console.log(i++);
-	return <button onClick={(e) => console.log(e)}>laksdhaslkd</button>;
-});
+
 function App() {
 	return (
 		<>
-			<BBB />
 			<BtnExample />
 			<InputExample />
 		</>

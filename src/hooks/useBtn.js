@@ -1,34 +1,7 @@
 import { useRef, useState } from 'react';
 import { extractEventHandlers } from '../utils/extractEventHandlers';
 import { isFocusVisible } from '../utils/is';
-export function useBtn(parameters = {}) {
-	const {
-		dimmed = false,
-		flat = false,
-		text = false,
-		tonal = false,
-		plain = false,
-		outline = false,
-
-		round = false,
-		block = false,
-		square = false,
-		rounded = false,
-		disabled = false,
-
-		type,
-		href,
-		to,
-		icon,
-		iconRight,
-		children,
-		className,
-		color = '',
-		size = '',
-		tabIndex = 0,
-		...props
-	} = parameters;
-
+export function useBtn({ disabled = false, type, href, to, tabIndex, ...props }) {
 	const buttonRef = useRef(null);
 	const externalEventHandlers = {
 		...extractEventHandlers(props),
@@ -67,6 +40,14 @@ export function useBtn(parameters = {}) {
 			otherHandlers.onClick?.(event);
 		}
 	};
+	const createHandleMouseLeave = (otherHandlers) => (event) => {
+		if (focusVisible) {
+			event.preventDefault();
+		}
+
+		otherHandlers.onMouseLeave?.(event);
+	};
+
 	const createHandleMouseDown = (otherHandlers) => (event) => {
 		if (!disabled) {
 			setActive(true);
@@ -130,14 +111,19 @@ export function useBtn(parameters = {}) {
 	};
 
 	return {
-		...props,
-		...buttonProps,
-		ref: buttonRef,
-		onBlur: createHandleBlur(externalEventHandlers),
-		onFocus: createHandleFocus(externalEventHandlers),
-		onClick: createHandleClick(externalEventHandlers),
-		onMouseDown: createHandleMouseDown(externalEventHandlers),
-		onKeyDown: createHandleKeyDown(externalEventHandlers),
-		onKeyUp: createHandleKeyUp(externalEventHandlers),
+		focusVisible,
+		active,
+		buttonRef,
+		attrs: {
+			...buttonProps,
+			ref: buttonRef,
+			onBlur: createHandleBlur(externalEventHandlers),
+			onFocus: createHandleFocus(externalEventHandlers),
+			onClick: createHandleClick(externalEventHandlers),
+			onMouseDown: createHandleMouseDown(externalEventHandlers),
+			onMouseLeave: createHandleMouseLeave(externalEventHandlers),
+			onKeyDown: createHandleKeyDown(externalEventHandlers),
+			onKeyUp: createHandleKeyUp(externalEventHandlers),
+		},
 	};
 }
