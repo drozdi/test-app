@@ -174,7 +174,6 @@ export function BtnExample() {
 							className="block bg-slate-700 border border-blue-900 p-2"
 							name="color"
 							value={btnProps.color}
-							defaultValue={btnProps.color}
 							onChange={({ target }) =>
 								onChangeSelect(target.name, target.value)
 							}

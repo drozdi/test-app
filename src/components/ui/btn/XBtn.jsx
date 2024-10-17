@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import './XBtn.scss';
 
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
-
-export function XBtn(parametrs = {}) {
+let i = 0;
+export const XBtn = memo(function XBtn(parametrs = {}) {
 	const {
 		children,
 		className,
@@ -26,10 +26,9 @@ export function XBtn(parametrs = {}) {
 		iconRight,
 		color,
 		size,
-		...props
 	} = parametrs;
 
-	console.log(useBtn(parametrs));
+	console.log(i++);
 
 	const isIcon = useMemo(
 		() =>
@@ -38,9 +37,7 @@ export function XBtn(parametrs = {}) {
 		[children, icon, iconRight],
 	);
 	const attrs = {
-		type: 'button',
-		tabIndex: 0,
-		...props,
+		...useBtn(parametrs),
 		className: classNames('x-btn', {
 			'x-btn--flat': flat,
 			'x-btn--text': text,
@@ -52,23 +49,15 @@ export function XBtn(parametrs = {}) {
 			'x-btn--round': round,
 			'x-btn--rounded': rounded,
 			'x-btn--dimmed': dimmed,
+			'x-btn--disabled': disabled,
 			'x-btn--icon': isIcon,
 			[`x-btn--${color}`]: color,
 			[`x-btn--${size}`]: size,
 		}),
 	};
 
-	if (disabled) {
-		attrs.disabled = true;
-		attrs.tabIndex = -1;
-		attrs['aria-disabled'] = 'true';
-	}
-	if (props.href === void 0) {
-		attrs.role = 'button';
-	}
-
 	return (
-		<button {...attrs}>
+		<button {...attrs} onClick={(e) => console.log(e)}>
 			<div className="x-btn-outline"></div>
 			<div className="x-btn-backdor"></div>
 			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
@@ -78,37 +67,48 @@ export function XBtn(parametrs = {}) {
 			{iconRight && <XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>}
 		</button>
 	);
-}
+});
 
 /*XBtn.defaultProps = {
-    icon: null,
-    iconRight: null,
-    flat: false,
-    tonal: false,
-    text: false,
-    square: false,
-    outline: false,
-    rounded: false,
-    disabled: false,
-    block: false,
-    type: 'button',
-    color: '',
-    textColor: '',
-    onClick: () => {}
+	children: null,
+	className: null,
+	dimmed: false,
+	flat: false,
+	text: false,
+	tonal: false,
+	plain: false,
+	outline: false,
+
+	round: false,
+	block: false,
+	square: false,
+	rounded: false,
+	disabled: false,
+	icon: '',
+	iconRight: '',
+	color: '',
+	size: '',
+	onClick: () => {},
 };
-/*XBtn.propTypes = {
-    icon: PropTypes.string,
-    iconRight: PropTypes.string,
-    flat: PropTypes.bool,
-    tonal: PropTypes.bool,
-    text: PropTypes.bool,
-    square: PropTypes.bool,
-    outline: PropTypes.bool,
-    rounded: PropTypes.bool,
-    disabled: PropTypes.bool,
-    block: PropTypes.bool,
-    type: PropTypes.string,
-    color: PropTypes.string,
-    textColor: PropTypes.string,
-    onClick: PropTypes.func
-}//*/
+XBtn.propTypes = {
+	children: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.string]),
+	className: PropTypes.string,
+	dimmed: PropTypes.bool,
+	flat: PropTypes.bool,
+	text: PropTypes.bool,
+	tonal: PropTypes.bool,
+	plain: PropTypes.bool,
+	outline: PropTypes.bool,
+
+	round: PropTypes.bool,
+	block: PropTypes.bool,
+	square: PropTypes.bool,
+	rounded: PropTypes.bool,
+	disabled: PropTypes.bool,
+
+	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+	iconRight: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+	color: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+	size: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+	onClick: PropTypes.func, 
+};*/

@@ -171,7 +171,6 @@ export function InputExample() {
 							className="block bg-slate-700 border border-blue-900 p-2"
 							name="color"
 							value={inputProps.color}
-							defaultValue={inputProps.color}
 							onChange={({ target }) =>
 								onChangeSelect(target.name, target.value)
 							}
@@ -200,7 +199,6 @@ export function InputExample() {
 							className=" block bg-slate-700 border border-blue-900 p-2"
 							name="labelColor"
 							value={inputProps.labelColor}
-							defaultValue={inputProps.labelColor}
 							onChange={({ target }) =>
 								onChangeSelect(target.name, target.value)
 							}

@@ -1,5 +1,5 @@
 import { isFunction } from './is';
-export function extractEventHandlers(object, excludeKeys) {
+export function extractEventHandlers(object = {}, excludeKeys = []) {
 	if (object === undefined) {
 		return {};
 	}
