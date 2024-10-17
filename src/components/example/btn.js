@@ -57,7 +57,7 @@ export function BtnExample() {
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn</h2>
-			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
+			{/*<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
 					<tr className="*:text-center">
 						<td>color</td>
@@ -149,7 +149,7 @@ export function BtnExample() {
 							</tr>
 						))}
 				</tbody>
-			</table>
+			</table>*/}
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>

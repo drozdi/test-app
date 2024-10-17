@@ -2,30 +2,35 @@ import classNames from 'classnames';
 import './XBtn.scss';
 
 import { useMemo } from 'react';
+import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
 
-export function XBtn({
-	children,
-	className,
-	dimmed = false,
-	flat = false,
-	text = false,
-	tonal = false,
-	plain = false,
-	outline = false,
+export function XBtn(parametrs = {}) {
+	const {
+		children,
+		className,
+		dimmed = false,
+		flat = false,
+		text = false,
+		tonal = false,
+		plain = false,
+		outline = false,
 
-	round = false,
-	block = false,
-	square = false,
-	rounded = false,
-	disabled = false,
+		round = false,
+		block = false,
+		square = false,
+		rounded = false,
+		disabled = false,
 
-	icon,
-	iconRight,
-	color,
-	size,
-	...props
-}) {
+		icon,
+		iconRight,
+		color,
+		size,
+		...props
+	} = parametrs;
+
+	console.log(useBtn(parametrs));
+
 	const isIcon = useMemo(
 		() =>
 			(!!icon != !!iconRight && !children) ||
