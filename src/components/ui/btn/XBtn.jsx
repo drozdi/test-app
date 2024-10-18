@@ -30,7 +30,7 @@ export const XBtn = memo(
 			...props
 		} = parametrs;
 
-		let { attrs: btnAttrs } = useBtn({ ...parametrs, ref });
+		let { attrs } = useBtn({ ...parametrs, ref });
 
 		const isIcon = useMemo(
 			() =>
@@ -38,26 +38,26 @@ export const XBtn = memo(
 				(children?.type === XIcon && !icon && !iconRight),
 			[children, icon, iconRight],
 		);
-		const attrs = {
-			...btnAttrs,
-			className: classNames('x-btn', {
-				'x-btn--flat': flat,
-				'x-btn--text': text,
-				'x-btn--tonal': tonal,
-				'x-btn--plain': plain,
-				'x-btn--outline': outline,
-				'x-btn--block': block,
-				'x-btn--square': square,
-				'x-btn--round': round,
-				'x-btn--rounded': rounded,
-				'x-btn--dimmed': dimmed,
-				'x-btn--icon': isIcon,
-				[`x-btn--${color}`]: color,
-				[`x-btn--${size}`]: size,
-			}),
-		};
+
 		return (
-			<button {...attrs}>
+			<button
+				{...attrs}
+				className={classNames('x-btn', {
+					'x-btn--flat': flat,
+					'x-btn--text': text,
+					'x-btn--tonal': tonal,
+					'x-btn--plain': plain,
+					'x-btn--outline': outline,
+					'x-btn--block': block,
+					'x-btn--square': square,
+					'x-btn--round': round,
+					'x-btn--rounded': rounded,
+					'x-btn--dimmed': dimmed,
+					'x-btn--icon': isIcon,
+					[`x-btn--${color}`]: color,
+					[`x-btn--${size}`]: size,
+				})}
+			>
 				<div className="x-btn-outline"></div>
 				<div className="x-btn-backdor"></div>
 				{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
