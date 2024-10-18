@@ -109,21 +109,23 @@ export function useBtn({ disabled = false, type, href, to, tabIndex, ...props })
 		'aria-disabled': disabled,
 		tabIndex: !disabled ? (tabIndex ?? 0) : -1,
 	};
-
+	const attrs = {
+		...externalEventHandlers,
+		...buttonProps,
+		ref: buttonRef,
+		onBlur: createHandleBlur(externalEventHandlers),
+		onFocus: createHandleFocus(externalEventHandlers),
+		onClick: createHandleClick(externalEventHandlers),
+		onMouseDown: createHandleMouseDown(externalEventHandlers),
+		onMouseLeave: createHandleMouseLeave(externalEventHandlers),
+		onKeyDown: createHandleKeyDown(externalEventHandlers),
+		onKeyUp: createHandleKeyUp(externalEventHandlers),
+	};
+	delete attrs.onFocusVisible;
 	return {
 		focusVisible,
 		active,
 		buttonRef,
-		attrs: {
-			...buttonProps,
-			ref: buttonRef,
-			onBlur: createHandleBlur(externalEventHandlers),
-			onFocus: createHandleFocus(externalEventHandlers),
-			onClick: createHandleClick(externalEventHandlers),
-			onMouseDown: createHandleMouseDown(externalEventHandlers),
-			onMouseLeave: createHandleMouseLeave(externalEventHandlers),
-			onKeyDown: createHandleKeyDown(externalEventHandlers),
-			onKeyUp: createHandleKeyUp(externalEventHandlers),
-		},
+		attrs,
 	};
 }
