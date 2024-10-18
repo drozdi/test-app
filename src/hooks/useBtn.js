@@ -1,12 +1,21 @@
 import { useRef, useState } from 'react';
 import { extractEventHandlers } from '../utils/extractEventHandlers';
 import { isFocusVisible } from '../utils/is';
-export function useBtn({ disabled = false, type, href, to, tabIndex, ...props }) {
+import { useForkRef } from './useForkRef';
+export function useBtn({
+	disabled = false,
+	ref: externalRef,
+	type,
+	href,
+	to,
+	tabIndex,
+	...props
+}) {
 	const buttonRef = useRef(null);
+	const handleRef = useForkRef(externalRef, buttonRef);
 	const externalEventHandlers = {
 		...extractEventHandlers(props),
 	};
-
 	const [focusVisible, setFocusVisible] = useState(false);
 	const [active, setActive] = useState(false);
 
@@ -112,7 +121,7 @@ export function useBtn({ disabled = false, type, href, to, tabIndex, ...props })
 	const attrs = {
 		...externalEventHandlers,
 		...buttonProps,
-		ref: buttonRef,
+		ref: handleRef,
 		onBlur: createHandleBlur(externalEventHandlers),
 		onFocus: createHandleFocus(externalEventHandlers),
 		onClick: createHandleClick(externalEventHandlers),
