@@ -1,14 +1,18 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { extractEventHandlers } from '../utils/extractEventHandlers';
 import { isFocusVisible } from '../utils/is';
 import { useForkRef } from './useForkRef';
 export function useBtn({
+	selected = false,
+	multiple = false,
+	current = undefined,
 	disabled = false,
 	ref: externalRef,
 	type,
 	href,
 	to,
 	tabIndex,
+	value,
 	...props
 }) {
 	const buttonRef = useRef(null);
@@ -18,6 +22,16 @@ export function useBtn({
 	};
 	const [focusVisible, setFocusVisible] = useState(false);
 	const [active, setActive] = useState(false);
+
+	const isSelected = useMemo(() => {
+		if (!selected) {
+			return false;
+		}
+		if (multiple && Array.isArray(current)) {
+			return current.includes(value);
+		}
+		return current === value;
+	}, [selected, current, value, multiple]);
 
 	const isNativeButton = () => {
 		const button = buttonRef.current;
@@ -46,7 +60,7 @@ export function useBtn({
 	};
 	const createHandleClick = (otherHandlers) => (event) => {
 		if (!disabled) {
-			otherHandlers.onClick?.(event);
+			otherHandlers.onClick?.(event, value);
 		}
 	};
 	const createHandleMouseLeave = (otherHandlers) => (event) => {
@@ -56,7 +70,6 @@ export function useBtn({
 
 		otherHandlers.onMouseLeave?.(event);
 	};
-
 	const createHandleMouseDown = (otherHandlers) => (event) => {
 		if (!disabled) {
 			setActive(true);
@@ -132,6 +145,7 @@ export function useBtn({
 	};
 	delete attrs.onFocusVisible;
 	return {
+		isSelected,
 		focusVisible,
 		active,
 		buttonRef,

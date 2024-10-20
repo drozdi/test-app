@@ -3,10 +3,12 @@ import './XBtn.scss';
 
 import { forwardRef, memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
+import { useXBtnGroupContext } from '../btnGroup';
 import { XIcon } from '../icon';
 
 export const XBtn = memo(
-	forwardRef(function XBtn(parametrs = {}, ref) {
+	forwardRef(function XBtn(props = {}, ref) {
+		const parametrs = useXBtnGroupContext(props);
 		const {
 			children,
 			className,
@@ -22,15 +24,16 @@ export const XBtn = memo(
 			square = false,
 			rounded = false,
 			disabled = false,
+			active = false,
 
 			icon,
 			iconRight,
 			color,
 			size,
-			...props
+			value,
 		} = parametrs;
 
-		let { attrs } = useBtn({ ...parametrs, ref });
+		let { isSelected: isSel, attrs } = useBtn({ ...parametrs, ref });
 
 		const isIcon = useMemo(
 			() =>
@@ -38,6 +41,7 @@ export const XBtn = memo(
 				(children?.type === XIcon && !icon && !iconRight),
 			[children, icon, iconRight],
 		);
+		const isSelected = useMemo(() => active || isSel, [isSel, active]);
 
 		return (
 			<button
@@ -54,6 +58,7 @@ export const XBtn = memo(
 					'x-btn--rounded': rounded,
 					'x-btn--dimmed': dimmed,
 					'x-btn--icon': isIcon,
+					'x-btn--selected': isSelected,
 					[`x-btn--${color}`]: color,
 					[`x-btn--${size}`]: size,
 				})}

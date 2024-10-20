@@ -1,21 +1,30 @@
 .x-btn {
 	@apply inline-flex items-center relative rounded px-6 py-2 text-base font-normal uppercase box-border transition duration-150 ease-in-out focus:outline-none
-	shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md 
+	shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md border-white border-0
         bg-blue-600 text-white shadow-black/50
         hover:bg-blue-600/75 hover:shadow-black/20 
         focus:bg-blue-600/80 focus:shadow-black/20
         active:bg-blue-600/90 active:shadow-black/10
         disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
 }
+.x-btn--selected {
+	@apply bg-blue-800/90 hover:bg-blue-800/90 focus:bg-blue-800/90 active:bg-blue-800/90 !shadow-md !shadow-black/10;
+	.x-btn-backdor {
+		@apply content-[''] !opacity-20;
+	}
+}
 .x-btn-outline,
 .x-btn-backdor {
-	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-2 border-transparent rounded-inherit contain-layout;
+	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-0 border-transparent rounded-inherit contain-layout;
 }
 .x-btn-outline {
-	@apply border-current;
+	@apply border-0 border-inherit;
 }
 .x-btn-backdor {
 	@apply bg-current opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20;
+}
+.x-btn--selected .x-btn-backdor {
+	@apply opacity-20;
 }
 
 $colors: primary, secondary, accent, positive, negative, info, warning, surface, body,
@@ -23,7 +32,7 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 
 @each $color in $colors {
 	.x-btn--#{$color} {
-		@apply bg-#{$color} hover:bg-#{$color}/75 focus:bg-#{$color}/80 active:bg-#{$color}/90;
+		@apply bg-#{$color} border-#{$color}/80 hover:bg-#{$color}/70 focus:bg-#{$color}/75 active:bg-#{$color}/90;
 	}
 	.x-btn--#{$color}.x-btn--tonal,
 	.x-btn--#{$color}.x-btn--outline {
@@ -32,6 +41,10 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 	.x-btn--#{$color}.x-btn--text,
 	.x-btn--#{$color}.x-btn--plain {
 		@apply text-#{$color}/80 hover:text-#{$color}/100;
+	}
+	.x-btn--#{$color}.x-btn--text,
+	.x-btn--#{$color}.x-btn--plain {
+		@apply text-#{$color}/100;
 	}
 }
 
@@ -56,16 +69,22 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 .x-btn--tonal .x-btn-backdor {
 	@apply bg-current opacity-10 hover:opacity-20 focus:opacity-20 active:opacity-30;
 }
+.x-btn--tonal.x-btn--selected .x-btn-backdor {
+	@apply opacity-30;
+}
 
 .x-btn--outline .x-btn-outline {
-	@apply block;
+	@apply block border-2;
 }
 
 .x-btn--dimmed {
 	@apply uppercase !bg-dimmed;
 }
 .x-btn--dimmed .x-btn-outline {
-	@apply border border-separator !bg-transparent;
+	@apply border-separator !bg-transparent;
+}
+.x-btn--dimmed.x-btn--outline .x-btn-outline {
+	@apply border;
 }
 .x-btn--dimmed .x-btn-backdor {
 	@apply hidden;

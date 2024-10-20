@@ -17,6 +17,7 @@ export function BtnExample() {
 		round: false,
 		rounded: false,
 		disabled: false,
+		active: false,
 		icon: false,
 		iconRight: false,
 	});
@@ -57,7 +58,7 @@ export function BtnExample() {
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn</h2>
-			{/*<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
+			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 				<thead>
 					<tr className="*:text-center">
 						<td>color</td>
@@ -67,10 +68,11 @@ export function BtnExample() {
 						<td>tonal</td>
 						<td>plain</td>
 						<td>text</td>
+						<td>active</td>
 					</tr>
 				</thead>
 				<tbody>
-					{'default primary secondary accent positive negative info warning'
+					{'default primary secondary accent positive negative info warning dimmed'
 						.split(/\s+/)
 						.map((color) => (
 							<tr
@@ -146,10 +148,19 @@ export function BtnExample() {
 										Text
 									</XBtn>
 								</td>
+								<td>
+									<XBtn
+										disabled={disables[color]}
+										color={color}
+										active={true}
+									>
+										Text
+									</XBtn>
+								</td>
 							</tr>
 						))}
 				</tbody>
-			</table>*/}
+			</table>
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
@@ -323,6 +334,15 @@ export function BtnExample() {
 							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Disabled</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="active"
+							checked={btnProps.active}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Active</span>
 					</label>
 				</div>
 			</div>

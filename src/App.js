@@ -1,12 +1,7 @@
-import { BtnExample, InputExample } from './components/example';
+import Example from './components/example';
 
 function App() {
-	return (
-		<>
-			<BtnExample />
-			<InputExample />
-		</>
-	);
+	return <Example btnGroup={true} btn={false} input={false} />;
 	/*const ref = useRef(null);
 	useEffect(() => {
 		//console.log(ref);
