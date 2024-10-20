@@ -154,7 +154,7 @@ export function BtnExample() {
 										color={color}
 										active={true}
 									>
-										Text
+										Active
 									</XBtn>
 								</td>
 							</tr>

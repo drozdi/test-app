@@ -1,32 +1,97 @@
 .x-btn {
-	@apply inline-flex items-center relative rounded px-6 py-2 text-base font-normal uppercase box-border 
+	@apply inline-flex items-center relative rounded px-6 py-2 text-base font-normal uppercase box-border text-white
 	transition duration-150 ease-in-out border-transparent border-0 focus:outline-none
 	shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md
 	disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
 }
+.x-btn {
+	@apply bg-blue-600 hover:bg-blue-600/75 focus:bg-blue-600/80 active:bg-blue-600/90;
+	@apply shadow-black/50 hover:shadow-black/60 focus:shadow-black/70 active:shadow-black/20;
+}
+.x-btn--text,
+.x-btn--plain {
+	@apply text-white/80 hover:text-white/100;
+}
+
 .x-btn-outline,
 .x-btn-backdor {
-	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-0 border-inherit rounded-inherit contain-layout;
+	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-0 border-transparent rounded-inherit contain-layout;
 }
-
-.x-btn {
-	@apply shadow-black/50 hover:shadow-black/60 focus:shadow-black/70 active:shadow-black/20
+.x-btn-outline {
+	@apply border-inherit;
 }
-
-
-
-
-
-
-
-.x-btn--selected {
-	@apply shadow-black/30 hover:shadow-black/30 focus:shadow-black/30 active:shadow-black/30
+.x-btn-backdor {
+	@apply bg-current opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20;
 }
-
+.x-btn--tonal .x-btn-backdor,
+.x-btn--plain .x-btn-backdor {
+	@apply block;
+}
+.x-btn--tonal .x-btn-backdor {
+	@apply bg-current opacity-10 hover:opacity-20 focus:opacity-20 active:opacity-30;
+}
+.x-btn--outline .x-btn-outline {
+	@apply block border-2;
+}
+.x-btn--outline,
+.x-btn--tonal,
+.x-btn--plain,
+.x-btn--text {
+	@apply bg-transparent !important;
+}
 
 .x-btn--flat {
-	@apply shadow-none hover:shadow-none focus:shadow-none active:shadow-none;
+	@apply shadow-none !important;
 }
+
+.x-btn--selected {
+	@apply text-white;
+	@apply shadow-md shadow-black/30 !important;
+}
+.x-btn--selected.x-btn--tonal .x-btn-backdor {
+	@apply opacity-30 !important;
+}
+.x-btn--selected .x-btn-backdor {
+	@apply opacity-20 !important;
+}
+
+$colors: primary, secondary, accent, positive, negative, info, warning, surface, body,
+	dark;
+
+@each $color in $colors {
+	.x-btn--#{$color} {
+		@apply bg-#{$color} border-#{$color}/75 hover:bg-#{$color}/65 focus:bg-#{$color}/70 active:bg-#{$color}/90;
+	}
+	.x-btn--#{$color}.x-btn--tonal,
+	.x-btn--#{$color}.x-btn--outline {
+		@apply text-#{$color};
+	}
+	.x-btn--#{$color}.x-btn--text,
+	.x-btn--#{$color}.x-btn--plain {
+		@apply text-#{$color}/80 hover:text-#{$color}/100;
+	}
+	.x-btn--selected.x-btn--#{$color} {
+		@apply bg-#{$color} hover:bg-#{$color} focus:bg-#{$color} active:bg-#{$color};
+		.x-btn-backdor {
+			@apply block;
+		}
+	}
+	.x-btn--selected.x-btn--#{$color}.x-btn--text,
+	.x-btn--selected.x-btn--#{$color}.x-btn--plain {
+		@apply text-#{$color}/100;
+	}
+}
+
+.x-btn--dimmed {
+	@apply bg-dimmed !important;
+}
+.x-btn--dimmed .x-btn-outline {
+	@apply border-separator bg-transparent;
+}
+.x-btn--dimmed.x-btn--outline .x-btn-outline {
+	@apply border;
+}
+
 /*
 
 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase 
@@ -35,82 +100,7 @@ transition duration-150 ease-in-out
 hover:bg-primary-accent-300 hover:shadow-primary-2 
 focus:bg-primary-accent-300 focus:shadow-primary-2  
 active:bg-primary-600 active:shadow-primary-2 
-motion-reduce:transition-none 
-dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong
   */
-
-
-/*.x-btn {
-	@apply inline-flex items-center relative rounded px-6 py-2 text-base font-normal uppercase box-border transition duration-150 ease-in-out focus:outline-none
-	shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md border-white border-0
-        bg-blue-600 text-white shadow-black/50
-        hover:bg-blue-600/75 hover:shadow-black/20 
-        focus:bg-blue-600/80 focus:shadow-black/20
-        active:bg-blue-600/90 active:shadow-black/10
-        disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
-}
-.x-btn--selected {
-	@apply bg-blue-800/90 hover:bg-blue-800/90 focus:bg-blue-800/90 active:bg-blue-800/90 !shadow-md !shadow-black/10;
-	.x-btn-backdor {
-		@apply content-[''] !opacity-20;
-	}
-}
-.x-btn-outline,
-.x-btn-backdor {
-	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-0 border-transparent rounded-inherit contain-layout;
-}
-.x-btn-outline {
-	@apply border-0 border-inherit;
-}
-.x-btn-backdor {
-	@apply bg-current opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20;
-}
-.x-btn--selected .x-btn-backdor {
-	@apply opacity-20;
-}
-
-
-.x-btn--flat,
-.x-btn--plain,
-.x-btn--text {
-	@apply shadow-none hover:shadow-none focus:shadow-none active:shadow-none;
-}
-
-.x-btn--tonal,
-.x-btn--outline,
-.x-btn--plain,
-.x-btn--text {
-	@apply bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent;
-}
-
-.x-btn--tonal .x-btn-backdor,
-.x-btn--plain .x-btn-backdor,
-.x-btn--outline .x-btn-backdor {
-	@apply block;
-}
-.x-btn--tonal .x-btn-backdor {
-	@apply bg-current opacity-10 hover:opacity-20 focus:opacity-20 active:opacity-30;
-}
-.x-btn--tonal.x-btn--selected .x-btn-backdor {
-	@apply opacity-30;
-}
-
-.x-btn--outline .x-btn-outline {
-	@apply block border-2;
-}
-
-.x-btn--dimmed {
-	@apply uppercase !bg-dimmed;
-}
-.x-btn--dimmed .x-btn-outline {
-	@apply border-separator !bg-transparent;
-}
-.x-btn--dimmed.x-btn--outline .x-btn-outline {
-	@apply border;
-}
-.x-btn--dimmed .x-btn-backdor {
-	@apply hidden;
-}
 
 .x-btn--xs {
 	@apply rounded px-2 py-1 text-xs;
@@ -144,4 +134,4 @@ dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong
 }
 .x-btn--round {
 	@apply p-0 items-center justify-center rounded-[50%] min-w-8 min-h-8;
-}*/
+}

@@ -1,7 +1,7 @@
 import Example from './components/example';
 
 function App() {
-	return <Example btnGroup={false} btn={true} input={false} />;
+	return <Example btnGroup={true} btn={true} input={false} />;
 	/*const ref = useRef(null);
 	useEffect(() => {
 		//console.log(ref);
