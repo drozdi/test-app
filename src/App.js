@@ -1,7 +1,14 @@
 import Example from './components/example';
+import { XListGroup, XListGroupItem, XListItem } from './components/ui';
 
 function App() {
-	return <Example btnGroup={true} btn={true} input={true} />;
+	return <XListGroup>
+			<XListItem>Item 1</XListItem>
+			<XListItem>Item 2</XListItem>
+			<XListItem>Item 3</XListItem>
+			<XListItem>Item 4</XListItem>
+	</XListGroup>
+	//return <Example btnGroup={true} btn={true} input={true} />;
 	/*const ref = useRef(null);
 	useEffect(() => {
 		//console.log(ref);

@@ -1,6 +1,7 @@
 import './style.scss';
 export function XListGroup ({
-    tag = 'ul'
+    tag = 'ul',
+    children
 }) {
-    return <{tag}>XListGroup</{tag}>
+    return <ul className='x-list-group'>{children}</ul>
 }

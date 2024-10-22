@@ -1,7 +1,8 @@
 import './style.scss';
 
 export function XListItem ({
-    tag = 'li'
+    tag = 'li',
+    children
 }) {
-    return <{tag}>XListItem</{tag}}>;
+    return <li className='x-list-item'>{children}</li>;
 }
