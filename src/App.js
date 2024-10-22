@@ -1,13 +1,16 @@
-import Example from './components/example';
-import { XListGroup, XListGroupItem, XListItem } from './components/ui';
+import { XListGroup, XListItem } from './components/ui';
 
 function App() {
-	return <XListGroup>
-			<XListItem>Item 1</XListItem>
-			<XListItem>Item 2</XListItem>
-			<XListItem>Item 3</XListItem>
-			<XListItem>Item 4</XListItem>
-	</XListGroup>
+	return (
+		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
+			<XListGroup>
+				<XListItem>Item 1</XListItem>
+				<XListItem>Item 2</XListItem>
+				<XListItem>Item 3</XListItem>
+				<XListItem>Item 4</XListItem>
+			</XListGroup>
+		</div>
+	);
 	//return <Example btnGroup={true} btn={true} input={true} />;
 	/*const ref = useRef(null);
 	useEffect(() => {
