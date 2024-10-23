@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import './style.scss';
 export function XItemLabel({
 	children,
@@ -6,5 +7,10 @@ export function XItemLabel({
 	header = false,
 	lines = false,
 }) {
-	return <div className="x-item__label">{children}</div>;
+	return <div className={classNames("x-item__label", {
+		"x-item__label--overline": overline, 
+		"x-item__label--caption": caption, 
+		"x-item__label--header": header, 
+		"x-item__label--lines": lines
+	})}>{children}</div>;
 }

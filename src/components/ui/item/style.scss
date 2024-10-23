@@ -1,5 +1,5 @@
 .x-item {
-	@apply flex flex-col flex-nowrap relative min-h-12 px-4 py-2 text-inherit transition duration-300;
+	@apply flex flex-nowrap relative min-h-12 px-4 py-2 text-inherit transition duration-300;
 }
 
 .x-item__backdor {
@@ -32,6 +32,9 @@
 	}
 	&--caption {
 		@apply text-white/55;
+	}
+	&--lines {
+		@apply truncate;
 	}
 	& + & {
 		@apply mt-1;
