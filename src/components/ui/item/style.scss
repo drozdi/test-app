@@ -17,9 +17,35 @@
 			@apply ml-2;
 		}
 	}
+	&--top {
+		@apply justify-start;
+	}
+	&--nowrap {
+		@apply text-nowrap;
+	}
+	&--thumbnail img {
+		@apply max-h-14 max-w-24 h-auto w-auto;
+	}
 	& ~ &--side {
 		@apply items-end pl-4 pr-0;
 	}
+	&--side > .x-icon {
+		@apply text-2xl;
+	}
+}
+
+.x-item {
+	> .x-item__section--thumbnail:first-child,
+	> .x-item__backdor + .x-item__section--thumbnail {
+		@apply -ml-4;
+	}
+	> .x-item__section--thumbnail:last-of-type {
+		@apply -mr-4;
+	}
+}
+
+.x-item__section--main.x-item__section--thumbnail {
+	@apply ml-0 -mr-4;
 }
 
 .x-item__label {

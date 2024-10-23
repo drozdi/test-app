@@ -1,11 +1,13 @@
-import { XItem, XItemSection, XItemLabel, XListGroup } from './components/ui';
+import { XIcon, XItem, XItemLabel, XItemSection, XListGroup } from './components/ui';
 
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
 			<XListGroup>
 				<XItem>
-					<XItemSection side={true}>S</XItemSection>
+					<XItemSection side={true}>
+						<XIcon>mdi-home</XIcon>
+					</XItemSection>
 					<XItemSection>
 						<XItemLabel overline={true}>Item 1</XItemLabel>
 						<XItemLabel>label</XItemLabel>
@@ -14,6 +16,9 @@ function App() {
 					<XItemSection side={true}>S</XItemSection>
 				</XItem>
 				<XItem>
+					<XItemSection side={true}>
+						<XIcon>mdi-home</XIcon>
+					</XItemSection>
 					<XItemSection>Item 2</XItemSection>
 				</XItem>
 				<XItem>
