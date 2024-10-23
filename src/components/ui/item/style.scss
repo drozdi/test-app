@@ -1,0 +1,39 @@
+.x-item {
+	@apply flex flex-col flex-nowrap relative min-h-12 px-4 py-2 text-inherit transition duration-300;
+}
+
+.x-item__backdor {
+	@apply absolute left-0 top-0 w-full h-full bg-black opacity-0 contain-layout -z-10;
+}
+.x-item:hover > .x-item__backdor {
+	@apply opacity-20;
+}
+
+.x-item__section {
+	@apply flex flex-col justify-center pr-4 items-start w-auto min-w-0 max-w-full;
+	&--main {
+		@apply flex-1;
+		& + & {
+			@apply ml-2;
+		}
+	}
+	& ~ &--side {
+		@apply items-end pl-4 pr-0;
+	}
+}
+
+.x-item__label {
+	@apply max-w-full;
+	&--header {
+		@apply p-4 text-white/65;
+	}
+	&--overline {
+		@apply text-white/70;
+	}
+	&--caption {
+		@apply text-white/55;
+	}
+	& + & {
+		@apply mt-1;
+	}
+}

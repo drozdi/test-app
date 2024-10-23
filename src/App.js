@@ -1,13 +1,21 @@
-import { XListGroup, XListItem } from './components/ui';
+import { XItem, XItemSection, XListGroup } from './components/ui';
 
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
 			<XListGroup>
-				<XListItem>Item 1</XListItem>
-				<XListItem>Item 2</XListItem>
-				<XListItem>Item 3</XListItem>
-				<XListItem>Item 4</XListItem>
+				<XItem>
+					<XItemSection>Item 1</XItemSection>
+				</XItem>
+				<XItem>
+					<XItemSection>Item 2</XItemSection>
+				</XItem>
+				<XItem>
+					<XItemSection>Item 3</XItemSection>
+				</XItem>
+				<XItem>
+					<XItemSection>Item 4</XItemSection>
+				</XItem>
 			</XListGroup>
 		</div>
 	);
