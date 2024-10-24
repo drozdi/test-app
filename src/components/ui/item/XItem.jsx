@@ -1,18 +1,32 @@
 import classNames from 'classnames';
-import { useMemo } from 'react';
+import { createElement, useMemo } from 'react';
 import './style.scss';
-export function XItem({ tag = 'li', tabIndex = 0, className, children }) {
+export function XItem({
+	tag = 'li',
+	className,
+	children,
+	tabIndex = 0,
+	dense = false,
+	active = false,
+	disable = false,
+	role = null,
+}) {
 	const attrs = useMemo(
 		() => ({
-			className: classNames('x-item', className),
-			tabindex: tabIndex ?? -1,
+			className: classNames('x-item', className, {
+				'x-item--dense': dense,
+				'x-item--active': active,
+				'x-item--disable': disable,
+			}),
+			tabindex: disable ? -1 : (tabIndex ?? -1),
+			role: role ?? 'listitem',
+			disable: disable,
 		}),
-		[],
+		[disable, tabIndex, dense, active, className],
 	);
-	return (
-		<li {...attrs}>
-			<div className="x-item__backdor" tabIndex={-1}></div>
-			{children}
-		</li>
+	return createElement(
+		tag,
+		attrs,
+		[<div className="x-item__backdor" tabIndex={-1} />].concat(children),
 	);
 }

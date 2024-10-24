@@ -1,9 +1,9 @@
-import { XIcon, XItem, XItemLabel, XItemSection, XListGroup } from './components/ui';
+import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
-			<XListGroup>
+			<XList>
 				<XItem>
 					<XItemSection side={true}>
 						<XIcon>mdi-home</XIcon>
@@ -27,7 +27,7 @@ function App() {
 				<XItem>
 					<XItemSection>Item 4</XItemSection>
 				</XItem>
-			</XListGroup>
+			</XList>
 		</div>
 	);
 	//return <Example btnGroup={true} btn={true} input={true} />;
