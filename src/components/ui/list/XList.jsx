@@ -9,9 +9,10 @@ export function XList({
 	role = null,
 	dense = false,
 	separator = false,
+	bordered = false,
 }) {
 	const aRole = useMemo(
-		() => (roleAttrExceptions.includes(tag) ? null : (role ?? 'listbox')),
+		() => (roleAttrExceptions.includes(tag) ? null : (role ?? 'list')),
 		[tag],
 	);
 	return h(
@@ -20,6 +21,7 @@ export function XList({
 			className: classNames('x-list', {
 				'x-list--dense': dense,
 				'x-list--separator': separator,
+				'x-list--bordered': bordered,
 			}),
 			role: aRole,
 		},

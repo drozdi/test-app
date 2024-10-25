@@ -3,7 +3,7 @@ import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
-			<XList>
+			<XList bordered={true}>
 				<XItem>
 					<XItemSection side={true}>
 						<XIcon>mdi-home</XIcon>
@@ -13,7 +13,9 @@ function App() {
 						<XItemLabel>label</XItemLabel>
 						<XItemLabel caption={true}>Description</XItemLabel>
 					</XItemSection>
-					<XItemSection side={true}>S</XItemSection>
+					<XItemSection side={true} top={true}>
+						<XIcon>mdi-close</XIcon>
+					</XItemSection>
 				</XItem>
 				<XItem>
 					<XItemSection side={true}>
@@ -23,6 +25,9 @@ function App() {
 				</XItem>
 				<XItem>
 					<XItemSection>Item 3</XItemSection>
+					<XItemSection side={true}>
+						<XIcon>mdi-arrow-down</XIcon>
+					</XItemSection>
 				</XItem>
 				<XItem>
 					<XItemSection>Item 4</XItemSection>
