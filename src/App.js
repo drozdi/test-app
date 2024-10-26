@@ -3,8 +3,32 @@ import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
-			<XList bordered={true}>
-				<XItem>
+			<XList bordered={true} separator={true}>
+				<XItem tag="label">
+					<XItemSection side={true}>
+						<input type="checkbox" value={1} />
+					</XItemSection>
+					<XItemSection>
+						<XItemLabel>Item 1</XItemLabel>
+					</XItemSection>
+				</XItem>
+				<XItem tag="label">
+					<XItemSection side={true}>
+						<input type="checkbox" value={2} />
+					</XItemSection>
+					<XItemSection>
+						<XItemLabel>Item 2</XItemLabel>
+					</XItemSection>
+				</XItem>
+				<XItem tag="label">
+					<XItemSection side={true}>
+						<input type="checkbox" value={3} />
+					</XItemSection>
+					<XItemSection>
+						<XItemLabel>Item 3</XItemLabel>
+					</XItemSection>
+				</XItem>
+				<XItem tag="label">
 					<XItemSection side={true}>
 						<XIcon>mdi-home</XIcon>
 					</XItemSection>
@@ -23,13 +47,13 @@ function App() {
 					</XItemSection>
 					<XItemSection>Item 2</XItemSection>
 				</XItem>
-				<XItem>
+				<XItem tag="label" disabled={true}>
 					<XItemSection>Item 3</XItemSection>
 					<XItemSection side={true}>
 						<XIcon>mdi-arrow-down</XIcon>
 					</XItemSection>
 				</XItem>
-				<XItem>
+				<XItem active={true}>
 					<XItemSection>Item 4</XItemSection>
 				</XItem>
 			</XList>

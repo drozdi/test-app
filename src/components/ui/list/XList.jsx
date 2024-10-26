@@ -6,6 +6,7 @@ const roleAttrExceptions = ['ul', 'ol'];
 export function XList({
 	tag = 'ul',
 	children,
+	className,
 	role = null,
 	dense = false,
 	separator = false,
@@ -18,7 +19,7 @@ export function XList({
 	return h(
 		tag,
 		{
-			className: classNames('x-list', {
+			className: classNames('x-list', className, {
 				'x-list--dense': dense,
 				'x-list--separator': separator,
 				'x-list--bordered': bordered,
