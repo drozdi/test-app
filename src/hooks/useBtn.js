@@ -9,12 +9,19 @@ export function useBtn({
 	disabled = false,
 	ref: externalRef,
 	type,
-	href,
-	to,
 	tabIndex,
 	value,
+	LinkComponent = 'a',
+	target = '_self',
+	to,
+	href,
 	...props
 }) {
+	const TagProp = useMemo(
+		() => (to || href ? LinkComponent : 'button'),
+		[to, href, LinkComponent],
+	);
+
 	const buttonRef = useRef(null);
 	const handleRef = useForkRef(externalRef, buttonRef);
 	const externalEventHandlers = {
@@ -125,9 +132,6 @@ export function useBtn({
 	};
 
 	const buttonProps = {
-		type: type ?? 'button',
-		role: !href && !to ? 'button' : undefined,
-		disabled: disabled,
 		'aria-disabled': disabled,
 		tabIndex: !disabled ? (tabIndex ?? 0) : -1,
 	};
@@ -144,7 +148,18 @@ export function useBtn({
 		onKeyUp: createHandleKeyUp(externalEventHandlers),
 	};
 	delete attrs.onFocusVisible;
+	if (TagProp === 'button') {
+		attrs.type = type ?? 'button';
+		attrs.disabled = disabled;
+	} else if (TagProp === LinkComponent) {
+		attrs.to = to;
+		attrs.href = href || to;
+		attrs.role = 'link';
+		attrs.target = target;
+	}
+
 	return {
+		TagProp,
 		isSelected,
 		focusVisible,
 		active,

@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { createElement, memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import './style.scss';
 const clickableTag = ['a', 'label'];
 
 export const XItem = memo(function XItem({
-	tag = 'li',
+	tag = 'div',
 	className,
 	children,
 	tabIndex = 0,
@@ -14,12 +14,17 @@ export const XItem = memo(function XItem({
 	disabled = false,
 	role = null,
 	onClick = null,
+	to,
 }) {
+	const TagProp = useMemo(() => (to ? 'a' : tag), [to, tag]);
 	const isActionable = useMemo(
-		() => clickableTag.includes(tag) || typeof onClick === 'function',
-		[tag, onClick],
+		() => clickableTag.includes(TagProp) || typeof onClick === 'function',
+		[TagProp, onClick],
 	);
-	const isClickable = useMemo(() => !disabled && isActionable, [tag, isActionable]);
+	const isClickable = useMemo(
+		() => !disabled && isActionable,
+		[disabled, isActionable],
+	);
 	const attrs = useMemo(() => {
 		const attrs = {
 			className: classNames(
@@ -55,9 +60,10 @@ export const XItem = memo(function XItem({
 		isActionable,
 	]);
 
-	return createElement(
-		tag,
-		attrs,
-		[<div className="x-item__backdor" key={-1} tabIndex={-1} />].concat(children),
+	return (
+		<TagProp {...attrs}>
+			<div className="x-item__backdor" tabIndex={-1} />
+			{children}
+		</TagProp>
 	);
 });

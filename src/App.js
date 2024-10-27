@@ -1,8 +1,12 @@
-import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
+import { XBtn, XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
+			<XBtn href="https://ya.ru/" target="_blank">
+				ya.ru
+			</XBtn>
+			<br />
 			<XList bordered={true} separator={true}>
 				<XItem tag="label">
 					<XItemSection side={true}>
@@ -28,7 +32,7 @@ function App() {
 						<XItemLabel>Item 3</XItemLabel>
 					</XItemSection>
 				</XItem>
-				<XItem tag="label">
+				<XItem>
 					<XItemSection side={true}>
 						<XIcon>mdi-home</XIcon>
 					</XItemSection>

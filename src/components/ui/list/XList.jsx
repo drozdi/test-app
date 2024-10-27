@@ -4,7 +4,7 @@ import './style.scss';
 
 const roleAttrExceptions = ['ul', 'ol'];
 export function XList({
-	tag = 'ul',
+	tag = 'div',
 	children,
 	className,
 	role = null,

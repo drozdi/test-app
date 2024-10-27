@@ -31,9 +31,14 @@ export const XBtn = memo(
 			color,
 			size,
 			value,
+
+			LinkComponent = 'a',
+			target = '_self',
+			to,
+			href,
 		} = parametrs;
 
-		let { isSelected: isSel, attrs } = useBtn({ ...parametrs, ref });
+		let { isSelected: isSel, attrs, TagProp } = useBtn({ ...parametrs, ref });
 
 		const isIcon = useMemo(
 			() =>
@@ -44,7 +49,7 @@ export const XBtn = memo(
 		const isSelected = useMemo(() => active || isSel, [isSel, active]);
 
 		return (
-			<button
+			<TagProp
 				{...attrs}
 				className={classNames('x-btn', {
 					'x-btn--flat': flat,
@@ -74,7 +79,7 @@ export const XBtn = memo(
 				{iconRight && (
 					<XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>
 				)}
-			</button>
+			</TagProp>
 		);
 	}),
 );
