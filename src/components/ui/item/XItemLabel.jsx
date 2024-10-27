@@ -7,10 +7,16 @@ export function XItemLabel({
 	header = false,
 	lines = false,
 }) {
-	return <div className={classNames("x-item__label", {
-		"x-item__label--overline": overline, 
-		"x-item__label--caption": caption, 
-		"x-item__label--header": header, 
-		"x-item__label--lines": lines
-	})}>{children}</div>;
+	return (
+		<div
+			className={classNames('x-item__label', {
+				'x-item__label--overline': overline,
+				'x-item__label--caption': caption,
+				'x-item__label--header': header,
+				'x-item__label--lines': lines,
+			})}
+		>
+			{children}
+		</div>
+	);
 }

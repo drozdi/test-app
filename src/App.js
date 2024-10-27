@@ -1,16 +1,12 @@
-import { XBtn, XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
+import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 
 function App() {
 	return (
 		<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12">
-			<XBtn href="https://ya.ru/" target="_blank">
-				ya.ru
-			</XBtn>
-			<br />
 			<XList bordered={true} separator={true}>
 				<XItem tag="label">
 					<XItemSection side={true}>
-						<input type="checkbox" value={1} />
+						<input type="checkbox" value={1} disabled />
 					</XItemSection>
 					<XItemSection>
 						<XItemLabel>Item 1</XItemLabel>
@@ -45,13 +41,13 @@ function App() {
 						<XIcon>mdi-close</XIcon>
 					</XItemSection>
 				</XItem>
-				<XItem>
+				<XItem to="https://ya.ru/" target="_blank" disabled={true}>
 					<XItemSection side={true}>
 						<XIcon>mdi-home</XIcon>
 					</XItemSection>
-					<XItemSection>Item 2</XItemSection>
+					<XItemSection>Yandex</XItemSection>
 				</XItem>
-				<XItem tag="label" disabled={true}>
+				<XItem disabled={true}>
 					<XItemSection>Item 3</XItemSection>
 					<XItemSection side={true}>
 						<XIcon>mdi-arrow-down</XIcon>

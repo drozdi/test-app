@@ -6,7 +6,8 @@
 	&--clickable {
 		@apply cursor-pointer;
 	}
-	&--disabled {
+	&--disabled,
+	&:has(input:disabled) {
 		@apply cursor-not-allowed opacity-60;
 	}
 }

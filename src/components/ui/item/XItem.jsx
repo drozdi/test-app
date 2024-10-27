@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import { memo, useMemo } from 'react';
 import './style.scss';
 const clickableTag = ['a', 'label'];
+const disRoleTag = ['label'];
+const disDisabledTag = ['div', 'span', 'a', 'label'];
 
 export const XItem = memo(function XItem({
 	tag = 'div',
@@ -14,9 +16,12 @@ export const XItem = memo(function XItem({
 	disabled = false,
 	role = null,
 	onClick = null,
+	LinkComponent = 'a',
 	to,
+	href,
+	target = '_self',
 }) {
-	const TagProp = useMemo(() => (to ? 'a' : tag), [to, tag]);
+	const TagProp = useMemo(() => (to || href ? LinkComponent : tag), [to, tag]);
 	const isActionable = useMemo(
 		() => clickableTag.includes(TagProp) || typeof onClick === 'function',
 		[TagProp, onClick],
@@ -38,7 +43,7 @@ export const XItem = memo(function XItem({
 				},
 				active && !disabled ? activeClass : '',
 			),
-			role: role ?? 'listitem',
+			role: disRoleTag.includes(TagProp) ? undefined : (role ?? 'listitem'),
 			disabled: disabled,
 		};
 		if (isActionable) {
@@ -46,6 +51,15 @@ export const XItem = memo(function XItem({
 		}
 		if (isClickable) {
 			attrs.tabIndex = disabled ? -1 : (tabIndex ?? -1);
+		}
+		if (disDisabledTag.includes(TagProp)) {
+			delete attrs.disabled;
+		}
+		if (TagProp === LinkComponent) {
+			if (!disabled) {
+				attrs.href = href || to;
+				attrs.target = target;
+			}
 		}
 		return attrs;
 	}, [
@@ -58,11 +72,13 @@ export const XItem = memo(function XItem({
 		activeClass,
 		isClickable,
 		isActionable,
+		TagProp,
+		LinkComponent,
 	]);
 
 	return (
 		<TagProp {...attrs}>
-			<div className="x-item__backdor" tabIndex={-1} />
+			<span className="x-item__backdor" />
 			{children}
 		</TagProp>
 	);
