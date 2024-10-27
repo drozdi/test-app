@@ -89,7 +89,7 @@ module.exports = {
 		plugin(function ({ addBase, addUtilities, theme }) {
 			const utilities = {};
 
-			addBase({
+			/*addBase({
 				'*': {
 					margin: 0,
 					padding: 0,
@@ -101,8 +101,6 @@ module.exports = {
 					},
 				},
 				'html,body': {
-					margin: 0,
-					padding: 0,
 					width: '100%',
 					height: '100%',
 				},
@@ -114,11 +112,11 @@ module.exports = {
 					color: '#00aeff',
 					textDecoration: 'none',
 				},
-				'a:hover': {
+				'a[href]:hover': {
 					color: theme('colors.white'),
 					textDecoration: 'underlined',
 				},
-			});
+			});*/
 
 			'primary secondary accent positive negative info warning surface body dark'
 				.split(/\s+/)

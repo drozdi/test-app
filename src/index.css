@@ -23,7 +23,7 @@
 		color: #00aeff;
 		text-decoration: none;
 	}
-	a:hover {
+	a[href]:hover {
 		color: #fff;
 		text-decoration: underlined;
 	}
