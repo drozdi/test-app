@@ -65,9 +65,6 @@
 .x-item__section--main.x-item__section--thumbnail {
 	@apply ml-0 -mr-4;
 }
-.x-list--separator .x-item + .x-item {
-	@apply border-t border-t-separator;
-}
 
 .x-item__label {
 	@apply max-w-full;
@@ -75,15 +72,12 @@
 		@apply p-4 text-white/65;
 	}
 	&--overline {
-		@apply text-white/70;
+		@apply text-xs font-medium tracking-widest uppercase text-white/70;
 	}
 	&--caption {
-		@apply text-white/55;
+		@apply text-xs font-normal text-white/55;
 	}
 	&--lines {
 		@apply truncate;
-	}
-	& + & {
-		@apply mt-1;
 	}
 }
