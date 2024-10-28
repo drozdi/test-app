@@ -68,7 +68,7 @@
 	&,
 	&.xSidebar--overlay:not(.xSidebar--close),
 	& .xSidebar {
-		@extend %sidebar-mini;
+		@apply w-full;
 	}
 }
 .xSidebar--mini-overlay {

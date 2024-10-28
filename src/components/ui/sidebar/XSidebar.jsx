@@ -5,10 +5,13 @@ import React, {
 	memo,
 	useCallback,
 	useContext,
+	useEffect,
+	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
 } from 'react';
+import { matchesSelectorToParentElements } from '../../../utils/domFns';
 
 import { DraggableCore } from 'react-draggable';
 import { XBtn } from '../btn/XBtn';
@@ -104,6 +107,36 @@ export const XSidebar = memo(
 			() => ({ width: isOpen && !isMini ? width : '' }),
 			[width, isOpen, isMini],
 		);
+
+		useLayoutEffect(() => {
+			if (containerRef.current) {
+				const style = window.getComputedStyle(containerRef.current);
+				const minWidth = parseInt(style.minWidth || 0, 10) || 0;
+				!miniWidth && setMiniWidth(minWidth);
+			}
+		}, [containerRef.current]);
+		useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
+		useEffect(() => setOpenBreakpoint((v) => !v), [open]);
+
+		useEffect(() => {
+			const handleClose = ({ target }) => {
+				if (
+					!matchesSelectorToParentElements(
+						target,
+						'.xSidebar',
+						containerRef.current,
+					)
+				) {
+					onMini(true);
+				}
+			};
+			if (miniMouse && miniToggle) {
+				document.addEventListener('click', handleClose);
+			}
+			return () => {
+				document.removeEventListener('click', handleClose);
+			};
+		}, [miniMouse, miniToggle]);
 
 		const onHandleDrag = useCallback(
 			(e, ui) => {
@@ -229,7 +262,7 @@ XSidebar.defaultProps = {
 	miniToOverlay: false,
 	miniToggle: false,
 	miniMouse: false,
-	miniW: 56,
+	miniW: undefined,
 	open: false,
 	overlay: false,
 	breakpoint: null,

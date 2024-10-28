@@ -62,11 +62,11 @@ export function XLayout({
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
 			open: !belowBreakpoint || ls.open,
-			//overlay: overlay && belowBreakpoint,
+			overlay: overlay && belowBreakpoint,
 			//breakpoint: breakpoint,
 			mini: !belowBreakpoint && ls.mini,
-			//miniToOverlay: overlay || belowBreakpoint,
-			//miniMouse: true,
+			miniToOverlay: overlay || belowBreakpoint,
+			miniMouse: true,
 			miniToggle: !belowBreakpoint,
 
 			resizeable: true,
