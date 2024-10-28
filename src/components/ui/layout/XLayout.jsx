@@ -13,6 +13,7 @@ import { XLayoutContext } from './XLayoutContext';
 
 export function XLayout({
 	children,
+	className,
 	container = false,
 	view = 'hhh lpr fff',
 	breakpoint = 600,
@@ -61,12 +62,12 @@ export function XLayout({
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
 			open: !belowBreakpoint || ls.open,
-			overlay: overlay && belowBreakpoint,
-			breakpoint: breakpoint,
-			//mini: !belowBreakpoint && ls.mini,
+			//overlay: overlay && belowBreakpoint,
+			//breakpoint: breakpoint,
+			mini: !belowBreakpoint && ls.mini,
 			//miniToOverlay: overlay || belowBreakpoint,
 			//miniMouse: true,
-			//miniToggle: !belowBreakpoint,
+			miniToggle: !belowBreakpoint,
 
 			resizeable: true,
 
@@ -166,7 +167,7 @@ export function XLayout({
 	);
 
 	let layout = (
-		<div className={classNames('xLayout', classes)} ref={ref}>
+		<div className={classNames('xLayout', classes, className)} ref={ref}>
 			{hasSlot('left') && left()}
 			{hasSlot('right') && right()}
 			{hasSlot('header') && header()}
