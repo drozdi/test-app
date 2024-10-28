@@ -21,9 +21,10 @@ export const XItem = memo(function XItem({
 	href,
 	target = '_self',
 }) {
+	
 	const TagProp = useMemo(() => (to || href ? LinkComponent : tag), [to, tag]);
 	const isActionable = useMemo(
-		() => clickableTag.includes(TagProp) || typeof onClick === 'function',
+		() => clickableTag.includes(TagProp) || TagProp === LinkComponent || typeof onClick === 'function',
 		[TagProp, onClick],
 	);
 	const isClickable = useMemo(
@@ -57,6 +58,7 @@ export const XItem = memo(function XItem({
 		}
 		if (TagProp === LinkComponent) {
 			if (!disabled) {
+				attrs.to = to;
 				attrs.href = href || to;
 				attrs.target = target;
 			}
@@ -75,7 +77,8 @@ export const XItem = memo(function XItem({
 		TagProp,
 		LinkComponent,
 	]);
-
+	console.log(TagProp)
+	console.log(attrs)
 	return (
 		<TagProp {...attrs}>
 			<span className="x-item__backdor" />
