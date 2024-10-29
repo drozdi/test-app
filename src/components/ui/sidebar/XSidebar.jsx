@@ -117,7 +117,8 @@ function XSidebarRoot(
 	}, [containerRef.current]);
 	useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
 	useEffect(() => setOpenBreakpoint((v) => !v), [open]);
-
+	useEffect(() => console.log(width), [width]);
+	useEffect(() => console.log(miniWidth), [miniWidth]);
 	useEffect(() => {
 		const handleClose = ({ target }) => {
 			if (target.closest('.xSidebar-container') !== containerRef.current) {
@@ -181,7 +182,7 @@ function XSidebarRoot(
 				>
 					<div className={classNames('xSidebar-content', className)}>
 						{children}
-						{false && (
+						{true && (
 							<>
 								<br />
 								isOpen: {isOpen ? 'true' : 'false'}
