@@ -54,6 +54,7 @@ function App() {
 					),
 					header: 'header',
 					footer: 'footer',
+					right: "right",
 					default: (props) => (
 						<Routes>
 							<Route path="/" element={<div>Home</div>} />

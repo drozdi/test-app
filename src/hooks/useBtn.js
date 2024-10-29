@@ -11,6 +11,7 @@ export function useBtn({
 	type,
 	tabIndex,
 	value,
+	title,
 	LinkComponent = 'a',
 	target = '_self',
 	to,
@@ -138,6 +139,7 @@ export function useBtn({
 	const attrs = {
 		...externalEventHandlers,
 		...buttonProps,
+		title: title,
 		ref: handleRef,
 		onBlur: createHandleBlur(externalEventHandlers),
 		onFocus: createHandleFocus(externalEventHandlers),

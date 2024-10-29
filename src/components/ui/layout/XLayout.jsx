@@ -65,11 +65,11 @@ export function XLayout({
 			overlay: overlay && belowBreakpoint,
 			//breakpoint: breakpoint,
 			mini: !belowBreakpoint && ls.mini,
-			miniToOverlay: overlay || belowBreakpoint,
+			miniOverlay: overlay || belowBreakpoint,
 			miniMouse: true,
-			miniToggle: !belowBreakpoint,
-
-			resizeable: true,
+			//miniToggle: !belowBreakpoint,
+w: 200,
+			//resizeable: true,
 
 			onMini: (mini) => setLs({ ...ls, mini }),
 			//onToggle: (open) => setLs{...ls, open}),
@@ -82,7 +82,7 @@ export function XLayout({
 			overlay: overlay && belowBreakpoint,
 			breakpoint: breakpoint,
 			mini: !belowBreakpoint && rs.mini,
-			//miniToOverlay: overlay || belowBreakpoint,
+			//miniOverlay: overlay || belowBreakpoint,
 			//miniMouse: true,
 			miniToggle: !belowBreakpoint,
 
