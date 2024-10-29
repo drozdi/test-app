@@ -57,19 +57,20 @@ export function XLayout({
 	);
 
 	const { slot, hasSlot, wrapSlot } = useSlots(children);
-
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
+			//w: ls.size,
 			open: !belowBreakpoint || ls.open,
-			overlay: overlay && belowBreakpoint,
+			overlay: overlay,
 			breakpoint: breakpoint,
-			mini: !belowBreakpoint && ls.mini,
+			mini: ls.mini,
 			miniOverlay: overlay || belowBreakpoint,
 			miniMouse: true,
 			miniToggle: !belowBreakpoint,
 			//resizeable: true,
 			onMini: (mini) => setLs({ ...ls, mini }),
+			onResize: (size) => setLs({ ...ls, size }),
 			//onToggle: (open) => setLs{...ls, open}),
 		});
 	};

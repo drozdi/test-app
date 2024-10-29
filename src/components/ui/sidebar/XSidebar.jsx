@@ -6,7 +6,6 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
-	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
@@ -18,7 +17,7 @@ import { XLayoutContext } from '../layout';
 import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
 
-function XSidebarRoot(
+const XSidebarRoot = forwardRef(function XSidebarRoot(
 	{
 		children,
 		className,
@@ -50,7 +49,11 @@ function XSidebarRoot(
 	const [miniWidth, setMiniWidth] = useState(miniW);
 	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
 
+	const [innerMini, setInnerMini] = useState(mini);
+
 	const reverse = useMemo(() => type === 'right', [type]);
+	const innerEvents = useMemo(() => miniMouse || miniToggle, [miniMouse, miniToggle]);
+	const isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniMouse, miniToggle]);
 
 	const belowBreakpoint = useMemo(
 		() => (breakpoint && isLayout && $layout?.width < breakpoint) || false,
@@ -61,8 +64,10 @@ function XSidebarRoot(
 		() => (belowBreakpoint ? isOpenBreakpoint : open),
 		[belowBreakpoint, isOpenBreakpoint, open],
 	);
-
-	const isMini = useMemo(() => mini && !belowBreakpoint, [mini, belowBreakpoint]);
+	const isMini = useMemo(
+		() => (innerEvents ? innerMini : mini && !belowBreakpoint),
+		[innerEvents, innerMini, mini, belowBreakpoint],
+	);
 
 	const isOverlay = useMemo(
 		() =>
@@ -73,19 +78,13 @@ function XSidebarRoot(
 	);
 
 	const isMiniOverlay = useMemo(
-		() => (miniOverlay || overlay) && !belowBreakpoint,
-		[miniOverlay, overlay, belowBreakpoint],
-	);
-
-	const isMouseEvent = useMemo(
-		() => miniMouse && !miniToggle,
-		[miniMouse, miniToggle],
+		() => (miniOverlay || (innerEvents && overlay)) && !belowBreakpoint,
+		[miniOverlay, innerEvents, overlay, belowBreakpoint],
 	);
 
 	const canResized = useMemo(
-		() =>
-			resizeable && !miniToggle && !isMouseEvent && !isMini && !belowBreakpoint,
-		[resizeable, miniToggle, isMouseEvent, isMini, belowBreakpoint],
+		() => resizeable && !innerEvents && !isMini && !belowBreakpoint,
+		[resizeable, innerEvents, isMini, belowBreakpoint],
 	);
 
 	const containerStyle = useMemo(
@@ -106,7 +105,7 @@ function XSidebarRoot(
 		[width, isOpen, isMini],
 	);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		if (containerRef.current) {
 			const style = window.getComputedStyle(containerRef.current);
 			const w = parseInt(style.width || 0, 10) || 0;
@@ -117,12 +116,11 @@ function XSidebarRoot(
 	}, [containerRef.current]);
 	useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
 	useEffect(() => setOpenBreakpoint((v) => !v), [open]);
-	useEffect(() => console.log(width), [width]);
-	useEffect(() => console.log(miniWidth), [miniWidth]);
+
 	useEffect(() => {
 		const handleClose = ({ target }) => {
 			if (target.closest('.xSidebar-container') !== containerRef.current) {
-				onMini(true);
+				setInnerMini(true);
 			}
 		};
 		if (miniMouse && miniToggle) {
@@ -133,6 +131,8 @@ function XSidebarRoot(
 		};
 	}, [miniMouse, miniToggle]);
 
+	useEffect(() => onMini(isMini), [isMini]);
+
 	const onHandleDrag = useCallback(
 		(e, ui) => {
 			setWidth((w) => w + (reverse ? -ui.deltaX : ui.deltaX));
@@ -141,18 +141,28 @@ function XSidebarRoot(
 	);
 	const onHandleDragEnd = useCallback(
 		(e, ui) => {
-			setWidth(containerRef.current?.getBoundingClientRect().width);
+			const width = containerRef.current?.getBoundingClientRect().width;
+			setWidth(width);
+			onResize(width);
 		},
 		[containerRef.current],
 	);
-	const onMouseEnter = useCallback((e) => {
-		console.log(isMouseEvent, e);
-		isMouseEvent && onMini(false);
-	}, [isMouseEvent]);
-	const onMouseLeave = useCallback((e) => {
-		isMouseEvent && onMini(true);
-	}, [isMouseEvent]);
+	const onMouseEnter = useCallback(
+		(e) => {
+			isMouseEvent && setInnerMini(false);
+		},
+		[isMouseEvent],
+	);
+	const onMouseLeave = useCallback(
+		(e) => {
+			isMouseEvent && setInnerMini(true);
+		},
+		[isMouseEvent],
+	);
 
+	////
+	useEffect(() => console.log(width), [width]);
+	useEffect(() => console.log(miniWidth), [miniWidth]);
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
@@ -168,10 +178,10 @@ function XSidebarRoot(
 				})}
 				style={containerStyle}
 				ref={containerRef}
+				onMouseEnter={onMouseEnter}
+				onMouseLeave={onMouseLeave}
 			>
 				<div
-					onMouseEnter={onMouseEnter}
-					onMouseLeave={onMouseLeave}
 					className={classNames('xSidebar', {
 						'xSidebar--toggle': miniToggle,
 						[`xSidebar--${type}`]: !!type,
@@ -195,8 +205,7 @@ function XSidebarRoot(
 								<br />
 								belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
 								<br />
-								isOpenBreakpoint:{' '}
-								{isOpenBreakpoint ? 'true' : 'false'}
+								isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
 								<br />
 							</>
 						)}
@@ -212,9 +221,9 @@ function XSidebarRoot(
 										? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
 										: `mdi-arrow-${type}-bold-box-outline`
 								}
-								onClick={() => onMini(!mini)}
+								onClick={() => setInnerMini((m) => !m)}
 								className="text-2xl py-0"
-								title={isMini? 'Развернуть' : 'Свернуть'}
+								title={isMini ? 'Развернуть' : 'Свернуть'}
 							/>
 						</div>
 					)}
@@ -227,11 +236,8 @@ function XSidebarRoot(
 			</div>
 		</XSidebarContext.Provider>
 	);
-}
+});
 
-export const XSidebar = memo(
-	forwardRef(XSidebarRoot),
-);
 XSidebarRoot.propTypes = {
 	children: PropTypes.any,
 	className: PropTypes.string,
@@ -256,7 +262,7 @@ XSidebarRoot.propTypes = {
 XSidebarRoot.defaultProps = {
 	children: '',
 	className: '',
-
+	w: 256,
 	type: 'left',
 	mini: false,
 	miniOverlay: false,
@@ -267,9 +273,9 @@ XSidebarRoot.defaultProps = {
 	overlay: false,
 	breakpoint: null,
 	resizeable: false,
-	w: 300,
-
 	onResize: () => {},
 	onMini: () => {},
 	onToggle: () => {},
 };
+
+export const XSidebar = memo(XSidebarRoot);
