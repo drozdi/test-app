@@ -23,10 +23,10 @@
 	@apply hidden absolute top-0 left-0 w-full h-full bg-transparent border-0 border-transparent rounded-inherit contain-layout;
 }
 .x-btn-outline {
-	@apply border-inherit;
+	@apply border-inherit -z-10;
 }
 .x-btn-backdor {
-	@apply bg-current opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20;
+	@apply -z-20 bg-current opacity-0 hover:opacity-10 focus:opacity-10 active:opacity-20;
 }
 
 .x-btn--outline,
@@ -88,6 +88,7 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 		@apply text-#{$color}/100;
 	}
 }
+
 
 .x-btn--dimmed {
 	@apply bg-dimmed !important;
