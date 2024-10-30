@@ -52,12 +52,17 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	const [innerMini, setInnerMini] = useState(mini);
 
 	const reverse = useMemo(() => type === 'right', [type]);
-	const innerEvents = useMemo(() => miniMouse || miniToggle, [miniMouse, miniToggle]);
-	const isMouseEvent = useMemo(() => miniMouse && !miniToggle, [miniMouse, miniToggle]);
-
 	const belowBreakpoint = useMemo(
 		() => (breakpoint && isLayout && $layout?.width < breakpoint) || false,
 		[$layout, breakpoint, isLayout],
+	);
+	const innerEvents = useMemo(
+		() => !belowBreakpoint && (miniMouse || miniToggle),
+		[belowBreakpoint, miniMouse, miniToggle],
+	);
+	const isMouseEvent = useMemo(
+		() => !belowBreakpoint && miniMouse && !miniToggle,
+		[miniMouse, miniToggle],
 	);
 
 	const isOpen = useMemo(
@@ -89,11 +94,13 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 
 	const containerStyle = useMemo(
 		() => ({
-			minWidth: isOpen ? '' : 0,
+			minWidth: isOpen && !belowBreakpoint ? '' : 0,
 			width:
 				isOpen && isMini
 					? miniWidth
-					: isOpen && (canResized || (!!width && !isMiniOverlay))
+					: !belowBreakpoint &&
+						  isOpen &&
+						  (canResized || (!!width && !isMiniOverlay))
 						? width
 						: '',
 		}),
@@ -114,22 +121,23 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 			!miniWidth && setMiniWidth(minWidth);
 		}
 	}, [containerRef.current]);
-	useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
+	useEffect(() => setOpenBreakpoint(true), [belowBreakpoint]);
 	useEffect(() => setOpenBreakpoint((v) => !v), [open]);
 
 	useEffect(() => {
 		const handleClose = ({ target }) => {
 			if (target.closest('.xSidebar-container') !== containerRef.current) {
 				setInnerMini(true);
+				setOpenBreakpoint(false);
 			}
 		};
-		if (miniMouse && miniToggle) {
+		if (miniMouse && (miniToggle || belowBreakpoint)) {
 			document.addEventListener('click', handleClose);
 		}
 		return () => {
 			document.removeEventListener('click', handleClose);
 		};
-	}, [miniMouse, miniToggle]);
+	}, [miniMouse, miniToggle, belowBreakpoint]);
 
 	useEffect(() => onMini(isMini), [isMini]);
 
@@ -159,6 +167,20 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		},
 		[isMouseEvent],
 	);
+
+	const onHandleToggle = useCallback(() => {
+		if (
+			false ===
+			onToggle({
+				width,
+				isOpen,
+				isMini,
+			})
+		) {
+			return;
+		}
+		setInnerMini((m) => !m);
+	}, [onToggle]);
 
 	////
 	useEffect(() => console.log(width), [width]);
@@ -221,7 +243,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 										? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
 										: `mdi-arrow-${type}-bold-box-outline`
 								}
-								onClick={() => setInnerMini((m) => !m)}
+								onClick={onHandleToggle}
 								className="text-2xl py-0"
 								title={isMini ? 'Развернуть' : 'Свернуть'}
 							/>

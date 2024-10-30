@@ -96,12 +96,3 @@
 .xSidebar-res {
 	@extend %sidebar-res;
 }
-
-.xSidebar {
-	ul {
-		@apply block max-w-full;
-		> li {
-			@apply block px-3 py-3.5 max-w-full whitespace-nowrap text-ellipsis overflow-hidden hover:bg-gray-50/10;
-		}
-	}
-}

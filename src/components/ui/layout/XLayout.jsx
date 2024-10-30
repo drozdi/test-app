@@ -108,7 +108,11 @@ export function XLayout({
 									icon="mdi-dock-left"
 									size="sm"
 									square={true}
-									onClick={() => setLs({ ...ls, open: !ls.open })}
+									onClick={(e) => {
+										e.stopPropagation();
+										e.preventDefault();
+										setLs({ ...ls, open: !ls.open });
+									}}
 								/>
 							)
 						);
