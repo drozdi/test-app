@@ -91,7 +91,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		() => resizeable && !innerEvents && !isMini && !belowBreakpoint,
 		[resizeable, innerEvents, isMini, belowBreakpoint],
 	);
-
+	//# todo belowBreakpoint overlay
 	const containerStyle = useMemo(
 		() => ({
 			minWidth: isOpen && !belowBreakpoint ? '' : 0,
@@ -228,6 +228,8 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 								belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
 								<br />
 								isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
+								<br />
+								canResized: {canResized ? 'true' : 'false'}
 								<br />
 							</>
 						)}
