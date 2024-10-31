@@ -72,6 +72,7 @@ export function XLayout({
 		miniMouse: false,
 		miniToggle: false,
 		resizeable: false,
+		toggle: false,
 	});
 	const onLeftParam = (prop) => {
 		setLeftParam((v) => ({ ...v, [prop]: !v[prop] }));
@@ -207,15 +208,6 @@ export function XLayout({
 				{layout}
 				{true && (
 					<div className="fixed bg-black/50 text-white right-0 bottom-4 p-4 z-50">
-						<ul>
-							{Object.entries(leftParam).map(([k, v]) => {
-								return (
-									<li key={k}>
-										{k}: {v ? 'true' : 'false'}
-									</li>
-								);
-							})}
-						</ul>
 						<label className="block">
 							<input
 								type="checkbox"
@@ -234,6 +226,17 @@ export function XLayout({
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								overlay
+							</span>
+						</label>
+						<label className="block">
+							<input
+								type="checkbox"
+								name="toggle"
+								checked={leftParam.toggle}
+								onChange={({ target }) => onLeftParam(target.name)}
+							/>
+							<span className="ml-3 font-medium text-slate-500">
+								toggle
 							</span>
 						</label>
 						<label className="block">
