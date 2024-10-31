@@ -74,13 +74,15 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		[innerEvents, innerMini, mini, belowBreakpoint],
 	);
 
-	const isOverlay = useMemo(
+	/*const isOverlay = useMemo(
 		() =>
 			!belowBreakpoint && open && ((mini && overlay) || miniOverlay)
 				? false
 				: overlay || miniOverlay,
 		[mini, overlay, miniOverlay, open],
-	);
+	);*/
+
+	const isOverlay = useMemo(() => (open ? overlay : false), [overlay, open]);
 
 	const isMiniOverlay = useMemo(
 		() => (miniOverlay || (innerEvents && overlay)) && !belowBreakpoint,
@@ -94,7 +96,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	// # todo: belowBreakpoint isOverlay
 	const containerStyle = useMemo(
 		() => ({
-			minWidth: isOpen && !belowBreakpoint ? '' : 0,
+			/*minWidth: isOpen && !belowBreakpoint ? '' : 0,
 			width:
 				isOpen && isMini
 					? miniWidth
@@ -102,13 +104,15 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 						  isOpen &&
 						  (canResized || (!!width && !isMiniOverlay))
 						? width
-						: '',
+						: '',*/
 		}),
 		[width, isOpen, isMini, canResized, miniWidth, isMiniOverlay],
 	);
 
 	const style = useMemo(
-		() => ({ width: isOpen && !isMini ? width : '' }),
+		() => ({
+			//width: isOpen && !isMini ? width : '',
+		}),
 		[width, isOpen, isMini],
 	);
 
@@ -183,19 +187,14 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	}, [onToggle]);
 
 	////
-	useEffect(() => console.log(width), [width]);
-	useEffect(() => console.log(miniWidth), [miniWidth]);
+	//useEffect(() => console.log(width), [width]);
+	//useEffect(() => console.log(miniWidth), [miniWidth]);
 	return (
 		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 			<div
 				className={classNames('xSidebar-container', {
 					'xLayout-sidebar': isLayout,
 					[`xLayout-sidebar--${type}`]: isLayout && !!type,
-					[`xSidebar--${type}`]: !!type,
-					'xSidebar--overlay': isOverlay,
-					'xSidebar--close': !isOpen,
-					'xSidebar--mini': isMini,
-					'xSidebar--mini-overlay': isMiniOverlay,
 					'xSidebar--animate': !canResized,
 				})}
 				style={containerStyle}
@@ -205,34 +204,19 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 			>
 				<div
 					className={classNames('xSidebar', {
-						'xSidebar--toggle': miniToggle,
 						[`xSidebar--${type}`]: !!type,
+						'xSidebar--toggle': miniToggle,
+						'xSidebar--mini': isMini,
+						'xSidebar--close': !isOpen,
 						'xSidebar--animate': !canResized,
+						'xSidebar--overlay': isOverlay,
+						'xSidebar--mini-overlay': isMiniOverlay,
 					})}
 					style={style}
 					ref={ref}
 				>
 					<div className={classNames('xSidebar-content', className)}>
 						{children}
-						{true && (
-							<>
-								<br />
-								isOpen: {isOpen ? 'true' : 'false'}
-								<br />
-								isMini: {isMini ? 'true' : 'false'}
-								<br />
-								isOverlay: {isOverlay ? 'true' : 'false'}
-								<br />
-								isMiniOverlay: {isMiniOverlay ? 'true' : 'false'}
-								<br />
-								belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
-								<br />
-								isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
-								<br />
-								canResized: {canResized ? 'true' : 'false'}
-								<br />
-							</>
-						)}
 					</div>
 					{miniToggle && (
 						<div className="xSidebar-toggle">
@@ -257,6 +241,36 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 						</DraggableCore>
 					)}
 				</div>
+				{true && (
+					<div className="fixed bg-black/50 text-white right-0 top-12 p-4">
+						isOpen: {isOpen ? 'true' : 'false'}
+						<br />
+						isMini: {isMini ? 'true' : 'false'}
+						<br />
+						isOverlay: {isOverlay ? 'true' : 'false'}
+						<br />
+						isMiniOverlay: {isMiniOverlay ? 'true' : 'false'}
+						<br />
+						belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
+						<br />
+						isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
+						<br />
+						canResized: {canResized ? 'true' : 'false'}
+						<br />
+						innerEvents: {innerEvents ? 'true' : 'false'}
+						<br />
+						isMouseEvent: {isMouseEvent ? 'true' : 'false'}
+						<br />
+						width: {width}
+						<br />
+						miniWidth: {miniWidth}
+						<br />
+						containerStyle: {JSON.stringify(containerStyle)}
+						<br />
+						style: {JSON.stringify(style)}
+						<br />
+					</div>
+				)}
 			</div>
 		</XSidebarContext.Provider>
 	);
