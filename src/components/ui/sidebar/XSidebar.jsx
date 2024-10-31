@@ -129,8 +129,8 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 			!miniWidth && setMiniWidth(minWidth);
 		}
 	}, [containerRef.current]);
-	useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
 	useEffect(() => setOpenBreakpoint((v) => !v), [open]);
+	useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
 
 	useEffect(() => {
 		const handleClose = ({ target }) => {
