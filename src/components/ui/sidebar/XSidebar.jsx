@@ -187,11 +187,21 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		) {
 			return;
 		}
-		if (belowBreakpoint) {
-			setOpenBreakpoint((v) => !v);
-		} else {
-			setInnerMini((m) => !m);
+		setOpenBreakpoint((v) => !v);
+	}, [onToggle]);
+
+	const onHandleMiniToggle = useCallback(() => {
+		if (
+			false ===
+			onToggle({
+				width,
+				isOpen,
+				isMini,
+			})
+		) {
+			return;
 		}
+		setInnerMini((m) => !m);
 	}, [onToggle]);
 
 	////
@@ -237,7 +247,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 										? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
 										: `mdi-arrow-${type}-bold-box-outline`
 								}
-								onClick={onHandleToggle}
+								onClick={onHandleMiniToggle}
 								className="text-2xl py-0"
 								title={isMini ? 'Развернуть' : 'Свернуть'}
 							/>
@@ -268,7 +278,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 				</div>
 				{true && (
 					<div className="fixed bg-black/50 text-white right-0 top-12 p-4">
-						breakpoint: {breakpoint}
+						breakpoint: {breakpoint} - {$layout.width}
 						<br />
 						isOpen: {isOpen ? 'true' : 'false'}
 						<br />

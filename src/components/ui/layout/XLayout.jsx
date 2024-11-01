@@ -74,8 +74,10 @@ export function XLayout({
 		resizeable: false,
 		toggle: false,
 	});
-	const onLeftParam = (prop) => {
+	const onLeftParam = (e) => {
+		const prop = e.target.name;
 		setLeftParam((v) => ({ ...v, [prop]: !v[prop] }));
+		e.stopPropagation();
 	};
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
@@ -213,7 +215,7 @@ export function XLayout({
 								type="checkbox"
 								name="open"
 								checked={leftParam.open}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">open</span>
 						</label>
@@ -222,7 +224,7 @@ export function XLayout({
 								type="checkbox"
 								name="overlay"
 								checked={leftParam.overlay}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								overlay
@@ -233,7 +235,7 @@ export function XLayout({
 								type="checkbox"
 								name="toggle"
 								checked={leftParam.toggle}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								toggle
@@ -244,7 +246,7 @@ export function XLayout({
 								type="checkbox"
 								name="mini"
 								checked={leftParam.mini}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">mini</span>
 						</label>
@@ -253,7 +255,7 @@ export function XLayout({
 								type="checkbox"
 								name="miniOverlay"
 								checked={leftParam.miniOverlay}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								miniOverlay
@@ -264,7 +266,7 @@ export function XLayout({
 								type="checkbox"
 								name="miniMouse"
 								checked={leftParam.miniMouse}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								miniMouse
@@ -275,7 +277,7 @@ export function XLayout({
 								type="checkbox"
 								name="miniToggle"
 								checked={leftParam.miniToggle}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								miniToggle
@@ -286,7 +288,7 @@ export function XLayout({
 								type="checkbox"
 								name="resizeable"
 								checked={leftParam.resizeable}
-								onChange={({ target }) => onLeftParam(target.name)}
+								onChange={(e) => onLeftParam(e)}
 							/>
 							<span className="ml-3 font-medium text-slate-500">
 								resizeable
