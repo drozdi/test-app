@@ -64,7 +64,7 @@ export function XLayout({
 	});
 
 	const { slot, hasSlot, wrapSlot } = useSlots(children);
-	const [leftParam, setLeftParam] = useState({
+	/*const [leftParam, setLeftParam] = useState({
 		open: false,
 		overlay: false,
 		mini: false,
@@ -78,21 +78,20 @@ export function XLayout({
 		const prop = e.target.name;
 		setLeftParam((v) => ({ ...v, [prop]: !v[prop] }));
 		e.stopPropagation();
-	};
+	};*/
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
-			//open: ls.open,
-			//overlay: overlay,
+			open: ls.open,
+			overlay: overlay,
 			breakpoint: breakpoint,
-			//mini: ls.mini,
-			//miniOverlay: overlay || belowBreakpoint,
-			//miniMouse: !belowBreakpoint,
-			//miniToggle: !belowBreakpoint,
+			mini: ls.mini,
+			miniOverlay: overlay || belowBreakpoint,
+			miniMouse: !belowBreakpoint,
+			miniToggle: !belowBreakpoint,
 			//resizeable: true,
-			...leftParam,
-			//onMini: (mini) => setLs({ ...ls, mini }),
-			//onResize: (size) => setLs({ ...ls, size }),
+			onMini: (mini) => setLs({ ...ls, mini }),
+			onResize: (size) => setLs({ ...ls, size }),
 			//onToggle: (open) => setLs{...ls, open}),
 		});
 	};
@@ -208,7 +207,7 @@ export function XLayout({
 		<XLayoutContext.Provider value={{ $layout, $update }}>
 			<>
 				{layout}
-				{true && (
+				{false && (
 					<div className="fixed bg-black/50 text-white right-0 bottom-4 p-4 z-50">
 						<label className="block">
 							<input

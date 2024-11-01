@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 
 import { DraggableCore } from 'react-draggable';
+import { useForkRef } from '../../../hooks/useForkRef';
 import { XBtn } from '../btn/XBtn';
 import { XLayoutContext } from '../layout';
 import './XSidebar.scss';
@@ -39,8 +40,10 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		onMini,
 		onToggle,
 	},
-	ref,
+	externalRef,
 ) {
+	const ref = useRef();
+	const handleRef = useForkRef(externalRef, ref);
 	const { $layout, $update } = useContext(XLayoutContext);
 
 	const isLayout = useMemo(() => !!$layout, [$layout]);
@@ -100,41 +103,44 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	// # todo: belowBreakpoint isOverlay
 	const containerStyle = useMemo(
 		() => ({
-			/*minWidth: isOpen && !belowBreakpoint ? '' : 0,
+			minWidth: isMiniOverlay && !belowBreakpoint ? miniWidth : 0,
 			width:
 				isOpen && isMini
 					? miniWidth
-					: !belowBreakpoint &&
-						  isOpen &&
-						  (canResized || (!!width && !isMiniOverlay))
-						? width
-						: '',*/
+					: belowBreakpoint
+						? ''
+						: isOpen && (canResized || (!!width && !isMiniOverlay))
+							? width
+							: '',
 		}),
 		[width, isOpen, isMini, canResized, miniWidth, isMiniOverlay],
 	);
 
 	const style = useMemo(
 		() => ({
-			//width: isOpen && !isMini ? width : '',
+			width:
+				isOpen && !isMini && !belowBreakpoint
+					? width
+					: (belowBreakpoint && w) || '',
 		}),
 		[width, isOpen, isMini],
 	);
 
 	useEffect(() => {
-		if (containerRef.current) {
-			const style = window.getComputedStyle(containerRef.current);
+		if (ref.current) {
+			const style = window.getComputedStyle(ref.current);
 			const w = parseInt(style.width || 0, 10) || 0;
 			const minWidth = parseInt(style.minWidth || 0, 10) || 0;
-			!width && setWidth(w);
-			!miniWidth && setMiniWidth(minWidth);
+			width ?? setWidth(w);
+			miniWidth ?? setMiniWidth(minWidth);
 		}
-	}, [containerRef.current]);
+	}, [ref.current]);
 	useEffect(() => setOpenBreakpoint((v) => !v), [open]);
 	useEffect(() => setOpenBreakpoint(false), [belowBreakpoint]);
 
 	useEffect(() => {
 		const handleClose = ({ target }) => {
-			if (target.closest('.xSidebar-container') !== containerRef.current) {
+			if (target.closest('.xSidebar') !== ref.current) {
 				setInnerMini(true);
 				setOpenBreakpoint(false);
 			}
@@ -157,11 +163,11 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	);
 	const onHandleDragEnd = useCallback(
 		(e, ui) => {
-			const width = containerRef.current?.getBoundingClientRect().width;
+			const width = ref.current?.getBoundingClientRect().width;
 			setWidth(width);
 			onResize(width);
 		},
-		[containerRef.current],
+		[ref.current],
 	);
 	const onMouseEnter = useCallback(
 		(e) => {
@@ -175,7 +181,6 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		},
 		[isMouseEvent],
 	);
-
 	const onHandleToggle = useCallback(() => {
 		if (
 			false ===
@@ -204,112 +209,113 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		setInnerMini((m) => !m);
 	}, [onToggle]);
 
-	////
-	//useEffect(() => console.log(width), [width]);
-	//useEffect(() => console.log(miniWidth), [miniWidth]);
 	return (
-		<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
-			<div
-				className={classNames('xSidebar-container', {
-					'xLayout-sidebar': isLayout,
-					[`xLayout-sidebar--${type}`]: isLayout && !!type,
-					'xSidebar--animate': !canResized,
-				})}
-				style={containerStyle}
-				ref={containerRef}
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
-			>
+		<>
+			<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
 				<div
-					className={classNames('xSidebar', {
-						[`xSidebar--${type}`]: !!type,
-						'xSidebar--toggle': miniToggle,
-						'xSidebar--mini': isMini,
-						'xSidebar--close': !isOpen,
+					className={classNames('xSidebar-container', {
+						'xLayout-sidebar': isLayout,
+						[`xLayout-sidebar--${type}`]: isLayout && !!type,
 						'xSidebar--animate': !canResized,
-						'xSidebar--overlay': isOverlay,
-						'xSidebar--mini-overlay': isMiniOverlay,
 					})}
-					style={style}
-					ref={ref}
+					style={containerStyle}
+					ref={containerRef}
+					onMouseEnter={onMouseEnter}
+					onMouseLeave={onMouseLeave}
 				>
-					<div className={classNames('xSidebar-content', className)}>
-						{children}
+					<div
+						className={classNames('xSidebar', {
+							'xLayout-sidebar': isLayout,
+							[`xLayout-sidebar--${type}`]: isLayout && !!type,
+							[`xSidebar--${type}`]: !!type,
+							'xSidebar--toggle': miniToggle,
+							'xSidebar--mini': isMini,
+							'xSidebar--close': !isOpen,
+							'xSidebar--animate': !canResized,
+							'xSidebar--overlay': isOverlay,
+							'xSidebar--mini-overlay': isMiniOverlay,
+						})}
+						style={style}
+						ref={handleRef}
+					>
+						<div className={classNames('xSidebar-content', className)}>
+							{children}
+						</div>
+						{miniToggle && !belowBreakpoint && (
+							<div className="xSidebar-toggle">
+								<XBtn
+									color="dimmed"
+									block={true}
+									square={true}
+									icon={
+										isMini
+											? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
+											: `mdi-arrow-${type}-bold-box-outline`
+									}
+									onClick={onHandleMiniToggle}
+									className="text-2xl py-0"
+									title={isMini ? 'Развернуть' : 'Свернуть'}
+								/>
+							</div>
+						)}
+						{toggle && belowBreakpoint && (
+							<div className="xSidebar-toggle">
+								<XBtn
+									color="dimmed"
+									block={true}
+									square={true}
+									icon={
+										isOpen
+											? `mdi-arrow-${type}-bold-box-outline`
+											: `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
+									}
+									onClick={onHandleToggle}
+									className="text-2xl py-0"
+									title={isOpen ? 'Свернуть' : 'Развернуть'}
+								/>
+							</div>
+						)}
+						{canResized && (
+							<DraggableCore onDrag={onHandleDrag} onStop={onHandleDragEnd}>
+								<div className="xSidebar-res"></div>
+							</DraggableCore>
+						)}
 					</div>
-					{miniToggle && !belowBreakpoint && (
-						<div className="xSidebar-toggle">
-							<XBtn
-								color="dimmed"
-								block={true}
-								square={true}
-								icon={
-									isMini
-										? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
-										: `mdi-arrow-${type}-bold-box-outline`
-								}
-								onClick={onHandleMiniToggle}
-								className="text-2xl py-0"
-								title={isMini ? 'Развернуть' : 'Свернуть'}
-							/>
-						</div>
-					)}
-					{toggle && belowBreakpoint && (
-						<div className="xSidebar-toggle">
-							<XBtn
-								color="dimmed"
-								block={true}
-								square={true}
-								icon={
-									isOpen
-										? `mdi-arrow-${type}-bold-box-outline`
-										: `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
-								}
-								onClick={onHandleToggle}
-								className="text-2xl py-0"
-								title={isOpen ? 'Свернуть' : 'Развернуть'}
-							/>
-						</div>
-					)}
-					{canResized && (
-						<DraggableCore onDrag={onHandleDrag} onStop={onHandleDragEnd}>
-							<div className="xSidebar-res"></div>
-						</DraggableCore>
-					)}
 				</div>
-				{true && (
-					<div className="fixed bg-black/50 text-white right-0 top-12 p-4">
-						breakpoint: {breakpoint} - {$layout.width}
-						<br />
-						isOpen: {isOpen ? 'true' : 'false'}
-						<br />
-						isMini: {isMini ? 'true' : 'false'}
-						<br />
-						isOverlay: {isOverlay ? 'true' : 'false'}
-						<br />
-						isMiniOverlay: {isMiniOverlay ? 'true' : 'false'}
-						<br />
-						belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
-						<br />
-						isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
-						<br />
-						canResized: {canResized ? 'true' : 'false'}
-						<br />
-						innerEvents: {innerEvents ? 'true' : 'false'}
-						<br />
-						isMouseEvent: {isMouseEvent ? 'true' : 'false'}
-						<br />
-						width: {width}
-						<br />
-						miniWidth: {miniWidth}
-						<br />
-						containerStyle: {JSON.stringify(containerStyle)}
-						<br />
-						style: {JSON.stringify(style)}
-						<br />
-					</div>
-				)}
-			</div>
-		</XSidebarContext.Provider>
+			</XSidebarContext.Provider>
+			{false && (
+				<div className="fixed bg-black/50 text-white right-0 top-12 p-4 z-10">
+					breakpoint: {breakpoint} - {$layout.width}
+					<br />
+					isOpen: {isOpen ? 'true' : 'false'}
+					<br />
+					isMini: {isMini ? 'true' : 'false'}
+					<br />
+					isOverlay: {isOverlay ? 'true' : 'false'}
+					<br />
+					isMiniOverlay: {isMiniOverlay ? 'true' : 'false'}
+					<br />
+					belowBreakpoint: {belowBreakpoint ? 'true' : 'false'}
+					<br />
+					isOpenBreakpoint: {isOpenBreakpoint ? 'true' : 'false'}
+					<br />
+					canResized: {canResized ? 'true' : 'false'}
+					<br />
+					innerEvents: {innerEvents ? 'true' : 'false'}
+					<br />
+					isMouseEvent: {isMouseEvent ? 'true' : 'false'}
+					<br />
+					width: {width}
+					<br />
+					miniWidth: {miniWidth}
+					<br />
+					containerStyle: {JSON.stringify(containerStyle)}
+					<br />
+					style: {JSON.stringify(style)}
+					<br />
+				</div>
+			)}
+		</>
 	);
 });
 

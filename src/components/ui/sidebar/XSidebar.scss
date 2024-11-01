@@ -30,22 +30,24 @@
 	}
 }
 .xSidebar--mini {
-	@apply w-16;
+	@apply w-14;
 }
 
 .xSidebar-container:has(.xSidebar--mini-overlay) {
-	@apply w-16;
+	@apply w-14;
 }
+
 .xSidebar-container:has(.xSidebar--close) {
-	@apply w-0 min-w-0 !important;
+	@apply w-0;
+	@apply min-w-0 !important;
 }
 .xSidebar--close {
 	@apply overflow-hidden w-0 border-0;
 }
 .xSidebar-container:has(.xSidebar--mini) {
-	@apply w-16;
+	@apply w-14;
 }
-.xSidebar-container:has(.xSidebar--overlay) {
+.xSidebar-container:has(.xSidebar--overlay:not(.xSidebar--mini-overlay)) {
 	@apply w-0;
 }
 .xSidebar-container:has(.xSidebar--overlay) {
@@ -68,7 +70,7 @@
 	@apply w-64 relative border-0 max-h-full;
 }
 %sidebar-mini {
-	@apply w-16;
+	@apply w-14;
 }
 %sidebar-close {
 	@apply w-0 border-0;

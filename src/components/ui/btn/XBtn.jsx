@@ -50,29 +50,31 @@ const XBtnRoot = forwardRef(function XBtn(props = {}, ref) {
 	return (
 		<TagProp
 			{...attrs}
-			className={classNames('x-btn', {
-				'x-btn--flat': flat,
-				'x-btn--text': text,
-				'x-btn--tonal': tonal,
-				'x-btn--plain': plain,
-				'x-btn--outline': outline,
-				'x-btn--block': block,
-				'x-btn--square': square,
-				'x-btn--round': round,
-				'x-btn--rounded': rounded,
-				'x-btn--dimmed': dimmed,
-				'x-btn--icon': isIcon,
-				'x-btn--selected': isSelected,
-				[`x-btn--${color}`]: color,
-				[`x-btn--${size}`]: size,
-			})}
+			className={classNames(
+				'x-btn',
+				{
+					'x-btn--flat': flat,
+					'x-btn--text': text,
+					'x-btn--tonal': tonal,
+					'x-btn--plain': plain,
+					'x-btn--outline': outline,
+					'x-btn--block': block,
+					'x-btn--square': square,
+					'x-btn--round': round,
+					'x-btn--rounded': rounded,
+					'x-btn--dimmed': dimmed,
+					'x-btn--icon': isIcon,
+					'x-btn--selected': isSelected,
+					[`x-btn--${color}`]: color,
+					[`x-btn--${size}`]: size,
+				},
+				className,
+			)}
 		>
 			<div className="x-btn-outline"></div>
 			<div className="x-btn-backdor"></div>
 			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
-			{children && (
-				<span className={classNames('x-btn-content', className)}>{children}</span>
-			)}
+			{children && <span className="x-btn-content">{children}</span>}
 			{iconRight && <XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>}
 		</TagProp>
 	);
