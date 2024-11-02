@@ -1,5 +1,5 @@
 .xSidebar {
-	@apply w-64 flex flex-col justify-between max-h-full h-full absolute top-0 bottom-0 
+	@apply min-w-14 w-64 flex flex-col justify-between max-h-full h-full absolute top-0 bottom-0 
         overflow-hidden bg-surface border-solid border-separator z-50;
 }
 .xSidebar-container {
@@ -50,6 +50,9 @@
 	@apply w-0;
 }
 
+.xSidebar-container:has(.xSidebar:not(.is-mounted)) {
+	@apply overflow-hidden;
+}
 .xSidebar-container:has(.is-mounted) {
 	@apply min-w-0 !important;
 }

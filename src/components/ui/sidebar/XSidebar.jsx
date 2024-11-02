@@ -102,25 +102,25 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	// # todo: belowBreakpoint isOverlay
 	const containerStyle = useMemo(
 		() => ({
-			minWidth: isMiniOverlay && !belowBreakpoint ? miniWidth : 0,
-			width:
+			//minWidth: isMiniOverlay && !belowBreakpoint ? miniWidth : 0,
+			/*width:
 				isOpen && isMini
 					? miniWidth
 					: belowBreakpoint
 						? ''
 						: isOpen && (canResized || (!!width && !isMiniOverlay))
 							? width
-							: '',
+							: '',*/
 		}),
 		[width, isOpen, isMini, canResized, miniWidth, isMiniOverlay],
 	);
 
 	const style = useMemo(
 		() => ({
-			width:
+			/*width:
 				isOpen && !isMini && !belowBreakpoint
 					? width
-					: (belowBreakpoint && w) || '',
+					: (belowBreakpoint && w) || '',*/
 		}),
 		[width, isOpen, isMini],
 	);
