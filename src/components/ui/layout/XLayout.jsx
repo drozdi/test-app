@@ -64,7 +64,7 @@ export function XLayout({
 	});
 
 	const { slot, hasSlot, wrapSlot } = useSlots(children);
-	/*const [leftParam, setLeftParam] = useState({
+	const [leftParam, setLeftParam] = useState({
 		open: false,
 		overlay: false,
 		mini: false,
@@ -78,20 +78,21 @@ export function XLayout({
 		const prop = e.target.name;
 		setLeftParam((v) => ({ ...v, [prop]: !v[prop] }));
 		e.stopPropagation();
-	};*/
+	};
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
-			open: ls.open,
-			overlay: overlay,
-			breakpoint: breakpoint,
-			mini: ls.mini,
-			miniOverlay: overlay || belowBreakpoint,
-			miniMouse: !belowBreakpoint,
-			miniToggle: !belowBreakpoint,
+			//open: ls.open,
+			//overlay: overlay,
+			//breakpoint: breakpoint,
+			//mini: ls.mini,
+			//miniOverlay: overlay || belowBreakpoint,
+			//miniMouse: !belowBreakpoint,
+			//miniToggle: !belowBreakpoint,
 			//resizeable: true,
-			onMini: (mini) => setLs({ ...ls, mini }),
-			onResize: (size) => setLs({ ...ls, size }),
+			...leftParam,
+			//onMini: (mini) => setLs({ ...ls, mini }),
+			//onResize: (size) => setLs({ ...ls, size }),
 			//onToggle: (open) => setLs{...ls, open}),
 		});
 	};
@@ -204,99 +205,93 @@ export function XLayout({
 	}
 
 	return (
-		<XLayoutContext.Provider value={{ $layout, $update }}>
-			<>
+		<>
+			<XLayoutContext.Provider value={{ $layout, $update }}>
 				{layout}
-				{false && (
-					<div className="fixed bg-black/50 text-white right-0 bottom-4 p-4 z-50">
-						<label className="block">
-							<input
-								type="checkbox"
-								name="open"
-								checked={leftParam.open}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">open</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="overlay"
-								checked={leftParam.overlay}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								overlay
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="toggle"
-								checked={leftParam.toggle}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								toggle
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="mini"
-								checked={leftParam.mini}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">mini</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="miniOverlay"
-								checked={leftParam.miniOverlay}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								miniOverlay
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="miniMouse"
-								checked={leftParam.miniMouse}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								miniMouse
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="miniToggle"
-								checked={leftParam.miniToggle}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								miniToggle
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="resizeable"
-								checked={leftParam.resizeable}
-								onChange={(e) => onLeftParam(e)}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								resizeable
-							</span>
-						</label>
-					</div>
-				)}
-			</>
-		</XLayoutContext.Provider>
+			</XLayoutContext.Provider>
+			{true && (
+				<div className="fixed bg-black/50 text-white right-0 bottom-4 p-4 z-50">
+					<label className="block">
+						<input
+							type="checkbox"
+							name="open"
+							checked={leftParam.open}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">open</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="overlay"
+							checked={leftParam.overlay}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">overlay</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="toggle"
+							checked={leftParam.toggle}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">toggle</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="mini"
+							checked={leftParam.mini}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">mini</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="miniOverlay"
+							checked={leftParam.miniOverlay}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">
+							miniOverlay
+						</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="miniMouse"
+							checked={leftParam.miniMouse}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">miniMouse</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="miniToggle"
+							checked={leftParam.miniToggle}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">
+							miniToggle
+						</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="resizeable"
+							checked={leftParam.resizeable}
+							onChange={(e) => onLeftParam(e)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">
+							resizeable
+						</span>
+					</label>
+				</div>
+			)}
+		</>
 	);
 }
 

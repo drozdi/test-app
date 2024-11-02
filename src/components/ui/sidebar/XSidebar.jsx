@@ -45,13 +45,12 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 	const ref = useRef();
 	const handleRef = useForkRef(externalRef, ref);
 	const { $layout, $update } = useContext(XLayoutContext);
-
 	const isLayout = useMemo(() => !!$layout, [$layout]);
-	const containerRef = useRef(null);
 
 	const [width, setWidth] = useState(w);
 	const [miniWidth, setMiniWidth] = useState(miniW);
 	const [isOpenBreakpoint, setOpenBreakpoint] = useState(false);
+	const [isMounted, setMounted] = useState(false);
 
 	const [innerMini, setInnerMini] = useState(mini);
 
@@ -208,7 +207,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		}
 		setInnerMini((m) => !m);
 	}, [onToggle]);
-
+	useEffect(() => setMounted(true), []);
 	return (
 		<>
 			<XSidebarContext.Provider value={{ width, isMini, isOpen }}>
@@ -219,12 +218,12 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 						'xSidebar--animate': !canResized,
 					})}
 					style={containerStyle}
-					ref={containerRef}
 					onMouseEnter={onMouseEnter}
 					onMouseLeave={onMouseLeave}
 				>
 					<div
 						className={classNames('xSidebar', {
+							'is-mounted': isMounted,
 							'xLayout-sidebar': isLayout,
 							[`xLayout-sidebar--${type}`]: isLayout && !!type,
 							[`xSidebar--${type}`]: !!type,
@@ -283,7 +282,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 					</div>
 				</div>
 			</XSidebarContext.Provider>
-			{false && (
+			{true && (
 				<div className="fixed bg-black/50 text-white right-0 top-12 p-4 z-10">
 					breakpoint: {breakpoint} - {$layout.width}
 					<br />

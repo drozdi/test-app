@@ -39,7 +39,6 @@
 
 .xSidebar-container:has(.xSidebar--close) {
 	@apply w-0;
-	@apply min-w-0 !important;
 }
 .xSidebar--close {
 	@apply overflow-hidden w-0 border-0;
@@ -50,7 +49,11 @@
 .xSidebar-container:has(.xSidebar--overlay:not(.xSidebar--mini-overlay)) {
 	@apply w-0;
 }
-.xSidebar-container:has(.xSidebar--overlay) {
+
+.xSidebar-container:has(.is-mounted) {
+	@apply min-w-0 !important;
+}
+.xSidebar.is-mounted {
 	@apply min-w-0 !important;
 }
 
