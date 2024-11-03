@@ -12,7 +12,7 @@ import { XSidebar } from './components/ui/sidebar';
 function App() {
 	return (
 		<AppProvider config={{ smKey: 'app-1' }}>
-			<XLayout container={true} overlay={true} view="lhr lpr lff">
+			<XLayout container={true} overlay={true} toggle={true} view="lhr lpr lff">
 				{{
 					left: (props) => (
 						<XSidebar>
@@ -54,7 +54,7 @@ function App() {
 					),
 					header: 'header',
 					footer: 'footer',
-					//right: "right",
+					//right: 'right',
 					default: (props) => (
 						<Routes>
 							<Route path="/" element={<div>Home</div>} />

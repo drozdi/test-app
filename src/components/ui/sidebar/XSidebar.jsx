@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
 	forwardRef,
+	memo,
 	useCallback,
 	useContext,
 	useEffect,
@@ -28,13 +29,14 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		miniOverlay,
 		miniToggle,
 		miniMouse,
-		miniW,
+
 		open,
 		overlay,
 		toggle,
 
 		resizeable,
 		w,
+		miniW,
 
 		onResize,
 		onMini,
@@ -77,52 +79,40 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 		[innerEvents, innerMini, mini, belowBreakpoint],
 	);
 
-	/*const isOverlay = useMemo(
-		() =>
-			!belowBreakpoint && open && ((mini && overlay) || miniOverlay)
-				? false
-				: overlay || miniOverlay,
-		[mini, overlay, miniOverlay, open],
-	);*/
-
 	const isOverlay = useMemo(
-		() => overlay || (belowBreakpoint && miniOverlay) || false,
-		[overlay, belowBreakpoint, miniOverlay, open],
+		() => overlay || (belowBreakpoint && miniOverlay),
+		[overlay, belowBreakpoint, miniOverlay],
 	);
 
 	const isMiniOverlay = useMemo(
-		() => (miniOverlay || (innerEvents && overlay)) && !belowBreakpoint,
-		[miniOverlay, innerEvents, overlay, belowBreakpoint],
+		() => (miniOverlay || ((innerEvents || mini) && overlay)) && !belowBreakpoint,
+		[miniOverlay, innerEvents, overlay, mini, belowBreakpoint],
 	);
 
 	const canResized = useMemo(
 		() => resizeable && !innerEvents && !isMini && !belowBreakpoint,
 		[resizeable, innerEvents, isMini, belowBreakpoint],
 	);
-	// # todo: belowBreakpoint isOverlay
+
 	const containerStyle = useMemo(
 		() => ({
-			//minWidth: isMiniOverlay && !belowBreakpoint ? miniWidth : 0,
-			/*width:
-				isOpen && isMini
-					? miniWidth
-					: belowBreakpoint
-						? ''
-						: isOpen && (canResized || (!!width && !isMiniOverlay))
-							? width
-							: '',*/
+			width:
+				!isOpen || isOverlay
+					? ''
+					: isMiniOverlay || isMini
+						? miniWidth
+						: isOverlay
+							? 0
+							: width,
 		}),
-		[width, isOpen, isMini, canResized, miniWidth, isMiniOverlay],
+		[width, isOpen, isMini, canResized, isOverlay, miniWidth, isMiniOverlay],
 	);
 
 	const style = useMemo(
 		() => ({
-			/*width:
-				isOpen && !isMini && !belowBreakpoint
-					? width
-					: (belowBreakpoint && w) || '',*/
+			width: isOpen ? (isMini ? miniWidth : belowBreakpoint ? w || '' : width) : 0,
 		}),
-		[width, isOpen, isMini],
+		[width, isOpen, isMini, belowBreakpoint],
 	);
 
 	useEffect(() => {
@@ -156,17 +146,17 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 
 	const onHandleDrag = useCallback(
 		(e, ui) => {
-			setWidth((w) => w + (reverse ? -ui.deltaX : ui.deltaX));
+			setWidth((w) => Math.max(miniWidth, w + (reverse ? -ui.deltaX : ui.deltaX)));
 		},
-		[reverse],
+		[reverse, miniWidth],
 	);
 	const onHandleDragEnd = useCallback(
 		(e, ui) => {
-			const width = ref.current?.getBoundingClientRect().width;
+			const width = Math.max(ref.current?.getBoundingClientRect().width, miniWidth);
 			setWidth(width);
 			onResize(width);
 		},
-		[ref.current],
+		[ref.current, miniWidth],
 	);
 	const onMouseEnter = useCallback(
 		(e) => {
@@ -241,7 +231,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 							{children}
 						</div>
 						{miniToggle && !belowBreakpoint && (
-							<div className="xSidebar-toggle">
+							<div className="xSidebar-toggle-mini">
 								<XBtn
 									color="dimmed"
 									block={true}
@@ -260,13 +250,11 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 						{toggle && belowBreakpoint && (
 							<div className="xSidebar-toggle">
 								<XBtn
-									color="dimmed"
-									block={true}
-									square={true}
+									color="accent"
 									icon={
 										isOpen
-											? `mdi-arrow-${type}-bold-box-outline`
-											: `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
+											? `mdi-menu-${type}`
+											: `mdi-menu-${type === 'left' ? 'right' : 'left'}`
 									}
 									onClick={onHandleToggle}
 									className="text-2xl py-0"
@@ -282,7 +270,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 					</div>
 				</div>
 			</XSidebarContext.Provider>
-			{true && (
+			{false && (
 				<div className="fixed bg-black/50 text-white right-0 top-12 p-4 z-10">
 					breakpoint: {breakpoint} - {$layout.width}
 					<br />
@@ -361,4 +349,4 @@ XSidebarRoot.defaultProps = {
 	onToggle: () => {},
 };
 
-export const XSidebar = XSidebarRoot;
+export const XSidebar = memo(XSidebarRoot);

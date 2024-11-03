@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useResizeObserver } from '../../../hooks/useResizeObserver';
 import { useSlots } from '../../../hooks/useSlots';
-import { XBtn } from '../btn/XBtn';
 import './XLayout.scss';
 
 import classNames from 'classnames';
@@ -18,6 +17,7 @@ export function XLayout({
 	view = 'hhh lpr fff',
 	breakpoint = 600,
 	overlay = false,
+	toggle = false,
 }) {
 	const [$layout, set$layout] = useState({
 		isContainer: container,
@@ -64,7 +64,7 @@ export function XLayout({
 	});
 
 	const { slot, hasSlot, wrapSlot } = useSlots(children);
-	const [leftParam, setLeftParam] = useState({
+	/*const [leftParam, setLeftParam] = useState({
 		open: false,
 		overlay: false,
 		mini: false,
@@ -78,38 +78,38 @@ export function XLayout({
 		const prop = e.target.name;
 		setLeftParam((v) => ({ ...v, [prop]: !v[prop] }));
 		e.stopPropagation();
-	};
+	};*/
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
-			//open: ls.open,
-			//overlay: overlay,
-			//breakpoint: breakpoint,
-			//mini: ls.mini,
-			//miniOverlay: overlay || belowBreakpoint,
-			//miniMouse: !belowBreakpoint,
-			//miniToggle: !belowBreakpoint,
+			open: ls.open,
+			overlay: overlay,
+			breakpoint: breakpoint,
+			toggle: belowBreakpoint,
+			mini: ls.mini,
+			miniOverlay: overlay || belowBreakpoint,
+			miniMouse: overlay && toggle,
+			miniToggle: toggle && !belowBreakpoint,
 			//resizeable: true,
-			...leftParam,
-			//onMini: (mini) => setLs({ ...ls, mini }),
-			//onResize: (size) => setLs({ ...ls, size }),
+			onMini: (mini) => setLs({ ...ls, mini }),
+			onResize: (size) => setLs({ ...ls, size }),
 			//onToggle: (open) => setLs{...ls, open}),
 		});
 	};
 	const right = () => {
 		return wrapSlot(slot('right', null), XSidebar, {
 			type: 'right',
-			open: !belowBreakpoint || rs.open,
-			//overlay: overlay && belowBreakpoint,
+			open: rs.open,
+			overlay: overlay,
 			breakpoint: breakpoint,
-			//mini: !belowBreakpoint && rs.mini,
-			//miniOverlay: overlay || belowBreakpoint,
-			//miniMouse: true,
-			//miniToggle: !belowBreakpoint,
-			w: 100,
-			resizeable: true,
-
+			toggle: belowBreakpoint,
+			mini: rs.mini,
+			miniOverlay: overlay || belowBreakpoint,
+			miniMouse: overlay && toggle,
+			miniToggle: toggle && !belowBreakpoint,
+			//resizeable: true,
 			onMini: (mini) => setRs({ ...rs, mini }),
+			onResize: (size) => setRs({ ...rs, size }),
 			//onToggle: (open) => setRs({...rs, open}),
 		});
 	};
@@ -120,7 +120,7 @@ export function XLayout({
 		return (
 			<XHeader>
 				{{
-					append: (props) => {
+					/*prepend: (props) => {
 						return (
 							hasSlot('left') && (
 								<XBtn
@@ -138,7 +138,7 @@ export function XLayout({
 								/>
 							)
 						);
-					},
+					},*/
 					/*append: (props) => {
 						return (
 							hasSlot('right') &&
@@ -209,7 +209,7 @@ export function XLayout({
 			<XLayoutContext.Provider value={{ $layout, $update }}>
 				{layout}
 			</XLayoutContext.Provider>
-			{true && (
+			{false && (
 				<div className="fixed bg-black/50 text-white right-0 bottom-4 p-4 z-50">
 					<label className="block">
 						<input
