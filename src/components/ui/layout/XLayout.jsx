@@ -5,6 +5,7 @@ import './XLayout.scss';
 
 import classNames from 'classnames';
 import { useApp } from '../../app/hooks/useApp';
+import { XBtn } from '../btn/XBtn';
 import { XFooter } from '../footer/XFooter';
 import { XHeader } from '../header/XHeader';
 import { XSidebar } from '../sidebar/XSidebar';
@@ -64,21 +65,6 @@ export function XLayout({
 	});
 
 	const { slot, hasSlot, wrapSlot } = useSlots(children);
-	/*const [leftParam, setLeftParam] = useState({
-		open: false,
-		overlay: false,
-		mini: false,
-		miniOverlay: false,
-		miniMouse: false,
-		miniToggle: false,
-		resizeable: false,
-		toggle: false,
-	});
-	const onLeftParam = (e) => {
-		const prop = e.target.name;
-		setLeftParam((v) => ({ ...v, [prop]: !v[prop] }));
-		e.stopPropagation();
-	};*/
 	const left = () => {
 		return wrapSlot(slot('left', null), XSidebar, {
 			type: 'left',
@@ -119,45 +105,37 @@ export function XLayout({
 	const header = () => {
 		return (
 			<XHeader>
-				{{
-					/*prepend: (props) => {
-						return (
-							hasSlot('left') && (
-								<XBtn
-									color="primary"
-									className="float-start self-center"
-									icon="mdi-dock-left"
-									size="sm"
-									square={true}
-									onClick={(e) => {
-										e.stopPropagation();
-										e.preventDefault();
-
-										setLs((ls) => ({ ...ls, open: !ls.open }));
-									}}
-								/>
-							)
-						);
-					},*/
-					/*append: (props) => {
-						return (
-							hasSlot('right') &&
-							belowBreakpoint && (
-								<XBtn
-									color="primary"
-									icon="mdi-dock-right"
-									className="float-end self-center"
-									size="sm"
-									square={true}
-									onClick={() => setRs({ ...rs, open: !rs.open })}
-								/>
-							)
-						);
-					},*/
-					default: (props) => {
-						return slot('header', null);
-					},
-				}}
+				{belowBreakpoint && hasSlot('left') && (
+					<XBtn
+						slot="prepend"
+						color="primary"
+						className="float-start self-center"
+						icon="mdi-dock-left"
+						size="sm"
+						square={true}
+						onClick={(e) => {
+							e.stopPropagation();
+							e.preventDefault();
+							setLs((ls) => ({ ...ls, open: !ls.open }));
+						}}
+					/>
+				)}
+				{belowBreakpoint && hasSlot('right') && (
+					<XBtn
+						slot="append"
+						color="primary"
+						className="float-end self-center"
+						icon="mdi-dock-right"
+						size="sm"
+						square={true}
+						onClick={(e) => {
+							e.stopPropagation();
+							e.preventDefault();
+							setRs((rs) => ({ ...rs, open: !rs.open }));
+						}}
+					/>
+				)}
+				{slot('header', null)}
 			</XHeader>
 		);
 	};
@@ -209,97 +187,16 @@ export function XLayout({
 			<XLayoutContext.Provider value={{ $layout, $update }}>
 				{layout}
 			</XLayoutContext.Provider>
-			{false && (
-				<div className="fixed bg-black/50 text-white right-0 bottom-4 p-4 z-50">
-					<label className="block">
-						<input
-							type="checkbox"
-							name="open"
-							checked={leftParam.open}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">open</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="overlay"
-							checked={leftParam.overlay}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">overlay</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="toggle"
-							checked={leftParam.toggle}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">toggle</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="mini"
-							checked={leftParam.mini}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">mini</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="miniOverlay"
-							checked={leftParam.miniOverlay}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">
-							miniOverlay
-						</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="miniMouse"
-							checked={leftParam.miniMouse}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">miniMouse</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="miniToggle"
-							checked={leftParam.miniToggle}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">
-							miniToggle
-						</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="resizeable"
-							checked={leftParam.resizeable}
-							onChange={(e) => onLeftParam(e)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">
-							resizeable
-						</span>
-					</label>
-				</div>
-			)}
 		</>
 	);
 }
 
-export function XMain({ children }) {
+export function XMain({ children, tag = 'section' }) {
+	const TagProp = useMemo(() => tag, [tag]);
 	//const { $layout, $update } = useContext(XLayoutContext)
 	return (
-		<main className="xLayout-main">
+		<TagProp className="xLayout-main">
 			<div className="xLayout-content">{children}</div>
-		</main>
+		</TagProp>
 	);
 }

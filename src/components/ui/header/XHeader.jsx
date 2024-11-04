@@ -1,13 +1,13 @@
 import classNames from 'classnames';
-import React, { useContext, useMemo } from 'react';
+import React, { memo, useContext, useMemo } from 'react';
 import { useSlots } from '../../../hooks/useSlots';
 import { XLayoutContext } from '../layout/XLayoutContext';
 import './XHeader.scss';
 
-export function XHeader({ children, className }) {
+export const XHeader = memo(function XHeader({ children, className }) {
 	const { $layout } = useContext(XLayoutContext);
 	const isLayout = useMemo(() => !!$layout, [$layout]);
-	const { slot } = useSlots(children);
+	const { slot, slots } = useSlots(children);
 	return (
 		<header
 			className={classNames(className, 'xHeader', {
@@ -19,4 +19,4 @@ export function XHeader({ children, className }) {
 			<div className="xHeader-append">{slot('append', null)}</div>
 		</header>
 	);
-}
+});

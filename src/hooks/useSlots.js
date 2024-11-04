@@ -6,6 +6,8 @@ import {
 	useMemo,
 } from 'react';
 
+import { isString } from '../utils/is';
+
 export function useSlots(children) {
 	const slots = useMemo(() => {
 		let tmpChildren = children;
@@ -29,6 +31,8 @@ export function useSlots(children) {
 		for (const child of tmpChildren) {
 			if (isValidElement(child)) {
 				addCollect(child?.props?.slot || 'default', child);
+			} else if (isString(child)) {
+				addCollect('default', child);
 			} else {
 				for (const name in child) {
 					addCollect(name, child[name]);
@@ -79,5 +83,5 @@ export function useSlots(children) {
 		return h(componentName, props, slot);
 	};
 
-	return { slot, hasSlot, wrapSlot };
+	return { slot, hasSlot, wrapSlot, slots };
 }
