@@ -140,6 +140,10 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 	}
 }
 
+.x-btn--link {
+	@apply normal-case text-link hover:text-white hover:underline;
+}
+
 .x-btn--dimmed {
 	@apply bg-dimmed !important;
 }

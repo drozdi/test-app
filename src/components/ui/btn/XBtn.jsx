@@ -24,6 +24,7 @@ const XBtnRoot = forwardRef(function XBtn(props = {}, ref) {
 		rounded = false,
 		disabled = false,
 		active = false,
+		link = false,
 
 		icon,
 		iconRight,
@@ -53,7 +54,7 @@ const XBtnRoot = forwardRef(function XBtn(props = {}, ref) {
 			className={classNames(
 				'x-btn',
 				{
-					'x-btn--flat': flat,
+					'x-btn--flat': flat || link,
 					'x-btn--text': text,
 					'x-btn--tonal': tonal,
 					'x-btn--plain': plain,
@@ -64,6 +65,8 @@ const XBtnRoot = forwardRef(function XBtn(props = {}, ref) {
 					'x-btn--rounded': rounded,
 					'x-btn--dimmed': dimmed,
 					'x-btn--icon': isIcon,
+					'x-btn--link': link,
+
 					'x-btn--selected': isSelected,
 					[`x-btn--${color}`]: color,
 					[`x-btn--${size}`]: size,

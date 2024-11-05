@@ -17,6 +17,7 @@ export function BtnExample() {
 		round: false,
 		rounded: false,
 		disabled: false,
+		link: false,
 		active: false,
 		icon: false,
 		iconRight: false,
@@ -161,6 +162,8 @@ export function BtnExample() {
 						))}
 				</tbody>
 			</table>
+			<hr className="my-2" />
+			<XBtn link={true}>Link</XBtn>
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
@@ -334,6 +337,15 @@ export function BtnExample() {
 							onChange={({ target }) => onChangeCheckbox(target.name)}
 						/>
 						<span className="ml-3 font-medium text-slate-500">Disabled</span>
+					</label>
+					<label className="block">
+						<input
+							type="checkbox"
+							name="link"
+							checked={btnProps.link}
+							onChange={({ target }) => onChangeCheckbox(target.name)}
+						/>
+						<span className="ml-3 font-medium text-slate-500">Link</span>
 					</label>
 					<label className="block">
 						<input

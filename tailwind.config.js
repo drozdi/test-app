@@ -40,6 +40,7 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				link: '#00aeff',
 				primary: '#1976D2',
 				secondary: '#5cbbf6',
 				accent: '#9C27B0',

@@ -22,6 +22,7 @@ export function XBtnGroup(props = {}) {
 		rounded = false,
 		round = false,
 		disabled = false,
+		onChange = () => {},
 	} = props;
 
 	const [current, setCurrent] = useState(value ?? (multiple ? [] : undefined));
@@ -51,7 +52,7 @@ export function XBtnGroup(props = {}) {
 			setCurrent(multiple ? [] : undefined);
 		}
 	}, [multiple]);
-	useEffect(() => console.log(current), [current]);
+	useEffect(() => onChange(current), [current]);
 
 	const context = {
 		selected,
