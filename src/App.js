@@ -5,6 +5,7 @@ import {
 	BtnGroupExample,
 	InputExample,
 	ListExample,
+	MessageExample,
 } from './components/example';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 import { XLayout } from './components/ui/layout';
@@ -47,6 +48,14 @@ function App() {
 									<XItemLabel lines={true}>XList</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/message" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-message-alert-outline</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XMessage</XItemLabel>
+								</XItemSection>
+							</XItem>
 						</XList>
 					),
 					header: 'header',
@@ -59,6 +68,7 @@ function App() {
 							<Route path="/btn-group" element={<BtnGroupExample />} />
 							<Route path="/input" element={<InputExample />} />
 							<Route path="/list" element={<ListExample />} />
+							<Route path="/message" element={<MessageExample />} />
 						</Routes>
 					),
 				}}
