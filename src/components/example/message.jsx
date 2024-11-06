@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { XMessage } from '../ui/message';
+import { XMessages } from '../ui/messages';
 export function MessageExample() {
-	const [mess, setMess] = useState([
+	const mess = [
 		{
 			children: 'Test 1',
 			id: 1,
@@ -9,7 +10,6 @@ export function MessageExample() {
 			outline: true,
 			underline: 'left',
 			icon: 'mdi-close',
-			onClose: onRemove,
 		},
 		{
 			children: 'Test 2',
@@ -17,7 +17,6 @@ export function MessageExample() {
 			color: 'info',
 			outline: true,
 			icon: 'mdi-close',
-			onClose: onRemove,
 		},
 		{
 			children: 'Test 3',
@@ -25,20 +24,59 @@ export function MessageExample() {
 			color: 'info',
 			outline: true,
 			icon: 'mdi-close',
-			onClose: onRemove,
 		},
-	]);
-	function onRemove({ id }) {
-		const n = mess.filter((item) => item.id !== id);
-		setMess(n);
-	}
+	];
+
+	const mesgs = useRef(null);
+	useEffect(() => {
+		if (mesgs.current) {
+			console.log(mesgs);
+			mesgs.current.show([
+				{
+					children: 'Test 1',
+					life: 3000,
+					outline: false,
+					icon: 'mdi-home',
+					sticky: true,
+					closable: true,
+				},
+				{
+					children: 'Test 2',
+					life: 6000,
+					closable: true,
+					color: 'warning',
+					icon: 'mdi-home',
+				},
+				{
+					children: 'Test 3',
+					color: 'negative',
+					underlined: 'top',
+					outline: false,
+					icon: 'mdi-home',
+				},
+			]);
+		}
+	}, [mesgs]);
+
 	return (
-		<div className="max-w-4xl m-auto py-4 relative">
-			<div className="flex flex-col gap-4">
-				{mess.map((item) => (
-					<XMessage key={item.id} {...item} />
-				))}
+		<>
+			<div className="max-w-4xl m-auto p-4 relative">
+				<XMessages
+					color="info"
+					outline={true}
+					sticky={true}
+					underlined="left"
+					life={9000}
+					ref={mesgs}
+				/>
+				<hr className="my-4"></hr>
+
+				<div className="flex flex-col gap-4">
+					{mess.map((item) => (
+						<XMessage key={item.id} {...item} />
+					))}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
