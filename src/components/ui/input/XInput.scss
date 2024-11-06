@@ -62,8 +62,7 @@
 }
 
 .x-input-backdor {
-	@apply absolute hidden top-0 left-0 w-full h-full rounded-inherit text-black contain-layout box-border;
-	z-index: -1;
+	@apply absolute hidden top-0 left-0 w-full h-full rounded-inherit text-black contain-layout box-border -z-10;
 	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 .x-input-underlined {
@@ -153,8 +152,7 @@
 	@apply block;
 }
 
-$colors: primary, secondary, accent, positive, negative, info, warning, surface, body,
-	dark;
+$colors: primary, secondary, accent, positive, negative, info, warning, surface, dark;
 
 @each $color in $colors {
 	.x-input--#{$color}:has(input:focus) {
