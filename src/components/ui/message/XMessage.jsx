@@ -5,6 +5,7 @@ import { isString } from '../../../utils/is';
 import { XBtn } from '../btn';
 import { XIcon } from '../icon';
 import { useXMessagesContext } from '../messages/XMessagesContext';
+import { useXToastContext } from '../toast/XToastContext';
 import './style.scss';
 
 export const XMessage = memo(
@@ -45,7 +46,7 @@ export const XMessage = memo(
 				}),
 				[style],
 			);
-
+			const toast = useXToastContext();
 			const context = useXMessagesContext();
 			const isClosable = useMemo(() => closable && context, [closable, context]);
 			const handleClose = useCallback((event) => {
@@ -63,7 +64,10 @@ export const XMessage = memo(
 				life,
 				!sticky,
 			);
-
+			const under = useMemo(
+				() => toast?.underlined || underlined,
+				[toast, underlined],
+			);
 			return (
 				<div
 					{...attrs}
@@ -71,7 +75,7 @@ export const XMessage = memo(
 						[`x-message--${color}`]: color,
 						'x-message--square': square,
 						'x-message--outline': outline,
-						[`x-message--underlined-${underlined}`]: underlined,
+						[`x-message--underlined-${under}`]: under,
 					})}
 					ref={ref}
 				>
