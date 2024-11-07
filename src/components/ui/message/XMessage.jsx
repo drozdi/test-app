@@ -36,16 +36,6 @@ export const XMessage = memo(
 				}
 			}, [icon]);
 
-			const attrs = useMemo(
-				() => ({
-					id,
-					style,
-					role: 'alert',
-					'aria-live': 'polite',
-					'aria-atomic': 'true',
-				}),
-				[style],
-			);
 			const toast = useXToastContext();
 			const context = useXMessagesContext();
 			const isClosable = useMemo(() => closable && context, [closable, context]);
@@ -67,6 +57,16 @@ export const XMessage = memo(
 			const under = useMemo(
 				() => toast?.underlined || underlined,
 				[toast, underlined],
+			);
+			const attrs = useMemo(
+				() => ({
+					id,
+					style,
+					role: 'alert',
+					'aria-live': toast ? 'assertive' : 'polite',
+					'aria-atomic': 'true',
+				}),
+				[style],
 			);
 			return (
 				<div

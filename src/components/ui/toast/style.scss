@@ -1,12 +1,9 @@
 .x-toast {
 	@apply fixed right-4 top-4 max-w-64 h-auto z-50;
 }
+
 .x-toast .x-message {
-	@apply bg-white/50;
-}
-.x-toast .x-message__backdor {
-	@apply blur-[2px];
-	background-color: color-mix(in srgb, currentColor 20%, transparent);
+	@apply backdrop-blur shadow-lg shadow-black/10;
 }
 
 .x-toast--left-top {

@@ -12,7 +12,7 @@
 
 .x-message__backdor {
 	@apply hidden -z-20;
-	background-color: color-mix(in srgb, currentColor 30%, transparent);
+	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
 .x-message__content {
@@ -36,7 +36,7 @@
 .x-message--underlined-top .x-message__outline {
 	@apply border-t-4;
 }
-.x-message--underlined-bootom .x-message__outline {
+.x-message--underlined-bottom .x-message__outline {
 	@apply border-b-4;
 }
 
