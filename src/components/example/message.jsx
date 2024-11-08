@@ -4,8 +4,7 @@ import { XBtnGroup } from '../ui/btnGroup';
 import { XMessage } from '../ui/message';
 import { XMessages } from '../ui/messages';
 import { XToast } from '../ui/toast';
-import { Form } from './utils/form';
-import { useProps } from './utils/useProps';
+import { Form, useProps } from './utils';
 export function MessageExample() {
 	const mesgs = useRef(null);
 	const mess = [
@@ -113,6 +112,50 @@ export function MessageExample() {
 								{messageCode}
 							</pre>
 						</div>
+						<div>
+							{Form(
+								{
+									color: {
+										type: 'select',
+										values: [
+											'primary',
+											'secondary',
+											'accent',
+											'positive',
+											'negative',
+											'info',
+											'warning',
+										],
+									},
+									underlined: {
+										type: 'select',
+										values: ['top', 'bottom', 'left', 'right'],
+									},
+									icon: { type: 'checkbox', val: 'mdi-map-marker' },
+									outline: { type: 'checkbox' },
+									square: { type: 'checkbox' },
+								},
+								messageExample,
+							)}
+						</div>
+					</div>
+				</div>
+				<hr className="my-4" />
+				<h3>XMessages</h3>
+				<XMessages {...messagesProps} ref={mesgs} />
+				<br />
+				<XBtnGroup>
+					<XBtn onClick={onShowMessages}>Show</XBtn>
+					<XBtn onClick={onReplaceMessages}>Replace</XBtn>
+					<XBtn onClick={onClearMessages}>Clear</XBtn>
+				</XBtnGroup>
+				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
+					<div>
+						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+							{messagesCode}
+						</pre>
+					</div>
+					<div>
 						{Form(
 							{
 								color: {
@@ -131,57 +174,17 @@ export function MessageExample() {
 									type: 'select',
 									values: ['top', 'bottom', 'left', 'right'],
 								},
-								icon: { type: 'checkbox', val: 'mdi-map-marker' },
 								outline: { type: 'checkbox' },
 								square: { type: 'checkbox' },
+								row: { type: 'checkbox' },
+								sticky: { type: 'checkbox' },
+								closable: { type: 'checkbox' },
+								sticky: { type: 'checkbox' },
+								life: { type: 'number' },
 							},
-							messageExample,
+							messagesExample,
 						)}
 					</div>
-				</div>
-				<hr className="my-4" />
-				<h3>XMessages</h3>
-				<XMessages {...messagesProps} ref={mesgs} />
-				<br />
-				<XBtnGroup>
-					<XBtn onClick={onShowMessages}>Show</XBtn>
-					<XBtn onClick={onReplaceMessages}>Replace</XBtn>
-					<XBtn onClick={onClearMessages}>Clear</XBtn>
-				</XBtnGroup>
-				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
-					<div>
-						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-							{messagesCode}
-						</pre>
-					</div>
-					{Form(
-						{
-							color: {
-								type: 'select',
-								values: [
-									'primary',
-									'secondary',
-									'accent',
-									'positive',
-									'negative',
-									'info',
-									'warning',
-								],
-							},
-							underlined: {
-								type: 'select',
-								values: ['top', 'bottom', 'left', 'right'],
-							},
-							outline: { type: 'checkbox' },
-							square: { type: 'checkbox' },
-							row: { type: 'checkbox' },
-							sticky: { type: 'checkbox' },
-							closable: { type: 'checkbox' },
-							sticky: { type: 'checkbox' },
-							life: { type: 'number' },
-						},
-						messagesExample,
-					)}
 				</div>
 				<hr className="my-4" />
 				<h3>XToast</h3>
@@ -197,42 +200,44 @@ export function MessageExample() {
 							{toastCode}
 						</pre>
 					</div>
-					{Form(
-						{
-							color: {
-								type: 'select',
-								values: [
-									'primary',
-									'secondary',
-									'accent',
-									'positive',
-									'negative',
-									'info',
-									'warning',
-								],
+					<div>
+						{Form(
+							{
+								color: {
+									type: 'select',
+									values: [
+										'primary',
+										'secondary',
+										'accent',
+										'positive',
+										'negative',
+										'info',
+										'warning',
+									],
+								},
+								position: {
+									type: 'select',
+									values: [
+										'left-top',
+										'left-center',
+										'left-bottom',
+										'center-top',
+										'center-center',
+										'center-bottom',
+										'right-top',
+										'right-center',
+										'right-bottom',
+									],
+								},
+								life: { type: 'number' },
+								underlined: { type: 'checkbox' },
+								closable: { type: 'checkbox' },
+								outline: { type: 'checkbox' },
+								square: { type: 'checkbox' },
 							},
-							position: {
-								type: 'select',
-								values: [
-									'left-top',
-									'left-center',
-									'left-bottom',
-									'center-top',
-									'center-center',
-									'center-bottom',
-									'right-top',
-									'right-center',
-									'right-bottom',
-								],
-							},
-							life: { type: 'number' },
-							underlined: { type: 'checkbox' },
-							closable: { type: 'checkbox' },
-							outline: { type: 'checkbox' },
-							square: { type: 'checkbox' },
-						},
-						toastExample,
-					)}
+							toastExample,
+						)}
+					</div>
 				</div>
 			</div>
 		</>

@@ -71,47 +71,13 @@ function input(props) {
 	);
 }
 
-const p = {
-	color: {
-		type: 'select',
-		values: [
-			'primary',
-			'secondary',
-			'accent',
-			'positive',
-			'negative',
-			'info',
-			'warning',
-		],
-		onChange: () => {},
-	},
-	position: {
-		type: 'select',
-		values: [
-			'left-top',
-			'left-center',
-			'left-bottom',
-			'center-top',
-			'center-center',
-			'center-bottom',
-			'right-top',
-			'right-center',
-			'right-bottom',
-		],
-		onChange: () => {},
-	},
-	life: { type: 'number' },
-	underlined: { type: 'checkbox' },
-	closable: { type: 'checkbox' },
-	outline: { type: 'checkbox' },
-	square: { type: 'checkbox' },
-};
-
 export function Form(conf = {}, { props, onText, onCheckbox, onSelect }) {
 	return (
 		<div>
 			{Object.entries(conf).map(([name, p]) => {
-				if (p.type === 'select') {
+				if (p.type === 'header') {
+					return <h3>{p.name}</h3>;
+				} else if (p.type === 'select') {
 					return select({ ...p, name, value: props[name], onChange: onSelect });
 				} else if (p.type === 'checkbox') {
 					if (p.val) {

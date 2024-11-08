@@ -30,6 +30,6 @@ export function useProps(initial = {}, tag = '', body = '') {
 		}
 
 		return str;
-	}, [props]);
+	}, [props, tag, body]);
 	return { props, onSelect, onText, onCheckbox, code };
 }

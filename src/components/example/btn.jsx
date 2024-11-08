@@ -1,27 +1,9 @@
 import { useMemo, useState } from 'react';
-import { isBoolean } from '../../utils/is';
 import { XBtn } from '../ui';
+import { Form, useProps } from './utils';
 
 export function BtnExample() {
 	const [label, setLabel] = useState('Example');
-	const [btnProps, setBtnProps] = useState({
-		color: '',
-		dimmed: false,
-		flat: false,
-		outline: false,
-		tonal: false,
-		text: false,
-		plain: false,
-		block: false,
-		square: false,
-		round: false,
-		rounded: false,
-		disabled: false,
-		link: false,
-		active: false,
-		icon: false,
-		iconRight: false,
-	});
 	const [disables, setDisables] = useState({
 		default: false,
 		primary: false,
@@ -32,29 +14,31 @@ export function BtnExample() {
 		info: false,
 		warning: false,
 	});
-	const onChangeSelect = (prop, value) => {
-		setBtnProps((v) => ({ ...v, [prop]: value }));
-	};
-	const onChangeText = (prop, value) => {
-		setBtnProps((v) => ({ ...v, [prop]: value }));
-	};
-	const onChangeCheckbox = (prop) => {
-		setBtnProps((v) => ({ ...v, [prop]: !v[prop] }));
-	};
-	const exampleCode = useMemo(() => {
-		let str = '<XBtn';
-		for (let prop in btnProps) {
-			if (btnProps[prop]) {
-				if (isBoolean(btnProps[prop])) {
-					str += `\n ${prop}={${btnProps[prop]}}`;
-				} else {
-					str += `\n ${prop}="${btnProps[prop]}"`;
-				}
-			}
-		}
-		str += '>' + label + '</XBtn>';
-		return str;
-	}, [label, btnProps]);
+
+	const btnExample = useProps(
+		{
+			color: '',
+			dimmed: false,
+			flat: false,
+			outline: false,
+			tonal: false,
+			text: false,
+			plain: false,
+			block: false,
+			square: false,
+			round: false,
+			rounded: false,
+			disabled: false,
+			link: false,
+			active: false,
+			icon: false,
+			iconRight: false,
+		},
+		'XBtn',
+		label,
+	);
+	const btnProps = useMemo(() => btnExample.props, [btnExample.props]);
+	const btnCode = useMemo(() => btnExample.code, [btnExample.code]);
 
 	return (
 		<div className="max-w-4xl m-auto py-4">
@@ -169,7 +153,7 @@ export function BtnExample() {
 				<div>
 					<XBtn {...btnProps}>{label}</XBtn>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-						{exampleCode}
+						{btnCode}
 					</pre>
 				</div>
 				<div>
@@ -182,180 +166,38 @@ export function BtnExample() {
 							onChange={({ target }) => setLabel(target.value)}
 						/>
 					</label>
-					<label className="block">
-						<span className="ml-3 font-medium text-slate-500">Color</span>
-						<select
-							className="block bg-slate-700 border border-blue-900 p-2"
-							name="color"
-							value={btnProps.color}
-							onChange={({ target }) =>
-								onChangeSelect(target.name, target.value)
-							}
-						>
-							<option value="">default</option>
-							{[
-								'primary',
-								'secondary',
-								'accent',
-								'positive',
-								'negative',
-								'info',
-								'warning',
-							].map((color, index) => (
-								<option key={index} value={color}>
-									{color}
-								</option>
-							))}
-						</select>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="icon"
-							value="mdi-map-marker"
-							checked={btnProps.icon}
-							onChange={({ target }) =>
-								onChangeText(
-									target.name,
-									!btnProps.icon ? target.value : false,
-								)
-							}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Icon</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="iconRight"
-							value="mdi-close"
-							checked={btnProps.iconRight}
-							onChange={({ target }) =>
-								onChangeText(
-									target.name,
-									!btnProps.iconRight ? target.value : false,
-								)
-							}
-						/>
-						<span className="ml-3 font-medium text-slate-500">IconRight</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="flat"
-							checked={btnProps.flat}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Flat</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="dimmed"
-							checked={btnProps.dimmed}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Dimmed</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="outline"
-							checked={btnProps.outline}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Outline</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="tonal"
-							checked={btnProps.tonal}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Tonal</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="plain"
-							checked={btnProps.plain}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Plain</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="text"
-							checked={btnProps.text}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Text</span>
-					</label>
-
-					<label className="block">
-						<input
-							type="checkbox"
-							name="block"
-							checked={btnProps.block}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Block</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="square"
-							checked={btnProps.square}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Square</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="rounded"
-							checked={btnProps.rounded}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Rounded</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="round"
-							checked={btnProps.round}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Round</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="disabled"
-							checked={btnProps.disabled}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Disabled</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="link"
-							checked={btnProps.link}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Link</span>
-					</label>
-					<label className="block">
-						<input
-							type="checkbox"
-							name="active"
-							checked={btnProps.active}
-							onChange={({ target }) => onChangeCheckbox(target.name)}
-						/>
-						<span className="ml-3 font-medium text-slate-500">Active</span>
-					</label>
+					{Form(
+						{
+							color: {
+								type: 'select',
+								values: [
+									'primary',
+									'secondary',
+									'accent',
+									'positive',
+									'negative',
+									'info',
+									'warning',
+								],
+							},
+							icon: { type: 'checkbox', val: 'mdi-map-marker' },
+							iconRight: { type: 'checkbox', val: 'mdi-close' },
+							flat: { type: 'checkbox' },
+							dimmed: { type: 'checkbox' },
+							outline: { type: 'checkbox' },
+							tonal: { type: 'checkbox' },
+							plain: { type: 'checkbox' },
+							text: { type: 'checkbox' },
+							block: { type: 'checkbox' },
+							square: { type: 'checkbox' },
+							rounded: { type: 'checkbox' },
+							round: { type: 'checkbox' },
+							disabled: { type: 'checkbox' },
+							link: { type: 'checkbox' },
+							active: { type: 'checkbox' },
+						},
+						btnExample,
+					)}
 				</div>
 			</div>
 		</div>
