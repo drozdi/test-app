@@ -150,7 +150,9 @@ export function MessageExample() {
 							</select>
 						</label>
 						<label className="block">
-							<span className="ml-3 font-medium text-slate-500">Color</span>
+							<span className="ml-3 font-medium text-slate-500">
+								Position
+							</span>
 							<select
 								className="block bg-slate-700 border border-blue-900 p-2"
 								name="position"

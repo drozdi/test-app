@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { XMessages } from '../messages';
 import './style.scss';
@@ -41,7 +41,7 @@ export const XToast = memo(
 				clear,
 				getElement: () => containerRef.current,
 			}));
-
+			useEffect(() => console.log(under), [under]);
 			return createPortal(
 				<div
 					className={classNames('x-toast', {
