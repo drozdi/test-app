@@ -38,7 +38,10 @@ export const XMessage = memo(
 
 			const toast = useXToastContext();
 			const context = useXMessagesContext();
-			const isClosable = useMemo(() => closable && context, [closable, context]);
+			const isClosable = useMemo(
+				() => (closable || sticky) && context,
+				[closable, context],
+			);
 			const handleClose = useCallback((event) => {
 				clearTimer();
 				context?.remove(_pId);

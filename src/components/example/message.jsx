@@ -1,10 +1,11 @@
-import { useMemo, useRef, useState } from 'react';
-import { isBoolean } from '../../utils/is';
+import { useMemo, useRef } from 'react';
 import { XBtn } from '../ui/btn';
 import { XBtnGroup } from '../ui/btnGroup';
 import { XMessage } from '../ui/message';
 import { XMessages } from '../ui/messages';
 import { XToast } from '../ui/toast';
+import { Form } from './utils/form';
+import { useProps } from './utils/useProps';
 export function MessageExample() {
 	const mesgs = useRef(null);
 	const mess = [
@@ -40,7 +41,6 @@ export function MessageExample() {
 	const onClearMessages = () => {
 		mesgs.current.clear();
 	};
-
 	const toast = useRef(null);
 	const onShowToast = () => {
 		toast.current.show([...mess]);
@@ -52,62 +52,137 @@ export function MessageExample() {
 		toast.current.clear();
 	};
 
-	const [toastProps, setToastProps] = useState({
-		underlined: false,
-		life: 3000,
-		closable: false,
-		color: '',
-		position: '',
-		outline: false,
-	});
-	const onChangeSelectToast = (prop, value) => {
-		setToastProps((v) => ({ ...v, [prop]: value }));
-	};
-	const onChangeTextToast = (prop, value) => {
-		setToastProps((v) => ({ ...v, [prop]: value }));
-	};
-	const onChangeCheckboxToast = (prop) => {
-		setToastProps((v) => ({ ...v, [prop]: !v[prop] }));
-	};
-	const exampleCodeToast = useMemo(() => {
-		let str = '<XToast';
-		for (let prop in toastProps) {
-			if (toastProps[prop]) {
-				if (isBoolean(toastProps[prop])) {
-					str += `\n ${prop}={${toastProps[prop]}}`;
-				} else {
-					str += `\n ${prop}="${toastProps[prop]}"`;
-				}
-			}
-		}
-		str += ' />';
-		return str;
-	}, [toastProps]);
+	const messageExample = useProps(
+		{
+			underlined: false,
+			closable: false,
+			color: '',
+			position: '',
+			outline: false,
+			square: false,
+		},
+		'XMessage',
+		'Test 1',
+	);
+	const messageProps = useMemo(() => messageExample.props, [messageExample.props]);
+	const messageCode = useMemo(() => messageExample.code, [messageExample.code]);
+
+	const messagesExample = useProps(
+		{
+			underlined: false,
+			closable: false,
+			color: '',
+			position: '',
+			outline: false,
+			square: false,
+			life: 9000,
+			row: false,
+			sticky: false,
+		},
+		'XMessages',
+	);
+	const messagesProps = useMemo(() => messagesExample.props, [messagesExample.props]);
+	const messagesCode = useMemo(() => messagesExample.code, [messagesExample.code]);
+
+	const toastExample = useProps(
+		{
+			underlined: false,
+			closable: false,
+			color: '',
+			position: '',
+			outline: false,
+			square: false,
+			life: 9000,
+			row: false,
+			sticky: false,
+		},
+		'XToast',
+	);
+	const toastProps = useMemo(() => toastExample.props, [toastExample.props]);
+	const toastCode = useMemo(() => toastExample.code, [toastExample.code]);
 
 	return (
 		<>
 			<div className="max-w-4xl m-auto p-4 relative">
 				<h3>XMessage</h3>
 				<div className="flex flex-col gap-4">
-					{mess.map((item, index) => (
-						<XMessage key={index} {...item} />
-					))}
+					<XMessage {...messageProps}>Test 1</XMessage>
+					<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
+						<div>
+							<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+								{messageCode}
+							</pre>
+						</div>
+						{Form(
+							{
+								color: {
+									type: 'select',
+									values: [
+										'primary',
+										'secondary',
+										'accent',
+										'positive',
+										'negative',
+										'info',
+										'warning',
+									],
+								},
+								underlined: {
+									type: 'select',
+									values: ['top', 'bottom', 'left', 'right'],
+								},
+								icon: { type: 'checkbox', val: 'mdi-map-marker' },
+								outline: { type: 'checkbox' },
+								square: { type: 'checkbox' },
+							},
+							messageExample,
+						)}
+					</div>
 				</div>
 				<hr className="my-4" />
 				<h3>XMessages</h3>
-				<XMessages
-					color="info"
-					outline={true}
-					underlined="left"
-					life={9000}
-					ref={mesgs}
-				/>
+				<XMessages {...messagesProps} ref={mesgs} />
 				<br />
 				<XBtnGroup>
 					<XBtn onClick={onShowMessages}>Show</XBtn>
 					<XBtn onClick={onReplaceMessages}>Replace</XBtn>
 					<XBtn onClick={onClearMessages}>Clear</XBtn>
 				</XBtnGroup>
+				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
+					<div>
+						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+							{messagesCode}
+						</pre>
+					</div>
+					{Form(
+						{
+							color: {
+								type: 'select',
+								values: [
+									'primary',
+									'secondary',
+									'accent',
+									'positive',
+									'negative',
+									'info',
+									'warning',
+								],
+							},
+							underlined: {
+								type: 'select',
+								values: ['top', 'bottom', 'left', 'right'],
+							},
+							outline: { type: 'checkbox' },
+							square: { type: 'checkbox' },
+							row: { type: 'checkbox' },
+							sticky: { type: 'checkbox' },
+							closable: { type: 'checkbox' },
+							sticky: { type: 'checkbox' },
+							life: { type: 'number' },
+						},
+						messagesExample,
+					)}
+				</div>
 				<hr className="my-4" />
 				<h3>XToast</h3>
 				<XBtnGroup>
@@ -119,22 +194,14 @@ export function MessageExample() {
 					<div>
 						<XToast {...toastProps} ref={toast} />
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-							{exampleCodeToast}
+							{toastCode}
 						</pre>
 					</div>
-					<div>
-						<label className="block">
-							<span className="ml-3 font-medium text-slate-500">Color</span>
-							<select
-								className="block bg-slate-700 border border-blue-900 p-2"
-								name="color"
-								value={toastProps.color}
-								onChange={({ target }) =>
-									onChangeSelectToast(target.name, target.value)
-								}
-							>
-								<option value="">default</option>
-								{[
+					{Form(
+						{
+							color: {
+								type: 'select',
+								values: [
 									'primary',
 									'secondary',
 									'accent',
@@ -142,27 +209,11 @@ export function MessageExample() {
 									'negative',
 									'info',
 									'warning',
-								].map((color, index) => (
-									<option key={index} value={color}>
-										{color}
-									</option>
-								))}
-							</select>
-						</label>
-						<label className="block">
-							<span className="ml-3 font-medium text-slate-500">
-								Position
-							</span>
-							<select
-								className="block bg-slate-700 border border-blue-900 p-2"
-								name="position"
-								value={toastProps.position}
-								onChange={({ target }) =>
-									onChangeSelectToast(target.name, target.value)
-								}
-							>
-								<option value="">default</option>
-								{[
+								],
+							},
+							position: {
+								type: 'select',
+								values: [
 									'left-top',
 									'left-center',
 									'left-bottom',
@@ -172,65 +223,16 @@ export function MessageExample() {
 									'right-top',
 									'right-center',
 									'right-bottom',
-								].map((position, index) => (
-									<option key={index} value={position}>
-										{position}
-									</option>
-								))}
-							</select>
-						</label>
-						<label className="block">
-							<span className="block font-medium text-slate-500">Life</span>
-							<input
-								className="bg-slate-700 border border-blue-900 p-2"
-								type="number"
-								name="life"
-								value={toastProps.life}
-								onChange={({ target }) =>
-									onChangeTextToast(target.name, target.value)
-								}
-							/>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="underlined"
-								checked={toastProps.underlined}
-								onChange={({ target }) =>
-									onChangeCheckboxToast(target.name)
-								}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								Underlined
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="closable"
-								checked={toastProps.closable}
-								onChange={({ target }) =>
-									onChangeCheckboxToast(target.name)
-								}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								Closable
-							</span>
-						</label>
-						<label className="block">
-							<input
-								type="checkbox"
-								name="outline"
-								checked={toastProps.outline}
-								onChange={({ target }) =>
-									onChangeCheckboxToast(target.name)
-								}
-							/>
-							<span className="ml-3 font-medium text-slate-500">
-								Outline
-							</span>
-						</label>
-					</div>
+								],
+							},
+							life: { type: 'number' },
+							underlined: { type: 'checkbox' },
+							closable: { type: 'checkbox' },
+							outline: { type: 'checkbox' },
+							square: { type: 'checkbox' },
+						},
+						toastExample,
+					)}
 				</div>
 			</div>
 		</>

@@ -10,7 +10,18 @@ let messageIdx = 0;
 export const XMessages = memo(
 	forwardRef(
 		(
-			{ className, style, row, life, closable, color, outline, underlined, sticky },
+			{
+				className,
+				style,
+				row,
+				life,
+				closable,
+				color,
+				outline,
+				underlined,
+				square,
+				sticky,
+			},
 			ref,
 		) => {
 			const [list, setList] = useState([]);
@@ -35,6 +46,7 @@ export const XMessages = memo(
 							closable,
 							color,
 							outline,
+							square,
 							underlined,
 							sticky,
 							_pId: messageIdx++,
@@ -56,6 +68,7 @@ export const XMessages = memo(
 								closable,
 								color,
 								outline,
+								square,
 								underlined,
 								sticky,
 								_pId: messageIdx++,
@@ -69,6 +82,7 @@ export const XMessages = memo(
 								closable,
 								color,
 								outline,
+								square,
 								underlined,
 								sticky,
 								_pId: messageIdx++,

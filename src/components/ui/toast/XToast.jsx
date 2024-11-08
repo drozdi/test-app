@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { XMessages } from '../messages';
 import './style.scss';
@@ -7,7 +7,18 @@ import { XToastContext } from './XToastContext';
 
 export const XToast = memo(
 	forwardRef(
-		({ position = 'right-top', underlined, life, closable, color, outline }, ref) => {
+		(
+			{
+				position = 'right-top',
+				underlined,
+				life,
+				closable,
+				color,
+				outline,
+				square,
+			},
+			ref,
+		) => {
 			const containerRef = useRef(null);
 			const mesgs = useRef(null);
 			const under = useMemo(() => {
@@ -41,7 +52,6 @@ export const XToast = memo(
 				clear,
 				getElement: () => containerRef.current,
 			}));
-			useEffect(() => console.log(under), [under]);
 			return createPortal(
 				<div
 					className={classNames('x-toast', {
@@ -57,6 +67,7 @@ export const XToast = memo(
 							closable={closable}
 							color={color}
 							outline={outline}
+							square={square}
 							underlined={underlined}
 							sticky={false}
 							ref={mesgs}
