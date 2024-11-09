@@ -1,41 +1,32 @@
 import classNames from 'classnames';
-import './XBtn.scss';
-
+import PropTypes from 'prop-types';
 import { forwardRef, memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { useXBtnGroupContext } from '../btnGroup';
 import { XIcon } from '../icon';
+import './XBtn.scss';
 
 const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 	const props = useXBtnGroupContext(params);
 	const {
 		children,
 		className,
-		dimmed = false,
-		flat = false,
-		text = false,
-		tonal = false,
-		plain = false,
-		outline = false,
-
-		round = false,
-		block = false,
-		square = false,
-		rounded = false,
-		disabled = false,
-		active = false,
-		link = false,
-
+		dimmed,
+		flat,
+		text,
+		tonal,
+		plain,
+		outline,
+		round,
+		block,
+		square,
+		rounded,
+		active,
+		link,
 		icon,
 		iconRight,
 		color,
 		size,
-		value,
-
-		LinkComponent = 'a',
-		target = '_self',
-		to,
-		href,
 	} = props;
 
 	const { isSelected: isSel, attrs, TagProp } = useBtn({ ...props, ref });
@@ -85,7 +76,7 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 
 export const XBtn = memo(XBtnRoot);
 
-/*XBtn.defaultProps = {
+XBtnRoot.defaultProps = {
 	children: null,
 	className: null,
 	dimmed: false,
@@ -94,19 +85,25 @@ export const XBtn = memo(XBtnRoot);
 	tonal: false,
 	plain: false,
 	outline: false,
-
 	round: false,
 	block: false,
 	square: false,
 	rounded: false,
 	disabled: false,
+	active: false,
+	link: false,
 	icon: '',
 	iconRight: '',
 	color: '',
 	size: '',
 	onClick: () => {},
+	value: undefined,
+	LinkComponent: 'a',
+	target: '_self',
+	to: undefined,
+	href: undefined,
 };
-XBtn.propTypes = {
+XBtnRoot.propTypes = {
 	children: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.string]),
 	className: PropTypes.string,
 	dimmed: PropTypes.bool,
@@ -121,10 +118,18 @@ XBtn.propTypes = {
 	square: PropTypes.bool,
 	rounded: PropTypes.bool,
 	disabled: PropTypes.bool,
+	active: PropTypes.bool,
+	link: PropTypes.bool,
 
 	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 	iconRight: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 	color: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 	size: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-	onClick: PropTypes.func, 
-};*/
+	onClick: PropTypes.func,
+
+	value: PropTypes.any,
+	LinkComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+	target: PropTypes.string,
+	to: PropTypes.any,
+	href: PropTypes.any,
+}; //*/
