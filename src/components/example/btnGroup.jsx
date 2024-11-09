@@ -8,6 +8,7 @@ export function BtnGroupExample() {
 			multiple: false,
 			selected: true,
 			color: undefined,
+			size: undefined,
 			flat: false,
 			dimmed: false,
 			outline: false,
@@ -20,7 +21,8 @@ export function BtnGroupExample() {
 			disabled: false,
 		},
 		'XBtnGroup',
-		'\n\t\t<XBtn value={1}>btn1</XBtn>\n \
+		'\n \
+		<XBtn value={1}>btn1</XBtn>\n \
 		<XBtn value={2}>btn2</XBtn>\n \
 		<XBtn value={3}>btn3</XBtn>\n',
 	);
@@ -76,6 +78,10 @@ export function BtnGroupExample() {
 									'info',
 									'warning',
 								],
+							},
+							size: {
+								type: 'select',
+								values: ['xs', 'sm', 'lg'],
 							},
 							flat: { type: 'checkbox' },
 							dimmed: { type: 'checkbox' },

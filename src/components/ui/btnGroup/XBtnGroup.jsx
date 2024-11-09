@@ -3,27 +3,17 @@ import { useCallback, useEffect, useState } from 'react';
 import './XBtnGroup.scss';
 import { XBtnGroupContext } from './XBtnGroupContext';
 
-export function XBtnGroup(props = {}) {
+export function XBtnGroup(params = {}) {
 	const {
 		children,
 		className,
 		vertical,
 		selected,
 		multiple,
-		value,
-		color,
-		flat = false,
-		dimmed = false,
-		outline = false,
-		tonal = false,
-		plain = false,
-		text = false,
-		square = false,
-		rounded = false,
-		round = false,
-		disabled = false,
 		onChange = () => {},
-	} = props;
+		value,
+		...props
+	} = params;
 
 	const [current, setCurrent] = useState(value ?? (multiple ? [] : undefined));
 
@@ -55,27 +45,17 @@ export function XBtnGroup(props = {}) {
 	useEffect(() => onChange(current), [current]);
 
 	const context = {
+		...props,
 		selected,
 		multiple,
 		current,
-		color,
-		flat,
-		dimmed,
-		outline,
-		tonal,
-		plain,
-		text,
-		square,
-		rounded,
-		round,
-		disabled,
 		onClick: handleClick,
 	};
 	return (
 		<div
 			className={classNames('x-btn-group', className, {
 				'x-btn-group--vertical': vertical,
-				'x-btn-group--round': round,
+				'x-btn-group--round': props.round,
 			})}
 		>
 			<XBtnGroupContext.Provider value={context}>

@@ -76,7 +76,7 @@ export function Form(conf = {}, { props, onText, onCheckbox, onSelect }) {
 		<div>
 			{Object.entries(conf).map(([name, p]) => {
 				if (p.type === 'header') {
-					return <h3>{p.name}</h3>;
+					return <h3 key={name}>{name}</h3>;
 				} else if (p.type === 'select') {
 					return select({ ...p, name, value: props[name], onChange: onSelect });
 				} else if (p.type === 'checkbox') {

@@ -18,6 +18,7 @@ export function BtnExample() {
 	const btnExample = useProps(
 		{
 			color: '',
+			size: '',
 			dimmed: false,
 			flat: false,
 			outline: false,
@@ -179,6 +180,10 @@ export function BtnExample() {
 									'info',
 									'warning',
 								],
+							},
+							size: {
+								type: 'select',
+								values: ['xs', 'sm', 'lg'],
 							},
 							icon: { type: 'checkbox', val: 'mdi-map-marker' },
 							iconRight: { type: 'checkbox', val: 'mdi-close' },

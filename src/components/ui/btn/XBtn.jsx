@@ -6,8 +6,8 @@ import { useBtn } from '../../../hooks/useBtn';
 import { useXBtnGroupContext } from '../btnGroup';
 import { XIcon } from '../icon';
 
-const XBtnRoot = forwardRef(function XBtn(props = {}, ref) {
-	const parametrs = useXBtnGroupContext(props);
+const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
+	const props = useXBtnGroupContext(params);
 	const {
 		children,
 		className,
@@ -36,9 +36,9 @@ const XBtnRoot = forwardRef(function XBtn(props = {}, ref) {
 		target = '_self',
 		to,
 		href,
-	} = parametrs;
+	} = props;
 
-	let { isSelected: isSel, attrs, TagProp } = useBtn({ ...parametrs, ref });
+	const { isSelected: isSel, attrs, TagProp } = useBtn({ ...props, ref });
 
 	const isIcon = useMemo(
 		() =>
