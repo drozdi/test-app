@@ -20,7 +20,7 @@ export function BtnGroupExample() {
 			round: false,
 			disabled: false,
 		},
-		'XBtnGroup',
+		'XBtn.Group',
 		'\n \
 		<XBtn value={1}>btn1</XBtn>\n \
 		<XBtn value={2}>btn2</XBtn>\n \
@@ -31,7 +31,7 @@ export function BtnGroupExample() {
 
 	return (
 		<div className="max-w-4xl m-auto py-4">
-			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtnGroup</h2>
+			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn.Group</h2>
 			<div className="p-4">
 				<XBtn.Group {...btnGroupProps}>
 					<XBtn value={1}>btn1</XBtn>
@@ -61,7 +61,7 @@ export function BtnGroupExample() {
 				<div>
 					{Form(
 						{
-							'XBtnGroup options': { type: 'header' },
+							'XBtn.Group options': { type: 'header' },
 							vertical: { type: 'checkbox' },
 							selected: { type: 'checkbox' },
 							multiple: { type: 'checkbox' },

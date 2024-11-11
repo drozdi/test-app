@@ -1,6 +1,5 @@
 import { useMemo, useRef } from 'react';
 import { XBtn } from '../ui/btn';
-import { XBtnGroup } from '../ui/btnGroup';
 import { XMessage } from '../ui/message';
 import { XMessages } from '../ui/messages';
 import { XToast } from '../ui/toast';
@@ -144,11 +143,11 @@ export function MessageExample() {
 				<h3>XMessages</h3>
 				<XMessages {...messagesProps} ref={mesgs} />
 				<br />
-				<XBtnGroup>
+				<XBtn.Group>
 					<XBtn onClick={onShowMessages}>Show</XBtn>
 					<XBtn onClick={onReplaceMessages}>Replace</XBtn>
 					<XBtn onClick={onClearMessages}>Clear</XBtn>
-				</XBtnGroup>
+				</XBtn.Group>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
@@ -188,11 +187,11 @@ export function MessageExample() {
 				</div>
 				<hr className="my-4" />
 				<h3>XToast</h3>
-				<XBtnGroup>
+				<XBtn.Group>
 					<XBtn onClick={onShowToast}>Show</XBtn>
 					<XBtn onClick={onReplaceToast}>Replace</XBtn>
 					<XBtn onClick={onClearToast}>Clear</XBtn>
-				</XBtnGroup>
+				</XBtn.Group>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
 						<XToast {...toastProps} ref={toast} />

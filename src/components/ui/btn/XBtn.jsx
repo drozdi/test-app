@@ -2,9 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { forwardRef, memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
-import { useXBtnGroupContext } from '../btnGroup';
 import { XIcon } from '../icon';
-import { XBtnGroup } from './Group/XBtnGroup';
+import { useXBtnGroupContext, XBtnGroup } from './Group';
 import './XBtn.scss';
 
 const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
