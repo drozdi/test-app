@@ -4,6 +4,7 @@ import { forwardRef, memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { useXBtnGroupContext } from '../btnGroup';
 import { XIcon } from '../icon';
+import { XBtnGroup } from './Group/XBtnGroup';
 import './XBtn.scss';
 
 const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
@@ -74,8 +75,6 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 	);
 });
 
-export const XBtn = memo(XBtnRoot);
-
 XBtnRoot.defaultProps = {
 	children: null,
 	className: null,
@@ -121,15 +120,19 @@ XBtnRoot.propTypes = {
 	active: PropTypes.bool,
 	link: PropTypes.bool,
 
-	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-	iconRight: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-	color: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-	size: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+	icon: PropTypes.string,
+	iconRight: PropTypes.string,
+	color: PropTypes.string,
+	size: PropTypes.PropTypes.string,
 	onClick: PropTypes.func,
 
 	value: PropTypes.any,
-	LinkComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+	LinkComponent: PropTypes.any,
 	target: PropTypes.string,
 	to: PropTypes.any,
 	href: PropTypes.any,
 }; //*/
+
+export const XBtn = memo(XBtnRoot);
+
+XBtn.Group = XBtnGroup;

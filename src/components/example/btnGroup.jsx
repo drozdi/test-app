@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { XBtn, XBtnGroup, XIcon } from '../ui';
+import { XBtn, XIcon } from '../ui';
 import { Form, useProps } from './utils';
 export function BtnGroupExample() {
 	const btnGroupExample = useProps(
@@ -33,13 +33,13 @@ export function BtnGroupExample() {
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtnGroup</h2>
 			<div className="p-4">
-				<XBtnGroup {...btnGroupProps}>
+				<XBtn.Group {...btnGroupProps}>
 					<XBtn value={1}>btn1</XBtn>
 					<XBtn value={2}>btn2</XBtn>
 					<XBtn value={3}>btn3</XBtn>
-				</XBtnGroup>
+				</XBtn.Group>
 				<br />
-				<XBtnGroup {...btnGroupProps}>
+				<XBtn.Group {...btnGroupProps}>
 					<XBtn value={1}>
 						<XIcon>mdi-close</XIcon>
 					</XBtn>
@@ -49,7 +49,7 @@ export function BtnGroupExample() {
 					<XBtn value={3}>
 						<XIcon>mdi-close</XIcon>
 					</XBtn>
-				</XBtnGroup>
+				</XBtn.Group>
 			</div>
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
