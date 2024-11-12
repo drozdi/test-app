@@ -178,7 +178,6 @@ export function MessageExample() {
 								row: { type: 'checkbox' },
 								sticky: { type: 'checkbox' },
 								closable: { type: 'checkbox' },
-								sticky: { type: 'checkbox' },
 								life: { type: 'number' },
 							},
 							messagesExample,
