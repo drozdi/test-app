@@ -6,6 +6,7 @@ import {
 	InputExample,
 	ListExample,
 	MessageExample,
+	SpinExample,
 } from './components/example';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 import { XLayout } from './components/ui/layout';
@@ -56,6 +57,14 @@ function App() {
 									<XItemLabel lines={true}>XMessage</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/spin" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-reload</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XSpin</XItemLabel>
+								</XItemSection>
+							</XItem>
 						</XList>
 					),
 					header: 'header',
@@ -69,6 +78,7 @@ function App() {
 							<Route path="/input" element={<InputExample />} />
 							<Route path="/list" element={<ListExample />} />
 							<Route path="/message" element={<MessageExample />} />
+							<Route path="/spin" element={<SpinExample />} />
 						</Routes>
 					),
 				}}

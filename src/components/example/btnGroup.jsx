@@ -7,6 +7,7 @@ export function BtnGroupExample() {
 			vertical: false,
 			multiple: false,
 			selected: true,
+			separator: false,
 			color: undefined,
 			size: undefined,
 			flat: false,
@@ -62,6 +63,7 @@ export function BtnGroupExample() {
 					{Form(
 						{
 							'XBtn.Group options': { type: 'header' },
+							separator: { type: 'checkbox' },
 							vertical: { type: 'checkbox' },
 							selected: { type: 'checkbox' },
 							multiple: { type: 'checkbox' },

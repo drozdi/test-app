@@ -3,10 +3,10 @@ import { extractEventHandlers } from '../utils/extractEventHandlers';
 import { isFocusVisible } from '../utils/is';
 import { useForkRef } from './useForkRef';
 export function useBtn({
-	selected = false,
-	multiple = false,
-	current = undefined,
-	disabled = false,
+	selected,
+	multiple,
+	current,
+	disabled,
 	ref: externalRef,
 	type,
 	tabIndex,

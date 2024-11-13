@@ -10,6 +10,7 @@ export function XBtnGroup(params = {}) {
 		vertical,
 		selected,
 		multiple,
+		separator,
 		onClick = () => {},
 		onChange = () => {},
 		value,
@@ -33,7 +34,7 @@ export function XBtnGroup(params = {}) {
 				setCurrent((v) => (v === value ? undefined : value));
 			}
 		},
-		[selected, multiple],
+		[selected, multiple, onClick],
 	);
 	useEffect(() => {
 		if (Array.isArray(current) && !multiple) {
@@ -57,6 +58,7 @@ export function XBtnGroup(params = {}) {
 		<div
 			className={classNames('x-btn-group', className, {
 				'x-btn-group--vertical': vertical,
+				'x-btn-group--separator': separator,
 				'x-btn-group--round': props.round,
 			})}
 		>
