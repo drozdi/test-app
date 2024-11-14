@@ -5,5 +5,5 @@ export * from './item';
 export * from './list';
 export * from './message';
 export * from './messages';
-export * from './spin';
+export * from './spinner';
 export * from './toast';
