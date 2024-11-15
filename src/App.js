@@ -6,6 +6,7 @@ import {
 	InputExample,
 	ListExample,
 	MessageExample,
+	ProgressExample,
 	SpinnerExample,
 } from './components/example';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
@@ -65,6 +66,14 @@ function App() {
 									<XItemLabel lines={true}>XSpinner</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/progress" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-reload</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XProgress</XItemLabel>
+								</XItemSection>
+							</XItem>
 						</XList>
 					),
 					header: 'header',
@@ -79,6 +88,7 @@ function App() {
 							<Route path="/list" element={<ListExample />} />
 							<Route path="/message" element={<MessageExample />} />
 							<Route path="/spinner" element={<SpinnerExample />} />
+							<Route path="/progress" element={<ProgressExample />} />
 						</Routes>
 					),
 				}}

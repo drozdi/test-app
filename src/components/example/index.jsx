@@ -4,6 +4,7 @@ export * from './input';
 export * from './list';
 export * from './message';
 export * from './spinner';
+export * from './progress';
 
 import { BtnExample } from './btn';
 import { BtnGroupExample } from './btnGroup';
@@ -11,6 +12,7 @@ import { InputExample } from './input';
 import { ListExample } from './list';
 import { MessageExample } from './message';
 import { SpinnerExample } from './spinner';
+import { ProgressExample } from './progress';
 
 export default function ({
 	btn = false,
@@ -19,6 +21,7 @@ export default function ({
 	list = false,
 	message = false,
 	spinner = false,
+	progress = false,
 }) {
 	return (
 		<div className="py-8">
@@ -28,6 +31,7 @@ export default function ({
 			{list && <ListExample />}
 			{message && <MessageExample />}
 			{spinner && <SpinnerExample />}
+			{progress && <ProgressExample />}
 		</div>
 	);
 }
