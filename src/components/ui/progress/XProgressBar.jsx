@@ -10,5 +10,10 @@ export function XProgressBar({ className, trackColor, color }) {
 			? void 0
 			: props.value*/
 	}));
-	return <div {...attr} className={classNames('x-progress-bar', className)}></div>;
+	return (
+		<div {...attr} className={classNames('x-progress-bar', className)}>
+			<div className="x-progress-bar__track"></div>
+			<div className="x-progress-bar__value"></div>
+		</div>
+	);
 }
