@@ -2,6 +2,7 @@
 	@apply relative w-full overflow-hidden h-4 text-primary;
 	transform: scale3d(1, 1, 1);
 }
+
 .x-progress-bar__track,
 .x-progress-bar__value {
 	@apply absolute left-0 top-0 bottom-0;
@@ -12,6 +13,21 @@
 }
 .x-progress-bar__value {
 	background-color: color-mix(in srgb, currentColor 70%, transparent);
+}
+
+.x-progress-bar--stripe .x-progress-bar__value::after {
+	@apply absolute left-0 top-0 bottom-0 right-0 bg-10;
+	content: ' ';
+	background-image: linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		rgba(255, 255, 255, 0) 25%,
+		rgba(255, 255, 255, 0) 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		rgba(255, 255, 255, 0) 75%,
+		rgba(255, 255, 255, 0)
+	);
 }
 
 @keyframes x-linear-progress--indeterminate {

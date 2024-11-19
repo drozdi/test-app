@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import './style.scss';
-export function XProgressBar({ className, trackColor, color }) {
+export function XProgressBar({ className, trackColor, color, stripe }) {
 	const attr = useMemo(() => ({
 		role: 'progressbar',
 		'aria-valuemin': 0,
@@ -11,7 +11,12 @@ export function XProgressBar({ className, trackColor, color }) {
 			: props.value*/
 	}));
 	return (
-		<div {...attr} className={classNames('x-progress-bar', className)}>
+		<div
+			{...attr}
+			className={classNames('x-progress-bar', className, {
+				'x-progress-bar--stripe': stripe,
+			})}
+		>
 			<div className="x-progress-bar__track"></div>
 			<div className="x-progress-bar__value"></div>
 		</div>

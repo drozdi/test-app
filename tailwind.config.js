@@ -60,6 +60,16 @@ module.exports = {
 				bgmb4: 'rgba(207,92,118, 0.5)',
 				bgmb5: 'rgba(14,100,95, 0.5)',
 			},
+			backgroundSize: {
+				'50%': '50%',
+				4: '1rem 1rem',
+				6: '1.5rem 1.5rem',
+				8: '2rem 2rem',
+				10: '2.5rem 2.5rem',
+				12: '3rem 3rem',
+				14: '3.5rem 3.5rem',
+				16: '4rem 4rem',
+			},
 			boxShadow: {
 				strong: '0 4px 18px -2px #000000b3',
 			},

@@ -6,7 +6,7 @@ export function ProgressExample() {
 		<div className="max-w-4xl m-auto p-4 relative">
 			<h3>XProgressBar</h3>
 			<div className="flex flex-col gap-4">
-				<XProgressBar {...progressExample.props} className="h-2">
+				<XProgressBar {...progressExample.props} stripe className="h-2">
 					Test 1
 				</XProgressBar>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
