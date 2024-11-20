@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { XBtn } from '../ui/btn';
 import { XMessage } from '../ui/message';
 import { XMessages } from '../ui/messages';
@@ -62,8 +62,6 @@ export function MessageExample() {
 		'XMessage',
 		'Test 1',
 	);
-	const messageProps = useMemo(() => messageExample.props, [messageExample.props]);
-	const messageCode = useMemo(() => messageExample.code, [messageExample.code]);
 
 	const messagesExample = useProps(
 		{
@@ -79,8 +77,6 @@ export function MessageExample() {
 		},
 		'XMessages',
 	);
-	const messagesProps = useMemo(() => messagesExample.props, [messagesExample.props]);
-	const messagesCode = useMemo(() => messagesExample.code, [messagesExample.code]);
 
 	const toastExample = useProps(
 		{
@@ -96,19 +92,17 @@ export function MessageExample() {
 		},
 		'XToast',
 	);
-	const toastProps = useMemo(() => toastExample.props, [toastExample.props]);
-	const toastCode = useMemo(() => toastExample.code, [toastExample.code]);
 
 	return (
 		<>
 			<div className="max-w-4xl m-auto p-4 relative">
 				<h3>XMessage</h3>
 				<div className="flex flex-col gap-4">
-					<XMessage {...messageProps}>Test 1</XMessage>
+					<XMessage {...messageExample.props}>Test 1</XMessage>
 					<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 						<div>
 							<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-								{messageCode}
+								{messageExample.code}
 							</pre>
 						</div>
 						<div>
@@ -141,7 +135,7 @@ export function MessageExample() {
 				</div>
 				<hr className="my-4" />
 				<h3>XMessages</h3>
-				<XMessages {...messagesProps} ref={mesgs} />
+				<XMessages {...messagesExample.props} ref={mesgs} />
 				<br />
 				<XBtn.Group>
 					<XBtn onClick={onShowMessages}>Show</XBtn>
@@ -151,7 +145,7 @@ export function MessageExample() {
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-							{messagesCode}
+							{messagesExample.code}
 						</pre>
 					</div>
 					<div>
@@ -193,9 +187,9 @@ export function MessageExample() {
 				</XBtn.Group>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
-						<XToast {...toastProps} ref={toast} />
+						<XToast {...toastExample.props} ref={toast} />
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-							{toastCode}
+							{toastExample.code}
 						</pre>
 					</div>
 					<div>

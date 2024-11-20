@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect } from 'react';
 import settingManager from '../../../core/setting-manager';
 import { cached } from '../../../utils/cached';
 
@@ -50,11 +50,15 @@ export const XStorage = cached(function XStorage(type, key) {
 			smActive = old;
 		},
 		useState(name, initial) {
-			const [state, setState] = useState(this.get(name, initial));
+			let state = this.get(name, initial);
+			const setState = (newState) => {
+				state = { ...state, ...newState };
+			};
+			//const [state, setState] = useState(this.get(name, initial));
 			useEffect(() => {
 				this.set(name, state);
 			}, [state]);
-			return [state, setState];
+			return [state, setState]; //*/
 		},
 	};
 });
@@ -130,11 +134,21 @@ export function useXStorage(type, key) {
 			smActive = old;
 		},
 		join(name, initial = null) {
-			const [state, setState] = useState(initial);
+			/*const [state, setState] = useState(initial);
 			useEffect(() => {
 				this.set(name, state);
 			}, [state]);
-			return [state, setState];
+			return [state, setState];*/
+			let state = this.get(name, initial);
+			const setState = (newState) => {
+				state = { ...state, ...newState };
+				this.set(name, state);
+			};
+			//const [state, setState] = useState(this.get(name, initial));
+			/*useEffect(() => {
+				this.set(name, state);
+			}, [state]);*/
+			return [state, setState]; //*/
 		},
 	};
 }

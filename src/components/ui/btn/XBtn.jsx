@@ -4,7 +4,7 @@ import { forwardRef, memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
 import { useXBtnGroupContext, XBtnGroup } from './Group';
-import './XBtn.scss';
+import './style.scss';
 
 const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 	const props = useXBtnGroupContext(params);

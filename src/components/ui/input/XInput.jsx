@@ -9,7 +9,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import './XInput.scss';
+import './style.scss';
 export const XInput = memo(
 	forwardRef(function XInput(
 		{

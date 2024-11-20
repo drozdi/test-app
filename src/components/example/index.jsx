@@ -1,18 +1,18 @@
-export * from './btn';
-export * from './btnGroup';
-export * from './input';
-export * from './list';
-export * from './message';
-export * from './spinner';
-export * from './progress';
-
 import { BtnExample } from './btn';
 import { BtnGroupExample } from './btnGroup';
 import { InputExample } from './input';
 import { ListExample } from './list';
 import { MessageExample } from './message';
-import { SpinnerExample } from './spinner';
 import { ProgressExample } from './progress';
+import { SpinnerExample } from './spinner';
+
+export * from './btn';
+export * from './btnGroup';
+export * from './input';
+export * from './list';
+export * from './message';
+export * from './progress';
+export * from './spinner';
 
 export default function ({
 	btn = false,
