@@ -5,6 +5,8 @@ export function ProgressExample() {
 		{
 			stripe: false,
 			animation: false,
+			indeterminate: false,
+			reverse: false,
 			value: 33,
 			buffer: 66,
 		},
@@ -14,8 +16,8 @@ export function ProgressExample() {
 		<div className="max-w-4xl m-auto p-4 relative">
 			<h3>XProgressBar</h3>
 			<div className="flex flex-col gap-4">
-				<XProgressBar {...progressExample.props} className="h-2">
-					Test 1
+				<XProgressBar {...progressExample.props} className="h-8">
+					label
 				</XProgressBar>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
@@ -28,6 +30,8 @@ export function ProgressExample() {
 							{
 								stripe: { type: 'checkbox' },
 								animation: { type: 'checkbox' },
+								indeterminate: { type: 'checkbox' },
+								reverse: { type: 'checkbox' },
 								value: { type: 'number' },
 								buffer: { type: 'number' },
 							},
