@@ -66,8 +66,7 @@ $colors: primary, secondary, accent, positive, negative, info, warning, surface,
 		.x-message--warning,
 		.x-message--surface,
 		.x-message--dark
-	) {
+	)
 	.x-message__backdor {
-		@apply block;
-	}
+	@apply block;
 }
