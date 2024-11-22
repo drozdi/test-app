@@ -39,9 +39,36 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			backgroundColor: {
+				/*primary: 'var(--color-bg-primary)',
+				secondary: 'var(--color-bg-secondary)',
+				accent: 'var(--color-bg-accent)',
+				positive: 'var(--color-bg-positive)',
+				negative: 'var(--color-bg-negative)',
+				info: 'var(--color-bg-info)',
+				warning: 'var(--color-bg-warning)',
+				surface: 'var(--color-bg-surface)',*/
+
+				bgmb1: 'rgba(190,155,100, 0.5)',
+				bgmb2: 'rgba(245,137,116, 0.5)',
+				bgmb3: 'rgba(158,25,58, 0.5)',
+				bgmb4: 'rgba(207,92,118, 0.5)',
+				bgmb5: 'rgba(14,100,95, 0.5)',
+			},
+			textColor: {
+				/*link: 'var(--link-color)',
+				primary: 'var(--color-text-primary)',
+				secondary: 'var(--color-text-secondary)',
+				accent: 'var(--color-text-accent)',
+				positive: 'var(--color-text-positive)',
+				negative: 'var(--color-text-negative)',
+				info: 'var(--color-text-info)',
+				warning: 'var(--color-text-warning)',
+				surface: 'var(--color-text-surface)',*/
+			},
+
 			colors: {
-				link: '#00aeff',
-				primary: '#1976D2',
+				primary: '#1976d2',
 				secondary: '#5cbbf6',
 				accent: '#9C27B0',
 				positive: '#4caf50',
@@ -49,16 +76,13 @@ module.exports = {
 				info: '#2196f3',
 				warning: '#fb8c00',
 				surface: '#15171e',
+				link: '#00aeff',
+
 				body: '#002650',
 				dark: '#15171e',
 				separator: 'rgba(255, 255, 255, .15)',
 				divider: 'rgba(255, 255, 255, .15)',
 				dimmed: 'rgba(0,0,0,0.2)',
-				bgmb1: 'rgba(190,155,100, 0.5)',
-				bgmb2: 'rgba(245,137,116, 0.5)',
-				bgmb3: 'rgba(158,25,58, 0.5)',
-				bgmb4: 'rgba(207,92,118, 0.5)',
-				bgmb5: 'rgba(14,100,95, 0.5)',
 			},
 			backgroundSize: {
 				'50%': '50%',

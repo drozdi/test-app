@@ -11,6 +11,7 @@ import {
 } from './components/example';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 import { XLayout } from './components/ui/layout';
+import { ThemeProvider } from './hooks/useTheme';
 function App() {
 	return (
 		<AppProvider config={{ smKey: 'app-1' }}>
@@ -76,7 +77,7 @@ function App() {
 							</XItem>
 						</XList>
 					),
-					header: 'header',
+					header: <ThemeProvider.Toggler></ThemeProvider.Toggler>,
 					footer: 'footer',
 					//right: 'right',
 					default: (props) => (

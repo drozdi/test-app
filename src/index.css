@@ -1,10 +1,93 @@
+:root {
+	--body-bg: #ffffff;
+	--body-color: #000000;
+
+	--link-color: #00aeff;
+
+	--color-bg-primary: #1976d2;
+	--color-bg-secondary: #5cbbf6;
+	--color-bg-accent: #9c27b0;
+	--color-bg-positive: #4caf50;
+	--color-bg-negative: #dc3545;
+	--color-bg-info: #2196f3;
+	--color-bg-warning: #fb8c00;
+	--color-bg-surface: #15171e;
+	--color-bg-dark: #15171e;
+	--color-separator: rgba(255, 255, 255, 0.15);
+	--color-divider: rgba(255, 255, 255, 0.15);
+	--color-dimmed: rgba(0, 0, 0, 0.2);
+}
+.light {
+	--body-bg: #ffffff;
+	--body-color: #000000;
+
+	--link-color: rgb(0, 102, 204);
+	--link-hover-color: rgb(0, 102, 204);
+
+	--color-bg-primary: #1976d2;
+	--color-bg-secondary: #5cbbf6;
+	--color-bg-accent: #9c27b0;
+	--color-bg-positive: #4caf50;
+	--color-bg-negative: #dc3545;
+	--color-bg-info: #2196f3;
+	--color-bg-warning: #fb8c00;
+	--color-bg-surface: #15171e;
+	--color-bg-dark: #15171e;
+	--color-separator: rgba(255, 255, 255, 0.15);
+	--color-divider: rgba(255, 255, 255, 0.15);
+	--color-dimmed: rgba(0, 0, 0, 0.2);
+
+	--color-text-primary: #1976d2;
+	--color-text-secondary: #5cbbf6;
+	--color-text-accent: #9c27b0;
+	--color-text-positive: #4caf50;
+	--color-text-negative: #dc3545;
+	--color-text-info: #2196f3;
+	--color-text-warning: #fb8c00;
+	--color-text-surface: #15171e;
+	--color-text-dark: #15171e;
+}
+
+.dark {
+	--body-bg: #002650;
+	--color: rgba(255, 255, 255, 0.7);
+
+	--link-color: #00aeff;
+	--link-hover-color: #ffffff;
+
+	--color-bg-primary: #1976d2;
+	--color-bg-secondary: #5cbbf6;
+	--color-bg-accent: #9c27b0;
+	--color-bg-positive: #4caf50;
+	--color-bg-negative: #dc3545;
+	--color-bg-info: #2196f3;
+	--color-bg-warning: #fb8c00;
+	--color-bg-surface: #15171e;
+	--color-bg-dark: #15171e;
+	--color-separator: rgba(255, 255, 255, 0.15);
+	--color-divider: rgba(255, 255, 255, 0.15);
+	--color-dimmed: rgba(0, 0, 0, 0.2);
+
+	--color-text-primary: #1976d2;
+	--color-text-secondary: #5cbbf6;
+	--color-text-accent: #9c27b0;
+	--color-text-positive: #4caf50;
+	--color-text-negative: #dc3545;
+	--color-text-info: #2196f3;
+	--color-text-warning: #fb8c00;
+	--color-text-surface: #15171e;
+	--color-text-dark: #15171e;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
 
 @layer base {
-	* {
+	*,
+	*:before,
+	*::after {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
@@ -16,15 +99,15 @@
 		height: 100%;
 	}
 	body {
-		background-color: #002650;
-		color: rgba(255, 255, 255, 0.7);
+		background-color: var(--body-bg);
+		color: var(--body-color);
 	}
 	a {
-		color: #00aeff;
+		color: var(--link-color);
 		text-decoration: none;
 	}
 	a[href]:hover {
-		color: #fff;
+		color: var(--link-hover-color);
 		text-decoration: underlined;
 	}
 	* {
