@@ -1,19 +1,15 @@
-import classNames from 'classnames';
 import { XSpinnerBase } from './XSpinnerBase';
 
 export function XSpinnerIos({ size = '1em', color }) {
 	return (
 		<XSpinnerBase
-			className={classNames('x-spinner', {
-				[`text-${color}`]: color,
-			})}
 			size={size}
 			color={color}
 			viewBox="0 0 64 64"
 			fill="currentColor"
 			stroke="currentColor"
 		>
-			<g stroke-width="4" stroke-linecap="round">
+			<g strokeWidth="4" strokeLinecap="round">
 				<line y1="17" y2="29" transform="translate(32,32) rotate(180)">
 					<animate
 						attributeName="stroke-opacity"

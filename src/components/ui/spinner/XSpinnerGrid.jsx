@@ -13,7 +13,7 @@ export function XSpinnerGrid({ size = '1em', color }) {
 					repeatCount="indefinite"
 				></animate>
 			</circle>
-			<circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5">
+			<circle cx="12.5" cy="52.5" r="12.5" fillOpacity=".5">
 				<animate
 					attributeName="fill-opacity"
 					begin="100ms"

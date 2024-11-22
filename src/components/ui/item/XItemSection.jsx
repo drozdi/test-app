@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import './style.scss';
 export function XItemSection({
 	children,
+	className,
 	side = false,
 	top = false,
 	noWrap = false,
@@ -11,7 +12,7 @@ export function XItemSection({
 	const main = useMemo(() => !side, [side]);
 	return (
 		<div
-			className={classNames('x-item__section', {
+			className={classNames('x-item__section', className, {
 				'x-item__section--main': main,
 				'x-item__section--side': side,
 				'x-item__section--top': top,

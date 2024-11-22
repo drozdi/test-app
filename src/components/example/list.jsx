@@ -6,7 +6,7 @@ export function ListExample() {
 			<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12 pt-8">
 				<XList bordered={true} separator={true}>
 					<XItem tag="label">
-						<XItemSection side={true}>
+						<XItemSection side>
 							<input type="checkbox" value={1} disabled />
 						</XItemSection>
 						<XItemSection>
@@ -14,7 +14,7 @@ export function ListExample() {
 						</XItemSection>
 					</XItem>
 					<XItem tag="label">
-						<XItemSection side={true}>
+						<XItemSection side>
 							<input type="checkbox" value={2} />
 						</XItemSection>
 						<XItemSection>
@@ -22,7 +22,7 @@ export function ListExample() {
 						</XItemSection>
 					</XItem>
 					<XItem tag="label">
-						<XItemSection side={true}>
+						<XItemSection side>
 							<input type="checkbox" value={3} />
 						</XItemSection>
 						<XItemSection>
@@ -30,31 +30,31 @@ export function ListExample() {
 						</XItemSection>
 					</XItem>
 					<XItem>
-						<XItemSection side={true}>
+						<XItemSection side>
 							<XIcon>mdi-home</XIcon>
 						</XItemSection>
 						<XItemSection>
-							<XItemLabel overline={true}>Item 1</XItemLabel>
+							<XItemLabel overline>Item 1</XItemLabel>
 							<XItemLabel>label</XItemLabel>
-							<XItemLabel caption={true}>Description</XItemLabel>
+							<XItemLabel caption>Description</XItemLabel>
 						</XItemSection>
-						<XItemSection side={true} top={true}>
+						<XItemSection side top>
 							<XIcon>mdi-close</XIcon>
 						</XItemSection>
 					</XItem>
-					<XItem to="https://ya.ru/" target="_blank" disabled={true}>
-						<XItemSection side={true}>
+					<XItem to="https://ya.ru/" target="_blank" disabled>
+						<XItemSection side>
 							<XIcon>mdi-home</XIcon>
 						</XItemSection>
 						<XItemSection>Yandex</XItemSection>
 					</XItem>
-					<XItem disabled={true}>
+					<XItem disabled>
 						<XItemSection>Item 3</XItemSection>
-						<XItemSection side={true}>
+						<XItemSection side>
 							<XIcon>mdi-arrow-down</XIcon>
 						</XItemSection>
 					</XItem>
-					<XItem active={true}>
+					<XItem active>
 						<XItemSection>Item 4</XItemSection>
 					</XItem>
 				</XList>

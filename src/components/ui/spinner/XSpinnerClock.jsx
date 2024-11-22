@@ -14,14 +14,14 @@ export function XSpinnerClock({ size = '1em', color }) {
 				cy="50"
 				r="48"
 				fill="none"
-				stroke-width="4"
-				stroke-miterlimit="10"
+				strokeWidth="4"
+				strokeMiterlimit="10"
 				stroke="currentColor"
 			></circle>
 			<line
-				stroke-linecap="round"
-				stroke-width="4"
-				stroke-miterlimit="10"
+				strokeLinecap="round"
+				strokeWidth="4"
+				strokeMiterlimit="10"
 				stroke="currentColor"
 				x1="50"
 				y1="50"
@@ -38,9 +38,9 @@ export function XSpinnerClock({ size = '1em', color }) {
 				></animateTransform>
 			</line>
 			<line
-				stroke-linecap="round"
-				stroke-width="4"
-				stroke-miterlimit="10"
+				strokeLinecap="round"
+				strokeWidth="4"
+				strokeMiterlimit="10"
 				stroke="currentColor"
 				x1="50"
 				y1="50"
