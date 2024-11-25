@@ -38,7 +38,7 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 					'x-btn--dimmed': props.dimmed,
 					'x-btn--link': props.link,
 					'x-btn--icon': isIcon,
-					'x-btn--selected': selected,
+					'x-btn--active': selected,
 					[`x-btn--${color}`]: color,
 					[`x-btn--${size}`]: size,
 				},

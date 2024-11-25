@@ -204,7 +204,7 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 				<div
 					className={classNames('xSidebar-container', {
 						'xLayout-sidebar': isLayout,
-						[`xLayout-sidebar--${type}`]: isLayout && !!type,
+						[`xLayout-sidebar--${type}`]: isLayout && type,
 						'xSidebar--animate': !canResized,
 					})}
 					style={containerStyle}
@@ -215,8 +215,8 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 						className={classNames('xSidebar', {
 							'is-mounted': isMounted,
 							'xLayout-sidebar': isLayout,
-							[`xLayout-sidebar--${type}`]: isLayout && !!type,
-							[`xSidebar--${type}`]: !!type,
+							[`xLayout-sidebar--${type}`]: isLayout && type,
+							[`xSidebar--${type}`]: type,
 							'xSidebar--toggle': miniToggle,
 							'xSidebar--mini': isMini,
 							'xSidebar--close': !isOpen,

@@ -1,82 +1,71 @@
 :root {
-	--body-bg: #ffffff;
-	--body-color: #000000;
+	--body-bg: 255, 255, 255;
+	--body-color: 0, 0, 0;
 
-	--link-color: #00aeff;
+	--link-color: 0, 174, 255;
+	--link-hover-color: 0, 102, 204;
 
-	--color-bg-primary: #1976d2;
-	--color-bg-secondary: #5cbbf6;
-	--color-bg-accent: #9c27b0;
-	--color-bg-positive: #4caf50;
-	--color-bg-negative: #dc3545;
-	--color-bg-info: #2196f3;
-	--color-bg-warning: #fb8c00;
-	--color-bg-surface: #15171e;
-	--color-bg-dark: #15171e;
-	--color-separator: rgba(255, 255, 255, 0.15);
-	--color-divider: rgba(255, 255, 255, 0.15);
-	--color-dimmed: rgba(0, 0, 0, 0.2);
+	--border-color: 0, 0, 0, 0.2;
+
+	--x-color-background-bg: var(--body-bg);
+	--x-color-primary: 25, 117, 210;
+	--x-color-secondary: 92, 187, 246;
+	--x-color-accent: 156, 39, 176;
+	--x-color-positive: 76, 175, 80;
+	--x-color-negative: 220, 53, 69;
+	--x-color-info: 33, 150, 243;
+	--x-color-warning: 251, 140, 0;
+	--x-color-dark: 29, 29, 29;
+
+	--x-color-on-primary: 255, 255, 255;
+	--x-color-on-secondary: 255, 255, 255;
+	--x-color-on-accent: 255, 255, 255;
+	--x-color-on-positive: 255, 255, 255;
+	--x-color-on-negative: 255, 255, 255;
+	--x-color-on-info: 255, 255, 255;
+	--x-color-on-warning: 255, 255, 255;
+	--x-color-on-dark: 255, 255, 255;
+	--x-color-on-background: var(--body-color);
+
+	--x-color-surface: 255, 255, 255;
+	--x-color-on-surface: 0, 0, 0;
+
+	--x-color-separator: rgba(255, 255, 255, 0.15);
+	--x-color-divider: rgba(255, 255, 255, 0.15);
+	--x-color-dimmed: rgba(0, 0, 0, 0.2);
 }
 .light {
-	--body-bg: #ffffff;
-	--body-color: #000000;
+	--body-bg: 255, 255, 255;
+	--body-color: 0, 0, 0;
 
-	--link-color: rgb(0, 102, 204);
-	--link-hover-color: rgb(0, 102, 204);
+	--link-color: 0, 174, 204;
+	--link-hover-color: 0, 102, 204;
 
-	--color-bg-primary: #1976d2;
-	--color-bg-secondary: #5cbbf6;
-	--color-bg-accent: #9c27b0;
-	--color-bg-positive: #4caf50;
-	--color-bg-negative: #dc3545;
-	--color-bg-info: #2196f3;
-	--color-bg-warning: #fb8c00;
-	--color-bg-surface: #15171e;
-	--color-bg-dark: #15171e;
-	--color-separator: rgba(255, 255, 255, 0.15);
-	--color-divider: rgba(255, 255, 255, 0.15);
-	--color-dimmed: rgba(0, 0, 0, 0.2);
+	--border-color: 0, 0, 0, 0.2;
 
-	--color-text-primary: #1976d2;
-	--color-text-secondary: #5cbbf6;
-	--color-text-accent: #9c27b0;
-	--color-text-positive: #4caf50;
-	--color-text-negative: #dc3545;
-	--color-text-info: #2196f3;
-	--color-text-warning: #fb8c00;
-	--color-text-surface: #15171e;
-	--color-text-dark: #15171e;
+	--x-color-surface: 255, 255, 255;
+	--x-color-on-surface: 0, 0, 0;
+
+	--x-color-separator: rgba(0, 0, 0, 0.15);
+	--x-color-divider: rgba(0, 0, 0, 0.15);
+	--x-color-dimmed: rgba(0, 0, 0, 0.2);
 }
 
 .dark {
-	--body-bg: #002650;
-	--color: rgba(255, 255, 255, 0.7);
+	--body-bg: 0, 38, 80;
+	--body-color: 255, 255, 255, 0.7;
 
-	--link-color: #00aeff;
-	--link-hover-color: #ffffff;
+	--link-color: 0, 174, 255;
+	--link-hover-color: 255, 255, 255;
 
-	--color-bg-primary: #1976d2;
-	--color-bg-secondary: #5cbbf6;
-	--color-bg-accent: #9c27b0;
-	--color-bg-positive: #4caf50;
-	--color-bg-negative: #dc3545;
-	--color-bg-info: #2196f3;
-	--color-bg-warning: #fb8c00;
-	--color-bg-surface: #15171e;
-	--color-bg-dark: #15171e;
-	--color-separator: rgba(255, 255, 255, 0.15);
-	--color-divider: rgba(255, 255, 255, 0.15);
-	--color-dimmed: rgba(0, 0, 0, 0.2);
+	--border-color: 255, 255, 255, 0.2;
 
-	--color-text-primary: #1976d2;
-	--color-text-secondary: #5cbbf6;
-	--color-text-accent: #9c27b0;
-	--color-text-positive: #4caf50;
-	--color-text-negative: #dc3545;
-	--color-text-info: #2196f3;
-	--color-text-warning: #fb8c00;
-	--color-text-surface: #15171e;
-	--color-text-dark: #15171e;
+	--x-color-surface: 21, 23, 30;
+	--x-color-on-surface: 255, 255, 255;
+
+	--x-color-separator: rgba(255, 255, 255, 0.15);
+	--x-color-divider: rgba(255, 255, 255, 0.15);
+	--x-color-dimmed: rgba(0, 0, 0, 0.2);
 }
 
 @tailwind base;
@@ -99,15 +88,15 @@
 		height: 100%;
 	}
 	body {
-		background-color: var(--body-bg);
-		color: var(--body-color);
+		background-color: rgb(var(--body-bg));
+		color: rgb(var(--body-color));
 	}
 	a {
-		color: var(--link-color);
+		color: rgb(var(--link-color));
 		text-decoration: none;
 	}
 	a[href]:hover {
-		color: var(--link-hover-color);
+		color: rgb(var(--link-hover-color));
 		text-decoration: underlined;
 	}
 	* {

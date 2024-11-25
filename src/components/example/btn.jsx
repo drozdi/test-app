@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { XBtn } from '../ui';
 import { Form, useProps } from './utils';
 
@@ -32,14 +32,12 @@ export function BtnExample() {
 			disabled: false,
 			link: false,
 			active: false,
-			icon: false,
-			iconRight: false,
+			icon: '',
+			iconRight: '',
 		},
 		'XBtn',
 		label,
 	);
-	const btnProps = useMemo(() => btnExample.props, [btnExample.props]);
-	const btnCode = useMemo(() => btnExample.code, [btnExample.code]);
 
 	return (
 		<div className="max-w-4xl m-auto py-4">
@@ -152,9 +150,9 @@ export function BtnExample() {
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XBtn {...btnProps}>{label}</XBtn>
+					<XBtn {...btnExample.props}>{label}</XBtn>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-						{btnCode}
+						{btnExample.code}
 					</pre>
 				</div>
 				<div>

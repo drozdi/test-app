@@ -1,6 +1,6 @@
 .xSidebar {
 	@apply min-w-14 w-64 flex flex-col justify-between max-h-full h-full absolute top-0 bottom-0 
-        bg-surface border-solid border-separator z-50;
+        bg-surface border-r border-solid border-border z-50;
 }
 .xSidebar-container {
 	@apply w-64 relative border-0 max-h-full;
@@ -65,97 +65,3 @@
 .xSidebar.is-mounted {
 	@apply min-w-0 !important;
 }
-
-%sidebar {
-	@apply w-64 flex flex-col justify-between max-h-full h-full absolute top-0 bottom-0 overflow-hidden bg-surface border-solid border-separator z-50;
-}
-%sidebar-animate {
-	@apply transition-width duration-300 ease-in-out;
-}
-%sidebar-left {
-	@apply left-0 border-r;
-}
-%sidebar-right {
-	@apply right-0 border-l;
-}
-%sidebar-container {
-	@apply w-64 relative border-0 max-h-full;
-}
-%sidebar-mini {
-	@apply w-14;
-}
-%sidebar-close {
-	@apply w-0 border-0;
-}
-%sidebar-container-close {
-	@apply overflow-hidden w-0 border-0;
-}
-
-%sidebar-content {
-	@apply max-w-full max-h-full overflow-y-auto overflow-x-hidden;
-}
-%sidebar-toggle {
-	@apply w-full border-t border-separator;
-}
-%sidebar-res {
-	@apply w-2 cursor-col-resize bg-transparent absolute top-0 bottom-0 z-10;
-}
-%sidebar-res-left {
-	@apply -right-1;
-}
-%sidebar-res-right {
-	@apply -left-1;
-}
-
-/*.xSidebar {
-	@extend %sidebar;
-	&--left {
-		@extend %sidebar-left;
-		.xSidebar-res {
-			@extend %sidebar-res-left;
-		}
-	}
-	&--right {
-		@extend %sidebar-right;
-		.xSidebar-res {
-			@extend %sidebar-res-right;
-		}
-	}
-}
-.xSidebar-container {
-	@extend %sidebar-container;
-}
-.xSidebar--animate {
-	@extend %sidebar-animate;
-}
-
-.xSidebar--mini {
-	&.xSidebar--overlay:not(.xSidebar--close),
-	& .xSidebar {
-		@apply w-full;
-	}
-}
-.xSidebar--mini-overlay {
-	@extend %sidebar-mini;
-}
-.xSidebar--overlay {
-	@apply min-w-0;
-	@apply w-0 !important;
-}
-.xSidebar--close {
-	@extend %sidebar-container-close;
-	& .xSidebar {
-		@extend %sidebar-close;
-	}
-}
-
-.xSidebar-content {
-	@extend %sidebar-content;
-}
-.xSidebar-toggle {
-	@extend %sidebar-toggle;
-}
-.xSidebar-res {
-	@extend %sidebar-res;
-}
-*/
