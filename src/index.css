@@ -6,6 +6,7 @@
 	--link-hover-color: 0, 102, 204;
 
 	--border-color: 0, 0, 0, 0.2;
+	--scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 255, 0.2);
 
 	--x-color-background-bg: var(--body-bg);
 	--x-color-primary: 25, 117, 210;
@@ -43,6 +44,8 @@
 
 	--border-color: 0, 0, 0, 0.2;
 
+	--scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 255, 0.2);
+
 	--x-color-surface: 255, 255, 255;
 	--x-color-on-surface: 0, 0, 0;
 
@@ -59,6 +62,8 @@
 	--link-hover-color: 255, 255, 255;
 
 	--border-color: 255, 255, 255, 0.2;
+
+	--scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2);
 
 	--x-color-surface: 21, 23, 30;
 	--x-color-on-surface: 255, 255, 255;
@@ -100,7 +105,7 @@
 		text-decoration: underlined;
 	}
 	* {
-		scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.2);
+		scrollbar-color: var(--scrollbar-color);
 		scrollbar-width: thin;
 	}
 	*::-moz-selection,

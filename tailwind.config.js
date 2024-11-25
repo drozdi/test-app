@@ -87,6 +87,12 @@ module.exports = {
 				16: '4rem 4rem',
 			},
 			boxShadow: {
+				1: '0px 1px 3px 0px rgba(166, 175, 195, 0.40)',
+				2: '0px 5px 12px 0px rgba(0, 0, 0, 0.10)',
+				3: '0px 4px 12px 0px rgba(13, 10, 44, 0.06)',
+				4: '0px 10px 30px 0px rgba(85, 106, 235, 0.12), 0px 4px 10px 0px rgba(85, 106, 235, 0.04), 0px -18px 38px 0px rgba(85, 106, 235, 0.04)',
+				5: '0px 13px 40px 0px rgba(13, 10, 44, 0.12), 0px -8px 18px 0px rgba(13, 10, 44, 0.04)',
+				6: '0px 12px 34px 0px rgba(13, 10, 44, 0.08), 0px 34px 26px 0px rgba(13, 10, 44, 0.05)',
 				strong: '0 4px 18px -2px #000000b3',
 			},
 			borderRadius: {

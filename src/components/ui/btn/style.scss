@@ -1,6 +1,6 @@
 .x-btn {
 	@apply relative inline-flex items-center justify-center select-none cursor-pointer rounded px-6 py-2 text-base text-center font-normal uppercase box-border transition duration-200 ease-in-out border-current border-0 focus:outline-none focus-visible:outline-none disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
-	@apply shadow-md hover:shadow-xl focus:shadow-lg active:shadow-md shadow-black/50 hover:shadow-black/60 focus:shadow-black/70 active:shadow-black/20;
+	@apply shadow hover:shadow-xl focus:shadow-lg active:shadow-md shadow-black/50 hover:shadow-black/60 focus:shadow-black/70 active:shadow-black/20;
 	@apply active:scale-[0.97];
 }
 
@@ -16,26 +16,26 @@
 }
 
 .x-btn:hover .x-btn-backdor {
-	@apply opacity-10;
+	@apply opacity-20;
 }
 .x-btn:focus .x-btn-backdor {
-	@apply opacity-15;
+	@apply opacity-25;
 }
 .x-btn:active .x-btn-backdor {
-	@apply opacity-20;
+	@apply opacity-30;
 }
 
 .x-btn--tonal .x-btn-backdor {
-	@apply opacity-10;
+	@apply opacity-20;
 }
 .x-btn--tonal:hover .x-btn-backdor {
-	@apply opacity-20;
+	@apply opacity-30;
 }
 .x-btn--tonal:focus .x-btn-backdor {
-	@apply opacity-20;
+	@apply opacity-30;
 }
 .x-btn--tonal:active .x-btn-backdor {
-	@apply opacity-30;
+	@apply opacity-40;
 }
 
 .x-btn--text .x-btn-backdor,
@@ -46,7 +46,8 @@
 .x-btn--outline,
 .x-btn--tonal,
 .x-btn--plain,
-.x-btn--text {
+.x-btn--text,
+.x-btn--link {
 	@apply bg-transparent !important;
 }
 .x-btn--flat {
@@ -69,10 +70,10 @@
 }
 
 .x-btn--active.x-btn--tonal .x-btn-backdor {
-	@apply opacity-30 !important;
+	@apply opacity-40 !important;
 }
 .x-btn--active .x-btn-backdor {
-	@apply opacity-20 !important;
+	@apply opacity-30 !important;
 }
 .x-btn--active {
 	@apply shadow-md shadow-black/30 !important;
