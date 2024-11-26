@@ -51,7 +51,6 @@
 
 	--x-color-separator: rgba(0, 0, 0, 0.15);
 	--x-color-divider: rgba(0, 0, 0, 0.15);
-	--x-color-dimmed: rgba(0, 0, 0, 0.2);
 }
 
 .dark {
@@ -70,7 +69,6 @@
 
 	--x-color-separator: rgba(255, 255, 255, 0.15);
 	--x-color-divider: rgba(255, 255, 255, 0.15);
-	--x-color-dimmed: rgba(0, 0, 0, 0.2);
 }
 
 @tailwind base;

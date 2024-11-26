@@ -1,5 +1,5 @@
 .x-input {
-	@apply relative flex border-border rounded;
+	@apply relative flex border-color rounded;
 }
 .x-input-before,
 .x-input-after,
@@ -66,8 +66,7 @@
 	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 .x-input-underlined {
-	@apply absolute hidden bottom-0 left-0 w-full rounded-inherit contain-layout box-border border-b border-inherit;
-	z-index: -1;
+	@apply absolute hidden bottom-0 left-0 w-full rounded-inherit contain-layout box-border border-b border-inherit -z-10;
 }
 
 .x-input-outline {

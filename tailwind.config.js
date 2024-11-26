@@ -4,6 +4,7 @@ module.exports = {
 	content: ['./public/index.html', './src/**/*.{js,jsx,ts,tsx}'],
 	darkMode: ['selector'],
 	safelist: [
+		'border-color',
 		...'primary secondary accent positive negative info warning background'
 			.split(/\s+/)
 			.map((color) => `x-bg-${color}`),
@@ -119,7 +120,7 @@ module.exports = {
 		},
 	},
 	plugins: [
-		plugin(function ({ addBase, addUtilities, theme }) {
+		plugin(function ({ addBase, addUtilities, matchVariant, theme }) {
 			const utilities = {};
 
 			/*addBase({
@@ -160,10 +161,15 @@ module.exports = {
 					};
 				});
 
-			utilities['x-bg-background'] = {
+			utilities['.x-bg-background'] = {
 				backgroundColor: `rgb(var(--x-color-background)) !important`,
 				color: `rgb(var(--x-color-on-background)) !important`,
 			};
+			utilities['.border-color'] = {
+				borderColor: `rgb(var(--border-color))`,
+			};
+
+			//matchVariant
 
 			addUtilities(utilities);
 		}),
