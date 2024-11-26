@@ -1,16 +1,7 @@
 //todo add styles label over border
 import classNames from 'classnames';
-import {
-	forwardRef,
-	memo,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import { forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react';
 import './style.scss';
-let iii = 0;
 export const XInput = memo(
 	forwardRef(function XInput(
 		{
@@ -45,16 +36,10 @@ export const XInput = memo(
 			}
 		}, [prependRef]);
 
-		const isShift = useMemo(
-			() => stackLabel || (outline && dense && isFocus),
-			[outline, dense, stackLabel, isFocus],
-		);
-		const labelStyle = useMemo(
-			() => ({
-				left: isShift ? shiftLabel : '',
-			}),
-			[isShift, shiftLabel],
-		);
+		const isShift = stackLabel || (outline && dense && isFocus);
+		const labelStyle = {
+			left: isShift ? shiftLabel : '',
+		};
 		const handleFocus = useCallback(
 			(e) => {
 				setFocus(true);
@@ -78,8 +63,6 @@ export const XInput = memo(
 			onFocus: handleFocus,
 			onBlur: handleBlur,
 		};
-
-		console.log(iii++);
 
 		return (
 			<div
