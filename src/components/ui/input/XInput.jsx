@@ -10,6 +10,7 @@ import {
 	useState,
 } from 'react';
 import './style.scss';
+let iii = 0;
 export const XInput = memo(
 	forwardRef(function XInput(
 		{
@@ -77,6 +78,8 @@ export const XInput = memo(
 			onFocus: handleFocus,
 			onBlur: handleBlur,
 		};
+
+		console.log(iii++);
 
 		return (
 			<div

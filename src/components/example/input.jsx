@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { XInput } from '../ui';
 import { Form, useProps } from './utils';
 export function InputExample() {
@@ -24,9 +24,9 @@ export function InputExample() {
 	});
 	const inputExample = useProps(
 		{
-			label: '',
+			label: 'Lable',
 			labelColor: '',
-			placeholder: '',
+			placeholder: 'Placeholder',
 			color: '',
 			outline: false,
 			field: false,
@@ -38,8 +38,6 @@ export function InputExample() {
 		},
 		'XInput',
 	);
-	const inputProps = useMemo(() => inputExample.props, [inputExample.props]);
-	const inputCode = useMemo(() => inputExample.code, [inputExample.code]);
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
@@ -140,9 +138,9 @@ export function InputExample() {
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XInput {...inputProps} className="text-white" />
+					<XInput {...inputExample.props} className="text-white" />
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
-						{inputCode}
+						{inputExample.code}
 					</pre>
 				</div>
 				<div>
