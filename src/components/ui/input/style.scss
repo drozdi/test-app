@@ -68,8 +68,7 @@
 }
 
 .x-input-underlay {
-	@apply h-full text-black;
-	background-color: color-mix(in srgb, currentColor 20%, transparent);
+	@apply h-full bg-dimmed;
 }
 .x-input-underlined {
 	@apply border-b;
@@ -167,14 +166,15 @@
 		.x-input--warning
 	) {
 	.x-input-underlay {
-		background-color: color-mix(in srgb, currentColor 20%, transparent);
+		background-color: color-mix(in srgb, currentColor 30%, transparent);
 	}
 	.x-input-outline,
 	.x-input-underlined {
-		border-color: color-mix(in srgb, currentColor 70%, transparent);
+		@apply border-current opacity-60;
 	}
-	&:has(input:focus) .x-input-outline {
-		@apply border-current;
+	&:has(input:focus) .x-input-outline,
+	&:has(input:focus) .x-input-underlined {
+		@apply opacity-100;
 	}
 }
 

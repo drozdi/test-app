@@ -34,7 +34,7 @@ export const XInput = memo(
 			setShiftLabel(-1 * parseInt(prependRef.current?.offsetWidth || 0, 10));
 		}, [prependRef]);
 
-		const isShift = stackLabel || (outline && dense && isFocus);
+		const isShift = outline && dense && isFocus;
 		const labelStyle = {
 			left: isShift ? shiftLabel : '',
 		};
