@@ -31,9 +31,7 @@ export const XInput = memo(
 		const [isFocus, setFocus] = useState(false);
 		const [shiftLabel, setShiftLabel] = useState(0);
 		useEffect(() => {
-			if (prependRef.current) {
-				setShiftLabel(-1 * parseInt(prependRef.current.offsetWidth, 10));
-			}
+			setShiftLabel(-1 * parseInt(prependRef.current?.offsetWidth || 0, 10));
 		}, [prependRef]);
 
 		const isShift = stackLabel || (outline && dense && isFocus);
@@ -75,7 +73,6 @@ export const XInput = memo(
 					'x-input--stack-label': stackLabel,
 					'x-input--disabled': disabled,
 					[`x-input--${color}`]: !!color,
-					[`border-${color}`]: !!color,
 				})}
 			>
 				{before && <div className="x-input-before">{before}</div>}
@@ -103,20 +100,18 @@ export const XInput = memo(
 						)}
 					</div>
 					{append && <div className="x-input-append">{append}</div>}
-					{outline && (
-						<div className="x-input-outline">
-							<div className="x-input-outline-start"></div>
-							<div className="x-input-outline-notch">
-								{label && (
-									<label htmlFor={props.id} className="x-input-label">
-										{label}
-									</label>
-								)}
-							</div>
-							<div className="x-input-outline-end"></div>
+					<div className="x-input-underlay"></div>
+					<div className="x-input-outline">
+						<div className="x-input-outline-start"></div>
+						<div className="x-input-outline-notch">
+							{label && (
+								<label htmlFor={props.id} className="x-input-label">
+									{label}
+								</label>
+							)}
 						</div>
-					)}
-					<div className="x-input-backdor"></div>
+						<div className="x-input-outline-end"></div>
+					</div>
 					<div className="x-input-underlined"></div>
 				</div>
 				{after && <div className="x-input-after">{after}</div>}

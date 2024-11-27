@@ -61,16 +61,22 @@
 	@apply text-[0.8em] top-2;
 }
 
-.x-input-backdor {
-	@apply absolute hidden top-0 left-0 w-full h-full rounded-inherit text-black contain-layout box-border -z-10;
+.x-input-underlay,
+.x-input-underlined,
+.x-input-outline {
+	@apply hidden absolute bottom-0 left-0 w-full rounded-inherit border-inherit contain-layout box-border -z-10;
+}
+
+.x-input-underlay {
+	@apply h-full text-black;
 	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 .x-input-underlined {
-	@apply absolute hidden bottom-0 left-0 w-full rounded-inherit contain-layout box-border border-b border-inherit -z-10;
+	@apply border-b;
 }
 
 .x-input-outline {
-	@apply hidden border-inherit rounded-inherit items-stretch pointer-events-none h-full w-full absolute top-0 left-0 right-0 transition-border ease-in-out duration-200;
+	@apply h-full items-stretch pointer-events-none transition-border ease-in-out duration-200;
 }
 .x-input-outline > * {
 	@apply border-y border-inherit transition-border ease-in-out duration-200;
@@ -143,21 +149,41 @@
 .x-input--disabled .x-input-native {
 	@apply pointer-events-none;
 }
+.x-input--field .x-input-underlay {
+	@apply block;
+}
 
 .x-input:has(input:focus) {
 	@apply border-blue-600;
 }
-.x-input--field .x-input-backdor {
-	@apply block;
+
+.x-input:where(
+		.x-input--primary,
+		.x-input--secondary,
+		.x-input--accent,
+		.x-input--positive,
+		.x-input--negative,
+		.x-input--info,
+		.x-input--warning
+	) {
+	.x-input-underlay {
+		background-color: color-mix(in srgb, currentColor 20%, transparent);
+	}
+	.x-input-outline,
+	.x-input-underlined {
+		border-color: color-mix(in srgb, currentColor 70%, transparent);
+	}
+	&:has(input:focus) .x-input-outline {
+		@apply border-current;
+	}
 }
 
 $colors: primary, secondary, accent, positive, negative, info, warning;
 
 @each $color in $colors {
-	.x-input--#{$color}:has(input:focus) {
-		@apply border-#{$color};
-	}
-	.x-input--#{$color} .x-input-backdor {
+	.x-input--#{$color} .x-input-outline,
+	.x-input--#{$color} .x-input-underlay,
+	.x-input--#{$color} .x-input-underlined {
 		@apply text-#{$color};
 	}
 }

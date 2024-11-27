@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XInput } from '../ui';
+import { XIcon, XInput } from '../ui';
 import { Form, useProps } from './utils';
 export function InputExample() {
 	const [danses, setDanses] = useState({
@@ -138,7 +138,17 @@ export function InputExample() {
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XInput {...inputExample.props} className="text-white" />
+					<XInput
+						{...inputExample.props}
+						before={
+							<XIcon className="text-warning text-4xl">
+								mdi-home-account
+							</XIcon>
+						}
+						after={<XIcon className="text-primary text-2xl">mdi-close</XIcon>}
+						prepend={<XIcon>mdi-account</XIcon>}
+						append={<XIcon>mdi-lock-off-outline</XIcon>}
+					/>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 						{inputExample.code}
 					</pre>
