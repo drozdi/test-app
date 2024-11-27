@@ -24,10 +24,10 @@
 }
 
 .x-input-native {
-	@apply block w-full bg-transparent px-2 pt-6 pb-2 outline-none transition-all ease-in-out duration-200 placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	@apply block w-full bg-transparent px-3 pt-6 pb-2 outline-none transition-all ease-in-out duration-200 placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
 }
 .x-input-label {
-	@apply pointer-events-none opacity-70 truncate absolute ml-2 left-0 top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2 transition-all ease-in-out duration-200;
+	@apply pointer-events-none opacity-70 truncate absolute ml-3 left-0 top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2 transition-all ease-in-out duration-200;
 }
 .x-input:has(input:focus) .x-input-label {
 	@apply opacity-100;
@@ -87,10 +87,10 @@
 	@apply border-r rounded-r-inherit;
 }
 .x-input-outline-start {
-	@apply flex-[0_0_0.75rem];
+	@apply flex-[0_0_0.5rem];
 }
 .x-input-outline-notch {
-	@apply flex-none max-w-[calc(100%-0.75rem)];
+	@apply flex-none max-w-[calc(100%-0.5rem)];
 }
 .x-input-outline-end {
 	@apply flex-[1];
@@ -108,7 +108,7 @@
 	}
 	.x-input-control:has(input:focus) .x-input-label,
 	.x-input-control:has(input:not(:placeholder-shown)) .x-input-label {
-		@apply top-0 ml-4;
+		@apply top-0 ml-3;
 	}
 
 	.x-input-control:has(input:focus) ~ .x-input-outline > .x-input-outline-notch,
@@ -124,7 +124,7 @@
 		@apply py-2;
 	}
 	.x-input-control .x-input-label {
-		@apply top-0 ml-4;
+		@apply top-0 ml-3;
 	}
 	.x-input-outline .x-input-outline-notch {
 		@apply border-t-transparent;

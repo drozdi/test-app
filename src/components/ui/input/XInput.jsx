@@ -31,10 +31,9 @@ export const XInput = memo(
 		const [isFocus, setFocus] = useState(false);
 		const [shiftLabel, setShiftLabel] = useState(0);
 		useEffect(() => {
-			setShiftLabel(-1 * parseInt(prependRef.current?.offsetWidth || 0, 10));
-		}, [prependRef]);
-
-		const isShift = outline && dense && isFocus;
+			setShiftLabel(-1 * (prependRef.current?.offsetWidth || 0));
+		}, [prependRef.current]);
+		const isShift = dense && outline && (isFocus || stackLabel);
 		const labelStyle = {
 			left: isShift ? shiftLabel : '',
 		};
