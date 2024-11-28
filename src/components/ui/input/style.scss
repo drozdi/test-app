@@ -223,8 +223,16 @@
 	@apply text-warning;
 }
 
-.x-input-hint {
-}
 .x-input-messages {
-	@apply flex-auto w-full min-h-3 text-xs/none px-3 py-1;
+	@apply flex-auto w-full min-h-3 text-xs/none px-3 py-1 overflow-hidden;
+}
+.x-input-message {
+	@apply transition-all relative -top-full -translate-y-1;
+}
+.x-input:has(input:focus) .x-input-hint,
+.x-input-messages--hint .x-input-hint {
+	@apply relative top-0 translate-y-0;
+}
+
+.x-input-hint {
 }

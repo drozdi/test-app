@@ -22,8 +22,7 @@ export const XInput = memo(
 			bg = '',
 			disabled = false,
 			hint,
-			persistentHint = false,
-			persistentAlways = false,
+			hideHint = false,
 			hideMessage = false,
 			onFocus = () => {},
 			onBlur = () => {},
@@ -121,8 +120,14 @@ export const XInput = memo(
 				</div>
 				{after && <div className="x-input-after">{after}</div>}
 				{!hideMessage && (
-					<div className="x-input-messages" role="alert" aria-live="polite">
-						{hint && <p className="x-input-hint">{hint}</p>}
+					<div
+						className={classNames('x-input-messages', {
+							'x-input-messages--hint': !hideHint,
+						})}
+						role="alert"
+						aria-live="polite"
+					>
+						{hint && <p className="x-input-message x-input-hint">{hint}</p>}
 					</div>
 				)}
 			</div>
