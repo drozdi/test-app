@@ -21,6 +21,7 @@ export const XInput = memo(
 			color = '',
 			bg = '',
 			disabled = false,
+			hint,
 			onFocus = () => {},
 			onBlur = () => {},
 			...props
@@ -30,13 +31,15 @@ export const XInput = memo(
 		const prependRef = useRef();
 		const [isFocus, setFocus] = useState(false);
 		const [shiftLabel, setShiftLabel] = useState(0);
+
 		useEffect(() => {
-			setShiftLabel(-1 * (prependRef.current?.offsetWidth || 0));
+			setShiftLabel(prependRef.current?.offsetWidth || 0);
 		}, [prependRef.current]);
 		const isShift = dense && outline && (isFocus || stackLabel);
 		const labelStyle = {
-			left: isShift ? shiftLabel : '',
+			left: isShift ? -shiftLabel : '',
 		};
+
 		const handleFocus = useCallback(
 			(e) => {
 				setFocus(true);
@@ -114,6 +117,7 @@ export const XInput = memo(
 					<div className="x-input-underlined"></div>
 				</div>
 				{after && <div className="x-input-after">{after}</div>}
+				{hint && <p className="x-input-hint">{hint}</p>}
 			</div>
 		);
 	}),
