@@ -37,6 +37,7 @@ export function InputExample() {
 			stackLabel: false,
 			disabled: false,
 			hideHint: false,
+			hideMessage: false,
 		},
 		'XInput',
 	);
@@ -199,6 +200,7 @@ export function InputExample() {
 							dense: { type: 'checkbox' },
 							stackLabel: { type: 'checkbox' },
 							disabled: { type: 'checkbox' },
+							hideMessage: { type: 'checkbox' },
 							hideHint: { type: 'checkbox' },
 						},
 						inputExample,
