@@ -23,6 +23,8 @@ export const XInput = memo(
 			disabled = false,
 			hint,
 			persistentHint = false,
+			persistentAlways = false,
+			hideMessage = false,
 			onFocus = () => {},
 			onBlur = () => {},
 			...props
@@ -118,9 +120,11 @@ export const XInput = memo(
 					<div className="x-input-underlined"></div>
 				</div>
 				{after && <div className="x-input-after">{after}</div>}
-				<div className="x-input-messages" role="alert" aria-live="polite">
-					{hint && <p className="x-input-hint">{hint}</p>}
-				</div>
+				{!hideMessage && (
+					<div className="x-input-messages" role="alert" aria-live="polite">
+						{hint && <p className="x-input-hint">{hint}</p>}
+					</div>
+				)}
 			</div>
 		);
 	}),
