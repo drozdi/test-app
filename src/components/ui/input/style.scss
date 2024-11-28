@@ -15,12 +15,16 @@
 }
 .x-input-prepend,
 .x-input-append {
-	@apply px-2;
+	@apply px-3;
 }
 
 .x-input-container,
 .x-input-control {
 	@apply relative flex-1 flex border-inherit rounded-inherit;
+}
+.x-input-prepend + .x-input-control,
+.x-input-control + .x-input-append {
+	@apply -ml-3;
 }
 
 .x-input-native {
@@ -220,5 +224,7 @@
 }
 
 .x-input-hint {
-	@apply flex-auto w-full;
+}
+.x-input-messages {
+	@apply flex-auto w-full min-h-3 text-xs/none px-3 py-1;
 }

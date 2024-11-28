@@ -147,9 +147,11 @@ export function InputExample() {
 					<XInput
 						{...inputExample.props}
 						before={
-							<XIcon className="text-warning text-4xl">
-								mdi-home-account
-							</XIcon>
+							false && (
+								<XIcon className="text-warning text-4xl">
+									mdi-home-account
+								</XIcon>
+							)
 						}
 						after={<XIcon className="text-primary text-2xl">mdi-close</XIcon>}
 						prepend={<XIcon>mdi-account</XIcon>}
