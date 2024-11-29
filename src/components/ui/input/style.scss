@@ -224,14 +224,24 @@
 }
 
 .x-input-messages {
-	@apply flex-auto w-full min-h-3 text-xs/none px-3 py-1 overflow-hidden;
+	@apply flex-auto w-full min-h-3 relative text-xs/none px-3 py-1 overflow-hidden;
 }
 .x-input-message {
-	@apply transition-all relative -top-full -translate-y-1;
+	@apply transition-position relative -top-full -translate-y-1;
 }
-.x-input-hint {
+.x-input-message--hint {
 }
-.x-input:has(input:focus) .x-input-hint,
-.x-input-messages--hint .x-input-hint {
-	@apply relative top-0 translate-y-0;
+.x-input-message--error {
+	@apply text-negative absolute w-[calc(100%-1.5rem)];
+}
+.x-input-messages--error .x-input-message--hint {
+}
+.x-input-messages--error .x-input-message--error {
+	@apply top-1 translate-y-0;
+}
+.x-input:has(input:focus)
+	.x-input-messages:not(.x-input-messages--error)
+	.x-input-message--hint,
+.x-input-messages--hint .x-input-message--hint {
+	@apply top-0 translate-y-0;
 }

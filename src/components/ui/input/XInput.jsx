@@ -24,6 +24,7 @@ export const XInput = memo(
 			hint,
 			hideHint = false,
 			hideMessage = false,
+			errorMessage,
 			onFocus = () => {},
 			onBlur = () => {},
 			...props
@@ -38,6 +39,7 @@ export const XInput = memo(
 			setShiftLabel(prependRef.current?.offsetWidth || 0);
 		}, [prependRef.current]);
 		const isShift = dense && outline && (isFocus || stackLabel);
+		const isError = !!errorMessage;
 		const labelStyle = {
 			left: isShift ? -shiftLabel : '',
 		};
@@ -65,7 +67,7 @@ export const XInput = memo(
 			onFocus: handleFocus,
 			onBlur: handleBlur,
 		};
-
+		const modColor = isError ? 'negative' : color;
 		return (
 			<div
 				className={classNames('x-input', {
@@ -76,7 +78,7 @@ export const XInput = memo(
 					'x-input--dense': dense,
 					'x-input--stack-label': stackLabel,
 					'x-input--disabled': disabled,
-					[`x-input--${color}`]: !!color,
+					[`x-input--${modColor}`]: !!modColor,
 				})}
 			>
 				{before && <div className="x-input-before">{before}</div>}
@@ -93,8 +95,8 @@ export const XInput = memo(
 								htmlFor={props.id}
 								className={classNames(
 									'x-input-label',
-									labelColor || color
-										? 'text-' + (labelColor || color)
+									labelColor || modColor
+										? 'text-' + (labelColor || modColor)
 										: '',
 								)}
 								style={labelStyle}
@@ -122,12 +124,26 @@ export const XInput = memo(
 				{!hideMessage && (
 					<div
 						className={classNames('x-input-messages', {
-							'x-input-messages--hint': !hideHint,
+							'x-input-messages--hint': !isError && !hideHint,
+							'x-input-messages--error': isError,
 						})}
 						role="alert"
 						aria-live="polite"
 					>
-						{hint && <p className="x-input-message x-input-hint">{hint}</p>}
+						{hint === ' ' ? (
+							<p className="x-input-message x-input-message--hint">
+								&nbsp;
+							</p>
+						) : (
+							hint && (
+								<p className="x-input-message x-input-message--hint">
+									{hint}
+								</p>
+							)
+						)}
+						<p className="x-input-message x-input-message--error">
+							{errorMessage}
+						</p>
 					</div>
 				)}
 			</div>
