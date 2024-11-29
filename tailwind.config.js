@@ -111,6 +111,7 @@ module.exports = {
 				width: 'width',
 				height: 'height',
 				spacing: 'margin, padding',
+				position: 'transform, top, left, bottom, right',
 			},
 			borderWidth: {
 				3: '3px',
