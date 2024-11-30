@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import './style.scss';
 
 export function XSpinnerBase({
@@ -24,3 +25,20 @@ export function XSpinnerBase({
 		</svg>
 	);
 }
+
+XSpinnerBase.propTypes = {
+	children: PropTypes.node,
+	className: PropTypes.string,
+	color: PropTypes.any,
+	/*color: PropTypes.oneOf([
+		'primary',
+		'secondary',
+		'success',
+		'negative',
+		'positive',
+		'info',
+		'warning',
+	]),*/
+	size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	viewBox: PropTypes.string,
+};

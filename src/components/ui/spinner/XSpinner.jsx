@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { XSpinnerBase } from './XSpinnerBase';
 
 export function XSpinner({ size = '1em', thickness = 5, color }) {
@@ -21,3 +22,20 @@ export function XSpinner({ size = '1em', thickness = 5, color }) {
 		</XSpinnerBase>
 	);
 }
+
+XSpinner.propTypes = {
+	children: PropTypes.node,
+	className: PropTypes.string,
+	size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	thickness: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	color: PropTypes.any,
+	/*color: PropTypes.oneOf([
+		'primary',
+		'secondary',
+		'success',
+		'negative',
+		'positive',
+		'info',
+		'warning',
+	]),*/
+};
