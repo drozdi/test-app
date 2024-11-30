@@ -1,0 +1,163 @@
+.x-progress-bar {
+	@apply relative w-full overflow-hidden;
+	transform: scale3d(1, 1, 1);
+}
+
+.x-progress-bar__track,
+.x-progress-bar__value,
+.x-progress-bar__label {
+	@apply absolute left-0 top-0 bottom-0 transition-width ease-in-out duration-500;
+}
+.x-progress-bar__track {
+	@apply -z-10 w-full;
+	background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+.x-progress-bar__value {
+	background-color: color-mix(in srgb, currentColor 50%, transparent);
+}
+.x-progress-bar__label {
+	@apply w-full z-10 flex items-center justify-center;
+}
+
+.x-progress-bar--stripe .x-progress-bar__value::after {
+	@apply absolute left-0 top-0 bottom-0 right-0 bg-10;
+	content: ' ';
+	background-image: linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		rgba(255, 255, 255, 0) 25%,
+		rgba(255, 255, 255, 0) 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		rgba(255, 255, 255, 0) 75%,
+		rgba(255, 255, 255, 0)
+	);
+}
+
+.x-progress-bar--animation .x-progress-bar__value::after {
+	animation: 1s linear infinite x-linear-progress-stripes;
+}
+
+.x-progress-bar--indeterminate .x-progress-bar__value {
+	@apply static w-full h-0;
+}
+
+.x-progress-bar--indeterminate .x-progress-bar__value::before,
+.x-progress-bar--indeterminate .x-progress-bar__value::after {
+	@apply absolute top-0 left-0 bottom-0 bg-inherit;
+	content: '';
+}
+.x-progress-bar--indeterminate .x-progress-bar__value::before {
+	animation: 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite
+		x-linear-progress-indeterminate;
+}
+
+.x-progress-bar--indeterminate .x-progress-bar__value::after {
+	animation: 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite
+		x-linear-progress-indeterminate-short;
+	animation-delay: 1.15s;
+}
+
+.x-progress-bar--reverse .x-progress-bar__track,
+.x-progress-bar--reverse .x-progress-bar__value,
+.x-progress-bar--reverse .x-progress-bar__label {
+	@apply left-auto right-0;
+}
+
+.x-progress-bar--reverse.x-progress-bar--animation .x-progress-bar__value::after {
+	animation: 1s linear infinite x-linear-progress-stripes-reverse;
+}
+
+.x-progress-bar--reverse.x-progress-bar--indeterminate .x-progress-bar__value::before,
+.x-progress-bar--reverse.x-progress-bar--indeterminate .x-progress-bar__value::after {
+	@apply left-auto right-0;
+	content: '';
+}
+.x-progress-bar--reverse.x-progress-bar--indeterminate .x-progress-bar__value::before {
+	animation: 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite
+		x-linear-progress-indeterminate-reverse;
+}
+
+.x-progress-bar--reverse.x-progress-bar--indeterminate .x-progress-bar__value::after {
+	animation: 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite
+		x-linear-progress-indeterminate-short-reverse;
+	animation-delay: 1.15s;
+}
+
+$colors: primary, secondary, accent, positive, negative, info, warning, surface, dark;
+
+@each $color in $colors {
+	.x-progress-bar--#{$color} {
+		@apply text-#{$color};
+	}
+}
+
+@keyframes x-linear-progress-stripes {
+	100% {
+		background-position-x: 2.5rem;
+	}
+}
+@keyframes x-linear-progress-stripes-reverse {
+	0% {
+		background-position-x: 2.5rem;
+	}
+}
+
+@keyframes x-linear-progress-indeterminate {
+	0% {
+		left: -35%;
+		right: 100%;
+	}
+	60% {
+		left: 100%;
+		right: -90%;
+	}
+	100% {
+		left: 100%;
+		right: -90%;
+	}
+}
+@keyframes x-linear-progress-indeterminate-reverse {
+	0% {
+		left: 100%;
+		right: -35%;
+	}
+	60% {
+		left: -90%;
+		right: 100%;
+	}
+	100% {
+		left: -90%;
+		right: 100%;
+	}
+}
+
+@keyframes x-linear-progress-indeterminate-short {
+	0% {
+		left: -200%;
+		right: 100%;
+	}
+	60% {
+		left: 107%;
+		right: -8%;
+	}
+	100% {
+		left: 107%;
+		right: -8%;
+	}
+}
+
+@keyframes x-linear-progress-indeterminate-short-reverse {
+	0% {
+		left: 100%;
+		right: -200%;
+	}
+	60% {
+		left: -8%;
+		right: 107%;
+	}
+	100% {
+		left: -8%;
+		right: 107%;
+	}
+}
