@@ -3,6 +3,7 @@ import {
 	XItemLabel,
 	XItemSection,
 	XList,
+	XProgress,
 	XProgressBar,
 	XProgressCircle,
 } from '../ui';
@@ -16,10 +17,13 @@ export function ProgressExample() {
 			indeterminate: false,
 			reverse: false,
 			label: false,
+			thickness: undefined,
+			type: 'bar',
+			size: 128,
 			value: 33,
 			buffer: 66,
 		},
-		'XProgressBar',
+		'XProgress',
 	);
 	return (
 		<div className="max-w-4xl m-auto p-4 relative flex flex-col gap-4">
@@ -69,7 +73,6 @@ export function ProgressExample() {
 					</XItem>
 				))}
 			</XList>
-
 			<XList dense>
 				{[
 					{
@@ -135,7 +138,7 @@ export function ProgressExample() {
 
 			<h3>Generate</h3>
 			<div className="flex flex-col gap-4">
-				<XProgressBar {...progressExample.props} className="h-8"></XProgressBar>
+				<XProgress {...progressExample.props} className="h-8"></XProgress>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
@@ -145,6 +148,10 @@ export function ProgressExample() {
 					<div>
 						{Form(
 							{
+								type: {
+									type: 'select',
+									values: ['bar', 'circle'],
+								},
 								color: {
 									type: 'select',
 									values: [
@@ -157,6 +164,8 @@ export function ProgressExample() {
 										'warning',
 									],
 								},
+								size: { type: 'text' },
+								thickness: { type: 'text' },
 								stripe: { type: 'checkbox' },
 								animation: { type: 'checkbox' },
 								indeterminate: { type: 'checkbox' },
