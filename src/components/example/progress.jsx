@@ -27,6 +27,7 @@ export function ProgressExample() {
 	);
 	return (
 		<div className="max-w-4xl m-auto p-4 relative flex flex-col gap-4">
+			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XProgress</h2>
 			<h3>XProgressBar</h3>
 			<XList dense>
 				{[
@@ -73,54 +74,64 @@ export function ProgressExample() {
 					</XItem>
 				))}
 			</XList>
-			<XList dense>
-				{[
-					{
-						elem: <XProgressCircle size={128} thickness={5} value={33} />,
-						code: '<XProgressCircle size={128} thickness={5} value={33} />',
-					},
-					{
-						elem: (
-							<XProgressCircle
-								size={128}
-								thickness={5}
-								value={33}
-								buffer={66}
-							/>
-						),
-						code: '<XProgressCircle size={128} thickness={5} value={33} buffer={66} />',
-					},
-					{
-						elem: <XProgressCircle size={128} thickness={5} indeterminate />,
-						code: '<XProgressCircle size={128} thickness={5} indeterminate />',
-					},
-					{
-						elem: (
-							<XProgressCircle size={128} thickness={5} label value={33} />
-						),
-						code: '<XProgressCircle size={128} thickness={5} label value={33} />',
-					},
-					{
-						elem: (
-							<XProgressCircle size={128} thickness={5} value={33}>
-								label
-							</XProgressCircle>
-						),
-						code: '<XProgressCircle size={128} thickness={5} value={33}>label</XProgressCircle>',
-					},
-				].map((v, i) => (
-					<XItem key={i}>
-						<XItemSection side>{v.elem}</XItemSection>
-						<XItemSection className="bg-sky-500/50 text-white pl-2 rounded-md">
-							<XItemLabel>{v.code}</XItemLabel>
-						</XItemSection>
-					</XItem>
-				))}
-			</XList>
+			<h3>XProgressCircle</h3>
+			{false && (
+				<XList dense>
+					{[
+						{
+							elem: <XProgressCircle size={128} thickness={5} value={33} />,
+							code: '<XProgressCircle size={128} thickness={5} value={33} />',
+						},
+						{
+							elem: (
+								<XProgressCircle
+									size={128}
+									thickness={5}
+									value={33}
+									buffer={66}
+								/>
+							),
+							code: '<XProgressCircle size={128} thickness={5} value={33} buffer={66} />',
+						},
+						{
+							elem: (
+								<XProgressCircle size={128} thickness={5} indeterminate />
+							),
+							code: '<XProgressCircle size={128} thickness={5} indeterminate />',
+						},
+						{
+							elem: (
+								<XProgressCircle
+									size={128}
+									thickness={5}
+									label
+									value={33}
+								/>
+							),
+							code: '<XProgressCircle size={128} thickness={5} label value={33} />',
+						},
+						{
+							elem: (
+								<XProgressCircle size={128} thickness={5} value={33}>
+									label
+								</XProgressCircle>
+							),
+							code: '<XProgressCircle size={128} thickness={5} value={33}>label</XProgressCircle>',
+						},
+					].map((v, i) => (
+						<XItem key={i}>
+							<XItemSection side>{v.elem}</XItemSection>
+							<XItemSection className="bg-sky-500/50 text-white pl-2 rounded-md">
+								<XItemLabel>{v.code}</XItemLabel>
+							</XItemSection>
+						</XItem>
+					))}
+				</XList>
+			)}
 
 			<h3>Generate</h3>
 			<div className="flex flex-col gap-4">
-				<XProgress {...progressExample.props} className="h-8"></XProgress>
+				<XProgress {...progressExample.props}></XProgress>
 				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">

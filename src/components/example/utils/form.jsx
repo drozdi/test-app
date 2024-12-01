@@ -65,7 +65,12 @@ function input(props) {
 				type={props.type}
 				name={props.name}
 				value={props.value}
-				onChange={({ target }) => props.onChange(target.name, target.value)}
+				onChange={({ target }) =>
+					props.onChange(
+						target.name,
+						props.type === 'number' ? 1 * target.value : target.value,
+					)
+				}
 			/>
 		</label>
 	);
