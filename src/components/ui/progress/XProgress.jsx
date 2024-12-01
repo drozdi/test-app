@@ -23,18 +23,33 @@ export function XProgressRoot({
 		'aria-valuemax': 100,
 		'aria-valuenow': indeterminate === true ? void 0 : value,
 	}));
+	const normalizedValue = useMemo(
+		() => Math.max(0, Math.min(100, parseFloat(value))),
+		[value],
+	);
+	const normalizedBuffer = useMemo(
+		() => Math.max(0, Math.min(100, parseFloat(buffer))),
+		[buffer],
+	);
 	const trackAttrs = useMemo(
 		() => ({
-			style: { width: buffer && !indeterminate ? `${buffer}%` : '' },
+			style: { width: buffer && !indeterminate ? `${normalizedBuffer}%` : '' },
 		}),
 		[buffer, indeterminate],
 	);
 	const valueAttrs = useMemo(
 		() => ({
-			style: { width: value && !indeterminate ? `${value}%` : '' },
+			style: { width: value && !indeterminate ? `${normalizedValue}%` : '' },
 		}),
 		[value, indeterminate],
 	);
+	const style = useMemo(
+		() => ({
+			height: thickness,
+		}),
+		[thickness],
+	);
+
 	function progressBar() {
 		return (
 			<div
@@ -46,7 +61,7 @@ export function XProgressRoot({
 					'x-progress-bar--reverse': reverse,
 					[`text-${color}`]: color,
 				})}
-				style={{ height: thickness }}
+				style={style}
 			>
 				<div {...trackAttrs} className="x-progress-bar__track"></div>
 				<div {...valueAttrs} className="x-progress-bar__value"></div>
@@ -62,9 +77,10 @@ export function XProgressRoot({
 
 	const radius = useMemo(() => size / 2 - thickness / 2, [size, thickness]);
 	const circumference = useMemo(() => 2 * Math.PI * radius, [radius]);
-	const normalizedValue = useMemo(
-		() => Math.max(0, Math.min(100, parseFloat(value))),
-		[value],
+
+	const strokeDashOffsetBuffer = useMemo(
+		() => ((100 - normalizedBuffer) / 100) * circumference,
+		[normalizedBuffer, circumference],
 	);
 	const strokeDashOffset = useMemo(
 		() => ((100 - normalizedValue) / 100) * circumference,
@@ -109,7 +125,7 @@ export function XProgressRoot({
 						r={radius}
 						strokeWidth={strokeWidth}
 						strokeDasharray={circumference}
-						strokeDashoffset={0}
+						strokeDashoffset={'' + indeterminate ? strokeDashOffsetBuffer : 0}
 					/>
 
 					<circle

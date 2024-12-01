@@ -5,13 +5,10 @@ import './style.scss';
 export function XProgressCircleRoot({
 	children,
 	className,
-	type = 'bar',
 	value,
 	buffer,
 	color,
 	label,
-	stripe,
-	animation,
 	indeterminate,
 	size,
 	thickness,
@@ -30,9 +27,17 @@ export function XProgressCircleRoot({
 		() => Math.max(0, Math.min(100, parseFloat(value))),
 		[value],
 	);
+	const normalizedBuffer = useMemo(
+		() => Math.max(0, Math.min(100, parseFloat(buffer))),
+		[buffer],
+	);
 	const strokeDashOffset = useMemo(
 		() => ((100 - normalizedValue) / 100) * circumference,
 		[normalizedValue, circumference],
+	);
+	const strokeDashOffsetBuffer = useMemo(
+		() => ((100 - normalizedBuffer) / 100) * circumference,
+		[normalizedBuffer, circumference],
 	);
 
 	const diameter = useMemo(
@@ -72,7 +77,7 @@ export function XProgressCircleRoot({
 					r={radius}
 					strokeWidth={strokeWidth}
 					strokeDasharray={circumference}
-					strokeDashoffset={0}
+					strokeDashoffset={'' + indeterminate ? strokeDashOffsetBuffer : 0}
 				/>
 
 				<circle
@@ -114,8 +119,6 @@ XProgressCircleRoot.propTypes = {
 		'warning',
 	]),
 	label: PropTypes.bool,
-	stripe: PropTypes.bool,
-	animation: PropTypes.bool,
 	indeterminate: PropTypes.bool,
 	reverse: PropTypes.bool,
 };

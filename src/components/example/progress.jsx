@@ -11,17 +11,17 @@ import { Form, useProps } from './utils';
 export function ProgressExample() {
 	const progressExample = useProps(
 		{
+			type: 'bar',
 			color: '',
+			size: 128,
+			thickness: 5,
+			value: 33,
+			buffer: 66,
 			stripe: false,
 			animation: false,
 			indeterminate: false,
 			reverse: false,
 			label: false,
-			thickness: undefined,
-			type: 'bar',
-			size: 128,
-			value: 33,
-			buffer: 66,
 		},
 		'XProgress',
 	);
@@ -96,24 +96,6 @@ export function ProgressExample() {
 					},
 					{
 						elem: (
-							<XProgressCircle size={128} thickness={5} stripe value={33} />
-						),
-						code: '<XProgressCircle size={128} thickness={5} stripe value={33} />',
-					},
-					{
-						elem: (
-							<XProgressCircle
-								size={128}
-								thickness={5}
-								stripe
-								animation
-								value={33}
-							/>
-						),
-						code: '<XProgressCircle size={128} thickness={5} stripe animation value={33} />',
-					},
-					{
-						elem: (
 							<XProgressCircle size={128} thickness={5} label value={33} />
 						),
 						code: '<XProgressCircle size={128} thickness={5} label value={33} />',
@@ -164,15 +146,15 @@ export function ProgressExample() {
 										'warning',
 									],
 								},
-								size: { type: 'text' },
-								thickness: { type: 'text' },
+								size: { type: 'number' },
+								thickness: { type: 'number' },
+								value: { type: 'number' },
+								buffer: { type: 'number' },
 								stripe: { type: 'checkbox' },
 								animation: { type: 'checkbox' },
 								indeterminate: { type: 'checkbox' },
 								reverse: { type: 'checkbox' },
 								label: { type: 'checkbox' },
-								value: { type: 'number' },
-								buffer: { type: 'number' },
 							},
 							progressExample,
 						)}
