@@ -3,6 +3,7 @@ import { AppProvider } from './components/app';
 import {
 	BtnExample,
 	BtnGroupExample,
+	CardsExample,
 	InputExample,
 	ListExample,
 	MessageExample,
@@ -69,10 +70,18 @@ function App() {
 							</XItem>
 							<XItem to="/progress" LinkComponent={Link}>
 								<XItemSection side={true}>
-									<XIcon>mdi-reload</XIcon>
+									<XIcon>mdi-progress-helper</XIcon>
 								</XItemSection>
 								<XItemSection>
 									<XItemLabel lines={true}>XProgress</XItemLabel>
+								</XItemSection>
+							</XItem>
+							<XItem to="/cards" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-cards</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XCards</XItemLabel>
 								</XItemSection>
 							</XItem>
 						</XList>
@@ -90,6 +99,7 @@ function App() {
 							<Route path="/message" element={<MessageExample />} />
 							<Route path="/spinner" element={<SpinnerExample />} />
 							<Route path="/progress" element={<ProgressExample />} />
+							<Route path="/cards" element={<CardsExample />} />
 						</Routes>
 					),
 				}}

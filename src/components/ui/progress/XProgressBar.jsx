@@ -1,19 +1,20 @@
 import classNames from 'classnames';
-import { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { memo, useMemo } from 'react';
 import './style.scss';
-export function XProgressBar({
+export function XProgressBarRoot({
 	children,
 	className,
+	type = 'bar',
 	value,
 	buffer,
-	trackColor,
 	color,
 	label,
 	stripe,
 	animation,
 	indeterminate,
+	thickness,
 	reverse,
-	...props
 }) {
 	const attrs = useMemo(() => ({
 		role: 'progressbar',
@@ -36,15 +37,15 @@ export function XProgressBar({
 
 	return (
 		<div
-			{...props}
 			{...attrs}
 			className={classNames('x-progress-bar', className, {
 				'x-progress-bar--stripe': !indeterminate && stripe,
 				'x-progress-bar--animation': !indeterminate && animation,
 				'x-progress-bar--indeterminate': indeterminate,
 				'x-progress-bar--reverse': reverse,
-				[`x-progress-bar--${color}`]: color,
+				[`text-${color}`]: color,
 			})}
+			style={{ height: thickness }}
 		>
 			<div {...trackAttrs} className="x-progress-bar__track"></div>
 			<div {...valueAttrs} className="x-progress-bar__value"></div>
@@ -57,3 +58,28 @@ export function XProgressBar({
 		</div>
 	);
 }
+
+export const XProgressBar = memo(XProgressBarRoot);
+
+XProgressBarRoot.propTypes = {
+	children: PropTypes.node,
+	className: PropTypes.string,
+	type: PropTypes.oneOf(['bar', 'circle']),
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	buffer: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	thickness: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	color: PropTypes.oneOf([
+		'primary',
+		'secondary',
+		'success',
+		'negative',
+		'positive',
+		'info',
+		'warning',
+	]),
+	label: PropTypes.bool,
+	stripe: PropTypes.bool,
+	animation: PropTypes.bool,
+	indeterminate: PropTypes.bool,
+	reverse: PropTypes.bool,
+};
