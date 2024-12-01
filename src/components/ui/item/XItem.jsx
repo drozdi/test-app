@@ -20,6 +20,7 @@ export const XItem = memo(function XItem({
 	to,
 	href,
 	target = '_self',
+	vertical = false,
 }) {
 	const TagProp = useMemo(() => (to || href ? LinkComponent : tag), [to, tag]);
 	const isActionable = useMemo(
@@ -43,6 +44,7 @@ export const XItem = memo(function XItem({
 					'x-item--active': active,
 					'x-item--disabled': disabled,
 					'x-item--clickable': isClickable,
+					'x-item--vertical': vertical,
 				},
 				active && !disabled ? activeClass : '',
 			),

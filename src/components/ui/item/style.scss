@@ -1,5 +1,8 @@
 .x-item {
 	@apply flex flex-nowrap relative min-h-12 px-4 py-2 text-inherit transition ease-in-out duration-300 cursor-default;
+	&--vertical {
+		@apply flex-col;
+	}
 	&--active {
 		@apply text-primary;
 	}
@@ -10,6 +13,10 @@
 	&:has(input:disabled) {
 		@apply cursor-not-allowed opacity-60;
 	}
+}
+
+.x-item---vertical .x-item__section + .x-item__section {
+	@apply mt-2;
 }
 
 .x-item--dense,
@@ -27,13 +34,14 @@
 	> .x-item__backdor {
 	@apply opacity-20;
 }
+
+.x-item:not(.x-item--vertical) .x-item__section--main + .x-item__section--main {
+	@apply ml-2;
+}
 .x-item__section {
 	@apply flex flex-col justify-center pr-4 items-start w-auto min-w-0 max-w-full;
 	&--main {
 		@apply flex-1;
-		& + & {
-			@apply ml-2;
-		}
 	}
 	&--top {
 		@apply justify-start;
