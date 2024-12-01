@@ -14,7 +14,13 @@ module.exports = {
 	darkMode: ['selector'],
 	safelist: [
 		'border-color',
-		...'primary secondary accent positive negative info warning background'
+		'justify-start',
+		'justify-center',
+		'justify-end',
+		'items-start',
+		'items-center',
+		'items-end',
+		...'primary secondary accent positive negative info warning surface background'
 			.split(/\s+/)
 			.map((color) => `x-bg-${color}`),
 		...'primary secondary accent positive negative info warning'
@@ -162,7 +168,7 @@ module.exports = {
 				},
 			});*/
 
-			'primary secondary accent positive negative info warning'
+			'primary secondary accent positive negative info warning surface'
 				.split(/\s+/)
 				.forEach((color) => {
 					utilities[`.x-bg-${color}`] = {
