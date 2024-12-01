@@ -28,7 +28,7 @@ export function InputExample() {
 			labelColor: '',
 			placeholder: 'Placeholder',
 			hint: 'Hint',
-			errorMessage: 'Error message',
+			errorMessage: '',
 			color: '',
 			outline: false,
 			field: false,
@@ -37,7 +37,8 @@ export function InputExample() {
 			dense: false,
 			stackLabel: false,
 			disabled: false,
-			hideHint: false,
+			lazyRules: true,
+			hideHint: true,
 			hideMessage: false,
 		},
 		'XInput',
@@ -159,6 +160,10 @@ export function InputExample() {
 						after={<XIcon className="text-primary text-2xl">mdi-close</XIcon>}
 						prepend={<XIcon>mdi-account</XIcon>}
 						append={<XIcon>mdi-lock-off-outline</XIcon>}
+						rules={[
+							(v) => (v && v.length > 2) || 'min 3 characters',
+							(v) => (v && v.length < 7) || 'max 6 characters',
+						]}
 					/>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 						{inputExample.code}
@@ -203,6 +208,7 @@ export function InputExample() {
 							stackLabel: { type: 'checkbox' },
 							disabled: { type: 'checkbox' },
 							hideMessage: { type: 'checkbox' },
+							lazyRules: { type: 'checkbox' },
 							hideHint: { type: 'checkbox' },
 						},
 						inputExample,

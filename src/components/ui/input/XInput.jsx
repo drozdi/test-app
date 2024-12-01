@@ -1,10 +1,30 @@
 //todo add styles label over border
 import classNames from 'classnames';
-import { forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, memo, useEffect, useRef, useState } from 'react';
+import { useInput } from '../../../hooks/useInput';
 import './style.scss';
 export const XInput = memo(
-	forwardRef(function XInput(
-		{
+	forwardRef(function XInput(props, ref) {
+		/**
+		 * initialValue
+		 * error
+		 * disabled
+		 * required
+		 * rules,
+		 */
+		const {
+			value,
+			dirty,
+			error,
+			errors,
+			focus,
+			inputRef,
+			disabled,
+			attrs: _attrs,
+		} = useInput({ ...props, ref });
+
+		const {
+			lazyRules = false,
 			className = '',
 			dense = false,
 			outline = false,
@@ -19,55 +39,41 @@ export const XInput = memo(
 			label = '',
 			labelColor = '',
 			color = '',
-			bg = '',
-			disabled = false,
+
 			hint,
 			hideHint = false,
 			hideMessage = false,
 			errorMessage,
-			onFocus = () => {},
-			onBlur = () => {},
-			...props
-		},
-		ref,
-	) {
+			//???????
+			bg = '',
+
+			...other
+		} = props;
+
 		const prependRef = useRef();
-		const [isFocus, setFocus] = useState(false);
 		const [shiftLabel, setShiftLabel] = useState(0);
 
 		useEffect(() => {
 			setShiftLabel(prependRef.current?.offsetWidth || 0);
 		}, [prependRef.current]);
-		const isShift = dense && outline && (isFocus || stackLabel);
-		const isError = !!errorMessage;
+
+		const isShift = dense && outline && (focus || stackLabel);
 		const labelStyle = {
 			left: isShift ? -shiftLabel : '',
 		};
 
-		const handleFocus = useCallback(
-			(e) => {
-				setFocus(true);
-				onFocus(e);
-			},
-			[onFocus],
-		);
-		const handleBlur = useCallback(
-			(e) => {
-				setFocus(false);
-				onBlur(e);
-			},
-			[onBlur],
-		);
+		const isError = dirty && (error || !!errorMessage);
+		const errorMes = errorMessage || errors[0] || '';
 
 		const attrs = {
+			...other,
+			..._attrs,
 			type: 'text',
-			...props,
-			disabled: disabled,
 			className: classNames('x-input-native', className),
-			onFocus: handleFocus,
-			onBlur: handleBlur,
 		};
+
 		const modColor = isError ? 'negative' : color;
+
 		return (
 			<div
 				className={classNames('x-input', {
@@ -89,7 +95,7 @@ export const XInput = memo(
 						</div>
 					)}
 					<div className="x-input-control">
-						<input {...attrs} ref={ref} />
+						<input {...attrs} />
 						{label && (
 							<label
 								htmlFor={props.id}
@@ -141,9 +147,11 @@ export const XInput = memo(
 								</p>
 							)
 						)}
-						<p className="x-input-message x-input-message--error">
-							{errorMessage}
-						</p>
+						{dirty && (
+							<p className="x-input-message x-input-message--error">
+								{errorMes}
+							</p>
+						)}
 					</div>
 				)}
 			</div>
