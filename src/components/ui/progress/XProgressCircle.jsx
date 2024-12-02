@@ -69,6 +69,15 @@ export function XProgressCircleRoot({
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox={`0 0 ${diameter} ${diameter}`}
 			>
+				<defs>
+					<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+						<stop offset="0%" stopColor="rgb(var(--x-color-primary))" />
+						<stop offset="25%" stopColor="rgb(var(--x-color-accent))" />
+						<stop offset="50%" stopColor="rgb(var(--x-color-info))" />
+						<stop offset="75%" stopColor="rgb(var(--x-color-positive))" />
+						<stop offset="100%" stopColor="rgb(var(--x-color-secondary))" />
+					</linearGradient>
+				</defs>
 				<circle
 					className="x-progress-circular__underlay"
 					fill="transparent"
@@ -77,7 +86,10 @@ export function XProgressCircleRoot({
 					r={radius}
 					strokeWidth={strokeWidth}
 					strokeDasharray={circumference}
-					strokeDashoffset={'' + indeterminate ? strokeDashOffsetBuffer : 0}
+					strokeDashoffset={
+						(reverse ? '-' : '') +
+						(!indeterminate ? strokeDashOffsetBuffer : 0)
+					}
 				/>
 
 				<circle
@@ -88,7 +100,7 @@ export function XProgressCircleRoot({
 					r={radius}
 					strokeWidth={strokeWidth}
 					strokeDasharray={circumference}
-					strokeDashoffset={'' + strokeDashOffset}
+					strokeDashoffset={(reverse ? '-' : '') + strokeDashOffset}
 				/>
 			</svg>
 			{children && <div className="x-progress-circular__label">{children}</div>}
@@ -117,6 +129,7 @@ XProgressCircleRoot.propTypes = {
 		'positive',
 		'info',
 		'warning',
+		'gradient',
 	]),
 	label: PropTypes.bool,
 	indeterminate: PropTypes.bool,

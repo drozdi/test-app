@@ -75,7 +75,7 @@ export function ProgressExample() {
 				))}
 			</XList>
 			<h3>XProgressCircle</h3>
-			{false && (
+			{true && (
 				<XList dense>
 					{[
 						{
@@ -98,6 +98,17 @@ export function ProgressExample() {
 								<XProgressCircle size={128} thickness={5} indeterminate />
 							),
 							code: '<XProgressCircle size={128} thickness={5} indeterminate />',
+						},
+						{
+							elem: (
+								<XProgressCircle
+									size={128}
+									thickness={5}
+									color="gradient"
+									indeterminate
+								/>
+							),
+							code: '<XProgressCircle size={128} thickness={5} color="gradient" indeterminate />',
 						},
 						{
 							elem: (
@@ -155,6 +166,7 @@ export function ProgressExample() {
 										'negative',
 										'info',
 										'warning',
+										'gradient',
 									],
 								},
 								size: { type: 'number' },
