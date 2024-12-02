@@ -1,3 +1,4 @@
+import { AccordionExample } from './accordion';
 import { BtnExample } from './btn';
 import { BtnGroupExample } from './btnGroup';
 import { CardsExample } from './cards';
@@ -7,6 +8,7 @@ import { MessageExample } from './message';
 import { ProgressExample } from './progress';
 import { SpinnerExample } from './spinner';
 
+export * from './accordion';
 export * from './btn';
 export * from './btnGroup';
 export * from './cards';
@@ -25,6 +27,7 @@ export default function ({
 	spinner = false,
 	progress = false,
 	cards = false,
+	accordion = false,
 }) {
 	return (
 		<div className="py-8">
@@ -36,6 +39,7 @@ export default function ({
 			{spinner && <SpinnerExample />}
 			{progress && <ProgressExample />}
 			{cards && <CardsExample />}
+			{accordion && <AccordionExample />}
 		</div>
 	);
 }

@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import { AppProvider } from './components/app';
 import {
+	AccordionExample,
 	BtnExample,
 	BtnGroupExample,
 	CardsExample,
@@ -84,6 +85,14 @@ function App() {
 									<XItemLabel lines={true}>XCards</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/accordion" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-table-column</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XAccordion</XItemLabel>
+								</XItemSection>
+							</XItem>
 						</XList>
 					),
 					header: <ThemeProvider.Toggler></ThemeProvider.Toggler>,
@@ -100,6 +109,7 @@ function App() {
 							<Route path="/spinner" element={<SpinnerExample />} />
 							<Route path="/progress" element={<ProgressExample />} />
 							<Route path="/cards" element={<CardsExample />} />
+							<Route path="/accordion" element={<AccordionExample />} />
 						</Routes>
 					),
 				}}
