@@ -77,13 +77,13 @@
 .x-item__label {
 	@apply max-w-full;
 	&--header {
-		@apply p-4 text-white/65;
+		@apply p-4 opacity-65;
 	}
 	&--overline {
-		@apply text-xs font-medium tracking-widest uppercase text-white/70;
+		@apply text-xs font-medium tracking-widest uppercase opacity-70;
 	}
 	&--caption {
-		@apply text-xs font-normal text-white/55;
+		@apply text-xs font-normal opacity-60;
 	}
 	&--lines {
 		@apply truncate;
