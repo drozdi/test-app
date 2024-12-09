@@ -86,7 +86,7 @@
 	@apply opacity-20 !important;
 }
 .x-btn--active {
-	@apply shadow-md !important;
+	@apply shadow-md shadow-black/50 !important;
 }
 
 .x-btn--xs {
