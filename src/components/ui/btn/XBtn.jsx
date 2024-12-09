@@ -10,7 +10,7 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 	const props = useXBtnGroupContext(params);
 	const { children, className, active, icon, iconRight, color, size } = props;
 
-	const { isSelected, attrs, TagProp } = useBtn({ ...props, ref });
+	const { isSelected, isLink, attrs, TagProp } = useBtn({ ...props, ref });
 
 	const isIcon = useMemo(
 		() =>
@@ -36,7 +36,7 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 					'x-btn--round': props.round,
 					'x-btn--rounded': props.rounded,
 					'x-btn--dimmed': props.dimmed,
-					'x-btn--link': props.link,
+					'x-btn--link': props.link || isLink,
 					'x-btn--icon': isIcon,
 					'x-btn--active': selected,
 					[`x-btn--${color}`]: color,

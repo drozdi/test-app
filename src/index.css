@@ -2,8 +2,8 @@
 	--body-bg: 255, 255, 255;
 	--body-color: 0, 0, 0;
 
-	--link-color: 0, 174, 255;
-	--link-hover-color: 0, 102, 204;
+	--link-color: 0, 0, 0;
+	--link-hover-color: 0, 0, 0;
 
 	--border-color: 0, 0, 0, 0.2;
 	--scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 255, 0.2);
@@ -39,8 +39,8 @@
 	--body-bg: 255, 255, 255;
 	--body-color: 0, 0, 0;
 
-	--link-color: 0, 174, 204;
-	--link-hover-color: 0, 102, 204;
+	--link-color: 0, 0, 0;
+	--link-hover-color: 0, 0, 0;
 
 	--border-color: 0, 0, 0, 0.2;
 
@@ -96,11 +96,11 @@
 		color: rgb(var(--body-color));
 	}
 	a {
-		color: rgb(var(--link-color));
+		/*color: rgb(var(--link-color));*/
 		text-decoration: none;
 	}
 	a[href]:hover {
-		color: rgb(var(--link-hover-color));
+		/*color: rgb(var(--link-hover-color));*/
 		text-decoration: underlined;
 	}
 	* {

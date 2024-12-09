@@ -163,6 +163,7 @@ export function useBtn({
 	return {
 		TagProp,
 		isSelected,
+		isLink: TagProp === LinkComponent,
 		focusVisible,
 		active,
 		buttonRef,
