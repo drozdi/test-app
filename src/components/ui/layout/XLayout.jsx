@@ -38,12 +38,12 @@ export function XLayout({
 	const $s = useApp().$sm('LAYOUT');
 	const [ls, setLs] = $s.useState('left', {
 		size: 300,
-		open: !belowBreakpoint,
+		open: true,
 		mini: true,
 	});
 	const [rs, setRs] = $s.useState('right', {
 		size: 300,
-		open: !belowBreakpoint,
+		open: true,
 		mini: true,
 	});
 	$s.active = true;
