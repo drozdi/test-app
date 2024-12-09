@@ -227,7 +227,7 @@
 	@apply flex-auto w-full min-h-3 relative text-xs/none px-3 py-1 overflow-hidden;
 }
 .x-input-message {
-	@apply transition-position relative -top-full -translate-y-1;
+	@apply transition-position relative -top-full -translate-y-full;
 }
 .x-input-message--hint {
 }
