@@ -17,7 +17,7 @@ export function useProps(initial = {}, tag = '', body = '') {
 		for (let prop in props) {
 			if (props[prop]) {
 				if (isBoolean(props[prop])) {
-					str += `\n ${prop}={${props[prop]}}`;
+					str += `\n ${prop}`;
 				} else {
 					str += `\n ${prop}="${props[prop]}"`;
 				}
