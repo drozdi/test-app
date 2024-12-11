@@ -6,7 +6,7 @@
 
 .x-btn-outline,
 .x-btn-underlay {
-	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none;
+	@apply absolute top-0 left-0 w-full h-full rounded-inherit pointer-events-none transition duration-200 ease-in-out;
 }
 .x-btn-outline {
 	@apply hidden bg-transparent border border-inherit opacity-80;
@@ -19,23 +19,26 @@
 	@apply opacity-15;
 }
 .x-btn:focus .x-btn-underlay {
-	@apply opacity-[0.18];
+	@apply opacity-20;
 }
 .x-btn:active .x-btn-underlay {
-	@apply opacity-20;
+	@apply opacity-25;
 }
 
 .x-btn--tonal .x-btn-underlay {
-	@apply opacity-15;
-}
-.x-btn--tonal:hover .x-btn-underlay {
-	@apply opacity-20;
-}
-.x-btn--tonal:focus .x-btn-underlay {
-	@apply opacity-[0.22];
-}
-.x-btn--tonal:active .x-btn-underlay {
 	@apply opacity-25;
+}
+.x-btn--tonal:hover .x-btn-underlay,
+.x-btn--plain:hover .x-btn-underlay {
+	@apply opacity-35;
+}
+.x-btn--tonal:focus .x-btn-underlay,
+.x-btn--plain:focus .x-btn-underlay {
+	@apply opacity-40;
+}
+.x-btn--tonal:active .x-btn-underlay,
+.x-btn--plain:active .x-btn-underlay {
+	@apply opacity-45;
 }
 
 .x-btn--text .x-btn-underlay,
@@ -78,12 +81,12 @@
 		@apply opacity-100;
 	}
 }
-
-.x-btn--active.x-btn--tonal .x-btn-underlay {
-	@apply opacity-25 !important;
+.x-btn--active.x-btn--tonal .x-btn-underlay,
+.x-btn--active.x-btn--plain .x-btn-underlay {
+	@apply opacity-45 !important;
 }
 .x-btn--active .x-btn-underlay {
-	@apply opacity-20 !important;
+	@apply opacity-25 !important;
 }
 .x-btn--active {
 	@apply shadow-md shadow-black/50 !important;
@@ -187,5 +190,5 @@
 	@apply bg-dimmed !important;
 }
 .x-btn--dimmed .x-btn-outline {
-	@apply border-separator bg-transparent;
+	@apply border-separator;
 }
