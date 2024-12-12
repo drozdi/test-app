@@ -4,7 +4,7 @@ import { forwardRef, memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
 import { useXBtnGroupContext, XBtnGroup } from './Group';
-import './style.scss';
+import './style.css';
 
 const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 	const props = useXBtnGroupContext(params);
@@ -26,7 +26,7 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 			className={classNames(
 				'x-btn',
 				{
-					'x-btn--flat': props.flat || props.link,
+					'x-btn--flat': props.flat || props.link || isLink,
 					'x-btn--text': props.text,
 					'x-btn--tonal': props.tonal,
 					'x-btn--plain': props.plain,

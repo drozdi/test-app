@@ -30,23 +30,32 @@ export function InputExample() {
 			hint: 'Hint',
 			errorMessage: '',
 			color: '',
-			outline: true,
+			outline: false,
 			field: true,
 			square: false,
 			underlined: false,
-			dense: true,
-			stackLabel: true,
+			dense: false,
+			stackLabel: false,
 			disabled: false,
 			lazyRules: true,
-			hideHint: true,
-			hideMessage: true,
+			hideHint: false,
+			hideMessage: false,
+			///???
+			before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
+			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,
+			prepend: <XIcon>mdi-account</XIcon>,
+			append: <XIcon>mdi-lock-off-outline</XIcon>,
+			/*rules: [
+				(v) => (v && v.length > 2) || 'min 3 characters',
+				(v) => (v && v.length < 7) || 'max 6 characters',
+			],*/
 		},
 		'XInput',
 	);
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
-			{true && (
+			{false && (
 				<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 					<thead>
 						<tr className="*:text-center">
@@ -148,23 +157,7 @@ export function InputExample() {
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
-					<XInput
-						{...inputExample.props}
-						before={
-							false && (
-								<XIcon className="text-warning text-4xl">
-									mdi-home-account
-								</XIcon>
-							)
-						}
-						after={<XIcon className="text-primary text-2xl">mdi-close</XIcon>}
-						prepend={<XIcon>mdi-account</XIcon>}
-						append={<XIcon>mdi-lock-off-outline</XIcon>}
-						rules={[
-							(v) => (v && v.length > 2) || 'min 3 characters',
-							(v) => (v && v.length < 7) || 'max 6 characters',
-						]}
-					/>
+					<XInput {...inputExample.props} />
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 						{inputExample.code}
 					</pre>

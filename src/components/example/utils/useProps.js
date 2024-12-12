@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { isValidElement, useMemo, useState } from 'react';
 import { isBoolean } from '../../../utils/is';
 
 export function useProps(initial = {}, tag = '', body = '') {
@@ -18,6 +18,8 @@ export function useProps(initial = {}, tag = '', body = '') {
 			if (props[prop]) {
 				if (isBoolean(props[prop])) {
 					str += `\n ${prop}`;
+				} else if (isValidElement(props[prop])) {
+					//str += `\n ${props[prop].toString()}`;
 				} else {
 					str += `\n ${prop}="${props[prop]}"`;
 				}

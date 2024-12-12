@@ -41,11 +41,6 @@
 	@apply opacity-45;
 }
 
-.x-btn--text .x-btn-underlay,
-.x-btn--outline:not(.x-btn--tonal, .x-btn--plain) .x-btn-underlay {
-	@apply opacity-0 !important;
-}
-
 .x-btn--outline,
 .x-btn--tonal,
 .x-btn--plain,
@@ -73,23 +68,35 @@
 		@apply opacity-80;
 	}
 }
-.x-btn--text:hover,
-.x-btn--plain:hover,
-.x-btn--text.x-btn--active,
-.x-btn--plain.x-btn--active {
-	.x-btn-content {
-		@apply opacity-100;
+
+.x-btn--text,
+.x-btn--plain {
+	&:hover,
+	&.x-btn--active {
+		.x-btn-content {
+			@apply opacity-100;
+		}
 	}
 }
-.x-btn--active.x-btn--tonal .x-btn-underlay,
-.x-btn--active.x-btn--plain .x-btn-underlay {
-	@apply opacity-45 !important;
-}
+
 .x-btn--active .x-btn-underlay {
 	@apply opacity-25 !important;
 }
+
+.x-btn--tonal,
+.x-btn--plain {
+	&.x-btn--active .x-btn-underlay {
+		@apply opacity-45 !important;
+	}
+}
+
 .x-btn--active {
 	@apply shadow-md shadow-black/50 !important;
+}
+
+.x-btn--text .x-btn-underlay,
+.x-btn--outline:not(.x-btn--tonal, .x-btn--plain) .x-btn-underlay {
+	@apply opacity-0 !important;
 }
 
 .x-btn--xs {
@@ -142,43 +149,85 @@
 .x-btn--primary {
 	@apply bg-primary;
 }
-.x-btn--primary:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--primary:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-primary;
 }
 .x-btn--secondary {
 	@apply bg-secondary;
 }
-.x-btn--secondary:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--secondary:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-secondary;
 }
 .x-btn--accent {
 	@apply bg-accent;
 }
-.x-btn--accent:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--accent:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-accent;
 }
 .x-btn--positive {
 	@apply bg-positive;
 }
-.x-btn--positive:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--positive:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-positive;
 }
 .x-btn--negative {
 	@apply bg-negative;
 }
-.x-btn--negative:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--negative:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-negative;
 }
 .x-btn--info {
 	@apply bg-info;
 }
-.x-btn--info:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--info:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-info;
 }
 .x-btn--warning {
 	@apply bg-warning;
 }
-.x-btn--warning:where(.x-btn--tonal, .x-btn--outline, .x-btn--text, .x-btn--plain) {
+.x-btn--warning:where(
+		.x-btn--tonal,
+		.x-btn--outline,
+		.x-btn--text,
+		.x-btn--plain,
+		.x-btn--link
+	) {
 	@apply text-warning;
 }
 
