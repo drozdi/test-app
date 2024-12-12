@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 import { isArray } from '../../../utils/is';
 import { XMessage } from '../message';
-import './style.scss';
+import './style.css';
 import { XMessagesContext } from './XMessagesContext';
 
 let messageIdx = 0;

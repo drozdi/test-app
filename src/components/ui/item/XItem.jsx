@@ -1,28 +1,35 @@
 import classNames from 'classnames';
-import { memo, useMemo } from 'react';
-import './style.scss';
+import PropTypes from 'prop-types';
+import { forwardRef, useMemo } from 'react';
+import './style.css';
 const clickableTag = ['a', 'label'];
 const disRoleTag = ['label'];
 const disDisabledTag = ['div', 'span', 'a', 'label'];
 
-export const XItem = memo(function XItem({
-	tag = 'div',
-	className,
-	children,
-	tabIndex = 0,
-	dense = false,
-	active = false,
-	activeClass,
-	disabled = false,
-	role = null,
-	onClick = null,
-	LinkComponent = 'a',
-	to,
-	href,
-	target = '_self',
-	vertical = false,
-}) {
-	const TagProp = useMemo(() => (to || href ? LinkComponent : tag), [to, tag]);
+export const XItem = forwardRef(function XItem(
+	{
+		tag = 'div',
+		className,
+		children,
+		tabIndex = 0,
+		vertical,
+		dense,
+		active,
+		activeClass,
+		disabled,
+		role,
+		onClick,
+		LinkComponent = 'a',
+		to,
+		href,
+		target = '_self',
+	},
+	ref,
+) {
+	const TagProp = useMemo(
+		() => (to || href ? LinkComponent : tag),
+		[to, href, LinkComponent, tag],
+	);
 	const isActionable = useMemo(
 		() =>
 			clickableTag.includes(TagProp) ||
@@ -88,3 +95,21 @@ export const XItem = memo(function XItem({
 		</TagProp>
 	);
 });
+
+XItem.propTypes = {
+	tag: PropTypes.string,
+	children: PropTypes.node,
+	className: PropTypes.string,
+	dense: PropTypes.bool,
+	active: PropTypes.bool,
+	disabled: PropTypes.bool,
+	vertical: PropTypes.bool,
+	activeClass: PropTypes.string,
+	tabIndex: PropTypes.number,
+	role: PropTypes.string,
+	onClick: PropTypes.func,
+	LinkComponent: PropTypes.any,
+	to: PropTypes.string,
+	href: PropTypes.string,
+	target: PropTypes.string,
+};

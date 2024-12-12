@@ -47,9 +47,11 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 		>
 			<div className="x-btn-underlay"></div>
 			<div className="x-btn-outline"></div>
-			{icon && <XIcon className={!isIcon && '-ml-2 mr-2'}>{icon}</XIcon>}
+			{icon && <XIcon className={!isIcon ? '-ml-2 mr-2' : ''}>{icon}</XIcon>}
 			{children && <span className="x-btn-content">{children}</span>}
-			{iconRight && <XIcon className={!isIcon && 'ml-2 -mr-2'}>{iconRight}</XIcon>}
+			{iconRight && (
+				<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
+			)}
 		</TagProp>
 	);
 });

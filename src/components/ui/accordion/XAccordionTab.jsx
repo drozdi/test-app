@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import './style.scss';
+import './style.css';
 export function XAccordionTab({ className, children, header, ...props }) {
 	const [expanded, setExpanded] = useState(false);
 	let toggleExpanded = (e) => {
