@@ -12,15 +12,18 @@ export function XAccordionTab({
 	onClick,
 	...props
 }) {
-	const [expanded, setExpanded] = useState(false);
-
 	const ctx = useXAccordionContext();
 	const isActive = ctx?.isItemActive(value);
-	const toggleExpanded = (e) => {
+	const [expanded, setExpanded] = useState(isActive);
+
+	const toggleExpanded = () => {
 		ctx || setExpanded((v) => !v);
 	};
 
 	const handleClick = (event) => {
+		if (disabled) {
+			return;
+		}
 		onClick?.(event);
 		ctx?.onChange?.(value);
 		toggleExpanded(event);
@@ -29,22 +32,35 @@ export function XAccordionTab({
 		<div
 			{...props}
 			className={classNames('x-accordion-tab', {
-				'x-accordion-tab--expanded': expanded,
+				'x-accordion-tab--expanded': isActive ?? expanded,
+				'x-accordion-tab--disabled': disabled,
 			})}
 		>
 			<div
-				className="x-accordion-header"
+				className="x-accordion-control"
 				role="button"
 				disabled={disabled}
-				aria-expanded={isActive}
+				aria-expanded={isActive ?? expanded}
 				onClick={handleClick}
 			>
 				<div>{header}</div>
 				<div>
-					<i className="x-accordion-header-icon"></i>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="currentColor"
+						className="x-accordion-chevron"
+					>
+						<path
+							fillRule="evenodd"
+							d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+							clipRule="evenodd"
+						/>
+					</svg>
 				</div>
 			</div>
-			<div className="x-accordion-content">{children}</div>
+			<div className="x-accordion-panel">
+				<div className="x-accordion-content">{children}</div>
+			</div>
 		</div>
 	);
 }
