@@ -21,7 +21,8 @@ export function XAccordion({
 				: (value ?? (multiple ? [] : undefined)),
 	);
 	const context = {
-		isItemActive: (value) => (multiple ? current.includes(value) : value === current),
+		isItemActive: (value) =>
+			multiple ? current?.includes(value) : value === current,
 		onChange: (value) => {
 			if (multiple) {
 				setCurrent((current) => {

@@ -8,6 +8,7 @@ export function AccordionExample() {
 			field: false,
 			square: false,
 			separated: false,
+			multiple: false,
 		},
 		'XAccordion',
 		`
@@ -59,6 +60,7 @@ export function AccordionExample() {
 								field: { type: 'checkbox' },
 								square: { type: 'checkbox' },
 								separated: { type: 'checkbox' },
+								multiple: { type: 'checkbox' },
 							},
 							accordionExample,
 						)}
