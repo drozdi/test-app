@@ -69,4 +69,7 @@ XAccordionTab.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
 	header: PropTypes.string,
+	disabled: PropTypes.bool,
+	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	onClick: PropTypes.func,
 };

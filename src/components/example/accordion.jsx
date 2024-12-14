@@ -10,11 +10,22 @@ export function AccordionExample() {
 			separated: false,
 		},
 		'XAccordion',
+		`
+	<XAccordionTab header="Header I" value="acc-1">
+		<p>sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y</p>
+	</XAccordionTab>
+	<XAccordionTab header="Header II" value="acc-2" disabled>
+		<p>sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y</p>
+	</XAccordionTab>
+	<XAccordionTab header="Header III" value="acc-3">
+		<p>sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y</p>
+	</XAccordionTab>
+`,
 	);
 	return (
 		<div className="max-w-4xl m-auto py-4 relative">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XAccordion</h2>
-			<div className="w-96 absolute left-1/2 -translate-x-1/2 top-12 pt-8">
+			<div className="p-4">
 				<XAccordion {...accordionExample.props} value="acc-1">
 					<XAccordionTab header="Header I" value="acc-1">
 						<p>

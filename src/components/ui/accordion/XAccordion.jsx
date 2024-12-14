@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { XAccordionContext } from './XAccordionContext';
 export function XAccordion({
@@ -55,3 +56,15 @@ export function XAccordion({
 		</div>
 	);
 }
+
+XAccordion.propTypes = {
+	children: PropTypes.node,
+	className: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.number, PropTypes.array, PropTypes.string]),
+	multiple: PropTypes.bool,
+	border: PropTypes.bool,
+	field: PropTypes.bool,
+	square: PropTypes.bool,
+	separated: PropTypes.bool,
+	onChange: PropTypes.bool,
+};
