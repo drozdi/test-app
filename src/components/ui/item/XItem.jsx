@@ -90,7 +90,7 @@ export const XItem = forwardRef(function XItem(
 	]);
 	return (
 		<TagProp {...attrs}>
-			<span className="x-item__backdor" />
+			<span className="x-item__underlay" />
 			{children}
 		</TagProp>
 	);
