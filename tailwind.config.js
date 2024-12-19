@@ -16,9 +16,11 @@ module.exports = {
 		'border-color',
 		'justify-start',
 		'justify-center',
+		'justify-between',
 		'justify-end',
 		'items-start',
 		'items-center',
+		'items-between',
 		'items-end',
 		...'primary secondary accent positive negative info warning surface background'
 			.split(/\s+/)

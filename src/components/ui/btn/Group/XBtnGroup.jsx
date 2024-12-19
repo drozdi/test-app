@@ -15,6 +15,7 @@ export function XBtnGroup(params = {}) {
 		onClick,
 		onChange,
 		value,
+		align,
 		...props
 	} = params;
 
@@ -72,7 +73,10 @@ export function XBtnGroup(params = {}) {
 			className={classNames('x-btn-group', className, {
 				'x-btn-group--vertical': vertical,
 				'x-btn-group--separator': separator,
+				'x-btn-group--spread': props.spread,
 				'x-btn-group--round': props.round,
+				[`justify-` + align]: !vertical && align,
+				[`items-` + align]: vertical && align,
 			})}
 		>
 			<XBtnGroupContext.Provider value={context}>
@@ -92,4 +96,5 @@ XBtnGroup.propTypes = {
 	onClick: PropTypes.func,
 	onChange: PropTypes.func,
 	value: PropTypes.any,
+	align: PropTypes.oneOf(['start', 'center', 'between', 'end']),
 };

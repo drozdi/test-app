@@ -4,6 +4,7 @@ import { Form, useProps } from './utils';
 export function BtnGroupExample() {
 	const btnGroupExample = useProps(
 		{
+			spread: true,
 			vertical: false,
 			multiple: false,
 			selected: true,
@@ -67,6 +68,12 @@ export function BtnGroupExample() {
 							vertical: { type: 'checkbox' },
 							selected: { type: 'checkbox' },
 							multiple: { type: 'checkbox' },
+							spread: { type: 'checkbox' },
+
+							align: {
+								type: 'select',
+								values: ['start', 'center', 'between', 'end'],
+							},
 
 							'XBtn options': { type: 'header' },
 							color: {
@@ -97,7 +104,6 @@ export function BtnGroupExample() {
 							round: { type: 'checkbox' },
 							disabled: { type: 'checkbox' },
 							link: { type: 'checkbox' },
-							active: { type: 'checkbox' },
 						},
 						btnGroupExample,
 					)}
