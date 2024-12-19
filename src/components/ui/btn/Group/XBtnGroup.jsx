@@ -48,7 +48,9 @@ export function XBtnGroup(params = {}) {
 			setCurrent(multiple ? [] : undefined);
 		}
 	}, [multiple]);
-
+	useEffect(() => {
+		setCurrent(value ?? (multiple ? [] : undefined));
+	}, [value]);
 	useEffect(() => onChange?.(current), [current]);
 
 	const context = {
