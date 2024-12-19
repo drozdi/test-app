@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { forwardRef, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+
 import './style.css';
 const clickableTag = ['a', 'label'];
 const disRoleTag = ['label'];
@@ -19,7 +21,8 @@ export const XItem = forwardRef(function XItem(
 		disabled,
 		role,
 		onClick,
-		LinkComponent = 'a',
+		LinkComponent = Link,
+		hoverable,
 		to,
 		href,
 		target = '_self',
@@ -37,10 +40,8 @@ export const XItem = forwardRef(function XItem(
 			typeof onClick === 'function',
 		[TagProp, onClick],
 	);
-	const isClickable = useMemo(
-		() => !disabled && isActionable,
-		[disabled, isActionable],
-	);
+	const isClickable = !disabled && isActionable;
+	const isHoverable = isClickable || hoverable;
 	const attrs = useMemo(() => {
 		const attrs = {
 			className: classNames(
@@ -51,6 +52,7 @@ export const XItem = forwardRef(function XItem(
 					'x-item--active': active,
 					'x-item--disabled': disabled,
 					'x-item--clickable': isClickable,
+					'x-item--hoverable': isHoverable,
 					'x-item--vertical': vertical,
 				},
 				active && !disabled ? activeClass : '',
@@ -104,6 +106,7 @@ XItem.propTypes = {
 	active: PropTypes.bool,
 	disabled: PropTypes.bool,
 	vertical: PropTypes.bool,
+	hoverable: PropTypes.bool,
 	activeClass: PropTypes.string,
 	tabIndex: PropTypes.number,
 	role: PropTypes.string,
