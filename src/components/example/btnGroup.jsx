@@ -7,7 +7,8 @@ export function BtnGroupExample() {
 			spread: true,
 			vertical: false,
 			multiple: false,
-			selected: true,
+			selectable: false,
+			switchable: false,
 			separator: false,
 			color: undefined,
 			size: undefined,
@@ -64,10 +65,12 @@ export function BtnGroupExample() {
 					{Form(
 						{
 							'XBtn.Group options': { type: 'header' },
+							switchable: { type: 'switchable' },
+							selectable: { type: 'selectable' },
+							multiple: { type: 'checkbox' },
+
 							separator: { type: 'checkbox' },
 							vertical: { type: 'checkbox' },
-							selected: { type: 'checkbox' },
-							multiple: { type: 'checkbox' },
 							spread: { type: 'checkbox' },
 
 							align: {
