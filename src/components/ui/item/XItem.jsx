@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { forwardRef, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 
 import './style.css';
 const clickableTag = ['a', 'label'];
@@ -21,7 +20,7 @@ export const XItem = forwardRef(function XItem(
 		disabled,
 		role,
 		onClick,
-		LinkComponent = Link,
+		LinkComponent = 'a',
 		hoverable,
 		to,
 		href,
