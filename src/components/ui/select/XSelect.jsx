@@ -1,8 +1,10 @@
 import classNames from 'classnames';
-import { useRef, useMemo}
+import { useMemo, useRef } from 'react';
 import './style.css';
+
 export const XSelect = (props) => {
 	const {
+		children,
 		className,
 		dense,
 		outline,
@@ -17,6 +19,7 @@ export const XSelect = (props) => {
 		label,
 		labelColor,
 		color,
+		disabled,
 
 		lazyRules,
 		hint,
@@ -44,8 +47,7 @@ export const XSelect = (props) => {
 	const attrs = {
 		type: 'text',
 		...other,
-		..._attrs,
-		className: classNames('x-input-native', className),
+		className: classNames('x-select-native', className),
 	};
 
 	const modColor = isError ? 'negative' : color;
@@ -79,7 +81,7 @@ export const XSelect = (props) => {
 				<div className="x-select-underlined"></div>
 				{prepend && <div className="x-select-prepend">{prepend}</div>}
 				<div className="x-select-control" ref={controlRef}>
-					<input {...attrs} />
+					<select {...attrs}>{children}</select>
 					{label && (
 						<label
 							htmlFor={props.id}
@@ -116,7 +118,7 @@ export const XSelect = (props) => {
 							</p>
 						)
 					)}
-					{dirty && (
+					{false && (
 						<p className="x-select-message x-select-message--error">
 							{errorMes}
 						</p>

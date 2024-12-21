@@ -9,6 +9,7 @@ import {
 	ListExample,
 	MessageExample,
 	ProgressExample,
+	SelectExample,
 	SpinnerExample,
 } from './components/example';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
@@ -93,6 +94,14 @@ function App() {
 									<XItemLabel lines={true}>XAccordion</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/select" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-select</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XSelect</XItemLabel>
+								</XItemSection>
+							</XItem>
 						</XList>
 					),
 					header: <ThemeProvider.Toggler></ThemeProvider.Toggler>,
@@ -110,6 +119,8 @@ function App() {
 							<Route path="/progress" element={<ProgressExample />} />
 							<Route path="/cards" element={<CardsExample />} />
 							<Route path="/accordion" element={<AccordionExample />} />
+							<Route path="/accordion" element={<AccordionExample />} />
+							<Route path="/select" element={<SelectExample />} />
 						</Routes>
 					),
 				}}
