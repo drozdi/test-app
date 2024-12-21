@@ -8,5 +8,6 @@ export * from './list';
 export * from './message';
 export * from './messages';
 export * from './progress';
+export * from './select';
 export * from './spinner';
 export * from './toast';
