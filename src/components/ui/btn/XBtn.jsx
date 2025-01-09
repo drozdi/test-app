@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 import { memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
-import { useXBtnGroupContext, XBtnGroup } from './Group';
+import { XBtnGroup } from './Group';
 import './style.css';
 
 import { forwardRefWithAs, render } from '../../../utils/render';
 
 function XBtnFn(params = {}, ref) {
-	const ctx = useXBtnGroupContext();
-	const props = { ...ctx?.btnProps, ...params };
+	//const ctx = useXBtnGroupContext();
+	const props = { /*...ctx?.btnProps,*/ ...params };
 
-	if (ctx) {
+	/*if (ctx) {
 		props.onClick = (event, value) => {
 			ctx.onChange?.(props.value);
 			params.onClick?.(event, value);
 		};
 		props.active = ctx.isActive?.(props.value) || params.active;
 		props.disabled = ctx.isDisabled?.(props.value) || params.disabled;
-	}
+	}*/
 
 	const { children, className, active, icon, iconRight, color, size, value } = props;
 
@@ -33,6 +33,7 @@ function XBtnFn(params = {}, ref) {
 	);
 
 	return render({
+		...props,
 		...attrs,
 		as: TagProp,
 		className: classNames(

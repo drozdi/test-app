@@ -8,6 +8,7 @@ export function forwardRefWithAs(component) {
 }
 
 export function render({ as, children, ...props }) {
+	console.log(as, props);
 	if (isFunction(children)) {
 		return children(props);
 	}

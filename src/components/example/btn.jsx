@@ -42,111 +42,112 @@ export function BtnExample() {
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn</h2>
-			<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
-				<thead>
-					<tr className="*:text-center">
-						<td>color</td>
-						<td>standart</td>
-						<td>flat</td>
-						<td>outline</td>
-						<td>tonal</td>
-						<td>plain</td>
-						<td>text</td>
-						<td>active</td>
-					</tr>
-				</thead>
-				<tbody>
-					{'default primary secondary accent positive negative info warning dimmed'
-						.split(/\s+/)
-						.map((color) => (
-							<tr
-								key={color}
-								className="*:border *:border-separator *:p-2 *:text-center"
-							>
-								<td>
-									{color}
-									<label className="block">
-										<input
-											type="checkbox"
-											name={color}
-											checked={disables[color]}
-											onChange={({ target }) =>
-												setDisables((v) => ({
-													...v,
-													[target.name]: !v[target.name],
-												}))
-											}
-										/>
-										<span className="ml-3 font-medium text-slate-500">
-											Disabled
-										</span>
-									</label>
-								</td>
-								<td>
-									<XBtn disabled={disables[color]} color={color}>
-										Default
-									</XBtn>
-								</td>
-								<td>
-									<XBtn
-										disabled={disables[color]}
-										color={color}
-										flat={true}
-									>
-										Flat
-									</XBtn>
-								</td>
-								<td>
-									<XBtn
-										disabled={disables[color]}
-										color={color}
-										outline={true}
-									>
-										Outline
-									</XBtn>
-								</td>
-								<td>
-									<XBtn
-										disabled={disables[color]}
-										color={color}
-										tonal={true}
-									>
-										Tonal
-									</XBtn>
-								</td>
-								<td>
-									<XBtn
-										disabled={disables[color]}
-										color={color}
-										plain={true}
-									>
-										Plain
-									</XBtn>
-								</td>
-								<td>
-									<XBtn
-										disabled={disables[color]}
-										color={color}
-										text={true}
-									>
-										Text
-									</XBtn>
-								</td>
-								<td>
-									<XBtn
-										disabled={disables[color]}
-										color={color}
-										active={true}
-									>
-										Active
-									</XBtn>
-								</td>
-							</tr>
-						))}
-				</tbody>
-			</table>
-			<hr className="my-2" />
-			<XBtn link={true}>Link</XBtn>
+			{false && (
+				<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
+					<thead>
+						<tr className="*:text-center">
+							<td>color</td>
+							<td>standart</td>
+							<td>flat</td>
+							<td>outline</td>
+							<td>tonal</td>
+							<td>plain</td>
+							<td>text</td>
+							<td>active</td>
+						</tr>
+					</thead>
+					<tbody>
+						{'default primary secondary accent positive negative info warning dimmed'
+							.split(/\s+/)
+							.map((color) => (
+								<tr
+									key={color}
+									className="*:border *:border-separator *:p-2 *:text-center"
+								>
+									<td>
+										{color}
+										<label className="block">
+											<input
+												type="checkbox"
+												name={color}
+												checked={disables[color]}
+												onChange={({ target }) =>
+													setDisables((v) => ({
+														...v,
+														[target.name]: !v[target.name],
+													}))
+												}
+											/>
+											<span className="ml-3 font-medium text-slate-500">
+												Disabled
+											</span>
+										</label>
+									</td>
+									<td>
+										<XBtn disabled={disables[color]} color={color}>
+											Default
+										</XBtn>
+									</td>
+									<td>
+										<XBtn
+											disabled={disables[color]}
+											color={color}
+											flat={true}
+										>
+											Flat
+										</XBtn>
+									</td>
+									<td>
+										<XBtn
+											disabled={disables[color]}
+											color={color}
+											outline={true}
+										>
+											Outline
+										</XBtn>
+									</td>
+									<td>
+										<XBtn
+											disabled={disables[color]}
+											color={color}
+											tonal={true}
+										>
+											Tonal
+										</XBtn>
+									</td>
+									<td>
+										<XBtn
+											disabled={disables[color]}
+											color={color}
+											plain={true}
+										>
+											Plain
+										</XBtn>
+									</td>
+									<td>
+										<XBtn
+											disabled={disables[color]}
+											color={color}
+											text={true}
+										>
+											Text
+										</XBtn>
+									</td>
+									<td>
+										<XBtn
+											disabled={disables[color]}
+											color={color}
+											active={true}
+										>
+											Active
+										</XBtn>
+									</td>
+								</tr>
+							))}
+					</tbody>
+				</table>
+			)}
+
 			<hr className="my-2" />
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
