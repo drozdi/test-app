@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { forwardRef, memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
 import { useXBtnGroupContext, XBtnGroup } from './Group';
 import './style.css';
 
-const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
+import { forwardRefWithAs, render } from '../../../utils/render';
+
+function XBtnFn(params = {}, ref) {
 	const ctx = useXBtnGroupContext();
 	const props = { ...ctx?.btnProps, ...params };
 
@@ -15,8 +17,8 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 			ctx.onChange?.(props.value);
 			params.onClick?.(event, value);
 		};
-		props.active = ctx.isActive?.(props.value);
-		props.disabled = ctx.isDisabled?.(props.value);
+		props.active = ctx.isActive?.(props.value) || params.active;
+		props.disabled = ctx.isDisabled?.(props.value) || params.disabled;
 	}
 
 	const { children, className, active, icon, iconRight, color, size, value } = props;
@@ -30,41 +32,45 @@ const XBtnRoot = forwardRef(function XBtn(params = {}, ref) {
 		[children, icon, iconRight],
 	);
 
-	return (
-		<TagProp
-			{...attrs}
-			className={classNames(
-				'x-btn',
-				{
-					'x-btn--flat': props.flat,
-					'x-btn--text': props.text,
-					'x-btn--tonal': props.tonal,
-					'x-btn--plain': props.plain,
-					'x-btn--outline': props.outline,
-					'x-btn--block': props.block,
-					'x-btn--square': props.square,
-					'x-btn--round': props.round,
-					'x-btn--rounded': props.rounded,
-					'x-btn--dimmed': props.dimmed,
-					'x-btn--link': props.link,
-					'x-btn--icon': isIcon,
-					'x-btn--active': props.active,
-					[`x-btn--${color}`]: color,
-					[`x-btn--${size}`]: size,
-				},
-				className,
-			)}
-		>
-			<div className="x-btn-underlay"></div>
-			<div className="x-btn-outline"></div>
-			{icon && <XIcon className={!isIcon ? '-ml-2 mr-2' : ''}>{icon}</XIcon>}
-			{children && <span className="x-btn-content">{children}</span>}
-			{iconRight && (
-				<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
-			)}
-		</TagProp>
-	);
-});
+	return render({
+		...attrs,
+		as: TagProp,
+		className: classNames(
+			'x-btn',
+			{
+				'x-btn--flat': props.flat,
+				'x-btn--text': props.text,
+				'x-btn--tonal': props.tonal,
+				'x-btn--plain': props.plain,
+				'x-btn--outline': props.outline,
+				'x-btn--block': props.block,
+				'x-btn--square': props.square,
+				'x-btn--round': props.round,
+				'x-btn--rounded': props.rounded,
+				'x-btn--dimmed': props.dimmed,
+				'x-btn--link': props.link,
+				'x-btn--icon': isIcon,
+				'x-btn--active': props.active,
+				[`x-btn--${color}`]: color,
+				[`x-btn--${size}`]: size,
+			},
+			className,
+		),
+		children: (
+			<>
+				<div className="x-btn-underlay"></div>
+				<div className="x-btn-outline"></div>
+				{icon && <XIcon className={!isIcon ? '-ml-2 mr-2' : ''}>{icon}</XIcon>}
+				{children && <span className="x-btn-content">{children}</span>}
+				{iconRight && (
+					<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
+				)}
+			</>
+		),
+	});
+}
+
+const XBtnRoot = forwardRefWithAs(XBtnFn);
 
 XBtnRoot.defaultProps = {
 	LinkComponent: 'a',

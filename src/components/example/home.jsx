@@ -1,25 +1,21 @@
-import { createElement, forwardRef } from 'react';
+import { forwardRefWithAs, render } from '../../utils/render';
+import { XBtn } from '../ui';
 
-function forwardRefWithAs(component, displayName) {
-	return Object.assign(forwardRef(component), {
-		displayName: component.displayName ?? component.name,
+function BtnFn(props, ref) {
+	return render({
+		as: 'button',
+		...props,
+		className: 'p-2 bg-green-600',
+		ref,
 	});
 }
 
-function render({ as, ...props }) {
-	return createElement(as, props);
-}
-
-function BtnFn({ children, as = 'button' }, ref) {
-	return <button className="p-2 bg-green-600">{children}</button>;
-}
-
-const Btn = forwardRefWithAs(BtnFn, 'Btn');
+const Btn = forwardRefWithAs(BtnFn);
 
 export function HomeExample() {
 	return (
 		<div className="p-4">
-			<Btn>Test</Btn>
+			<XBtn as="a">Test Test</XBtn>
 		</div>
 	);
 }
