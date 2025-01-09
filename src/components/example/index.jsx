@@ -13,6 +13,7 @@ export * from './accordion';
 export * from './btn';
 export * from './btnGroup';
 export * from './cards';
+export * from './home';
 export * from './input';
 export * from './list';
 export * from './message';

@@ -5,6 +5,7 @@ import {
 	BtnExample,
 	BtnGroupExample,
 	CardsExample,
+	HomeExample,
 	InputExample,
 	ListExample,
 	MessageExample,
@@ -22,6 +23,14 @@ function App() {
 				{{
 					left: (props) => (
 						<XList separator={true}>
+							<XItem to="/" LinkComponent={Link}>
+								<XItemSection side={true}>
+									<XIcon>mdi-home</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>Home</XItemLabel>
+								</XItemSection>
+							</XItem>
 							<XItem to="/btn" LinkComponent={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-button-pointer</XIcon>
@@ -109,7 +118,7 @@ function App() {
 					//right: 'right',
 					default: (props) => (
 						<Routes>
-							<Route path="/" element={<div>Home</div>} />
+							<Route path="/" element={<HomeExample />} />
 							<Route path="/btn" element={<BtnExample />} />
 							<Route path="/btn-group" element={<BtnGroupExample />} />
 							<Route path="/input" element={<InputExample />} />
