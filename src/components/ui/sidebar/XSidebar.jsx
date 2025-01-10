@@ -233,9 +233,9 @@ const XSidebarRoot = forwardRef(function XSidebarRoot(
 						{miniToggle && !belowBreakpoint && (
 							<div className="xSidebar-toggle-mini">
 								<XBtn
-									color="dimmed"
-									block={true}
-									square={true}
+									dimmed
+									block
+									square
 									icon={
 										isMini
 											? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`

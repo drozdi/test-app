@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { XBtn } from '../ui';
 
 export function HomeExample() {
@@ -6,8 +6,11 @@ export function HomeExample() {
 	useEffect(() => console.log(ref), [ref]);
 	return (
 		<div className="p-4">
-			<XBtn as="a" ref={ref}>
-				Test Test
+			<XBtn as={Fragment} ref={ref}>
+				{(...args) => {
+					console.log(args);
+					return <span className="p-4">dfjsd</span>;
+				}}
 			</XBtn>
 		</div>
 	);

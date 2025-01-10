@@ -8,7 +8,7 @@ import './style.css';
 
 import { forwardRefWithAs, render } from '../../../utils/render';
 
-function XBtnFn(params = {}, ref) {
+function XBtnFn(params, ref) {
 	//const ctx = useXBtnGroupContext();
 	const props = { /*...ctx?.btnProps,*/ ...params };
 
@@ -21,9 +21,9 @@ function XBtnFn(params = {}, ref) {
 		props.disabled = ctx.isDisabled?.(props.value) || params.disabled;
 	}*/
 
-	const { children, className, active, icon, iconRight, color, size, value } = props;
+	const { children, className, icon, iconRight, color, size, value } = props;
 
-	const { isLink, attrs, TagProp } = useBtn({ ...props, ref });
+	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
 
 	const isIcon = useMemo(
 		() =>
@@ -32,53 +32,73 @@ function XBtnFn(params = {}, ref) {
 		[children, icon, iconRight],
 	);
 
-	return render({
-		...props,
-		...attrs,
-		as: TagProp,
-		className: classNames(
-			'x-btn',
-			{
-				'x-btn--flat': props.flat,
-				'x-btn--text': props.text,
-				'x-btn--tonal': props.tonal,
-				'x-btn--plain': props.plain,
-				'x-btn--outline': props.outline,
-				'x-btn--block': props.block,
-				'x-btn--square': props.square,
-				'x-btn--round': props.round,
-				'x-btn--rounded': props.rounded,
-				'x-btn--dimmed': props.dimmed,
-				'x-btn--link': props.link,
-				'x-btn--icon': isIcon,
-				'x-btn--active': props.active,
-				[`x-btn--${color}`]: color,
-				[`x-btn--${size}`]: size,
-			},
-			className,
-		),
-		children: (
-			<>
-				<div className="x-btn-underlay"></div>
-				<div className="x-btn-outline"></div>
-				{icon && <XIcon className={!isIcon ? '-ml-2 mr-2' : ''}>{icon}</XIcon>}
-				{children && <span className="x-btn-content">{children}</span>}
-				{iconRight && (
-					<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
-				)}
-			</>
-		),
-	});
+	const {
+		flat,
+		text,
+		tonal,
+		plain,
+		outline,
+		block,
+		square,
+		round,
+		rounded,
+		dimmed,
+		link,
+		...rest
+	} = props;
+
+	return render(
+		{
+			as: 'button',
+			...rest,
+			...attrs,
+			className: classNames(
+				'x-btn',
+				{
+					'x-btn--flat': flat,
+					'x-btn--text': text,
+					'x-btn--tonal': tonal,
+					'x-btn--plain': plain,
+					'x-btn--outline': outline,
+					'x-btn--block': block,
+					'x-btn--square': square,
+					'x-btn--round': round,
+					'x-btn--rounded': rounded,
+					'x-btn--dimmed': dimmed,
+					'x-btn--link': link,
+					'x-btn--icon': isIcon,
+					'x-btn--active': active,
+					[`x-btn--${color}`]: color,
+					[`x-btn--${size}`]: size,
+				},
+				className,
+			),
+			/*children: (
+				<>
+					<div className="x-btn-underlay"></div>
+					<div className="x-btn-outline"></div>
+					{icon && (
+						<XIcon className={!isIcon ? '-ml-2 mr-2' : ''}>{icon}</XIcon>
+					)}
+					{children && <span className="x-btn-content">{children}</span>}
+					{iconRight && (
+						<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
+					)}
+				</>
+			),*/
+		},
+		{},
+	);
 }
 
 const XBtnRoot = forwardRefWithAs(XBtnFn);
-
-XBtnRoot.defaultProps = {
-	LinkComponent: 'a',
-	target: '_self',
-};
 XBtnRoot.propTypes = {
-	children: PropTypes.oneOfType([PropTypes.node, PropTypes.element, PropTypes.string]),
+	children: PropTypes.oneOfType([
+		PropTypes.node,
+		PropTypes.element,
+		PropTypes.string,
+		PropTypes.func,
+	]),
 	className: PropTypes.string,
 	dimmed: PropTypes.bool,
 	flat: PropTypes.bool,
@@ -102,10 +122,6 @@ XBtnRoot.propTypes = {
 	onClick: PropTypes.func,
 
 	value: PropTypes.any,
-	LinkComponent: PropTypes.any,
-	target: PropTypes.string,
-	to: PropTypes.any,
-	href: PropTypes.any,
 }; //*/
 
 export const XBtn = memo(XBtnRoot);

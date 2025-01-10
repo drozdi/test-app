@@ -1,4 +1,4 @@
-import { createElement, forwardRef } from 'react';
+import { cloneElement, createElement, forwardRef, Fragment } from 'react';
 import { isFunction } from './is';
 
 export function forwardRefWithAs(component) {
@@ -7,8 +7,8 @@ export function forwardRefWithAs(component) {
 	});
 }
 
-export function render(props) {
-	const { as, children, ...rest } = props;
+export function render(props, { tag, refName = 'ref', name }) {
+	let { as: Component = tag, children, ...rest } = props;
 	if ('className' in rest && rest.className && isFunction(rest.className)) {
 		rest.className = rest.className({ ...rest, className: undefined });
 	}
@@ -21,9 +21,9 @@ export function render(props) {
 
 	let resolvedChildren = isFunction(children) ? children(rest) : children;
 
-	console.log(as, rest);
-	if (isFunction(children)) {
-		return children(rest);
+	if (Component === Fragment) {
+		return cloneElement(resolvedChildren, rest);
 	}
-	return createElement(as, rest, children);
+
+	return createElement(Component, rest, resolvedChildren);
 }

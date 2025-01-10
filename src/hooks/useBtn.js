@@ -1,29 +1,28 @@
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { extractEventHandlers } from '../utils/extractEventHandlers';
 import { isFocusVisible } from '../utils/is';
 import { useForkRef } from './useForkRef';
 export function useBtn({
 	disabled,
 	ref: externalRef,
-	type,
+	as: elementType = 'button',
+
+	type = 'button',
+	role = 'button',
 	tabIndex,
 	value,
 	title,
-	LinkComponent = 'a',
+
 	target = '_self',
 	to,
 	href,
-	...props
+	rel,
+	...rest
 }) {
-	const TagProp = useMemo(
-		() => (to || href ? LinkComponent : 'button'),
-		[to, href, LinkComponent],
-	);
-
 	const buttonRef = useRef(null);
 	const handleRef = useForkRef(externalRef, buttonRef);
 	const externalEventHandlers = {
-		...extractEventHandlers(props),
+		...extractEventHandlers(rest),
 	};
 	const [focusVisible, setFocusVisible] = useState(false);
 	const [active, setActive] = useState(false);
@@ -119,15 +118,32 @@ export function useBtn({
 		}
 	};
 
-	const buttonProps = {
-		'aria-disabled': disabled,
+	let additionalProps = {
+		title,
+		disabled,
 		tabIndex: !disabled ? (tabIndex ?? 0) : -1,
-	};
-	const attrs = {
-		...externalEventHandlers,
-		...buttonProps,
-		title: title,
 		ref: handleRef,
+	};
+	if (elementType === 'button') {
+		additionalProps = {
+			...additionalProps,
+			type,
+		};
+	} else {
+		additionalProps = {
+			...additionalProps,
+			role,
+			title,
+			href: elementType === 'a' && !disabled ? href : undefined,
+			target: elementType === 'a' ? target : undefined,
+			type: elementType === 'input' ? type : undefined,
+			disabled: elementType === 'input' ? disabled : undefined,
+			'aria-disabled': !disabled || elementType === 'input' ? undefined : disabled,
+			rel: elementType === 'a' ? rel : undefined,
+		};
+	}
+	let actionProps = {
+		...externalEventHandlers,
 		onBlur: createHandleBlur(externalEventHandlers),
 		onFocus: createHandleFocus(externalEventHandlers),
 		onClick: createHandleClick(externalEventHandlers),
@@ -136,23 +152,19 @@ export function useBtn({
 		onKeyDown: createHandleKeyDown(externalEventHandlers),
 		onKeyUp: createHandleKeyUp(externalEventHandlers),
 	};
-	delete attrs.onFocusVisible;
-	if (TagProp === 'button') {
-		attrs.type = type ?? 'button';
-		attrs.disabled = disabled;
-	} else if (TagProp === LinkComponent) {
-		attrs.to = to;
-		attrs.href = href || to;
-		attrs.role = 'link';
-		attrs.target = target;
-	}
+	delete actionProps.onFocusVisible;
 
 	return {
-		TagProp,
-		isLink: TagProp === LinkComponent,
-		focusVisible,
 		active,
+		focusVisible,
 		buttonRef,
-		attrs,
+		attrs: {
+			...actionProps,
+			...additionalProps,
+			'aria-haspopup': rest['aria-haspopup'],
+			'aria-expanded': rest['aria-expanded'],
+			'aria-controls': rest['aria-controls'],
+			'aria-pressed': rest['aria-pressed'],
+		},
 	};
 }
