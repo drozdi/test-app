@@ -1,21 +1,14 @@
-import { forwardRefWithAs, render } from '../../utils/render';
+import { useEffect, useRef } from 'react';
 import { XBtn } from '../ui';
 
-function BtnFn(props, ref) {
-	return render({
-		as: 'button',
-		...props,
-		className: 'p-2 bg-green-600',
-		ref,
-	});
-}
-
-const Btn = forwardRefWithAs(BtnFn);
-
 export function HomeExample() {
+	const ref = useRef();
+	useEffect(() => console.log(ref), [ref]);
 	return (
 		<div className="p-4">
-			<XBtn as="a">Test Test</XBtn>
+			<XBtn as="a" ref={ref}>
+				Test Test
+			</XBtn>
 		</div>
 	);
 }
