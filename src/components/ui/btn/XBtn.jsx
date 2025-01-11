@@ -3,25 +3,34 @@ import PropTypes from 'prop-types';
 import { memo, useMemo } from 'react';
 import { useBtn } from '../../../hooks/useBtn';
 import { XIcon } from '../icon';
-import { XBtnGroup } from './Group';
+import { XBtnGroup, useXBtnGroupContext } from './Group';
 import './style.css';
 
+import { isFunction } from '../../../utils/is';
 import { forwardRefWithAs, render } from '../../../utils/render';
+import { useDisabled } from '../../internal/disabled';
 
 function XBtnFn(params, ref) {
-	//const ctx = useXBtnGroupContext();
-	const props = { /*...ctx?.btnProps,*/ ...params };
+	const providedDisabled = useDisabled();
+	const ctx = useXBtnGroupContext();
+	const props = { ...ctx?.btnProps, ...params };
 
-	/*if (ctx) {
+	if (ctx) {
 		props.onClick = (event, value) => {
 			ctx.onChange?.(props.value);
 			params.onClick?.(event, value);
 		};
 		props.active = ctx.isActive?.(props.value) || params.active;
 		props.disabled = ctx.isDisabled?.(props.value) || params.disabled;
-	}*/
+	}
 
-	const { children, className, icon, iconRight, color, size, value } = props;
+	const {
+		disabled = providedDisabled || false,
+		children,
+		className,
+		icon,
+		iconRight,
+	} = props;
 
 	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
 
@@ -33,6 +42,8 @@ function XBtnFn(params, ref) {
 	);
 
 	const {
+		color,
+		size,
 		flat,
 		text,
 		tonal,
@@ -48,8 +59,8 @@ function XBtnFn(params, ref) {
 	} = props;
 
 	return render(
+		'button',
 		{
-			as: 'button',
 			...rest,
 			...attrs,
 			className: classNames(
@@ -73,7 +84,9 @@ function XBtnFn(params, ref) {
 				},
 				className,
 			),
-			/*children: (
+			children: isFunction(children) ? (
+				children
+			) : (
 				<>
 					<div className="x-btn-underlay"></div>
 					<div className="x-btn-outline"></div>
@@ -85,9 +98,13 @@ function XBtnFn(params, ref) {
 						<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
 					)}
 				</>
-			),*/
+			),
 		},
-		{},
+		{
+			disabled,
+			active,
+			focusVisible,
+		},
 	);
 }
 
