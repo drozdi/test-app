@@ -1,10 +1,13 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRefWithAs } from '../../../../utils/render';
 import './style.css';
 import { XBtnGroupContext } from './XBtnGroupContext';
 
-export function XBtnGroup(params = {}) {
+import { isArray } from '../../../../utils/is';
+
+function XBtnGroupFn(params = {}) {
 	const {
 		children,
 		className,
@@ -18,9 +21,10 @@ export function XBtnGroup(params = {}) {
 		value,
 		align,
 		spread,
+		name,
 		...props
 	} = params;
-
+	const elementRef = useRef();
 	const [current, setCurrent] = useState(value ?? (multiple ? [] : undefined));
 
 	const handleClick = useCallback(
@@ -42,13 +46,13 @@ export function XBtnGroup(params = {}) {
 				setCurrent((v) => (v === value ? undefined : value));
 			}
 		},
-		[selectable, multiple, onClick],
+		[selectable, switchable, multiple, onClick],
 	);
 
 	useEffect(() => {
-		if (Array.isArray(current) && !multiple) {
+		if (isArray(current) && !multiple) {
 			setCurrent(current[0] ?? undefined);
-		} else if (!Array.isArray(current) && multiple) {
+		} else if (!isArray(current) && multiple) {
 			setCurrent(current ? [current] : []);
 		} else {
 			setCurrent(multiple ? [] : undefined);
@@ -62,7 +66,9 @@ export function XBtnGroup(params = {}) {
 	useEffect(() => onChange?.(current), [current]);
 
 	const context = {
+		getElement: () => elementRef.current,
 		btnProps: props,
+		switchable,
 		selectable,
 		multiple,
 		current,
@@ -75,7 +81,7 @@ export function XBtnGroup(params = {}) {
 			if (!selectable) {
 				return false;
 			}
-			if (multiple && Array.isArray(current)) {
+			if (multiple && isArray(current)) {
 				return current.includes(value);
 			}
 			return current === value;
@@ -91,6 +97,7 @@ export function XBtnGroup(params = {}) {
 				[`justify-` + align]: !vertical && align,
 				[`items-` + align]: vertical && align,
 			})}
+			ref={elementRef}
 		>
 			<XBtnGroupContext.Provider value={context}>
 				{children}
@@ -98,6 +105,8 @@ export function XBtnGroup(params = {}) {
 		</div>
 	);
 }
+
+export const XBtnGroup = forwardRefWithAs(XBtnGroupFn);
 
 XBtnGroup.propTypes = {
 	children: PropTypes.node,
@@ -111,5 +120,6 @@ XBtnGroup.propTypes = {
 	onClick: PropTypes.func,
 	onChange: PropTypes.func,
 	value: PropTypes.any,
+	name: PropTypes.string,
 	align: PropTypes.oneOf(['start', 'center', 'between', 'end']),
 };

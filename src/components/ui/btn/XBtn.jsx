@@ -55,6 +55,7 @@ function XBtnFn(params, ref) {
 		rounded,
 		dimmed,
 		link,
+		active: propsActive,
 		...rest
 	} = props;
 
@@ -78,7 +79,7 @@ function XBtnFn(params, ref) {
 					'x-btn--dimmed': dimmed,
 					'x-btn--link': link,
 					'x-btn--icon': isIcon,
-					'x-btn--active': active,
+					'x-btn--active': propsActive,
 					[`x-btn--${color}`]: color,
 					[`x-btn--${size}`]: size,
 				},

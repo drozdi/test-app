@@ -65,8 +65,8 @@ export function BtnGroupExample() {
 					{Form(
 						{
 							'XBtn.Group options': { type: 'header' },
-							switchable: { type: 'switchable' },
-							selectable: { type: 'selectable' },
+							switchable: { type: 'checkbox' },
+							selectable: { type: 'checkbox' },
 							multiple: { type: 'checkbox' },
 
 							separator: { type: 'checkbox' },

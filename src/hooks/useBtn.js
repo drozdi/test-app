@@ -4,6 +4,7 @@ import { isFocusVisible } from '../utils/is';
 import { useForkRef } from './useForkRef';
 export function useBtn({
 	disabled,
+	active: isActive,
 	ref: externalRef,
 	as: elementType = 'button',
 
@@ -155,7 +156,7 @@ export function useBtn({
 	delete actionProps.onFocusVisible;
 
 	return {
-		active,
+		active: active || isActive,
 		focusVisible,
 		buttonRef,
 		attrs: {
