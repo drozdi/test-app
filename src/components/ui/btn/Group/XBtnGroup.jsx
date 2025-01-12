@@ -76,7 +76,7 @@ function XBtnGroupFn(
 			let newValue;
 
 			if (multiple) {
-				newValue = current ? [...current] : [];
+				newValue = current ? (isArray(current) ? [...current] : [current]) : [];
 				if (!newValue.includes(value)) {
 					newValue.push(value);
 				} else {
@@ -96,6 +96,7 @@ function XBtnGroupFn(
 		switch (event.code) {
 			case 'Enter':
 			case 'Space':
+				event.preventDefault();
 				target.click();
 				break;
 			case 'ArrowLeft':
