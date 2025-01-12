@@ -1,23 +1,22 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { memo, useMemo } from 'react';
-import { useBtn } from '../../../hooks/useBtn';
+import { useBtn } from '../../hooks/useBtn';
 import { XIcon } from '../icon';
 import { XBtnGroup, useXBtnGroupContext } from './Group';
 import './style.css';
 
 import { isFunction } from '../../../utils/is';
-import { forwardRefWithAs, render } from '../../../utils/render';
 import { useDisabled } from '../../internal/disabled';
+import { forwardRefWithAs, render } from '../../internal/render';
 
 function XBtnFn(params, ref) {
 	const providedDisabled = useDisabled();
 	const ctx = useXBtnGroupContext();
 	const props = { ...ctx?.btnProps, ...params };
-
 	if (ctx) {
 		props.onClick = (event, value) => {
-			ctx.onChange?.(props.value);
+			ctx.onChange?.(event, props.value);
 			params.onClick?.(event, value);
 		};
 		props.active = ctx.isActive?.(props.value) || params.active;

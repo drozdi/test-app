@@ -1,5 +1,5 @@
 import { cloneElement, createElement, forwardRef, Fragment } from 'react';
-import { isFunction } from './is';
+import { isFunction } from '../../utils/is';
 
 export function forwardRefWithAs(component) {
 	return Object.assign(forwardRef(component), {

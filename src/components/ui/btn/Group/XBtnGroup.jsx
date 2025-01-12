@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { forwardRefWithAs } from '../../../../utils/render';
+import { useCallback, useRef } from 'react';
+import { forwardRefWithAs } from '../../../internal/render';
 import './style.css';
 import { XBtnGroupContext } from './XBtnGroupContext';
 
 import { isArray } from '../../../../utils/is';
 
-function XBtnGroupFn(params = {}) {
-	const {
+function XBtnGroupFn(
+	{
 		children,
 		className,
 		selectable,
@@ -18,62 +18,116 @@ function XBtnGroupFn(params = {}) {
 		separator,
 		onClick,
 		onChange,
-		value,
+		value: current,
 		align,
 		spread,
 		name,
+		disabled,
 		...props
-	} = params;
+	},
+	ref,
+) {
 	const elementRef = useRef();
-	const [current, setCurrent] = useState(value ?? (multiple ? [] : undefined));
+
+	const handleChange = useCallback(
+		(event, value) => {
+			onChange?.({
+				originalEvent: event.originalEvent,
+				value: value,
+				stopPropagation: () => {
+					event.originalEvent.stopPropagation();
+				},
+				preventDefault: () => {
+					event.originalEvent.preventDefault();
+				},
+				target: {
+					name: props.name,
+					id: props.id,
+					value: value,
+				},
+			});
+		},
+		[onChange],
+	);
 
 	const handleClick = useCallback(
-		(value) => {
-			onClick?.(value);
+		(event, value) => {
+			if (disabled) {
+				return;
+			}
+
+			onClick?.({
+				...event,
+				value,
+				target: {
+					...event.target,
+					value,
+				},
+			});
+
 			if (switchable) {
-				setCurrent(value);
+				handleChange(event, value);
 				return;
 			}
 			if (!selectable) {
 				return;
 			}
+
+			let newValue;
+
 			if (multiple) {
-				setCurrent((current) => {
-					if (!current.includes(value)) return [...current, value];
-					return current.filter((v) => v !== value);
-				});
+				newValue = current ? [...current] : [];
+				if (!newValue.includes(value)) {
+					newValue.push(value);
+				} else {
+					newValue = newValue.filter((v) => v !== value);
+				}
 			} else {
-				setCurrent((v) => (v === value ? undefined : value));
+				newValue = current === value ? undefined : value;
 			}
+
+			handleChange(event, newValue);
 		},
-		[selectable, switchable, multiple, onClick],
+		[selectable, switchable, multiple, current, onClick],
 	);
 
-	useEffect(() => {
-		if (isArray(current) && !multiple) {
-			setCurrent(current[0] ?? undefined);
-		} else if (!isArray(current) && multiple) {
-			setCurrent(current ? [current] : []);
-		} else {
-			setCurrent(multiple ? [] : undefined);
+	const onKeyDown = (event) => {
+		const { target } = event;
+		switch (event.code) {
+			case 'Enter':
+			case 'Space':
+				target.click();
+				break;
+			case 'ArrowLeft':
+			case 'ArrowUp':
+				if (target.previousSibling) {
+					target.previousSibling.focus();
+				} else {
+					target.parentNode.lastChild.focus();
+				}
+				break;
+			case 'ArrowRight':
+			case 'ArrowDown':
+				if (target.nextSibling) {
+					target.nextSibling.focus();
+				} else {
+					target.parentNode.firstChild.focus();
+				}
+				break;
 		}
-	}, [multiple]);
-
-	useEffect(() => {
-		setCurrent(value ?? (multiple ? [] : undefined));
-	}, [value]);
-
-	useEffect(() => onChange?.(current), [current]);
+	};
 
 	const context = {
 		getElement: () => elementRef.current,
-		btnProps: props,
+		btnProps: { ...props, onKeyDown },
 		switchable,
 		selectable,
 		multiple,
 		current,
 		onChange: handleClick,
-		//isDisabled: (value) => {},
+		isDisabled: (value) => {
+			return disabled;
+		},
 		isActive: (value) => {
 			if (switchable) {
 				return current === value;

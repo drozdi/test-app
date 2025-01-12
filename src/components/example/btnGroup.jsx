@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { XBtn, XIcon } from '../ui';
 import { Form, useProps } from './utils';
 export function BtnGroupExample() {
+	const [val, setVal] = useState();
 	const btnGroupExample = useProps(
 		{
 			spread: true,
@@ -36,13 +37,21 @@ export function BtnGroupExample() {
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn.Group</h2>
 			<div className="p-4">
-				<XBtn.Group {...btnGroupProps}>
+				<XBtn.Group
+					{...btnGroupProps}
+					value={val}
+					onChange={({ value }) => setVal(value)}
+				>
 					<XBtn value={1}>btn1</XBtn>
 					<XBtn value={2}>btn2</XBtn>
 					<XBtn value={3}>btn3</XBtn>
 				</XBtn.Group>
 				<br />
-				<XBtn.Group {...btnGroupProps}>
+				<XBtn.Group
+					{...btnGroupProps}
+					value={val}
+					onChange={({ value }) => setVal(value)}
+				>
 					<XBtn value={1}>
 						<XIcon>mdi-close</XIcon>
 					</XBtn>
@@ -59,6 +68,10 @@ export function BtnGroupExample() {
 				<div>
 					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 						{btnGroupCode}
+					</pre>
+
+					<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+						{JSON.stringify(val)}
 					</pre>
 				</div>
 				<div>

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { extractEventHandlers } from '../utils/extractEventHandlers';
-import { isFocusVisible } from '../utils/is';
+import { isFocusVisible } from '../../utils/is';
+import { extractEventHandlers } from '../internal/extractEventHandlers';
 import { useForkRef } from './useForkRef';
 export function useBtn({
 	disabled,

@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { forwardRef, memo, useMemo, useRef } from 'react';
-import { useInput } from '../../../hooks/useInput';
+import { useInput } from '../../hooks/useInput';
 import './style.css';
 const XInputRoot = forwardRef(function XInput(props, ref) {
 	/**

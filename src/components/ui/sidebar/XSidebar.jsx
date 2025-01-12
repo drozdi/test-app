@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
-	forwardRef,
 	memo,
 	useCallback,
 	useContext,
@@ -12,13 +11,15 @@ import React, {
 } from 'react';
 
 import { DraggableCore } from 'react-draggable';
-import { useForkRef } from '../../../hooks/useForkRef';
+import { useForkRef } from '../../hooks/useForkRef';
 import { XBtn } from '../btn/XBtn';
 import { XLayoutContext } from '../layout';
 import './XSidebar.scss';
 import { XSidebarContext } from './XSidebarContext';
 
-const XSidebarRoot = forwardRef(function XSidebarRoot(
+import { forwardRefWithAs } from '../../internal/render';
+
+const XSidebarRoot = forwardRefWithAs(function XSidebarFn(
 	{
 		children,
 		className,
