@@ -44,9 +44,7 @@ function XBtnFn(params, ref) {
 	} = props;
 
 	const { disabled = providedDisabled || false, children, className } = props;
-
 	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
-
 	const isIcon = useMemo(
 		() =>
 			(!!icon != !!iconRight && !children) ||
