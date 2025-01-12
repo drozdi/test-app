@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { useResizeObserver } from '../../../hooks/useResizeObserver';
-import { useSlots } from '../../../hooks/useSlots';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
+import { useSlots } from '../../hooks/useSlots';
 import './XLayout.scss';
 
 import classNames from 'classnames';

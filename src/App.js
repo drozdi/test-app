@@ -13,9 +13,9 @@ import {
 	SelectExample,
 	SpinnerExample,
 } from './components/example';
+import { ThemeProvider } from './components/hooks/useTheme';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
 import { XLayout } from './components/ui/layout';
-import { ThemeProvider } from './hooks/useTheme';
 function App() {
 	return (
 		<AppProvider config={{ smKey: 'app-1' }}>

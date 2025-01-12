@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { memo, useContext, useMemo } from 'react';
-import { useSlots } from '../../../hooks/useSlots';
+import { useSlots } from '../../hooks/useSlots';
 import { XLayoutContext } from '../layout/XLayoutContext';
 import './XHeader.scss';
 
