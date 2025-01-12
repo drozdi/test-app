@@ -24,23 +24,6 @@ function XBtnFn(params, ref) {
 	}
 
 	const {
-		disabled = providedDisabled || false,
-		children,
-		className,
-		icon,
-		iconRight,
-	} = props;
-
-	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
-
-	const isIcon = useMemo(
-		() =>
-			(!!icon != !!iconRight && !children) ||
-			(children?.type === XIcon && !icon && !iconRight),
-		[children, icon, iconRight],
-	);
-
-	const {
 		color,
 		size,
 		flat,
@@ -55,8 +38,21 @@ function XBtnFn(params, ref) {
 		dimmed,
 		link,
 		active: propsActive,
+		icon,
+		iconRight,
 		...rest
 	} = props;
+
+	const { disabled = providedDisabled || false, children, className } = props;
+
+	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
+
+	const isIcon = useMemo(
+		() =>
+			(!!icon != !!iconRight && !children) ||
+			(children?.type === XIcon && !icon && !iconRight),
+		[children, icon, iconRight],
+	);
 
 	return render(
 		'button',
