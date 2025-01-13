@@ -11,7 +11,7 @@
 
 .x-btn-group:not(.x-btn-group--vertical):not(.x-btn-group--round) > * {
 	&:not(:first-child) {
-		@apply -ml-[1px] rounded-l-none;
+		@apply rounded-l-none;
 	}
 	&:not(:last-child) {
 		@apply rounded-r-none;

@@ -67,6 +67,7 @@ module.exports = {
 			},
 
 			colors: {
+				background: 'rgb(var(--x-color-background))',
 				primary: 'rgb(var(--x-color-primary))',
 				secondary: 'rgb(var(--x-color-secondary))',
 				accent: 'rgb(var(--x-color-accent))',
@@ -133,6 +134,11 @@ module.exports = {
 			borderWidth: {
 				3: '3px',
 				9: '9px',
+				10: '10px',
+			},
+			ringOffsetWidth: {
+				3: '3px',
+				6: '6px',
 				10: '10px',
 			},
 		},
