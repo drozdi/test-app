@@ -1,0 +1,43 @@
+.x-link {
+	@apply w-full flex relative items-center px-3 py-2 select-none cursor-pointer disabled:cursor-none disabled:opacity-40;
+}
+.x-link-underlay {
+	@apply bg-current opacity-0 absolute top-0 left-0 h-full w-full -z-10;
+}
+.x-link:hover .x-link-underlay {
+	@apply opacity-15;
+}
+.x-link-section {
+	@apply flex items-center justify-center transition-transform;
+	& > svg {
+		@apply block;
+	}
+	&:is(*:first-child) {
+		@apply mr-3;
+	}
+	&:is(*:last-child) {
+		@apply ml-3;
+	}
+}
+.x-link--active {
+	@apply bg-dimmed;
+}
+.x-link-body {
+	@apply flex-1 overflow-hidden text-ellipsis;
+	.x-link--nowrap & {
+		@apply text-nowrap;
+	}
+}
+.x-link-label {
+	@apply text-sm/normal;
+}
+.x-link-description {
+	@apply block text-xs/normal opacity-80 overflow-hidden text-ellipsis;
+	.x-link--nowrap & {
+		@apply text-nowrap;
+	}
+}
+
+.x-link-childrens {
+	@apply ps-7;
+}

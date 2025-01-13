@@ -4,6 +4,10 @@
 .x-btn-group > * {
 	@apply shadow-none !important;
 }
+.x-btn-group > .x-btn {
+	@apply shadow-none !important;
+	@apply focus:ring-1 focus:ring-current focus:ring-offset-background focus:ring-offset-3;
+}
 
 .x-btn-group--spread > * {
 	@apply flex-auto;

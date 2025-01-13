@@ -1,7 +1,6 @@
 .x-btn {
 	@apply relative inline-flex items-center justify-center select-none cursor-pointer rounded px-6 py-2 text-base text-center font-normal uppercase box-border transition duration-200 ease-in-out border-current border-0 focus:outline-none focus-visible:outline-none disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
 	@apply shadow hover:shadow-xl focus:shadow-lg active:shadow-md !shadow-black/50;
-	@apply focus:ring-1 focus:ring-current focus:ring-offset-background focus:ring-offset-3;
 	@apply active:scale-[0.97];
 }
 

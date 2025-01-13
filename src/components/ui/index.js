@@ -4,6 +4,7 @@ export * from './card';
 export * from './icon';
 export * from './input';
 export * from './item';
+export * from './link';
 export * from './list';
 export * from './message';
 export * from './messages';
