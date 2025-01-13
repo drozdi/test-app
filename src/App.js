@@ -23,7 +23,7 @@ function App() {
 				{{
 					left: (props) => (
 						<XList separator={true}>
-							<XItem to="/" LinkComponent={Link}>
+							<XItem to="/" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-home</XIcon>
 								</XItemSection>
@@ -31,7 +31,7 @@ function App() {
 									<XItemLabel lines={true}>Home</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/btn" LinkComponent={Link}>
+							<XItem to="/btn" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-button-pointer</XIcon>
 								</XItemSection>
@@ -39,7 +39,7 @@ function App() {
 									<XItemLabel lines={true}>XBtn</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/btn-group" LinkComponent={Link}>
+							<XItem to="/btn-group" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-card-outline</XIcon>
 								</XItemSection>
@@ -47,7 +47,7 @@ function App() {
 									<XItemLabel lines={true}>XBtnGroup</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/input" LinkComponent={Link}>
+							<XItem to="/input" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-form-textbox</XIcon>
 								</XItemSection>
@@ -55,7 +55,7 @@ function App() {
 									<XItemLabel lines={true}>XInput</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/list" LinkComponent={Link}>
+							<XItem to="/list" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-view-list</XIcon>
 								</XItemSection>
@@ -63,7 +63,7 @@ function App() {
 									<XItemLabel lines={true}>XList</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/message" LinkComponent={Link}>
+							<XItem to="/message" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-message-alert-outline</XIcon>
 								</XItemSection>
@@ -71,7 +71,7 @@ function App() {
 									<XItemLabel lines={true}>XMessage</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/spinner" LinkComponent={Link}>
+							<XItem to="/spinner" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-reload</XIcon>
 								</XItemSection>
@@ -79,7 +79,7 @@ function App() {
 									<XItemLabel lines={true}>XSpinner</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/progress" LinkComponent={Link}>
+							<XItem to="/progress" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-progress-helper</XIcon>
 								</XItemSection>
@@ -87,7 +87,7 @@ function App() {
 									<XItemLabel lines={true}>XProgress</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/cards" LinkComponent={Link}>
+							<XItem to="/cards" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-cards</XIcon>
 								</XItemSection>
@@ -95,7 +95,7 @@ function App() {
 									<XItemLabel lines={true}>XCards</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/accordion" LinkComponent={Link}>
+							<XItem to="/accordion" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-table-column</XIcon>
 								</XItemSection>
@@ -103,7 +103,7 @@ function App() {
 									<XItemLabel lines={true}>XAccordion</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/select" LinkComponent={Link}>
+							<XItem to="/select" as={Link}>
 								<XItemSection side={true}>
 									<XIcon>mdi-select</XIcon>
 								</XItemSection>

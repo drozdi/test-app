@@ -1,15 +1,17 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo } from 'react';
+import { useMemo } from 'react';
+import { isFunction } from '../../../utils/is';
+import { forwardRefWithAs, render } from '../../internal/render';
 
 import './style.css';
 const clickableTag = ['a', 'label'];
 const disRoleTag = ['label'];
 const disDisabledTag = ['div', 'span', 'a', 'label'];
 
-export const XItem = forwardRef(function XItem(
+export const XItem = forwardRefWithAs(function XItemFn(
 	{
-		tag = 'div',
+		as = 'div',
 		className,
 		children,
 		tabIndex = 0,
@@ -20,24 +22,14 @@ export const XItem = forwardRef(function XItem(
 		disabled,
 		role,
 		onClick,
-		LinkComponent = 'a',
 		hoverable,
-		to,
-		href,
-		target = '_self',
+		...props
 	},
 	ref,
 ) {
-	const TagProp = useMemo(
-		() => (to || href ? LinkComponent : tag),
-		[to, href, LinkComponent, tag],
-	);
 	const isActionable = useMemo(
-		() =>
-			clickableTag.includes(TagProp) ||
-			TagProp === LinkComponent ||
-			typeof onClick === 'function',
-		[TagProp, onClick],
+		() => clickableTag.includes(as) || isFunction(onClick),
+		[onClick],
 	);
 	const isClickable = !disabled && isActionable;
 	const isHoverable = isClickable || hoverable;
@@ -56,7 +48,7 @@ export const XItem = forwardRef(function XItem(
 				},
 				active && !disabled ? activeClass : '',
 			),
-			role: disRoleTag.includes(TagProp) ? undefined : (role ?? 'listitem'),
+			role: disRoleTag.includes(as) ? undefined : (role ?? 'listitem'),
 			disabled: disabled,
 		};
 		if (isActionable) {
@@ -65,15 +57,8 @@ export const XItem = forwardRef(function XItem(
 		if (isClickable) {
 			attrs.tabIndex = disabled ? -1 : (tabIndex ?? -1);
 		}
-		if (disDisabledTag.includes(TagProp)) {
+		if (disDisabledTag.includes(as)) {
 			delete attrs.disabled;
-		}
-		if (TagProp === LinkComponent) {
-			if (!disabled) {
-				attrs.to = to;
-				attrs.href = href || to;
-				attrs.target = target;
-			}
 		}
 		return attrs;
 	}, [
@@ -86,19 +71,31 @@ export const XItem = forwardRef(function XItem(
 		activeClass,
 		isClickable,
 		isActionable,
-		TagProp,
-		LinkComponent,
 	]);
-	return (
-		<TagProp {...attrs}>
-			<span className="x-item__underlay" />
-			{children}
-		</TagProp>
+	return render(
+		'div',
+		{
+			as,
+			...props,
+			...attrs,
+			children: isFunction(children) ? (
+				children
+			) : (
+				<>
+					<span className="x-item__underlay" />
+					{children}
+				</>
+			),
+		},
+		{
+			active,
+			disabled,
+		},
 	);
 });
 
 XItem.propTypes = {
-	tag: PropTypes.string,
+	as: PropTypes.any,
 	children: PropTypes.node,
 	className: PropTypes.string,
 	dense: PropTypes.bool,
@@ -110,8 +107,4 @@ XItem.propTypes = {
 	tabIndex: PropTypes.number,
 	role: PropTypes.string,
 	onClick: PropTypes.func,
-	LinkComponent: PropTypes.any,
-	to: PropTypes.string,
-	href: PropTypes.string,
-	target: PropTypes.string,
 };

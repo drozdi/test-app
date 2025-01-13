@@ -101,6 +101,7 @@ function XBtnGroupFn(
 				break;
 			case 'ArrowLeft':
 			case 'ArrowUp':
+				event.preventDefault();
 				if (target.previousSibling) {
 					target.previousSibling.focus();
 				} else {
@@ -109,6 +110,7 @@ function XBtnGroupFn(
 				break;
 			case 'ArrowRight':
 			case 'ArrowDown':
+				event.preventDefault();
 				if (target.nextSibling) {
 					target.nextSibling.focus();
 				} else {
