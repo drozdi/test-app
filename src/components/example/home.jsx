@@ -7,7 +7,6 @@ export function HomeExample() {
 		<div className="p-8">
 			<XLink
 				label="label"
-				description="description"
 				href="#1"
 				leftSection={<XIcon>mdi-close</XIcon>}
 				disabled
