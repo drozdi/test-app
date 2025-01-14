@@ -1,26 +1,20 @@
-import { useRef, useState } from 'react';
-import { XCollapse, XLink } from '../ui';
+import { useRef } from 'react';
+import { XIcon, XLink } from '../ui';
 
 export function HomeExample() {
 	const ref = useRef();
-	const [active, setActive] = useState(false);
 	return (
 		<div className="p-8">
-			<button onClick={() => setActive((v) => !v)}>tttt</button>
-			<hr />
 			<XLink
 				label="label"
-				active={active}
 				description="description"
 				href="#1"
+				leftSection={<XIcon>mdi-close</XIcon>}
 				disabled
-			/>
-			<XCollapse active={active}>
-				<div className="x-link-childrens">
-					<XLink label="label" description="description" href="#1" disabled />
-					<XLink label="label" description="description" href="#1" disabled />
-				</div>
-			</XCollapse>
+			>
+				<XLink label="label" description="description" href="#1" disabled />
+				<XLink label="label" description="description" href="#1" disabled />
+			</XLink>
 		</div>
 	);
 }

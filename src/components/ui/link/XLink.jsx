@@ -1,37 +1,109 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { isString } from '../../../utils/is';
 import { forwardRefWithAs } from '../../internal/render';
-import { XIcon } from '../icon';
+import { XCollapse } from '../collapse';
+import { XChevron, XIcon } from '../icon';
 import './style.css';
 export const XLink = forwardRefWithAs(function XLinkFn(
-	{ className, children, noWrap, active, label, description, ...props },
+	{
+		className,
+		children,
+		noWrap,
+		active,
+		label,
+		description,
+		leftSection,
+		rightSection,
+		opened: _opened,
+		onClick,
+		onKeyDown,
+		...props
+	},
 	ref,
 ) {
-	const [opened, setOpened] = useState(active);
+	const withChildren = !!children;
+	const [opened, setOpened] = useState(_opened);
+
+	const handleClick = (event) => {
+		onClick?.(event);
+		if (withChildren) {
+			event.preventDefault();
+			setOpened((v) => !v);
+		}
+	};
+
+	const handleKeyDown = (event) => {
+		onKeyDown?.(event);
+		if (event.nativeEvent.code === 'Space' && withChildren) {
+			event.preventDefault();
+			setOpened((v) => !v);
+		}
+	};
+
+	useEffect(() => setOpened(_opened), [_opened]);
 
 	return (
-		<a
-			className={classNames(
-				'x-link',
-				{
-					'x-link--nowrap': noWrap,
-					'x-link--active': active,
-				},
-				className,
-			)}
-			{...props}
-		>
-			<span className="x-link-section">
-				<XIcon>mdi-close</XIcon>
-			</span>
-			<div className="x-link-body">
-				<span className="x-link-label">{label}</span>
-				<span className="x-link-description">{description}</span>
-			</div>
-			<div className="x-link-underlay"></div>
-			<span className="x-link-section">
-				<XIcon>mdi-close</XIcon>
-			</span>
-		</a>
+		<>
+			<a
+				className={classNames(
+					'x-link',
+					{
+						'x-link--nowrap': noWrap,
+						'x-link--active': active,
+						'x-link--opened': opened,
+					},
+					className,
+				)}
+				{...props}
+				onClick={handleClick}
+				onKeyDown={handleKeyDown}
+				ref={ref}
+			>
+				{leftSection && (
+					<span className="x-link-section">
+						{isString(leftSection) ? (
+							<XIcon>{leftSection}</XIcon>
+						) : (
+							leftSection
+						)}
+					</span>
+				)}
+				<div className="x-link-body">
+					<span className="x-link-label">{label}</span>
+					<span className="x-link-description">{description}</span>
+				</div>
+				<div className="x-link-underlay"></div>
+
+				{(withChildren || rightSection) && (
+					<span className="x-link-section">
+						{withChildren ? (
+							<XChevron className="x-link-chevron" />
+						) : isString(rightSection) ? (
+							<XIcon>{rightSection}</XIcon>
+						) : (
+							rightSection
+						)}
+					</span>
+				)}
+			</a>
+			<XCollapse active={opened}>
+				<div className="x-link-childrens">{children}</div>
+			</XCollapse>
+		</>
 	);
 });
+
+XLink.propTypes = {
+	className: PropTypes.string,
+	children: PropTypes.node,
+	noWrap: PropTypes.bool,
+	active: PropTypes.bool,
+	label: PropTypes.string,
+	description: PropTypes.string,
+	leftSection: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+	rightSection: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+	onClick: PropTypes.func,
+	onKeyDown: PropTypes.func,
+};

@@ -19,15 +19,14 @@
 		@apply ml-3;
 	}
 }
-.x-link--active {
-	@apply bg-dimmed;
-}
+
 .x-link-body {
 	@apply flex-1 overflow-hidden text-ellipsis;
 	.x-link--nowrap & {
 		@apply text-nowrap;
 	}
 }
+
 .x-link-label {
 	@apply text-sm/normal;
 }
@@ -37,7 +36,17 @@
 		@apply text-nowrap;
 	}
 }
+.x-link-chevron {
+	@apply text-xl/none transition-transform ease-in-out duration-200;
+}
 
 .x-link-childrens {
 	@apply ps-7;
+}
+
+.x-link--active {
+	@apply bg-dimmed;
+}
+.x-link--opened .x-link-chevron {
+	@apply rotate-90;
 }
