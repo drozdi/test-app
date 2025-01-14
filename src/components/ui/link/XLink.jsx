@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 import { forwardRefWithAs } from '../../internal/render';
 import { XIcon } from '../icon';
 import './style.css';
@@ -6,6 +7,8 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 	{ className, children, noWrap, active, label, description, ...props },
 	ref,
 ) {
+	const [opened, setOpened] = useState(active);
+
 	return (
 		<a
 			className={classNames(
