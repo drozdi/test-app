@@ -13,6 +13,19 @@ export function HomeExample() {
 			>
 				<XLink label="label" description="description" href="#1" disabled />
 				<XLink label="label" description="description" href="#1" disabled />
+				<XLink label="label" description="description" href="#1" disabled />
+				<XLink label="label" description="description" href="#1" disabled />
+				<XLink
+					label="label"
+					href="#1"
+					leftSection={<XIcon>mdi-close</XIcon>}
+					disabled
+				>
+					<XLink label="label" description="description" href="#1" disabled />
+					<XLink label="label" description="description" href="#1" disabled />
+					<XLink label="label" description="description" href="#1" disabled />
+					<XLink label="label" description="description" href="#1" disabled />
+				</XLink>
 			</XLink>
 		</div>
 	);

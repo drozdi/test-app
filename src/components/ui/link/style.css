@@ -41,7 +41,7 @@
 }
 
 .x-link-childrens {
-	@apply ps-7;
+	@apply ps-5;
 }
 
 .x-link--active {

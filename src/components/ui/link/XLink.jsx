@@ -37,7 +37,7 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 
 	const handleKeyDown = (event) => {
 		onKeyDown?.(event);
-		if (event.nativeEvent.code === 'Space' && withChildren) {
+		if (event.code === 'Space' && withChildren) {
 			event.preventDefault();
 			setOpened((v) => !v);
 		}

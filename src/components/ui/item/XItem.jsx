@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { isFunction } from '../../../utils/is';
 import { forwardRefWithAs, render } from '../../internal/render';
-
+import { XLink } from '../link';
 import './style.css';
 const clickableTag = ['a', 'label'];
 const disRoleTag = ['label'];
@@ -28,7 +28,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	ref,
 ) {
 	const isActionable = useMemo(
-		() => clickableTag.includes(as) || isFunction(onClick),
+		() => as?.type === XLink || clickableTag.includes(as) || isFunction(onClick),
 		[onClick],
 	);
 	const isClickable = !disabled && isActionable;
