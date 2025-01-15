@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { isFunction } from '../../../utils/is';
+import { useForkRef } from '../../hooks/useForkRef';
 import { forwardRefWithAs, render } from '../../internal/render';
 import { XLink } from '../link';
 import './style.css';
-const clickableTag = ['a', 'label'];
+const clickableTag = ['a', 'label', 'A', 'LABEL'];
 const disRoleTag = ['label'];
 const disDisabledTag = ['div', 'span', 'a', 'label'];
 
@@ -27,10 +28,15 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	},
 	ref,
 ) {
-	const isActionable = useMemo(
-		() => as?.type === XLink || clickableTag.includes(as) || isFunction(onClick),
-		[onClick],
-	);
+	const elementRef = useRef();
+	const handleRef = useForkRef(ref, elementRef);
+	const isActionable = useMemo(() => {
+		return (
+			as?.type === XLink ||
+			clickableTag.includes(elementRef.current?.nodeName.toLowerCase() ?? as) ||
+			isFunction(onClick)
+		);
+	}, [onClick, elementRef.current]);
 	const isClickable = !disabled && isActionable;
 	const isHoverable = isClickable || hoverable;
 	const attrs = useMemo(() => {
@@ -76,6 +82,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 		'div',
 		{
 			as,
+			ref: handleRef,
 			...props,
 			...attrs,
 			children: isFunction(children) ? (

@@ -1,4 +1,4 @@
-import { cloneElement, createElement, forwardRef, Fragment } from 'react';
+import { cloneElement, createElement, forwardRef, Fragment, useMemo } from 'react';
 import { isFunction } from '../../utils/is';
 
 export function forwardRefWithAs(component) {
@@ -7,17 +7,24 @@ export function forwardRefWithAs(component) {
 	});
 }
 
-export function render(tag, props, state) {
-	let { as: Component = tag, children, ...rest } = props;
-	if ('className' in rest && rest.className && isFunction(rest.className)) {
-		rest.className = rest.className(state);
+export function render(tag, { as: Component = tag, children, ...rest }, state) {
+	if (rest?.if?.(state) === false) {
+		return null;
 	}
-	if ('style' in rest && rest.style && isFunction(rest.style)) {
-		rest.style = rest.style(state);
-	}
-	if (rest['aria-labelledby'] && rest['aria-labelledby'] === rest.id) {
-		rest['aria-labelledby'] = undefined;
-	}
+
+	const memoizedRest = useMemo(() => {
+		const result = { ...rest };
+		if ('className' in rest && rest.className && isFunction(rest.className)) {
+			result.className = rest.className(state, rest);
+		}
+		if ('style' in rest && rest.style && isFunction(rest.style)) {
+			result.style = rest.style(state, rest);
+		}
+		if (result['aria-labelledby'] && result['aria-labelledby'] === result.id) {
+			result['aria-labelledby'] = undefined;
+		}
+		return result;
+	}, [rest, state]);
 
 	let resolvedChildren = isFunction(children) ? children(state) : children;
 
@@ -27,19 +34,19 @@ export function render(tag, props, state) {
 		let childPropsStyle = childProps?.style;
 
 		let newClassName = isFunction(childPropsClassName)
-			? childPropsClassName(state, rest.className)
+			? childPropsClassName(state, memoizedRest.className)
 			: childPropsClassName;
 
 		let newStyle = isFunction(childPropsStyle)
-			? childPropsStyle(state, rest.style)
+			? childPropsStyle(state, memoizedRest.style)
 			: childPropsStyle;
 
 		return cloneElement(resolvedChildren, {
-			...rest,
+			...memoizedRest,
 			className: newClassName,
 			style: newStyle,
 		});
 	}
 
-	return createElement(Component, rest, resolvedChildren);
+	return createElement(Component, memoizedRest, resolvedChildren);
 }
