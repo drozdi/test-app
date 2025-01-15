@@ -1,5 +1,25 @@
-import { cloneElement, createElement, forwardRef, Fragment, useMemo } from 'react';
+import {
+	cloneElement,
+	createContext,
+	createElement,
+	forwardRef,
+	Fragment,
+	useContext,
+	useMemo,
+} from 'react';
 import { isFunction } from '../../utils/is';
+
+const RenderContext = createContext({});
+
+export function RenderProvider({ children, ...contextValues }) {
+	return (
+		<RenderContext.Provider value={contextValues}>{children}</RenderContext.Provider>
+	);
+}
+
+export function useRenderContext() {
+	return useContext(RenderContext);
+}
 
 export function forwardRefWithAs(component) {
 	return Object.assign(forwardRef(component), {
@@ -12,8 +32,10 @@ export function render(tag, { as: Component = tag, children, ...rest }, state) {
 		return null;
 	}
 
+	const contextValues = useRenderContext();
+
 	const memoizedRest = useMemo(() => {
-		const result = { ...rest };
+		const result = { ...rest, ...contextValues };
 		if ('className' in rest && rest.className && isFunction(rest.className)) {
 			result.className = rest.className(state, rest);
 		}
@@ -24,7 +46,7 @@ export function render(tag, { as: Component = tag, children, ...rest }, state) {
 			result['aria-labelledby'] = undefined;
 		}
 		return result;
-	}, [rest, state]);
+	}, [rest, state, contextValues]);
 
 	let resolvedChildren = isFunction(children) ? children(state) : children;
 

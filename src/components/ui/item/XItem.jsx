@@ -6,7 +6,7 @@ import { useForkRef } from '../../hooks/useForkRef';
 import { forwardRefWithAs, render } from '../../internal/render';
 import { XLink } from '../link';
 import './style.css';
-const clickableTag = ['a', 'label', 'A', 'LABEL'];
+const clickableTag = ['a', 'label'];
 const disRoleTag = ['label'];
 const disDisabledTag = ['div', 'span', 'a', 'label'];
 
