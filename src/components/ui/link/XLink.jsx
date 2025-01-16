@@ -50,6 +50,7 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 			{render(
 				'a',
 				{
+					as: 'navLink',
 					...props,
 					disabled,
 					className: classNames(
@@ -102,57 +103,6 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 					disabled,
 				},
 			)}
-			<XCollapse active={opened}>
-				<div className="x-link-childrens">{children}</div>
-			</XCollapse>
-		</>
-	);
-
-	return (
-		<>
-			<a
-				className={classNames(
-					'x-link',
-					{
-						'x-link--nowrap': noWrap,
-						'x-link--active': active,
-						'x-link--opened': opened,
-						'x-link--disabled': disabled,
-					},
-					className,
-				)}
-				{...props}
-				onClick={handleClick}
-				onKeyDown={handleKeyDown}
-				ref={ref}
-			>
-				{leftSection && (
-					<span className="x-link-section">
-						{isString(leftSection) ? (
-							<XIcon>{leftSection}</XIcon>
-						) : (
-							leftSection
-						)}
-					</span>
-				)}
-				<div className="x-link-body">
-					<span className="x-link-label">{label}</span>
-					<span className="x-link-description">{description}</span>
-				</div>
-				<div className="x-link-underlay"></div>
-
-				{(withChildren || rightSection) && (
-					<span className="x-link-section">
-						{withChildren ? (
-							<XChevron className="x-link-chevron" />
-						) : isString(rightSection) ? (
-							<XIcon>{rightSection}</XIcon>
-						) : (
-							rightSection
-						)}
-					</span>
-				)}
-			</a>
 			<XCollapse active={opened}>
 				<div className="x-link-childrens">{children}</div>
 			</XCollapse>

@@ -32,7 +32,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	const handleRef = useForkRef(ref, elementRef);
 	const isActionable = useMemo(() => {
 		return (
-			as?.type === XLink ||
+			as === XLink ||
 			clickableTag.includes(elementRef.current?.nodeName.toLowerCase() ?? as) ||
 			isFunction(onClick)
 		);

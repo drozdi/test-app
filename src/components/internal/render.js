@@ -9,7 +9,9 @@ import {
 } from 'react';
 import { isFunction } from '../../utils/is';
 
-const RenderContext = createContext({});
+const RenderContext = createContext({
+	render: ({ as }) => (as === 'navLink' ? 'a' : as),
+});
 
 export function RenderProvider({ children, ...contextValues }) {
 	return (
@@ -27,15 +29,24 @@ export function forwardRefWithAs(component) {
 	});
 }
 
-export function render(tag, { as: Component = tag, children, ...rest }, state) {
+function applyContextToProps(props) {
+	const { render = ({ as }) => as, ...contextValues } = useRenderContext();
+	return { ...contextValues, ...props, as: render(props) };
+}
+
+export function render(tag, props, state) {
+	let { as: Component = tag, children, ...rest } = applyContextToProps(props);
+
 	if (rest?.if?.(state) === false) {
 		return null;
 	}
 
-	const contextValues = useRenderContext();
+	if (!Component) {
+		return null;
+	}
 
 	const memoizedRest = useMemo(() => {
-		const result = { ...rest, ...contextValues };
+		const result = { ...rest };
 		if ('className' in rest && rest.className && isFunction(rest.className)) {
 			result.className = rest.className(state, rest);
 		}
@@ -46,7 +57,7 @@ export function render(tag, { as: Component = tag, children, ...rest }, state) {
 			result['aria-labelledby'] = undefined;
 		}
 		return result;
-	}, [rest, state, contextValues]);
+	}, [rest, state]);
 
 	let resolvedChildren = isFunction(children) ? children(state) : children;
 
