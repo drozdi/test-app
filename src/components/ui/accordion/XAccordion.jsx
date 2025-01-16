@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { isArray } from '../../../utils/is';
 import { XAccordionContext } from './XAccordionContext';
 export function XAccordion({
 	children,
@@ -14,7 +15,7 @@ export function XAccordion({
 	value,
 }) {
 	const [current, setCurrent] = useState(
-		multiple && Array.isArray(value)
+		multiple && isArray(value)
 			? value
 			: multiple && value
 				? [value]
@@ -35,9 +36,9 @@ export function XAccordion({
 		},
 	};
 	useEffect(() => {
-		if (Array.isArray(current) && !multiple) {
+		if (isArray(current) && !multiple) {
 			setCurrent(current[0] ?? undefined);
-		} else if (!Array.isArray(current) && multiple) {
+		} else if (!isArray(current) && multiple) {
 			setCurrent(current ? [current] : []);
 		}
 	}, [multiple]);

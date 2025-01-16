@@ -1,16 +1,9 @@
 import classNames from 'classnames';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import './style.css';
-export function XCardActions({
-	tag = 'div',
-	children,
-	className,
-	horizontal = false,
-	align,
-}) {
-	const Tag = tag;
+export function XCardActions({ children, className, horizontal, align }) {
 	return (
-		<Tag
+		<div
 			className={classNames('x-card__actions', className, {
 				'x-card__actions--horizontal': horizontal,
 				[`justify-` + align]: horizontal && align,
@@ -18,12 +11,11 @@ export function XCardActions({
 			})}
 		>
 			{children}
-		</Tag>
+		</div>
 	);
 }
 
 XCardActions.propTypes = {
-	tag: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
 	horizontal: PropTypes.bool,

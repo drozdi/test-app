@@ -5,7 +5,7 @@ export function ListExample() {
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XList</h2>
 			<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12 pt-8">
 				<XList bordered={true} separator={true}>
-					<XItem tag="label">
+					<XItem as="label">
 						<XItemSection side>
 							<input type="checkbox" value={1} disabled />
 						</XItemSection>
@@ -13,7 +13,7 @@ export function ListExample() {
 							<XItemLabel>Item 1</XItemLabel>
 						</XItemSection>
 					</XItem>
-					<XItem tag="label">
+					<XItem as="label">
 						<XItemSection side>
 							<input type="checkbox" value={2} />
 						</XItemSection>
@@ -21,7 +21,7 @@ export function ListExample() {
 							<XItemLabel>Item 2</XItemLabel>
 						</XItemSection>
 					</XItem>
-					<XItem tag="label">
+					<XItem as="label">
 						<XItemSection side>
 							<input type="checkbox" value={3} />
 						</XItemSection>

@@ -6,14 +6,20 @@ export function CardsExample() {
 			<div className="max-w-lg m-auto">
 				<XCard border>
 					<XCardSection horizontal>
-						<XCardSection className="bg-bgmb5">sdfsdfsdf</XCardSection>
-						<XCardSection className="bg-bgmb2">sdfsdfsdf</XCardSection>
-						<XCardSection className="bg-bgmb3">sdfsdfsdf</XCardSection>
+						<XCardSection className="bg-bgmb5">
+							parent: horizontal
+						</XCardSection>
+						<XCardSection className="bg-bgmb2">
+							parent: horizontal
+						</XCardSection>
+						<XCardSection className="bg-bgmb3">
+							parent: horizontal
+						</XCardSection>
 					</XCardSection>
-					<XCardSection horizontal>
-						<XCardSection className="bg-bgmb5">sdfsdfsdf</XCardSection>
+					<XCardSection>
 						<XCardSection className="bg-bgmb2">sdfsdfsdf</XCardSection>
 						<XCardSection className="bg-bgmb3">sdfsdfsdf</XCardSection>
+						<XCardSection className="bg-bgmb5">sdfsdfsdf</XCardSection>
 					</XCardSection>
 					<XCardActions horizontal className="bg-bgmb1" align="end">
 						<XBtn color="positive">positive</XBtn>

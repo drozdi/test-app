@@ -8,7 +8,7 @@
 	@apply opacity-15;
 }
 .x-link-section {
-	@apply flex items-center justify-center transition-transform;
+	@apply flex items-center justify-center;
 	& > svg {
 		@apply block;
 	}

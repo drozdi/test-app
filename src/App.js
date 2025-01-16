@@ -31,6 +31,14 @@ function App() {
 									<XItemLabel lines={true}>Home</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/accordion" as="navLink">
+								<XItemSection side={true}>
+									<XIcon>mdi-table-column</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XAccordion</XItemLabel>
+								</XItemSection>
+							</XItem>
 							<XItem to="/btn" as="navLink">
 								<XItemSection side={true}>
 									<XIcon>mdi-button-pointer</XIcon>
@@ -47,6 +55,15 @@ function App() {
 									<XItemLabel lines={true}>XBtnGroup</XItemLabel>
 								</XItemSection>
 							</XItem>
+							<XItem to="/cards" as="navLink">
+								<XItemSection side={true}>
+									<XIcon>mdi-cards</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XCards</XItemLabel>
+								</XItemSection>
+							</XItem>
+
 							<XItem to="/input" as="navLink">
 								<XItemSection side={true}>
 									<XIcon>mdi-form-textbox</XIcon>
@@ -87,22 +104,7 @@ function App() {
 									<XItemLabel lines={true}>XProgress</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/cards" as="navLink">
-								<XItemSection side={true}>
-									<XIcon>mdi-cards</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XCards</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/accordion" as="navLink">
-								<XItemSection side={true}>
-									<XIcon>mdi-table-column</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XAccordion</XItemLabel>
-								</XItemSection>
-							</XItem>
+
 							<XItem to="/select" as="navLink">
 								<XItemSection side={true}>
 									<XIcon>mdi-select</XIcon>

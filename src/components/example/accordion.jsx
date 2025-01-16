@@ -47,9 +47,9 @@ export function AccordionExample() {
 						</p>
 					</XAccordionTab>
 				</XAccordion>
-				<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
+				<div className="mt-8 grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 					<div>
-						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text overflow-scroll">
 							{accordionExample.code}
 						</pre>
 					</div>

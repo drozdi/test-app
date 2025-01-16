@@ -32,8 +32,10 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	const handleRef = useForkRef(ref, elementRef);
 	const isActionable = useMemo(() => {
 		return (
-			as === XLink ||
-			clickableTag.includes(elementRef.current?.nodeName.toLowerCase() ?? as) ||
+			props.as === XLink ||
+			clickableTag.includes(
+				elementRef.current?.nodeName.toLowerCase() ?? props.as,
+			) ||
 			isFunction(onClick)
 		);
 	}, [onClick, elementRef.current]);
@@ -54,7 +56,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 				},
 				active && !disabled ? activeClass : '',
 			),
-			role: disRoleTag.includes(as) ? undefined : (role ?? 'listitem'),
+			role: disRoleTag.includes(props.as) ? undefined : (role ?? 'listitem'),
 			disabled: disabled,
 		};
 		if (isActionable) {
@@ -63,7 +65,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 		if (isClickable) {
 			attrs.tabIndex = disabled ? -1 : (tabIndex ?? -1);
 		}
-		if (disDisabledTag.includes(as)) {
+		if (disDisabledTag.includes(props.as)) {
 			delete attrs.disabled;
 		}
 		return attrs;
@@ -81,10 +83,9 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	return render(
 		'div',
 		{
-			as,
-			ref: handleRef,
 			...props,
 			...attrs,
+			ref: handleRef,
 			children: isFunction(children) ? (
 				children
 			) : (
@@ -102,7 +103,6 @@ export const XItem = forwardRefWithAs(function XItemFn(
 });
 
 XItem.propTypes = {
-	as: PropTypes.any,
 	children: PropTypes.node,
 	className: PropTypes.string,
 	dense: PropTypes.bool,

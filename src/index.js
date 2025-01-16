@@ -12,7 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<ThemeProvider>
 		<BrowserRouter>
-			<RenderProvider render={({ as }) => (as === 'navLink' ? NavLink : as)}>
+			<RenderProvider
+				render={({ as, to }) => (as === 'navLink' || !!to ? NavLink : as)}
+			>
 				<App />
 			</RenderProvider>
 		</BrowserRouter>
