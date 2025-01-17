@@ -56,16 +56,17 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 				{
 					...props,
 					disabled,
-					className: classNames(
-						'x-link',
-						{
-							'x-link--nowrap': noWrap,
-							'x-link--active': active,
-							'x-link--opened': opened,
-							'x-link--disabled': disabled,
-						},
-						className,
-					),
+					className: ({ isActive }) =>
+						classNames(
+							'x-link',
+							{
+								'x-link--nowrap': noWrap,
+								'x-link--active': active || isActive,
+								'x-link--opened': opened,
+								'x-link--disabled': disabled,
+							},
+							className,
+						),
 					onClick: handleClick,
 					onKeyDown: handleKeyDown,
 					children: (
@@ -114,7 +115,7 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 });
 
 XLink.propTypes = {
-	className: PropTypes.string,
+	className: PropTypes.any,
 	children: PropTypes.node,
 	noWrap: PropTypes.bool,
 	active: PropTypes.bool,

@@ -34,6 +34,8 @@ function applyContextToProps(props) {
 	return { ...contextValues, ...props, as: render(props) };
 }
 
+function _cc(fn, ...args) {}
+
 export function render(tag, props, state) {
 	let { as: Component = tag, children, ...rest } = applyContextToProps(props);
 
@@ -47,15 +49,20 @@ export function render(tag, props, state) {
 
 	const memoizedRest = useMemo(() => {
 		const result = { ...rest };
-		if ('className' in rest && rest.className && isFunction(rest.className)) {
-			result.className = rest.className(state, rest);
-		}
-		if ('style' in rest && rest.style && isFunction(rest.style)) {
-			result.style = rest.style(state, rest);
-		}
+		['className', 'style'].forEach((key) => {
+			if (key in rest && rest[key] && isFunction(rest[key])) {
+				if (Component.render) {
+					result[key] = (arg) => rest[key]({ ...arg, ...state }, rest);
+				} else {
+					result[key] = rest[key](state, rest);
+				}
+			}
+		});
+
 		if (result['aria-labelledby'] && result['aria-labelledby'] === result.id) {
 			result['aria-labelledby'] = undefined;
 		}
+
 		return result;
 	}, [rest, state]);
 

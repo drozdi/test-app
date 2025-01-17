@@ -20,110 +20,113 @@ import { XLayout } from './components/ui/layout';
 function App() {
 	return (
 		<AppProvider config={{ smKey: 'app-1' }}>
-			<XLayout container={true} overlay={true} toggle={true} view="lhr lpr lff">
+			<XLayout container overlay toggle view="lhr lpr lff">
 				{{
-					left: (props) => (
-						<XList separator={true}>
-							<XItem to="/">
-								<XItemSection side={true}>
-									<XIcon>mdi-home</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>Home</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/accordion">
-								<XItemSection side={true}>
-									<XIcon>mdi-table-column</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XAccordion</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/btn">
-								<XItemSection side={true}>
-									<XIcon>mdi-button-pointer</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XBtn</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/btn-group">
-								<XItemSection side={true}>
-									<XIcon>mdi-card-outline</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XBtnGroup</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/cards">
-								<XItemSection side={true}>
-									<XIcon>mdi-cards</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XCards</XItemLabel>
-								</XItemSection>
-							</XItem>
+					left: (props) => {
+						//return 'left';
+						return (
+							<XList separator>
+								<XItem to="/">
+									<XItemSection side>
+										<XIcon>mdi-home</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>Home</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/accordion">
+									<XItemSection side>
+										<XIcon>mdi-table-column</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XAccordion</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/btn">
+									<XItemSection side>
+										<XIcon>mdi-button-pointer</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XBtn</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/btn-group">
+									<XItemSection side>
+										<XIcon>mdi-card-outline</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XBtnGroup</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/cards">
+									<XItemSection side>
+										<XIcon>mdi-cards</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XCards</XItemLabel>
+									</XItemSection>
+								</XItem>
 
-							<XItem to="/input">
-								<XItemSection side={true}>
-									<XIcon>mdi-form-textbox</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XInput</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/link">
-								<XItemSection side={true}>
-									<XIcon>mdi-link</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XLink</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/list">
-								<XItemSection side={true}>
-									<XIcon>mdi-view-list</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XList</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/message">
-								<XItemSection side={true}>
-									<XIcon>mdi-message-alert-outline</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XMessage</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/spinner">
-								<XItemSection side={true}>
-									<XIcon>mdi-reload</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XSpinner</XItemLabel>
-								</XItemSection>
-							</XItem>
-							<XItem to="/progress">
-								<XItemSection side={true}>
-									<XIcon>mdi-progress-helper</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XProgress</XItemLabel>
-								</XItemSection>
-							</XItem>
+								<XItem to="/input">
+									<XItemSection side>
+										<XIcon>mdi-form-textbox</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XInput</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/link">
+									<XItemSection side>
+										<XIcon>mdi-link</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XLink</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/list">
+									<XItemSection side>
+										<XIcon>mdi-view-list</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XList</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/message">
+									<XItemSection side>
+										<XIcon>mdi-message-alert-outline</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XMessage</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/spinner">
+									<XItemSection side>
+										<XIcon>mdi-reload</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XSpinner</XItemLabel>
+									</XItemSection>
+								</XItem>
+								<XItem to="/progress">
+									<XItemSection side>
+										<XIcon>mdi-progress-helper</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XProgress</XItemLabel>
+									</XItemSection>
+								</XItem>
 
-							<XItem to="/select">
-								<XItemSection side={true}>
-									<XIcon>mdi-select</XIcon>
-								</XItemSection>
-								<XItemSection>
-									<XItemLabel lines={true}>XSelect</XItemLabel>
-								</XItemSection>
-							</XItem>
-						</XList>
-					),
+								<XItem to="/select">
+									<XItemSection side>
+										<XIcon>mdi-select</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XSelect</XItemLabel>
+									</XItemSection>
+								</XItem>
+							</XList>
+						);
+					},
 					header: <ThemeProvider.Toggler></ThemeProvider.Toggler>,
 					footer: 'footer',
 					//right: 'right',

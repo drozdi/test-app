@@ -42,19 +42,20 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	const isHoverable = isClickable || hoverable;
 	const attrs = useMemo(() => {
 		const attrs = {
-			className: classNames(
-				'x-item',
-				className,
-				{
-					'x-item--dense': dense,
-					'x-item--active': active,
-					'x-item--disabled': disabled,
-					'x-item--clickable': isClickable,
-					'x-item--hoverable': isHoverable,
-					'x-item--vertical': vertical,
-				},
-				active && !disabled ? activeClass : '',
-			),
+			className: ({ isActive }) =>
+				classNames(
+					'x-item',
+					className,
+					{
+						'x-item--dense': dense,
+						'x-item--active': active || isActive,
+						'x-item--disabled': disabled,
+						'x-item--clickable': isClickable,
+						'x-item--hoverable': isHoverable,
+						'x-item--vertical': vertical,
+					},
+					active && !disabled ? activeClass : '',
+				),
 			role: disRoleTag.includes(props.as) ? undefined : (role ?? 'listitem'),
 			disabled: disabled,
 		};
