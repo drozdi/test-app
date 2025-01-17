@@ -1,10 +1,10 @@
 .x-link {
-	@apply w-full flex relative items-center px-3 py-2 select-none cursor-pointer disabled:cursor-none disabled:opacity-40;
+	@apply w-full flex relative items-center px-3 py-2 select-none cursor-pointer;
 }
 .x-link-underlay {
 	@apply bg-current opacity-0 absolute top-0 left-0 h-full w-full -z-10;
 }
-.x-link:hover .x-link-underlay {
+.x-link:not(.x-link--disabled):hover .x-link-underlay {
 	@apply opacity-15;
 }
 .x-link-section {
@@ -44,8 +44,12 @@
 	@apply ps-5;
 }
 
+.x-link--disabled {
+	@apply cursor-not-allowed opacity-50;
+}
+
 .x-link--active {
-	@apply bg-dimmed;
+	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 .x-link--opened .x-link-chevron {
 	@apply rotate-90;

@@ -28,6 +28,10 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 	const [opened, setOpened] = useState(_opened);
 
 	const handleClick = (event) => {
+		if (disabled) {
+			event.preventDefault();
+			return;
+		}
 		onClick?.(event);
 		if (withChildren) {
 			event.preventDefault();
@@ -50,7 +54,6 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 			{render(
 				'a',
 				{
-					as: 'navLink',
 					...props,
 					disabled,
 					className: classNames(

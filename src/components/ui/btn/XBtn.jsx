@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { memo, useMemo } from 'react';
 import { useBtn } from '../../hooks/useBtn';
 import { XIcon } from '../icon';
-import { XBtnGroup, useXBtnGroupContext } from './Group';
+import { XBtnGroup, useXBtnGroupContext } from './group';
 import './style.css';
 
 import { isFunction } from '../../../utils/is';

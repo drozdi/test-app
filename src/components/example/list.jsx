@@ -29,7 +29,7 @@ export function ListExample() {
 							<XItemLabel>Item 3</XItemLabel>
 						</XItemSection>
 					</XItem>
-					<XItem>
+					<XItem to="https://ya.ru/" target="_blank">
 						<XItemSection side>
 							<XIcon>mdi-home</XIcon>
 						</XItemSection>

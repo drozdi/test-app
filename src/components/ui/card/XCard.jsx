@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import { PropTypes } from 'prop-types';
 import { render } from '../../internal/render';
 import './style.css';
+import { XCardActions } from './XCardActions';
+import { XCardSection } from './XCardSection';
 
 export function XCard({ tag = 'div', className, border, flat, square, ...props }) {
 	return render('div', {
@@ -13,6 +15,9 @@ export function XCard({ tag = 'div', className, border, flat, square, ...props }
 		}),
 	});
 }
+
+XCard.Actions = XCardActions;
+XCard.Section = XCardSection;
 
 XCard.propTypes = {
 	className: PropTypes.string,

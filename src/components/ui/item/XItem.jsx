@@ -6,13 +6,12 @@ import { useForkRef } from '../../hooks/useForkRef';
 import { forwardRefWithAs, render } from '../../internal/render';
 import { XLink } from '../link';
 import './style.css';
-const clickableTag = ['a', 'label'];
+const clickableTag = ['a', 'label', 'navLink'];
 const disRoleTag = ['label'];
 const disDisabledTag = ['div', 'span', 'a', 'label'];
 
 export const XItem = forwardRefWithAs(function XItemFn(
 	{
-		as = 'div',
 		className,
 		children,
 		tabIndex = 0,
@@ -28,7 +27,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 	},
 	ref,
 ) {
-	const elementRef = useRef();
+	const elementRef = useRef(null);
 	const handleRef = useForkRef(ref, elementRef);
 	const isActionable = useMemo(() => {
 		return (
@@ -38,7 +37,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 			) ||
 			isFunction(onClick)
 		);
-	}, [onClick, elementRef.current]);
+	}, [props, onClick, elementRef]);
 	const isClickable = !disabled && isActionable;
 	const isHoverable = isClickable || hoverable;
 	const attrs = useMemo(() => {

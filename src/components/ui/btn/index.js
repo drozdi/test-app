@@ -1,2 +1,2 @@
-export * from './Group';
+export * from './group';
 export * from './XBtn';

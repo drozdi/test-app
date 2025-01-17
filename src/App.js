@@ -7,6 +7,7 @@ import {
 	CardsExample,
 	HomeExample,
 	InputExample,
+	LinkExample,
 	ListExample,
 	MessageExample,
 	ProgressExample,
@@ -23,7 +24,7 @@ function App() {
 				{{
 					left: (props) => (
 						<XList separator={true}>
-							<XItem to="/" as="navLink">
+							<XItem to="/">
 								<XItemSection side={true}>
 									<XIcon>mdi-home</XIcon>
 								</XItemSection>
@@ -31,7 +32,7 @@ function App() {
 									<XItemLabel lines={true}>Home</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/accordion" as="navLink">
+							<XItem to="/accordion">
 								<XItemSection side={true}>
 									<XIcon>mdi-table-column</XIcon>
 								</XItemSection>
@@ -39,7 +40,7 @@ function App() {
 									<XItemLabel lines={true}>XAccordion</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/btn" as="navLink">
+							<XItem to="/btn">
 								<XItemSection side={true}>
 									<XIcon>mdi-button-pointer</XIcon>
 								</XItemSection>
@@ -47,7 +48,7 @@ function App() {
 									<XItemLabel lines={true}>XBtn</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/btn-group" as="navLink">
+							<XItem to="/btn-group">
 								<XItemSection side={true}>
 									<XIcon>mdi-card-outline</XIcon>
 								</XItemSection>
@@ -55,7 +56,7 @@ function App() {
 									<XItemLabel lines={true}>XBtnGroup</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/cards" as="navLink">
+							<XItem to="/cards">
 								<XItemSection side={true}>
 									<XIcon>mdi-cards</XIcon>
 								</XItemSection>
@@ -64,7 +65,7 @@ function App() {
 								</XItemSection>
 							</XItem>
 
-							<XItem to="/input" as="navLink">
+							<XItem to="/input">
 								<XItemSection side={true}>
 									<XIcon>mdi-form-textbox</XIcon>
 								</XItemSection>
@@ -72,7 +73,15 @@ function App() {
 									<XItemLabel lines={true}>XInput</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/list" as="navLink">
+							<XItem to="/link">
+								<XItemSection side={true}>
+									<XIcon>mdi-link</XIcon>
+								</XItemSection>
+								<XItemSection>
+									<XItemLabel lines={true}>XLink</XItemLabel>
+								</XItemSection>
+							</XItem>
+							<XItem to="/list">
 								<XItemSection side={true}>
 									<XIcon>mdi-view-list</XIcon>
 								</XItemSection>
@@ -80,7 +89,7 @@ function App() {
 									<XItemLabel lines={true}>XList</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/message" as="navLink">
+							<XItem to="/message">
 								<XItemSection side={true}>
 									<XIcon>mdi-message-alert-outline</XIcon>
 								</XItemSection>
@@ -88,7 +97,7 @@ function App() {
 									<XItemLabel lines={true}>XMessage</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/spinner" as="navLink">
+							<XItem to="/spinner">
 								<XItemSection side={true}>
 									<XIcon>mdi-reload</XIcon>
 								</XItemSection>
@@ -96,7 +105,7 @@ function App() {
 									<XItemLabel lines={true}>XSpinner</XItemLabel>
 								</XItemSection>
 							</XItem>
-							<XItem to="/progress" as="navLink">
+							<XItem to="/progress">
 								<XItemSection side={true}>
 									<XIcon>mdi-progress-helper</XIcon>
 								</XItemSection>
@@ -105,7 +114,7 @@ function App() {
 								</XItemSection>
 							</XItem>
 
-							<XItem to="/select" as="navLink">
+							<XItem to="/select">
 								<XItemSection side={true}>
 									<XIcon>mdi-select</XIcon>
 								</XItemSection>
@@ -124,6 +133,7 @@ function App() {
 							<Route path="/btn" element={<BtnExample />} />
 							<Route path="/btn-group" element={<BtnGroupExample />} />
 							<Route path="/input" element={<InputExample />} />
+							<Route path="/link" element={<LinkExample />} />
 							<Route path="/list" element={<ListExample />} />
 							<Route path="/message" element={<MessageExample />} />
 							<Route path="/spinner" element={<SpinnerExample />} />
