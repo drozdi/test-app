@@ -9,6 +9,7 @@ import { MessageExample } from './message';
 import { ProgressExample } from './progress';
 import { SelectExample } from './select';
 import { SpinnerExample } from './spinner';
+import { TabsExample } from './tabs';
 
 export * from './accordion';
 export * from './btn';
@@ -22,12 +23,14 @@ export * from './message';
 export * from './progress';
 export * from './select';
 export * from './spinner';
+export * from './tabs';
 
 export default function ({
 	btn,
 	input,
 	btnGroup,
 	list,
+	tabs,
 	link,
 	message,
 	spinner,
@@ -49,6 +52,7 @@ export default function ({
 			{progress && <ProgressExample />}
 			{cards && <CardsExample />}
 			{accordion && <AccordionExample />}
+			{tabs && <TabsExample />}
 		</div>
 	);
 }

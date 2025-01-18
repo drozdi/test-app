@@ -12,4 +12,5 @@ export * from './messages';
 export * from './progress';
 export * from './select';
 export * from './spinner';
+export * from './tabs';
 export * from './toast';

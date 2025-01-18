@@ -9,6 +9,8 @@ export function HomeExample() {
 				}}
 				to="/"
 				label="yyyy"
+				leftSection="mdi-home"
+				rightSection="mdi-close"
 			/>
 		</div>
 	);

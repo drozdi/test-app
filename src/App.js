@@ -13,6 +13,7 @@ import {
 	ProgressExample,
 	SelectExample,
 	SpinnerExample,
+	TabsExample,
 } from './components/example';
 import { ThemeProvider } from './components/hooks/useTheme';
 import { XIcon, XItem, XItemLabel, XItemSection, XList } from './components/ui';
@@ -99,6 +100,14 @@ function App() {
 										<XItemLabel lines>XMessage</XItemLabel>
 									</XItemSection>
 								</XItem>
+								<XItem to="/progress">
+									<XItemSection side>
+										<XIcon>mdi-progress-helper</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XProgress</XItemLabel>
+									</XItemSection>
+								</XItem>
 								<XItem to="/spinner">
 									<XItemSection side>
 										<XIcon>mdi-reload</XIcon>
@@ -107,12 +116,12 @@ function App() {
 										<XItemLabel lines>XSpinner</XItemLabel>
 									</XItemSection>
 								</XItem>
-								<XItem to="/progress">
+								<XItem to="/tabs">
 									<XItemSection side>
-										<XIcon>mdi-progress-helper</XIcon>
+										<XIcon>mdi-tab</XIcon>
 									</XItemSection>
 									<XItemSection>
-										<XItemLabel lines>XProgress</XItemLabel>
+										<XItemLabel lines>XTabs</XItemLabel>
 									</XItemSection>
 								</XItem>
 
@@ -140,6 +149,7 @@ function App() {
 							<Route path="/list" element={<ListExample />} />
 							<Route path="/message" element={<MessageExample />} />
 							<Route path="/spinner" element={<SpinnerExample />} />
+							<Route path="/tabs" element={<TabsExample />} />
 							<Route path="/progress" element={<ProgressExample />} />
 							<Route path="/cards" element={<CardsExample />} />
 							<Route path="/accordion" element={<AccordionExample />} />
