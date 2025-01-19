@@ -141,6 +141,9 @@ module.exports = {
 				6: '6px',
 				10: '10px',
 			},
+			outlineOffset: {
+				3: '3px',
+			},
 		},
 	},
 	plugins: [

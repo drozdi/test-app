@@ -27,15 +27,13 @@ export function XTabsTab({
 		ctx.setActiveTab(value);
 	};
 
-	/*if (!ctx?.value) {
-		ctx?.setActiveTab?.(value);
-	}*/
-
 	return (
 		<button
 			role="tab"
+			id={ctx.getTabId(value)}
 			aria-selected={active}
 			aria-disabled={disabled}
+			aria-controls={ctx.getPanelId(value)}
 			disabled={disabled}
 			tabIndex={disabled ? -1 : tabIndex}
 			className={classNames('x-tabs-tab', {
@@ -45,6 +43,7 @@ export function XTabsTab({
 				className,
 			})}
 			onClick={handleClick}
+			onKeyDown={ctx.onKeyDown}
 		>
 			{leftSection && (
 				<span className="x-tabs-tab__section">
@@ -53,7 +52,7 @@ export function XTabsTab({
 			)}
 			<span className="x-tabs-tab__label">{children}</span>
 			<div className="x-tabs-tab__underlay"></div>
-			{leftSection && (
+			{rightSection && (
 				<span className="x-tabs-tab__section">
 					{isString(rightSection) ? (
 						<XIcon>{rightSection}</XIcon>

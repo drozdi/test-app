@@ -6,7 +6,7 @@
 }
 .x-btn-group > .x-btn {
 	@apply shadow-none !important;
-	@apply focus:ring-1 focus:ring-current focus:ring-offset-background focus:ring-offset-3;
+	@apply focus:outline focus:outline-1 focus:outline-current focus:outline-offset-2;
 }
 
 .x-btn-group--spread > * {

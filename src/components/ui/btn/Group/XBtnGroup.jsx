@@ -7,6 +7,41 @@ import { XBtnGroupContext } from './XBtnGroupContext';
 
 import { isArray } from '../../../../utils/is';
 
+function getPreviousIndex(current, elements, loop) {
+	for (let i = current - 1; i >= 0; i -= 1) {
+		if (!elements[i].disabled) {
+			return i;
+		}
+	}
+
+	if (loop) {
+		for (let i = elements.length - 1; i > -1; i -= 1) {
+			if (!elements[i].disabled) {
+				return i;
+			}
+		}
+	}
+
+	return current;
+}
+function getNextIndex(current, elements, loop) {
+	for (let i = current + 1; i < elements.length; i += 1) {
+		if (!elements[i].disabled) {
+			return i;
+		}
+	}
+
+	if (loop) {
+		for (let i = 0; i < elements.length; i += 1) {
+			if (!elements[i].disabled) {
+				return i;
+			}
+		}
+	}
+
+	return current;
+}
+
 function XBtnGroupFn(
 	{
 		children,
@@ -93,6 +128,16 @@ function XBtnGroupFn(
 
 	const onKeyDown = (event) => {
 		const { target } = event;
+
+		const elements = Array.from(
+			target
+				.closest('[role="group"]')
+				.querySelectorAll('[role="button"], button') || [],
+		);
+		const current = elements.findIndex((el) => target === el);
+		const nextIndex = getNextIndex(current, elements, true);
+		const previousIndex = getPreviousIndex(current, elements, true);
+
 		switch (event.code) {
 			case 'Enter':
 			case 'Space':
@@ -102,20 +147,14 @@ function XBtnGroupFn(
 			case 'ArrowLeft':
 			case 'ArrowUp':
 				event.preventDefault();
-				if (target.previousSibling) {
-					target.previousSibling.focus();
-				} else {
-					target.parentNode.lastChild.focus();
-				}
+				event.stopPropagation();
+				elements[previousIndex].focus();
 				break;
 			case 'ArrowRight':
 			case 'ArrowDown':
 				event.preventDefault();
-				if (target.nextSibling) {
-					target.nextSibling.focus();
-				} else {
-					target.parentNode.firstChild.focus();
-				}
+				event.stopPropagation();
+				elements[nextIndex].focus();
 				break;
 		}
 	};
@@ -154,6 +193,7 @@ function XBtnGroupFn(
 				[`justify-` + align]: !vertical && align,
 				[`items-` + align]: vertical && align,
 			})}
+			role="group"
 			ref={elementRef}
 		>
 			<XBtnGroupContext.Provider value={context}>

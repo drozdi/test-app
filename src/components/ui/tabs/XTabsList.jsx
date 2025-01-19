@@ -6,6 +6,7 @@ export function XTabsList({ className, children, justify, grow, noWrap }) {
 	const ctx = useXTabsContext();
 	return (
 		<div
+			role="tablist"
 			className={classNames(
 				'x-tabs-list',
 				{
