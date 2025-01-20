@@ -54,7 +54,7 @@ export function XAccordion({
 				parentSelector: '.x-accordion',
 				siblingSelector: 'button, [role="button"]',
 				loop: true,
-				activateOnFocus: true,
+				activateOnFocus: !multiple,
 				orientation: 'xy',
 			}),
 		};
