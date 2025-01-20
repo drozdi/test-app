@@ -43,7 +43,6 @@ export function scopedKeydownHandler({
 	orientation,
 }) {
 	return (event) => {
-		console.log(event);
 		onKeyDown?.(event);
 		const { target } = event;
 
@@ -53,8 +52,6 @@ export function scopedKeydownHandler({
 		const current = elements.findIndex((el) => target === el);
 		const nextIndex = getNextIndex(current, elements, loop);
 		const previousIndex = getPreviousIndex(current, elements, loop);
-
-		console.log(elements);
 
 		switch (event.key) {
 			case 'ArrowLeft': {

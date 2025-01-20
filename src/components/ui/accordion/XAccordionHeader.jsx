@@ -19,8 +19,9 @@ export function XAccordionHeader({ className, children, onClick, ...props }) {
 		if (disabled) {
 			return;
 		}
-		onClick?.({ ...event, value });
-		toggleExpanded(value);
+		event.value = value;
+		onClick?.(event, value);
+		toggleExpanded(event);
 	};
 	const handleKeyDown = (event) => {
 		event.value = value;

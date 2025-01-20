@@ -30,11 +30,11 @@ export function XAccordionTab({
 			getPanelId: () => ctx?.getPanelId(value) ?? `${uid}-panel`,
 			getHeaderId: () => ctx?.getHeaderId(value) ?? `${uid}-header`,
 			onKeyDown: ctx?.onKeyDown,
-			toggleExpanded: (value) => {
+			toggleExpanded: (event) => {
 				if (disabled) {
 					return;
 				}
-				ctx?.onChange?.(value);
+				ctx?.onChange?.(event);
 				ctx || setExpanded((v) => !v);
 			},
 		};

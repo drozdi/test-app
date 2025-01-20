@@ -40,11 +40,11 @@ export function XAccordion({
 			getTabId: (value) => {
 				return `${uid}-tab-${value}`;
 			},
-			onChange: (value) => {
+			onChange: ({ value }) => {
 				if (multiple) {
 					setCurrent((current) => {
 						if (!current.includes(value)) return [...current, value];
-						return current.filter((v) => v !== value);
+						return current?.filter((v) => v !== value);
 					});
 				} else {
 					setCurrent((v) => (v === value ? undefined : value));
@@ -64,6 +64,8 @@ export function XAccordion({
 			setCurrent(current[0] ?? undefined);
 		} else if (!isArray(current) && multiple) {
 			setCurrent(current ? [current] : []);
+		} else {
+			setCurrent(multiple ? [] : undefined);
 		}
 	}, [multiple]);
 	useEffect(() => onChange?.(current), [current]);

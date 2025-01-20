@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { XAccordion, XAccordionHeader, XAccordionPanel, XAccordionTab } from '../ui';
 import { Form, useProps } from './utils';
-
 export function AccordionExample() {
+	const [val, setVal] = useState();
 	const accordionExample = useProps(
 		{
 			border: false,
@@ -12,14 +13,23 @@ export function AccordionExample() {
 		},
 		'XAccordion',
 		`
-	<XAccordionTab header="Header I" value="acc-1">
-		<p>sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y</p>
+	<XAccordionTab value="acc-1">
+		<XAccordionHeader>Header I</XAccordionHeader>
+		<XAccordionPanel>
+			sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y
+		</XAccordionPanel>
 	</XAccordionTab>
-	<XAccordionTab header="Header II" value="acc-2" disabled>
-		<p>sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y</p>
+	<XAccordionTab value="acc-2" disabled>
+		<XAccordionHeader>Header II</XAccordionHeader>
+		<XAccordionPanel>
+			sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y
+		</XAccordionPanel>
 	</XAccordionTab>
-	<XAccordionTab header="Header III" value="acc-3">
-		<p>sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y</p>
+	<XAccordionTab value="acc-3">
+		<XAccordionHeader>Header III</XAccordionHeader>
+		<XAccordionPanel>
+			sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur 54e t5 7y
+		</XAccordionPanel>
 	</XAccordionTab>
 `,
 	);
@@ -27,7 +37,10 @@ export function AccordionExample() {
 		<div className="max-w-4xl m-auto py-4 relative">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XAccordion</h2>
 			<div className="p-4">
-				<XAccordion {...accordionExample.props}>
+				<XAccordion
+					{...accordionExample.props}
+					onChange={({ value }) => setVal(value)}
+				>
 					<XAccordionTab value="acc-1">
 						<XAccordionHeader>Header I</XAccordionHeader>
 						<XAccordionPanel>
@@ -54,6 +67,9 @@ export function AccordionExample() {
 					<div>
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text overflow-scroll">
 							{accordionExample.code}
+						</pre>
+						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
+							{JSON.stringify(val)}
 						</pre>
 					</div>
 					<div>
