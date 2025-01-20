@@ -68,7 +68,7 @@ export function XAccordion({
 			setCurrent(multiple ? [] : undefined);
 		}
 	}, [multiple]);
-	useEffect(() => onChange?.(current), [current]);
+	useEffect(() => onChange?.({ value: current }), [current]);
 	return (
 		<div
 			id={uid}
