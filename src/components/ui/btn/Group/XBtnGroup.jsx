@@ -7,40 +7,7 @@ import { XBtnGroupContext } from './XBtnGroupContext';
 
 import { isArray } from '../../../../utils/is';
 
-function getPreviousIndex(current, elements, loop) {
-	for (let i = current - 1; i >= 0; i -= 1) {
-		if (!elements[i].disabled) {
-			return i;
-		}
-	}
-
-	if (loop) {
-		for (let i = elements.length - 1; i > -1; i -= 1) {
-			if (!elements[i].disabled) {
-				return i;
-			}
-		}
-	}
-
-	return current;
-}
-function getNextIndex(current, elements, loop) {
-	for (let i = current + 1; i < elements.length; i += 1) {
-		if (!elements[i].disabled) {
-			return i;
-		}
-	}
-
-	if (loop) {
-		for (let i = 0; i < elements.length; i += 1) {
-			if (!elements[i].disabled) {
-				return i;
-			}
-		}
-	}
-
-	return current;
-}
+import { scopedKeydownHandler } from '../../../internal/events/scoped-keydown-handler';
 
 function XBtnGroupFn(
 	{
@@ -55,7 +22,8 @@ function XBtnGroupFn(
 		onChange,
 		value: current,
 		align,
-		spread,
+		grow,
+		pills,
 		name,
 		disabled,
 		...props
@@ -126,38 +94,13 @@ function XBtnGroupFn(
 		[selectable, switchable, multiple, current, onClick],
 	);
 
-	const onKeyDown = (event) => {
-		const { target } = event;
-
-		const elements = Array.from(
-			target
-				.closest('[role="group"]')
-				.querySelectorAll('[role="button"], button') || [],
-		);
-		const current = elements.findIndex((el) => target === el);
-		const nextIndex = getNextIndex(current, elements, true);
-		const previousIndex = getPreviousIndex(current, elements, true);
-
-		switch (event.code) {
-			case 'Enter':
-			case 'Space':
-				event.preventDefault();
-				target.click();
-				break;
-			case 'ArrowLeft':
-			case 'ArrowUp':
-				event.preventDefault();
-				event.stopPropagation();
-				elements[previousIndex].focus();
-				break;
-			case 'ArrowRight':
-			case 'ArrowDown':
-				event.preventDefault();
-				event.stopPropagation();
-				elements[nextIndex].focus();
-				break;
-		}
-	};
+	const onKeyDown = scopedKeydownHandler({
+		parentSelector: '[role="group"]',
+		siblingSelector: '[role="button"], button',
+		loop: true,
+		activateOnFocus: false,
+		orientation: 'xy',
+	});
 
 	const context = {
 		getElement: () => elementRef.current,
@@ -188,7 +131,8 @@ function XBtnGroupFn(
 			className={classNames('x-btn-group', className, {
 				'x-btn-group--vertical': vertical,
 				'x-btn-group--separator': separator,
-				'x-btn-group--spread': spread,
+				'x-btn-group--grow': grow,
+				'x-btn-group--pills': pills,
 				'x-btn-group--round': props.round,
 				[`justify-` + align]: !vertical && align,
 				[`items-` + align]: vertical && align,
@@ -213,7 +157,7 @@ XBtnGroup.propTypes = {
 	switchable: PropTypes.bool,
 	multiple: PropTypes.bool,
 	separator: PropTypes.bool,
-	spread: PropTypes.bool,
+	grow: PropTypes.bool,
 	onClick: PropTypes.func,
 	onChange: PropTypes.func,
 	value: PropTypes.any,

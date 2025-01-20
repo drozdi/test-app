@@ -1,4 +1,4 @@
-import { XAccordion, XAccordionTab } from '../ui';
+import { XAccordion, XAccordionHeader, XAccordionPanel, XAccordionTab } from '../ui';
 import { Form, useProps } from './utils';
 
 export function AccordionExample() {
@@ -27,24 +27,27 @@ export function AccordionExample() {
 		<div className="max-w-4xl m-auto py-4 relative">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XAccordion</h2>
 			<div className="p-4">
-				<XAccordion {...accordionExample.props} value="acc-1">
-					<XAccordionTab header="Header I" value="acc-1">
-						<p>
+				<XAccordion {...accordionExample.props}>
+					<XAccordionTab value="acc-1">
+						<XAccordionHeader>Header I</XAccordionHeader>
+						<XAccordionPanel>
 							sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty
 							uitur 54e t5 7y
-						</p>
+						</XAccordionPanel>
 					</XAccordionTab>
-					<XAccordionTab header="Header II" value="acc-2" disabled>
-						<p>
+					<XAccordionTab value="acc-2" disabled>
+						<XAccordionHeader>Header II</XAccordionHeader>
+						<XAccordionPanel>
 							sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty
 							uitur 54e t5 7y
-						</p>
+						</XAccordionPanel>
 					</XAccordionTab>
-					<XAccordionTab header="Header III" value="acc-3">
-						<p>
+					<XAccordionTab value="acc-3">
+						<XAccordionHeader>Header III</XAccordionHeader>
+						<XAccordionPanel>
 							sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty
 							uitur 54e t5 7y
-						</p>
+						</XAccordionPanel>
 					</XAccordionTab>
 				</XAccordion>
 				<div className="mt-8 grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
@@ -66,6 +69,14 @@ export function AccordionExample() {
 						)}
 					</div>
 				</div>
+				<hr className="my-4" />
+				<XAccordionTab value="acc-1">
+					<XAccordionHeader>Header I</XAccordionHeader>
+					<XAccordionPanel>
+						sdghksdjf w ehrfwelfwe fklwef weer ter yeryer uy rt yuru ty uitur
+						54e t5 7y
+					</XAccordionPanel>
+				</XAccordionTab>
 			</div>
 		</div>
 	);

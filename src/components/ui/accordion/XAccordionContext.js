@@ -1,7 +1,3 @@
-import { createContext, useContext } from 'react';
+import { createSafeContext } from '../../internal/createSafeContext';
 
-export const XAccordionContext = createContext(null);
-
-export function useXAccordionContext() {
-	return useContext(XAccordionContext);
-}
+export const [XAccordionProvider, useXAccordionContext] = createSafeContext();

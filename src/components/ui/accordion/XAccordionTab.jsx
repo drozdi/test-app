@@ -1,62 +1,65 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { XChevron } from '../icon';
+import { useMemo, useState } from 'react';
+import { useId } from '../../hooks/useId';
 import './style.css';
 import { useXAccordionContext } from './XAccordionContext';
+import { XAccordionTabProvider } from './XAccordionTabContext';
+
 export function XAccordionTab({
+	id,
+	active,
 	className,
 	children,
-	header,
 	disabled,
+	header,
 	value,
 	onClick,
 	...props
 }) {
 	const ctx = useXAccordionContext();
-	const isActive = ctx?.isItemActive(value);
-	const [expanded, setExpanded] = useState(isActive);
+	const isActive = ctx?.isActive(value);
+	const [expanded, setExpanded] = useState(isActive ?? active);
+	const uid = useId(id ?? ctx?.getTabId(value));
 
-	const toggleExpanded = () => {
-		ctx || setExpanded((v) => !v);
-	};
+	const context = useMemo(() => {
+		return {
+			value,
+			disabled,
+			active: isActive ?? expanded,
+			getPanelId: () => ctx?.getPanelId(value) ?? `${uid}-panel`,
+			getHeaderId: () => ctx?.getHeaderId(value) ?? `${uid}-header`,
+			onKeyDown: ctx?.onKeyDown,
+			toggleExpanded: (value) => {
+				if (disabled) {
+					return;
+				}
+				ctx?.onChange?.(value);
+				ctx || setExpanded((v) => !v);
+			},
+		};
+	}, [value, disabled, isActive, expanded, uid]);
 
-	const handleClick = (event) => {
-		if (disabled) {
-			return;
-		}
-		onClick?.(event);
-		ctx?.onChange?.(value);
-		toggleExpanded(event);
-	};
 	return (
 		<div
 			{...props}
-			className={classNames('x-accordion-tab', {
-				'x-accordion-tab--expanded': isActive ?? expanded,
-				'x-accordion-tab--disabled': disabled,
-			})}
+			id={uid}
+			className={classNames(
+				'x-accordion-tab',
+				{
+					'x-accordion-tab--expanded': isActive ?? expanded,
+					'x-accordion-tab--disabled': disabled,
+				},
+				className,
+			)}
 		>
-			<div
-				className="x-accordion-control"
-				role="button"
-				disabled={disabled}
-				aria-expanded={isActive ?? expanded}
-				onClick={handleClick}
-			>
-				<div>{header}</div>
-				<div>
-					<XChevron className="x-accordion-chevron" />
-				</div>
-			</div>
-			<div className="x-accordion-panel">
-				<div className="x-accordion-content">{children}</div>
-			</div>
+			<XAccordionTabProvider value={context}>{children}</XAccordionTabProvider>
 		</div>
 	);
 }
 
 XAccordionTab.propTypes = {
+	id: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
 	header: PropTypes.string,

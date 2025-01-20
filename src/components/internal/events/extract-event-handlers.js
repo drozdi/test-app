@@ -1,4 +1,4 @@
-import { isFunction } from '../../utils/is';
+import { isFunction } from '../../../utils/is';
 export function extractEventHandlers(object = {}, excludeKeys = []) {
 	if (object === undefined) {
 		return {};

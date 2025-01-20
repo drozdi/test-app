@@ -9,11 +9,12 @@
 	@apply focus:outline focus:outline-1 focus:outline-current focus:outline-offset-2;
 }
 
-.x-btn-group--spread > * {
-	@apply flex-auto;
+.x-btn-group--grow > * {
+	@apply grow;
 }
 
-.x-btn-group:not(.x-btn-group--vertical):not(.x-btn-group--round) > * {
+.x-btn-group:not(.x-btn-group--pills):not(.x-btn-group--vertical):not(.x-btn-group--round)
+	> * {
 	&:not(:first-child) {
 		@apply rounded-l-none;
 	}
@@ -32,7 +33,7 @@
 	@apply flex-col;
 }
 
-.x-btn-group--vertical:not(.x-btn-group--round) > * {
+.x-btn-group--vertical:not(.x-btn-group--pills):not(.x-btn-group--round) > * {
 	&:not(:first-child) {
 		@apply -mt-[1px] rounded-t-none;
 	}
@@ -52,4 +53,8 @@
 }
 .x-btn-group--round.x-btn-group--vertical {
 	@apply inline-flex space-y-2;
+}
+
+.x-btn-group--pills {
+	@apply gap-2;
 }

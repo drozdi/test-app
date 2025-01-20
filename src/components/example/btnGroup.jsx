@@ -5,7 +5,8 @@ export function BtnGroupExample() {
 	const [val, setVal] = useState();
 	const btnGroupExample = useProps(
 		{
-			spread: true,
+			grow: true,
+			pills: false,
 			vertical: false,
 			multiple: false,
 			selectable: false,
@@ -84,7 +85,8 @@ export function BtnGroupExample() {
 
 							separator: { type: 'checkbox' },
 							vertical: { type: 'checkbox' },
-							spread: { type: 'checkbox' },
+							grow: { type: 'checkbox' },
+							pills: { type: 'checkbox' },
 
 							align: {
 								type: 'select',

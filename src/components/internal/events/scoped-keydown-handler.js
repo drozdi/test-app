@@ -43,6 +43,7 @@ export function scopedKeydownHandler({
 	orientation,
 }) {
 	return (event) => {
+		console.log(event);
 		onKeyDown?.(event);
 		const { target } = event;
 
@@ -53,18 +54,9 @@ export function scopedKeydownHandler({
 		const nextIndex = getNextIndex(current, elements, loop);
 		const previousIndex = getPreviousIndex(current, elements, loop);
 
+		console.log(elements);
+
 		switch (event.key) {
-			case 'ArrowRight': {
-				if (orientation.includes('y')) {
-					event.stopPropagation();
-					event.preventDefault();
-					elements[nextIndex].focus();
-					activateOnFocus && elements[nextIndex].click();
-				}
-
-				break;
-			}
-
 			case 'ArrowLeft': {
 				if (orientation.includes('y')) {
 					event.stopPropagation();
@@ -72,39 +64,41 @@ export function scopedKeydownHandler({
 					elements[previousIndex].focus();
 					activateOnFocus && elements[previousIndex].click();
 				}
-
 				break;
 			}
-
+			case 'ArrowRight': {
+				if (orientation.includes('y')) {
+					event.stopPropagation();
+					event.preventDefault();
+					elements[nextIndex].focus();
+					activateOnFocus && elements[nextIndex].click();
+				}
+				break;
+			}
+			case 'ArrowDown': {
+				if (orientation.includes('x')) {
+					event.stopPropagation();
+					event.preventDefault();
+					elements[nextIndex].focus();
+					activateOnFocus && elements[nextIndex].click();
+				}
+				break;
+			}
 			case 'ArrowUp': {
 				if (orientation.includes('x')) {
 					event.stopPropagation();
 					event.preventDefault();
-					elements[_previousIndex].focus();
-					activateOnFocus && elements[_previousIndex].click();
+					elements[previousIndex].focus();
+					activateOnFocus && elements[previousIndex].click();
 				}
-
 				break;
 			}
-
-			case 'ArrowDown': {
-				if (orientation.includes('yx')) {
-					event.stopPropagation();
-					event.preventDefault();
-					elements[_nextIndex].focus();
-					activateOnFocus && elements[_nextIndex].click();
-				}
-
-				break;
-			}
-
 			case 'Home': {
 				event.stopPropagation();
 				event.preventDefault();
 				!elements[0].disabled && elements[0].focus();
 				break;
 			}
-
 			case 'End': {
 				event.stopPropagation();
 				event.preventDefault();
