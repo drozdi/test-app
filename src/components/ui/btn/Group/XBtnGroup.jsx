@@ -1,15 +1,15 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { forwardRefWithAs } from '../../../internal/render';
 import './style.css';
-import { XBtnGroupContext } from './XBtnGroupContext';
+import { XBtnGroupProvider } from './XBtnGroupContext';
 
 import { isArray } from '../../../../utils/is';
 
 import { scopedKeydownHandler } from '../../../internal/events/scoped-keydown-handler';
 
-function XBtnGroupFn(
+export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 	{
 		children,
 		className,
@@ -20,7 +20,7 @@ function XBtnGroupFn(
 		separator,
 		onClick,
 		onChange,
-		value: current,
+		value: currentValue,
 		align,
 		grow,
 		pills,
@@ -32,100 +32,112 @@ function XBtnGroupFn(
 ) {
 	const elementRef = useRef();
 
-	const handleChange = useCallback(
-		(event, value) => {
-			onChange?.({
-				originalEvent: event.originalEvent,
+	const handleChange = (event, value) => {
+		onChange?.({
+			...event,
+			value: value,
+			target: {
+				...event.target,
+				name: props.name,
+				id: props.id,
 				value: value,
-				stopPropagation: () => {
-					event.originalEvent.stopPropagation();
-				},
-				preventDefault: () => {
-					event.originalEvent.preventDefault();
-				},
-				target: {
-					name: props.name,
-					id: props.id,
-					value: value,
-				},
-			});
-		},
-		[onChange],
-	);
-
-	const handleClick = useCallback(
-		(event, value) => {
-			if (disabled) {
-				return;
-			}
-
-			onClick?.({
-				...event,
-				value,
-				target: {
-					...event.target,
-					value,
-				},
-			});
-
-			if (switchable) {
-				handleChange(event, value);
-				return;
-			}
-			if (!selectable) {
-				return;
-			}
-
-			let newValue;
-
-			if (multiple) {
-				newValue = current ? (isArray(current) ? [...current] : [current]) : [];
-				if (!newValue.includes(value)) {
-					newValue.push(value);
-				} else {
-					newValue = newValue.filter((v) => v !== value);
-				}
-			} else {
-				newValue = current === value ? undefined : value;
-			}
-
-			handleChange(event, newValue);
-		},
-		[selectable, switchable, multiple, current, onClick],
-	);
-
-	const onKeyDown = scopedKeydownHandler({
-		parentSelector: '[role="group"]',
-		siblingSelector: '[role="button"], button',
-		loop: true,
-		activateOnFocus: false,
-		orientation: 'xy',
-	});
-
-	const context = {
-		getElement: () => elementRef.current,
-		btnProps: { ...props, onKeyDown },
-		switchable,
-		selectable,
-		multiple,
-		current,
-		onChange: handleClick,
-		isDisabled: (value) => {
-			return disabled;
-		},
-		isActive: (value) => {
-			if (switchable) {
-				return current === value;
-			}
-			if (!selectable) {
-				return false;
-			}
-			if (multiple && isArray(current)) {
-				return current.includes(value);
-			}
-			return current === value;
-		},
+			},
+			stopPropagation: () => {
+				event.stopPropagation();
+			},
+			preventDefault: () => {
+				event.preventDefault();
+			},
+		});
 	};
+
+	const handleClick = (event, value) => {
+		if (disabled) {
+			return;
+		}
+
+		onClick?.({
+			...event,
+			value: value,
+			target: {
+				...event.target,
+				name: props.name,
+				id: props.id,
+				value: value,
+			},
+			stopPropagation: () => {
+				event.stopPropagation();
+			},
+			preventDefault: () => {
+				event.preventDefault();
+			},
+		});
+
+		if (switchable) {
+			handleChange(event, value);
+			return;
+		}
+		if (!selectable) {
+			return;
+		}
+
+		let newValue;
+
+		if (multiple) {
+			newValue = currentValue
+				? isArray(currentValue)
+					? [...currentValue]
+					: [currentValue]
+				: [];
+			if (!newValue.includes(value)) {
+				newValue.push(value);
+			} else {
+				newValue = newValue.filter((v) => v !== value);
+			}
+		} else {
+			newValue = currentValue === value ? undefined : value;
+		}
+
+		handleChange(event, newValue);
+	};
+
+	const context = useMemo(
+		() => ({
+			getElement: () => elementRef.current,
+			btnProps: {
+				...props,
+				onKeyDown: scopedKeydownHandler({
+					parentSelector: '[role="group"]',
+					siblingSelector: '[role="button"], button',
+					loop: true,
+					activateOnFocus: false,
+					orientation: 'xy',
+				}),
+			},
+			switchable,
+			selectable,
+			multiple,
+			current: currentValue,
+			onChange: handleClick,
+			isDisabled: (value) => {
+				return disabled;
+			},
+			isActive: (value) => {
+				if (switchable) {
+					return currentValue === value;
+				}
+				if (!selectable) {
+					return false;
+				}
+				if (multiple && isArray(currentValue)) {
+					return currentValue.includes(value);
+				}
+				return currentValue === value;
+			},
+		}),
+		[currentValue, switchable, selectable, multiple, disabled, props, elementRef],
+	);
+
 	return (
 		<div
 			className={classNames('x-btn-group', className, {
@@ -140,14 +152,10 @@ function XBtnGroupFn(
 			role="group"
 			ref={elementRef}
 		>
-			<XBtnGroupContext.Provider value={context}>
-				{children}
-			</XBtnGroupContext.Provider>
+			<XBtnGroupProvider value={context}>{children}</XBtnGroupProvider>
 		</div>
 	);
-}
-
-export const XBtnGroup = forwardRefWithAs(XBtnGroupFn);
+});
 
 XBtnGroup.propTypes = {
 	children: PropTypes.node,

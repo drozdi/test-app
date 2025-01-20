@@ -1,7 +1,3 @@
-import { createContext, useContext } from 'react';
+import { createSafeContext } from '../../../internal/createSafeContext';
 
-export const XBtnGroupContext = createContext(null);
-
-export function useXBtnGroupContext() {
-	return useContext(XBtnGroupContext);
-}
+export const [XBtnGroupProvider, useXBtnGroupContext] = createSafeContext();

@@ -20,7 +20,7 @@ export function XAccordionHeader({ className, children, onClick, ...props }) {
 			return;
 		}
 		event.value = value;
-		onClick?.(event, value);
+		onClick?.(event);
 		toggleExpanded(event);
 	};
 	const handleKeyDown = (event) => {

@@ -12,9 +12,7 @@ export function XAccordionTab({
 	className,
 	children,
 	disabled,
-	header,
 	value,
-	onClick,
 	...props
 }) {
 	const ctx = useXAccordionContext();
@@ -62,8 +60,6 @@ XAccordionTab.propTypes = {
 	id: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
-	header: PropTypes.string,
 	disabled: PropTypes.bool,
-	value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-	onClick: PropTypes.func,
+	value: PropTypes.string,
 };
