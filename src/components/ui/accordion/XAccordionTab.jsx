@@ -32,7 +32,7 @@ export function XAccordionTab({
 				if (disabled) {
 					return;
 				}
-				ctx?.onChange?.(event);
+				ctx?.onChange?.(event, value);
 				ctx || setExpanded((v) => !v);
 			},
 		};

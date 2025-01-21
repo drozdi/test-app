@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XAccordion, XAccordionHeader, XAccordionPanel, XAccordionTab } from '../ui';
 import { Form, useProps } from './utils';
 export function AccordionExample() {
 	const [val, setVal] = useState();
+	useEffect(() => console.log(val), [val]);
 	const accordionExample = useProps(
 		{
 			border: false,
@@ -39,7 +40,8 @@ export function AccordionExample() {
 			<div className="p-4">
 				<XAccordion
 					{...accordionExample.props}
-					onChange={({ value }) => setVal(value)}
+					value={val}
+					onChange={({ value }) => setVal(() => value)}
 				>
 					<XAccordionTab value="acc-1">
 						<XAccordionHeader>Header I</XAccordionHeader>
