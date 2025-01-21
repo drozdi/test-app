@@ -9,10 +9,10 @@ export function XAccordionHeader({ className, children, onClick, ...props }) {
 		value,
 		active,
 		disabled,
-		toggleExpanded,
 		getHeaderId,
 		getPanelId,
 		onKeyDown,
+		onToggleExpanded,
 	} = useXAccordionTabContext();
 
 	const handleClick = (event) => {
@@ -21,7 +21,7 @@ export function XAccordionHeader({ className, children, onClick, ...props }) {
 		}
 		event.value = value;
 		onClick?.(event);
-		toggleExpanded(event);
+		onToggleExpanded(event);
 	};
 	const handleKeyDown = (event) => {
 		event.value = value;
@@ -41,7 +41,7 @@ export function XAccordionHeader({ className, children, onClick, ...props }) {
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
 		>
-			<span>{children}</span>
+			<h3>{children}</h3>
 			<span>
 				<XChevron className="x-accordion-chevron" />
 			</span>
@@ -52,7 +52,5 @@ export function XAccordionHeader({ className, children, onClick, ...props }) {
 XAccordionHeader.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
-	/*header: PropTypes.string,
-	disabled: PropTypes.bool,
-	onClick: PropTypes.func,*/
+	onClick: PropTypes.func,
 };

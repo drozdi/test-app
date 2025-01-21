@@ -28,7 +28,7 @@ export function XAccordionTab({
 			getPanelId: () => ctx?.getPanelId(value) ?? `${uid}-panel`,
 			getHeaderId: () => ctx?.getHeaderId(value) ?? `${uid}-header`,
 			onKeyDown: ctx?.onKeyDown,
-			toggleExpanded: (event) => {
+			onToggleExpanded: (event) => {
 				if (disabled) {
 					return;
 				}
@@ -36,7 +36,7 @@ export function XAccordionTab({
 				ctx || setExpanded((v) => !v);
 			},
 		};
-	}, [value, disabled, isActive, expanded, uid]);
+	}, [value, disabled, isActive, expanded, uid, ctx]);
 
 	return (
 		<div
@@ -60,6 +60,7 @@ XAccordionTab.propTypes = {
 	id: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
+	active: PropTypes.bool,
 	disabled: PropTypes.bool,
 	value: PropTypes.string,
 };

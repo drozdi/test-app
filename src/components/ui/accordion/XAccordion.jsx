@@ -1,33 +1,31 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import { isArray } from '../../../utils/is';
 import { useId } from '../../hooks/useId';
 import { scopedKeydownHandler } from '../../internal/events/scoped-keydown-handler';
 import { XAccordionProvider } from './XAccordionContext';
 
+let iii = 0;
+
 export function XAccordion({
 	id,
 	children,
 	className,
-	multiple = false,
+	multiple,
 	border,
 	field,
 	square,
 	separated,
 	onChange,
-	value: currentValue,
+	value: propsValue,
 	...props
 }) {
 	const uid = useId(id);
 	const [current, setCurrent] = useState(
-		currentValue,
-		/*multiple && isArray(currentValue)
-			? currentValue
-			: multiple && currentValue
-				? [currentValue]
-				: (currentValue ?? (multiple ? [] : undefined)),//*/
+		multiple ? [].concat(propsValue) : (propsValue ?? undefined),
 	);
+
 	const handleChange = (event, value) => {
 		onChange?.({
 			...event,
@@ -47,45 +45,15 @@ export function XAccordion({
 		});
 		setCurrent(() => value);
 	};
-	const handleSelect = useCallback(
-		(event, value) => {
-			let newValue;
 
-			console.log(multiple);
-
-			if (multiple) {
-				newValue = [].concat(currentValue);
-				if (!newValue.includes(value)) {
-					newValue.push(value);
-				} else {
-					newValue = newValue.filter((v) => v !== value);
-				}
-			} else {
-				newValue = currentValue === value ? undefined : value;
-			}
-
-			console.log('val', newValue);
-
-			handleChange(event, newValue);
-			/*if (multiple) {
-			setCurrent((current) => {
-				if (!current.includes(value)) return [...current, value];
-				return current?.filter((v) => v !== value);
-			});
-		} else {
-			setCurrent((v) => (v === value ? undefined : value));
-		}//*/
-		},
-		[currentValue, multiple],
-	);
 	const context = useMemo(() => {
 		return {
-			value: currentValue,
+			value: current,
 			isActive: (value) => {
-				if (multiple && isArray(currentValue)) {
-					return currentValue.includes(value);
+				if (multiple && isArray(current)) {
+					return current.includes(value);
 				}
-				return currentValue === value;
+				return current === value;
 			},
 			getHeaderId: (value) => {
 				return `${uid}-header-${value}`;
@@ -96,7 +64,21 @@ export function XAccordion({
 			getTabId: (value) => {
 				return `${uid}-tab-${value}`;
 			},
-			onChange: handleSelect,
+			onChange: (event, value) => {
+				let newValue;
+				if (multiple) {
+					newValue = [].concat(current);
+					if (!newValue.includes(value)) {
+						newValue.push(value);
+					} else {
+						newValue = newValue.filter((v) => v !== value);
+					}
+				} else {
+					newValue = current === value ? undefined : value;
+				}
+
+				handleChange(event, newValue);
+			},
 			onKeyDown: scopedKeydownHandler({
 				parentSelector: '.x-accordion',
 				siblingSelector: 'button, [role="button"]',
@@ -105,17 +87,22 @@ export function XAccordion({
 				orientation: 'xy',
 			}),
 		};
-	}, [uid, currentValue, multiple]);
-	/*useEffect(() => {
+	}, [uid, current, multiple]);
+
+	useLayoutEffect(() => {
 		if (isArray(current) && !multiple) {
-			setCurrent(current[0] ?? undefined);
+			setCurrent(() => current[0] ?? undefined);
 		} else if (!isArray(current) && multiple) {
-			setCurrent(current ? [current] : []);
+			setCurrent(() => (current ? [current] : []));
 		} else {
-			setCurrent(multiple ? [] : undefined);
+			setCurrent(() => (multiple ? [] : undefined));
 		}
 	}, [multiple]);
-	useEffect(() => onChange?.({ value: current }), [current]);//*/
+
+	useLayoutEffect(() => {
+		setCurrent(() => (multiple ? [].concat(propsValue) : (propsValue ?? undefined)));
+	}, [propsValue]);
+
 	return (
 		<div
 			{...props}
