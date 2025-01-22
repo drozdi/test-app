@@ -32,6 +32,12 @@ export function useBtn({
 				['button', 'submit', 'reset'].includes(button?.type))
 		);
 	};
+	const createHandleBlur = (otherHandlers) => (event) => {
+		if (!isFocusVisible(event.target)) {
+			setFocusVisible(false);
+		}
+		otherHandlers.onBlur?.(event);
+	};
 	const createHandleFocus = (otherHandlers) => (event) => {
 		if (!buttonRef.current) {
 			buttonRef.current = event.currentTarget;
