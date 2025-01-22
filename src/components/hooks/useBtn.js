@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-import { isFocusVisible } from '../../utils/is';
+import { useRef } from 'react';
 import { extractEventHandlers } from '../internal/events/extract-event-handlers';
 import { useForkRef } from './useForkRef';
 export function useBtn({
@@ -21,8 +20,6 @@ export function useBtn({
 	const externalEventHandlers = {
 		...extractEventHandlers(rest),
 	};
-	const [focusVisible, setFocusVisible] = useState(false);
-	const [active, setActive] = useState(false);
 	const nativeElement = () => buttonRef.current;
 	const isNativeButton = () => {
 		const button = buttonRef.current;
@@ -32,40 +29,10 @@ export function useBtn({
 				['button', 'submit', 'reset'].includes(button?.type))
 		);
 	};
-	const createHandleBlur = (otherHandlers) => (event) => {
-		if (!isFocusVisible(event.target)) {
-			setFocusVisible(false);
-		}
-		otherHandlers.onBlur?.(event);
-	};
-	const createHandleFocus = (otherHandlers) => (event) => {
-		if (!buttonRef.current) {
-			buttonRef.current = event.currentTarget;
-		}
-		if (isFocusVisible(event.target)) {
-			setFocusVisible(true);
-			otherHandlers.onFocusVisible?.(event);
-		}
-		otherHandlers.onFocus?.(event);
-	};
 	const createHandleClick = (otherHandlers) => (event) => {
 		if (!isDisabled) {
 			otherHandlers.onClick?.(event, value);
 		}
-	};
-	const createHandleMouseLeave = (otherHandlers) => (event) => {
-		if (focusVisible) {
-			event.preventDefault();
-		}
-
-		otherHandlers.onMouseLeave?.(event);
-	};
-	const createHandleMouseDown = (otherHandlers) => (event) => {
-		if (!isDisabled) {
-			setActive(true);
-			document.addEventListener('mouseup', () => setActive(false), { once: true });
-		}
-		otherHandlers.onMouseDown?.(event);
 	};
 	const createHandleKeyDown = (otherHandlers) => (event) => {
 		otherHandlers.onKeyDown?.(event);
@@ -76,10 +43,6 @@ export function useBtn({
 			event.key === ' '
 		) {
 			event.preventDefault();
-		}
-
-		if (event.target === event.currentTarget && event.key === ' ' && !isDisabled) {
-			setActive(true);
 		}
 
 		if (
@@ -93,10 +56,6 @@ export function useBtn({
 		}
 	};
 	const createHandleKeyUp = (otherHandlers) => (event) => {
-		if (event.target === event.currentTarget) {
-			setActive(false);
-		}
-
 		otherHandlers.onKeyUp?.(event);
 
 		if (
@@ -136,19 +95,14 @@ export function useBtn({
 	}
 	let actionProps = {
 		...externalEventHandlers,
-		onBlur: createHandleBlur(externalEventHandlers),
-		onFocus: createHandleFocus(externalEventHandlers),
 		onClick: createHandleClick(externalEventHandlers),
-		onMouseDown: createHandleMouseDown(externalEventHandlers),
-		onMouseLeave: createHandleMouseLeave(externalEventHandlers),
 		onKeyDown: createHandleKeyDown(externalEventHandlers),
 		onKeyUp: createHandleKeyUp(externalEventHandlers),
 	};
-	delete actionProps.onFocusVisible;
+
 	return {
-		active: active || isActive,
+		active: isActive,
 		disabled: isDisabled,
-		focusVisible,
 		buttonRef,
 		attrs: {
 			...actionProps,
