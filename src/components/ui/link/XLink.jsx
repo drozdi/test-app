@@ -54,8 +54,10 @@ export const XLink = forwardRefWithAs(function XLinkFn(
 			{render(
 				'a',
 				{
+					'aria-label': isString(label) ? label : undefined,
 					...props,
 					disabled,
+					'aria-disabled': disabled,
 					className: ({ isActive }) =>
 						classNames(
 							'x-link',

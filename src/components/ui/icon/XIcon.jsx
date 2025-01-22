@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { createElement as h } from 'react';
-export function XIcon({ children, className, name, color, tag = 'i', ...props }) {
+export function XIcon({ children, className, name, color, as = 'i', ...props }) {
 	name ||= children;
 	if (!name) {
 		return '';
@@ -9,12 +9,12 @@ export function XIcon({ children, className, name, color, tag = 'i', ...props })
 	color &&= color = ' text-' + color;
 	color ||= '';
 	return h(
-		tag,
+		as,
 		{
 			...props,
 			className: classNames('x-icon', name.split('-')[0], name, color, className),
-			'aria-hidden': 'true',
 			role: 'presentation',
+			'aria-hidden': 'true',
 		},
 		'',
 	);
@@ -25,5 +25,5 @@ XIcon.propTypes = {
 	className: PropTypes.string,
 	name: PropTypes.string,
 	color: PropTypes.string,
-	tag: PropTypes.string,
+	as: PropTypes.string,
 };

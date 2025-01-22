@@ -117,7 +117,7 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 			switchable,
 			selectable,
 			multiple,
-			current: currentValue,
+			value: currentValue,
 			onChange: handleClick,
 			isDisabled: (value) => {
 				return disabled;

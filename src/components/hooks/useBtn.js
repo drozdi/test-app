@@ -3,45 +3,34 @@ import { isFocusVisible } from '../../utils/is';
 import { extractEventHandlers } from '../internal/events/extract-event-handlers';
 import { useForkRef } from './useForkRef';
 export function useBtn({
-	disabled,
-	active: isActive,
-	ref: externalRef,
-	as: elementType = 'button',
-
 	type = 'button',
 	role = 'button',
+	disabled: isDisabled,
+	active: isActive,
+	ref: externalRef,
 	tabIndex,
 	value,
 	title,
-
-	target = '_self',
-	to,
+	target,
 	href,
 	rel,
 	...rest
 }) {
-	const buttonRef = useRef(null);
+	const buttonRef = useRef();
 	const handleRef = useForkRef(externalRef, buttonRef);
 	const externalEventHandlers = {
 		...extractEventHandlers(rest),
 	};
 	const [focusVisible, setFocusVisible] = useState(false);
 	const [active, setActive] = useState(false);
-
+	const nativeElement = () => buttonRef.current;
 	const isNativeButton = () => {
 		const button = buttonRef.current;
 		return (
 			button?.tagName === 'BUTTON' ||
 			(button?.tagName === 'INPUT' &&
-				['button', 'submit', 'reset'].includes(button?.type)) ||
-			(button?.tagName === 'A' && button?.href)
+				['button', 'submit', 'reset'].includes(button?.type))
 		);
-	};
-	const createHandleBlur = (otherHandlers) => (event) => {
-		if (!isFocusVisible(event.target)) {
-			setFocusVisible(false);
-		}
-		otherHandlers.onBlur?.(event);
 	};
 	const createHandleFocus = (otherHandlers) => (event) => {
 		if (!buttonRef.current) {
@@ -54,7 +43,7 @@ export function useBtn({
 		otherHandlers.onFocus?.(event);
 	};
 	const createHandleClick = (otherHandlers) => (event) => {
-		if (!disabled) {
+		if (!isDisabled) {
 			otherHandlers.onClick?.(event, value);
 		}
 	};
@@ -66,7 +55,7 @@ export function useBtn({
 		otherHandlers.onMouseLeave?.(event);
 	};
 	const createHandleMouseDown = (otherHandlers) => (event) => {
-		if (!disabled) {
+		if (!isDisabled) {
 			setActive(true);
 			document.addEventListener('mouseup', () => setActive(false), { once: true });
 		}
@@ -74,10 +63,6 @@ export function useBtn({
 	};
 	const createHandleKeyDown = (otherHandlers) => (event) => {
 		otherHandlers.onKeyDown?.(event);
-
-		if (event.defaultMuiPrevented) {
-			return;
-		}
 
 		if (
 			event.target === event.currentTarget &&
@@ -87,7 +72,7 @@ export function useBtn({
 			event.preventDefault();
 		}
 
-		if (event.target === event.currentTarget && event.key === ' ' && !disabled) {
+		if (event.target === event.currentTarget && event.key === ' ' && !isDisabled) {
 			setActive(true);
 		}
 
@@ -95,7 +80,7 @@ export function useBtn({
 			event.target === event.currentTarget &&
 			!isNativeButton() &&
 			event.key === 'Enter' &&
-			!disabled
+			!isDisabled
 		) {
 			otherHandlers.onClick?.(event);
 			event.preventDefault();
@@ -111,21 +96,20 @@ export function useBtn({
 		if (
 			event.target === event.currentTarget &&
 			!isNativeButton() &&
-			!disabled &&
-			event.key === ' ' &&
-			!event.defaultMuiPrevented
+			!isDisabled &&
+			event.key === ' '
 		) {
 			otherHandlers.onClick?.(event);
 		}
 	};
-
 	let additionalProps = {
+		role,
 		title,
-		disabled,
-		tabIndex: !disabled ? (tabIndex ?? 0) : -1,
+		disabled: isDisabled,
+		tabIndex: !isDisabled ? (tabIndex ?? 0) : -1,
 		ref: handleRef,
 	};
-	if (elementType === 'button') {
+	if (isNativeButton()) {
 		additionalProps = {
 			...additionalProps,
 			type,
@@ -133,14 +117,15 @@ export function useBtn({
 	} else {
 		additionalProps = {
 			...additionalProps,
-			role,
-			title,
-			href: elementType === 'a' && !disabled ? href : undefined,
-			target: elementType === 'a' ? target : undefined,
-			type: elementType === 'input' ? type : undefined,
-			disabled: elementType === 'input' ? disabled : undefined,
-			'aria-disabled': !disabled || elementType === 'input' ? undefined : disabled,
-			rel: elementType === 'a' ? rel : undefined,
+			href: nativeElement()?.tagName === 'A' && !isDisabled ? href : undefined,
+			target: nativeElement()?.tagName === 'A' ? target : undefined,
+			type: nativeElement()?.tagName === 'INPUT' ? type : undefined,
+			disabled: nativeElement()?.tagName === 'INPUT' ? isDisabled : undefined,
+			'aria-disabled':
+				!isDisabled || nativeElement()?.tagName === 'INPUT'
+					? undefined
+					: isDisabled,
+			rel: nativeElement()?.tagName === 'A' ? rel : undefined,
 		};
 	}
 	let actionProps = {
@@ -154,9 +139,9 @@ export function useBtn({
 		onKeyUp: createHandleKeyUp(externalEventHandlers),
 	};
 	delete actionProps.onFocusVisible;
-
 	return {
 		active: active || isActive,
+		disabled: isDisabled,
 		focusVisible,
 		buttonRef,
 		attrs: {

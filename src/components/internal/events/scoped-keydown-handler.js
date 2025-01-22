@@ -53,7 +53,7 @@ export function scopedKeydownHandler({
 		const nextIndex = getNextIndex(current, elements, loop);
 		const previousIndex = getPreviousIndex(current, elements, loop);
 
-		switch (event.key) {
+		switch (event.code) {
 			case 'ArrowLeft': {
 				if (orientation.includes('y')) {
 					event.stopPropagation();

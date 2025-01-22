@@ -6,11 +6,11 @@ import { XIcon } from '../icon';
 import { XBtnGroup, useXBtnGroupContext } from './group';
 import './style.css';
 
-import { isFunction } from '../../../utils/is';
+import { isFunction, isString } from '../../../utils/is';
 import { useDisabled } from '../../internal/disabled';
 import { forwardRefWithAs, render } from '../../internal/render';
 
-function XBtnFn(params, ref) {
+const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 	const providedDisabled = useDisabled();
 	const ctx = useXBtnGroupContext();
 	const props = { ...ctx?.btnProps, ...params };
@@ -38,18 +38,37 @@ function XBtnFn(params, ref) {
 		dimmed,
 		link,
 		active: propsActive,
-		icon,
-		iconRight,
+		leftSection: propsLeftSection,
+		rightSection: propsRightSection,
 		...rest
 	} = props;
 
 	const { disabled = providedDisabled || false, children, className } = props;
 	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
+
+	const leftSection = useMemo(
+		() =>
+			isString(propsLeftSection) ? (
+				<XIcon>{propsLeftSection}</XIcon>
+			) : (
+				propsLeftSection
+			),
+		[propsLeftSection],
+	);
+	const rightSection = useMemo(
+		() =>
+			isString(propsRightSection) ? (
+				<XIcon>{propsRightSection}</XIcon>
+			) : (
+				propsRightSection
+			),
+		[propsRightSection],
+	);
 	const isIcon = useMemo(
 		() =>
-			(!!icon != !!iconRight && !children) ||
-			(children?.type === XIcon && !icon && !iconRight),
-		[children, icon, iconRight],
+			(!!leftSection != !!rightSection && !children) ||
+			(children?.type === XIcon && !leftSection && !rightSection),
+		[children, leftSection, rightSection],
 	);
 
 	return render(
@@ -82,14 +101,26 @@ function XBtnFn(params, ref) {
 				children
 			) : (
 				<>
-					<div className="x-btn-underlay"></div>
-					<div className="x-btn-outline"></div>
-					{icon && (
-						<XIcon className={!isIcon ? '-ml-2 mr-2' : ''}>{icon}</XIcon>
+					{leftSection && (
+						<span className="x-link-section">
+							{isString(leftSection) ? (
+								<XIcon>{leftSection}</XIcon>
+							) : (
+								leftSection
+							)}
+						</span>
 					)}
 					{children && <span className="x-btn-content">{children}</span>}
-					{iconRight && (
-						<XIcon className={!isIcon ? 'ml-2 -mr-2' : ''}>{iconRight}</XIcon>
+					<div className="x-btn-underlay"></div>
+					<div className="x-btn-outline"></div>
+					{rightSection && (
+						<span className="x-link-section">
+							{isString(rightSection) ? (
+								<XIcon>{rightSection}</XIcon>
+							) : (
+								rightSection
+							)}
+						</span>
 					)}
 				</>
 			),
@@ -100,9 +131,8 @@ function XBtnFn(params, ref) {
 			focusVisible,
 		},
 	);
-}
+});
 
-const XBtnRoot = forwardRefWithAs(XBtnFn);
 XBtnRoot.propTypes = {
 	children: PropTypes.oneOfType([
 		PropTypes.node,
@@ -126,8 +156,8 @@ XBtnRoot.propTypes = {
 	active: PropTypes.bool,
 	link: PropTypes.bool,
 
-	icon: PropTypes.string,
-	iconRight: PropTypes.string,
+	leftSection: PropTypes.node,
+	rightSection: PropTypes.node,
 	color: PropTypes.string,
 	size: PropTypes.PropTypes.string,
 	onClick: PropTypes.func,

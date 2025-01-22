@@ -31,13 +31,7 @@ export function XTabs({
 			values,
 			keepMounted,
 			vertical,
-			onKeyDown: scopedKeydownHandler({
-				parentSelector: '[role="tablist"]',
-				siblingSelector: '[role="tab"]',
-				loop: true,
-				activateOnFocus: true,
-				orientation: 'xy',
-			}),
+			isActive: (value) => value === currentTab,
 			getTabId: (value) => {
 				appendValue(value);
 				return `${uid}-tab-${value}`;
@@ -46,8 +40,14 @@ export function XTabs({
 				appendValue(value);
 				return `${uid}-panel-${value}`;
 			},
-			setActiveTab: (value) => setCurrentTab(value),
-			isActive: (value) => value === currentTab,
+			onActiveTab: (value) => setCurrentTab(value),
+			onKeyDown: scopedKeydownHandler({
+				parentSelector: '[role="tablist"]',
+				siblingSelector: '[role="tab"]',
+				loop: true,
+				activateOnFocus: true,
+				orientation: 'xy',
+			}),
 		};
 	}, [currentTab, keepMounted, vertical]);
 	useEffect(() => onChange?.(currentTab), [currentTab]);

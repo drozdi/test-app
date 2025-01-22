@@ -32,8 +32,8 @@ export function BtnExample() {
 			disabled: false,
 			link: false,
 			active: false,
-			icon: '',
-			iconRight: '',
+			leftSection: '',
+			rightSection: '',
 		},
 		'XBtn',
 		label,
@@ -42,7 +42,7 @@ export function BtnExample() {
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XBtn</h2>
-			{true && (
+			{false && (
 				<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 					<thead>
 						<tr className="*:text-center">
@@ -184,8 +184,8 @@ export function BtnExample() {
 								type: 'select',
 								values: ['xs', 'sm', 'lg'],
 							},
-							icon: { type: 'checkbox', val: 'mdi-map-marker' },
-							iconRight: { type: 'checkbox', val: 'mdi-close' },
+							leftSection: { type: 'checkbox', val: 'mdi-map-marker' },
+							rightSection: { type: 'checkbox', val: 'mdi-close' },
 							flat: { type: 'checkbox' },
 							dimmed: { type: 'checkbox' },
 							outline: { type: 'checkbox' },
