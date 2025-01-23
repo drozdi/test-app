@@ -58,6 +58,9 @@ export function MessageExample() {
 			position: '',
 			outline: false,
 			square: false,
+			loading: false,
+			filled: false,
+			tonal: false,
 		},
 		'XMessage',
 		'Test 1',
@@ -98,7 +101,11 @@ export function MessageExample() {
 			<div className="max-w-4xl m-auto p-4 relative">
 				<h3>XMessage</h3>
 				<div className="flex flex-col gap-4">
-					<XMessage {...messageExample.props}>Test 1</XMessage>
+					<XMessage {...messageExample.props} label="We notify you that">
+						You are now obligated to give a star to Mantine project on GitHub
+						<br />
+						You are now obligated to give a star to Mantine project on GitHub
+					</XMessage>
 					<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 						<div>
 							<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
@@ -124,7 +131,10 @@ export function MessageExample() {
 										type: 'select',
 										values: ['top', 'bottom', 'left', 'right'],
 									},
+									loading: { type: 'checkbox' },
 									icon: { type: 'checkbox', val: 'mdi-map-marker' },
+									tonal: { type: 'checkbox' },
+									filled: { type: 'checkbox' },
 									outline: { type: 'checkbox' },
 									square: { type: 'checkbox' },
 								},

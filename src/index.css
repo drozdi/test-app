@@ -31,26 +31,11 @@
 	--x-color-surface: 255, 255, 255;
 	--x-color-on-surface: 0, 0, 0;
 
-	--x-color-separator: rgba(255, 255, 255, 0.15);
-	--x-color-divider: rgba(255, 255, 255, 0.15);
+	--x-color-separator: rgba(0, 0, 0, 0.15);
+	--x-color-divider: rgba(0, 0, 0, 0.15);
 	--x-color-dimmed: rgba(0, 0, 0, 0.2);
 }
 .light {
-	--body-bg: 255, 255, 255;
-	--body-color: 0, 0, 0;
-
-	--link-color: 0, 0, 0;
-	--link-hover-color: 0, 0, 0;
-
-	--border-color: 0, 0, 0, 0.2;
-
-	--scrollbar-color: rgba(0, 0, 0, 0.3) rgba(255, 255, 255, 0.2);
-
-	--x-color-surface: 255, 255, 255;
-	--x-color-on-surface: 0, 0, 0;
-
-	--x-color-separator: rgba(0, 0, 0, 0.15);
-	--x-color-divider: rgba(0, 0, 0, 0.15);
 }
 
 .dark {

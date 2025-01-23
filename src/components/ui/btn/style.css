@@ -46,6 +46,8 @@
 	& > svg {
 		@apply block;
 	}
+}
+.x-btn:not(.x-btn--icon) .x-btn-section {
 	&:is(*:first-child) {
 		@apply mr-3;
 	}
