@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { forwardRefWithAs } from '../../../internal/render';
 import './style.css';
 import { XBtnGroupProvider } from './XBtnGroupContext';
@@ -8,6 +8,8 @@ import { XBtnGroupProvider } from './XBtnGroupContext';
 import { isArray } from '../../../../utils/is';
 
 import { scopedKeydownHandler } from '../../../internal/events/scoped-keydown-handler';
+
+import { useForkRef } from '../../../hooks/useForkRef';
 
 export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 	{
@@ -20,7 +22,7 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 		separator,
 		onClick,
 		onChange,
-		value: currentValue,
+		value: propsValue,
 		align,
 		grow,
 		pills,
@@ -31,24 +33,32 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 	ref,
 ) {
 	const elementRef = useRef();
+	const handleRef = useForkRef(elementRef, ref);
+
+	const [current, setCurrent] = useState(
+		multiple ? [].concat(propsValue) : (propsValue ?? undefined),
+	);
+
+	const eventValue = (event, value) => ({
+		...event,
+		value: value,
+		target: {
+			...event.target,
+			name: props.name,
+			id: props.id,
+			value: value,
+		},
+		stopPropagation: () => {
+			event.stopPropagation?.();
+		},
+		preventDefault: () => {
+			event.preventDefault?.();
+		},
+	});
 
 	const handleChange = (event, value) => {
-		onChange?.({
-			...event,
-			value: value,
-			target: {
-				...event.target,
-				name: props.name,
-				id: props.id,
-				value: value,
-			},
-			stopPropagation: () => {
-				event.stopPropagation();
-			},
-			preventDefault: () => {
-				event.preventDefault();
-			},
-		});
+		onChange?.(eventValue(event, value));
+		setCurrent(() => value);
 	};
 
 	const handleClick = (event, value) => {
@@ -56,22 +66,7 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 			return;
 		}
 
-		onClick?.({
-			...event,
-			value: value,
-			target: {
-				...event.target,
-				name: props.name,
-				id: props.id,
-				value: value,
-			},
-			stopPropagation: () => {
-				event.stopPropagation();
-			},
-			preventDefault: () => {
-				event.preventDefault();
-			},
-		});
+		onClick?.(eventValue(event, value));
 
 		if (switchable) {
 			handleChange(event, value);
@@ -82,20 +77,15 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 		}
 
 		let newValue;
-
 		if (multiple) {
-			newValue = currentValue
-				? isArray(currentValue)
-					? [...currentValue]
-					: [currentValue]
-				: [];
+			newValue = [].concat(current);
 			if (!newValue.includes(value)) {
 				newValue.push(value);
 			} else {
 				newValue = newValue.filter((v) => v !== value);
 			}
 		} else {
-			newValue = currentValue === value ? undefined : value;
+			newValue = current === value ? undefined : value;
 		}
 
 		handleChange(event, newValue);
@@ -117,26 +107,41 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 			switchable,
 			selectable,
 			multiple,
-			value: currentValue,
+			value: propsValue,
 			onChange: handleClick,
 			isDisabled: (value) => {
 				return disabled;
 			},
 			isActive: (value) => {
 				if (switchable) {
-					return currentValue === value;
+					return current === value;
 				}
 				if (!selectable) {
 					return false;
 				}
-				if (multiple && isArray(currentValue)) {
-					return currentValue.includes(value);
+				if (multiple && isArray(current)) {
+					return current.includes(value);
 				}
-				return currentValue === value;
+				return current === value;
 			},
 		}),
-		[currentValue, switchable, selectable, multiple, disabled, props, elementRef],
+		[current, switchable, selectable, multiple, disabled, props, elementRef],
 	);
+
+	useLayoutEffect(() => {
+		let newValue;
+		if (isArray(current) && !multiple) {
+			newValue = current[0] ?? undefined;
+		} else if (!isArray(current) && multiple) {
+			newValue = current ? [current] : [];
+		} else {
+			newValue = multiple ? [] : undefined;
+		}
+		handleChange({}, newValue);
+	}, [multiple]);
+	useLayoutEffect(() => {
+		setCurrent(() => (multiple ? [].concat(propsValue) : (propsValue ?? undefined)));
+	}, [propsValue]);
 
 	return (
 		<div
@@ -150,7 +155,7 @@ export const XBtnGroup = forwardRefWithAs(function XBtnGroupFn(
 				[`items-` + align]: vertical && align,
 			})}
 			role="group"
-			ref={elementRef}
+			ref={handleRef}
 		>
 			<XBtnGroupProvider value={context}>{children}</XBtnGroupProvider>
 		</div>

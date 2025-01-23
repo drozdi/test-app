@@ -1,22 +1,25 @@
 import { useRef } from 'react';
 import { extractEventHandlers } from '../internal/events/extract-event-handlers';
 import { useForkRef } from './useForkRef';
-export function useBtn({
-	type = 'button',
-	role = 'button',
-	disabled: isDisabled,
-	active: isActive,
-	ref: externalRef,
-	tabIndex,
-	value,
-	title,
-	target,
-	href,
-	rel,
-	...rest
-}) {
+export function useBtn(
+	{
+		type = 'button',
+		role = 'button',
+		disabled: isDisabled,
+		loading: isLoading,
+		active: isActive,
+		tabIndex,
+		value,
+		title,
+		target,
+		href,
+		rel,
+		...rest
+	},
+	externalRef,
+) {
 	const buttonRef = useRef();
-	const handleRef = useForkRef(externalRef, buttonRef);
+	const handleRef = useForkRef(buttonRef, externalRef);
 	const externalEventHandlers = {
 		...extractEventHandlers(rest),
 	};
@@ -30,7 +33,7 @@ export function useBtn({
 		);
 	};
 	const createHandleClick = (otherHandlers) => (event) => {
-		if (!isDisabled) {
+		if (!isDisabled && !isLoading) {
 			otherHandlers.onClick?.(event, value);
 		}
 	};
@@ -49,7 +52,8 @@ export function useBtn({
 			event.target === event.currentTarget &&
 			!isNativeButton() &&
 			event.key === 'Enter' &&
-			!isDisabled
+			!isDisabled &&
+			!isLoading
 		) {
 			otherHandlers.onClick?.(event);
 			event.preventDefault();
@@ -103,6 +107,7 @@ export function useBtn({
 	return {
 		active: isActive,
 		disabled: isDisabled,
+		loading: isLoading,
 		buttonRef,
 		attrs: {
 			...actionProps,

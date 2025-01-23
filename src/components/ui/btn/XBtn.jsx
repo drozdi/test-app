@@ -9,6 +9,7 @@ import './style.css';
 import { isFunction, isString } from '../../../utils/is';
 import { useDisabled } from '../../internal/disabled';
 import { forwardRefWithAs, render } from '../../internal/render';
+import { XSpinner } from '../spinner';
 
 const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 	const providedDisabled = useDisabled();
@@ -36,6 +37,7 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 		round,
 		rounded,
 		dimmed,
+		loading,
 		link,
 		active: propsActive,
 		leftSection: propsLeftSection,
@@ -43,8 +45,12 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 		...rest
 	} = props;
 
-	const { disabled = providedDisabled || false, children, className } = props;
-	const { active, focusVisible, buttonRef, attrs } = useBtn({ ...props, ref });
+	const { children, className } = props;
+	const {
+		active = propsActive || false,
+		disabled = providedDisabled || false,
+		attrs,
+	} = useBtn(props, ref);
 
 	const leftSection = useMemo(
 		() =>
@@ -92,6 +98,7 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 					'x-btn--link': link,
 					'x-btn--icon': isIcon,
 					'x-btn--active': propsActive,
+					'x-btn--loading': loading,
 					[`x-btn--${color}`]: color,
 					[`x-btn--${size}`]: size,
 				},
@@ -101,34 +108,26 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 				children
 			) : (
 				<>
-					{leftSection && (
-						<span className="x-link-section">
-							{isString(leftSection) ? (
-								<XIcon>{leftSection}</XIcon>
-							) : (
-								leftSection
-							)}
-						</span>
-					)}
-					{children && <span className="x-btn-content">{children}</span>}
-					<div className="x-btn-underlay"></div>
-					<div className="x-btn-outline"></div>
-					{rightSection && (
-						<span className="x-link-section">
-							{isString(rightSection) ? (
-								<XIcon>{rightSection}</XIcon>
-							) : (
-								rightSection
-							)}
-						</span>
-					)}
+					<span className="x-btn-underlay"></span>
+					<span className="x-btn-outline"></span>
+					<span className="x-btn-inner">
+						{leftSection && (
+							<span className="x-btn-section">{leftSection}</span>
+						)}
+						{children && <span className="x-btn-content">{children}</span>}
+						{rightSection && (
+							<span className="x-btn-section">{rightSection}</span>
+						)}
+					</span>
+					<span className="x-btn-loader">
+						<XSpinner size="1.5em" thickness="5" />
+					</span>
 				</>
 			),
 		},
 		{
 			disabled,
 			active,
-			focusVisible,
 		},
 	);
 });
@@ -147,6 +146,8 @@ XBtnRoot.propTypes = {
 	tonal: PropTypes.bool,
 	plain: PropTypes.bool,
 	outline: PropTypes.bool,
+
+	loading: PropTypes.bool,
 
 	round: PropTypes.bool,
 	block: PropTypes.bool,

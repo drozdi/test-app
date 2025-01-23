@@ -37,10 +37,10 @@ export function XAccordion({
 				value,
 			},
 			stopPropagation: () => {
-				event.stopPropagation();
+				event.stopPropagation?.();
 			},
 			preventDefault: () => {
-				event.preventDefault();
+				event.preventDefault?.();
 			},
 		});
 		setCurrent(() => value);
@@ -90,13 +90,15 @@ export function XAccordion({
 	}, [uid, current, multiple]);
 
 	useLayoutEffect(() => {
+		let newValue;
 		if (isArray(current) && !multiple) {
-			setCurrent(() => current[0] ?? undefined);
+			newValue = current[0] ?? undefined;
 		} else if (!isArray(current) && multiple) {
-			setCurrent(() => (current ? [current] : []));
+			newValue = current ? [current] : [];
 		} else {
-			setCurrent(() => (multiple ? [] : undefined));
+			newValue = multiple ? [] : undefined;
 		}
+		handleChange({}, newValue);
 	}, [multiple]);
 
 	useLayoutEffect(() => {

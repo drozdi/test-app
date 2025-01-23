@@ -12,9 +12,13 @@ export function XSpinnerBase({
 }) {
 	return (
 		<svg
-			className={classNames('x-spinner', className, {
-				[`text-${color}`]: color,
-			})}
+			className={classNames(
+				'x-spinner',
+				{
+					[`text-${color}`]: color,
+				},
+				className,
+			)}
 			width={size}
 			height={size}
 			viewBox={viewBox}

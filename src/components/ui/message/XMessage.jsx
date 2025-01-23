@@ -80,6 +80,7 @@ export const XMessage = memo(
 						'x-message--outline': outline,
 						[`x-message--underlined-${under}`]: under,
 					})}
+					role="alert"
 					ref={ref}
 				>
 					<div className="x-message__backdor" />

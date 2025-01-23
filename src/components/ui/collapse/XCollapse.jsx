@@ -17,7 +17,9 @@ export const XCollapse = forwardRefWithAs(function CollapseFN(
 			)}
 		>
 			<div className="x-accordion-panel">
-				<div className="x-collapse-content">{children}</div>
+				<div className="x-collapse-content" ref={ref}>
+					{children}
+				</div>
 			</div>
 		</div>
 	);
