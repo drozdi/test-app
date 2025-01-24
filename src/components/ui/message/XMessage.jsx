@@ -21,7 +21,7 @@ export const XMessage = memo(
 				label,
 				description,
 				icon,
-				tonal,
+				flat,
 				color,
 				outline,
 				square,
@@ -82,14 +82,13 @@ export const XMessage = memo(
 							'x-message--square': square,
 							'x-message--outline': outline,
 							'x-message--filled': filled,
-							'x-message--tonal': tonal,
+							'x-message--flat': flat,
 							[`x-message--underlined-${under}`]: under,
 						},
 						className,
 					)}
 					ref={ref}
 				>
-					<div className="x-message__underlay" />
 					<div className="x-message__outline" />
 					{icon && !loading && Icon}
 					{loading && <XSpinner thickness="5" />}

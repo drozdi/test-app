@@ -1,19 +1,10 @@
 .x-message {
-	@apply flex relative justify-start rounded cursor-default py-3 px-3;
-}
-
-.x-message__underlay,
-.x-message__outline {
-	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none;
-}
-
-.x-message__outline {
-	@apply border-0 border-current -z-10;
-}
-
-.x-message__underlay {
-	@apply -z-20;
+	@apply flex relative justify-start rounded cursor-default p-3 shadow-1 shadow-black/50;
 	background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.x-message__outline {
+	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none border-0 border-current -z-10;
 }
 
 .x-message__body {
@@ -31,11 +22,14 @@
 }
 
 .x-message__close {
-	@apply flex justify-start items-start;
+	@apply ml-3 flex justify-start items-start;
 }
 
 .x-message--square {
 	@apply rounded-none;
+}
+.x-message--flat {
+	@apply shadow-none !important;
 }
 .x-message--outline .x-message__outline {
 	@apply border;
@@ -73,4 +67,26 @@
 }
 .x-message--warning {
 	@apply text-warning;
+}
+
+.x-message--filled.x-message--primary {
+	@apply x-bg-primary;
+}
+.x-message--filled.x-message--secondary {
+	@apply x-bg-secondary;
+}
+.x-message--filled.x-message--accent {
+	@apply x-bg-accent;
+}
+.x-message--filled.x-message--positive {
+	@apply x-bg-positive;
+}
+.x-message--filled.x-message--negative {
+	@apply x-bg-negative;
+}
+.x-message--filled.x-message--info {
+	@apply x-bg-info;
+}
+.x-message--filled.x-message--warning {
+	@apply x-bg-warning;
 }
