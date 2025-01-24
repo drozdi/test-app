@@ -1,8 +1,3 @@
-import { createContext, useContext } from 'react';
+import { createSafeContext } from '../../internal/createSafeContext';
 
-export const XToastContext = createContext(null);
-
-export function useXToastContext() {
-	const context = useContext(XToastContext);
-	return context;
-}
+export const [XToastProvider, useXToastContext] = createSafeContext();

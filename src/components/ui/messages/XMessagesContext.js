@@ -1,7 +1,3 @@
-import { createContext, useContext } from 'react';
+import { createSafeContext } from '../../internal/createSafeContext';
 
-export const XMessagesContext = createContext(null);
-
-export function useXMessagesContext() {
-	return useContext(XMessagesContext);
-}
+export const [XMessagesProvider, useXMessagesContext] = createSafeContext();

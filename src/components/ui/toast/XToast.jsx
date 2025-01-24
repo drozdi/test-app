@@ -3,7 +3,7 @@ import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { XMessages } from '../messages';
 import './style.css';
-import { XToastContext } from './XToastContext';
+import { XToastProvider } from './XToastContext';
 
 export const XToast = memo(
 	forwardRef(
@@ -59,9 +59,7 @@ export const XToast = memo(
 					})}
 					ref={containerRef}
 				>
-					<XToastContext.Provider
-						value={{ underlined: under, show, replace, clear }}
-					>
+					<XToastProvider value={{ underlined: under, show, replace, clear }}>
 						<XMessages
 							life={Math.max(life ?? 0, 3000)}
 							closable={closable}
@@ -72,7 +70,7 @@ export const XToast = memo(
 							sticky={false}
 							ref={mesgs}
 						/>
-					</XToastContext.Provider>
+					</XToastProvider>
 				</div>,
 				document.body,
 			);

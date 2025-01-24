@@ -1,10 +1,11 @@
 .x-message {
-	@apply flex relative justify-start rounded cursor-default p-3 shadow-1 shadow-black/50;
+	@apply flex relative justify-start rounded cursor-default p-3 shadow-2 shadow-black/50;
 	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
-.x-message__outline {
+.x-message:before {
 	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none border-0 border-current;
+	content: '';
 }
 
 .x-message__body {
@@ -31,19 +32,19 @@
 .x-message--flat {
 	@apply shadow-none !important;
 }
-.x-message--outline .x-message__outline {
+.x-message--outline:before {
 	@apply border;
 }
-.x-message--underlined-top .x-message__outline {
+.x-message--underlined-top:before {
 	@apply border-t-4;
 }
-.x-message--underlined-bottom .x-message__outline {
+.x-message--underlined-bottom:before {
 	@apply border-b-4;
 }
-.x-message--underlined-left .x-message__outline {
+.x-message--underlined-left:before {
 	@apply border-l-4;
 }
-.x-message--underlined-right .x-message__outline {
+.x-message--underlined-right:before {
 	@apply border-r-4;
 }
 
@@ -90,6 +91,6 @@
 .x-message--filled.x-message--warning {
 	@apply x-bg-warning;
 }
-.x-message--filled .x-message__outline {
+.x-message--filled:before {
 	@apply border-color;
 }
