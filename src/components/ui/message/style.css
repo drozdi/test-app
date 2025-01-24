@@ -4,7 +4,7 @@
 }
 
 .x-message__outline {
-	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none border-0 border-current -z-10;
+	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none border-0 border-current;
 }
 
 .x-message__body {
@@ -89,4 +89,7 @@
 }
 .x-message--filled.x-message--warning {
 	@apply x-bg-warning;
+}
+.x-message--filled .x-message__outline {
+	@apply border-color;
 }
