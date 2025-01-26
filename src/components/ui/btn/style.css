@@ -1,9 +1,22 @@
 .x-btn {
-	@apply relative inline-flex items-center justify-center select-none cursor-pointer rounded px-6 py-2 text-base text-center font-normal uppercase box-border border-current border-0 overflow-hidden focus:outline-none focus-visible:outline-none disabled:!pointer-events-none disabled:!shadow-none disabled:!opacity-50 disabled:!cursor-not-allowed;
-	@apply shadow hover:shadow-xl focus:shadow-lg active:shadow-md !shadow-black/50;
-	@apply active:scale-[0.97];
+	@apply relative flex items-center justify-center select-none cursor-pointer rounded px-6 py-2 uppercase box-border border-current border-0 overflow-hidden focus:outline-none focus-visible:outline-none shadow !shadow-black/50;
+	&:not(:disabled, .x-btn--disabled, .x-btn--loading) {
+		&:hover {
+			@apply shadow-xl;
+		}
+		&:focus {
+			@apply shadow-lg;
+		}
+		&:active {
+			@apply scale-[0.98] shadow-none shadow-inner;
+		}
+	}
 }
-
+.x-btn:disabled,
+.x-btn--disabled,
+.x-btn--loading {
+	@apply shadow-none opacity-50 cursor-not-allowed transform-none !important;
+}
 .x-btn-outline,
 .x-btn-underlay,
 .x-btn-loader {
@@ -15,25 +28,18 @@
 .x-btn-underlay {
 	@apply bg-current opacity-0;
 }
-
 .x-btn,
-.x-btn-outline,
-.x-btn-underlay,
-.x-btn-loader,
-.x-btn-inner {
+.x-btn * {
 	@apply transition-all duration-200 ease-in-out;
 }
-
-.x-btn-inner {
+.x-btn-content {
 	@apply flex;
 }
-
 .x-btn-loader {
 	@apply top-full flex items-center justify-center;
 }
-
 .x-btn--loading {
-	& .x-btn-inner {
+	& .x-btn-content {
 		@apply translate-y-[calc(-100%-0.5rem)];
 	}
 	& .x-btn-loader {
@@ -55,33 +61,33 @@
 		@apply ml-3;
 	}
 }
-
-.x-btn:hover .x-btn-underlay {
+.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading):hover .x-btn-underlay {
 	@apply opacity-15;
 }
-.x-btn:focus .x-btn-underlay {
+.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading):focus .x-btn-underlay {
 	@apply opacity-20;
 }
-.x-btn:active .x-btn-underlay {
+.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading):active .x-btn-underlay {
 	@apply opacity-25;
 }
 
 .x-btn--tonal .x-btn-underlay {
 	@apply opacity-25;
 }
-.x-btn--tonal:hover .x-btn-underlay,
-.x-btn--plain:hover .x-btn-underlay {
-	@apply opacity-35;
+.x-btn--tonal,
+.x-btn--plain {
+	&:not(:disabled, .x-btn--disabled, .x-btn--loading) {
+		&:hover .x-btn-underlay {
+			@apply opacity-35;
+		}
+		&:focus .x-btn-underlay {
+			@apply opacity-40;
+		}
+		&:active .x-btn-underlay {
+			@apply opacity-45;
+		}
+	}
 }
-.x-btn--tonal:focus .x-btn-underlay,
-.x-btn--plain:focus .x-btn-underlay {
-	@apply opacity-40;
-}
-.x-btn--tonal:active .x-btn-underlay,
-.x-btn--plain:active .x-btn-underlay {
-	@apply opacity-45;
-}
-
 .x-btn--outline,
 .x-btn--tonal,
 .x-btn--plain,
@@ -99,23 +105,23 @@
 .x-btn--outline .x-btn-outline {
 	@apply block border;
 }
-.x-btn--outline:hover .x-btn-outline {
+.x-btn--outline:not(:disabled, .x-btn--disabled, .x-btn--loading):hover .x-btn-outline {
 	@apply opacity-100;
 }
-
 .x-btn--text,
 .x-btn--plain {
-	.x-btn-content {
+	.x-btn-label {
 		@apply opacity-80;
 	}
 }
-
 .x-btn--text,
 .x-btn--plain {
-	&:hover,
-	&.x-btn--active {
-		.x-btn-content {
-			@apply opacity-100;
+	&:not(:disabled, .x-btn--disabled, .x-btn--loading) {
+		&:hover,
+		&.x-btn--active {
+			.x-btn-label {
+				@apply opacity-100;
+			}
 		}
 	}
 }
@@ -126,7 +132,7 @@
 
 .x-btn--tonal,
 .x-btn--plain {
-	&.x-btn--active .x-btn-underlay {
+	&:not(:disabled, .x-btn--disabled, .x-btn--loading).x-btn--active .x-btn-underlay {
 		@apply opacity-45 !important;
 	}
 }
@@ -143,11 +149,35 @@
 .x-btn--xs {
 	@apply rounded px-2 py-1 text-xs;
 }
+.x-btn--xs:not(.x-btn--icon) .x-btn-section {
+	&:is(*:first-child) {
+		@apply mr-2;
+	}
+	&:is(*:last-child) {
+		@apply ml-2;
+	}
+}
 .x-btn--sm {
 	@apply rounded px-4 py-1 text-sm;
 }
+.x-btn--sm:not(.x-btn--icon) .x-btn-section {
+	&:is(*:first-child) {
+		@apply mr-2;
+	}
+	&:is(*:last-child) {
+		@apply ml-2;
+	}
+}
 .x-btn--lg {
 	@apply rounded px-7 py-3 text-lg;
+}
+.x-btn--lg:not(.x-btn--icon) .x-btn-section {
+	&:is(*:first-child) {
+		@apply mr-4;
+	}
+	&:is(*:last-child) {
+		@apply ml-4;
+	}
 }
 .x-btn--icon {
 	@apply px-2;
@@ -174,16 +204,14 @@
 	@apply p-0 rounded-[50%] min-w-8 min-h-8;
 }
 
-.x-btn:where(
-		.x-btn--primary,
-		.x-btn--secondary,
-		.x-btn--accent,
-		.x-btn--positive,
-		.x-btn--negative,
-		.x-btn--info,
-		.x-btn--warning,
-		.x-btn--dimmed
-	) {
+.x-btn--primary,
+.x-btn--secondary,
+.x-btn--accent,
+.x-btn--positive,
+.x-btn--negative,
+.x-btn--info,
+.x-btn--warning,
+.x-btn--dimmed {
 	@apply text-white;
 }
 

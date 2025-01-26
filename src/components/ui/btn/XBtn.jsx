@@ -72,9 +72,9 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 	);
 	const isIcon = useMemo(
 		() =>
-			(!!leftSection != !!rightSection && !children) ||
-			(children?.type === XIcon && !leftSection && !rightSection),
-		[children, leftSection, rightSection],
+			(!!propsLeftSection != !!propsRightSection && !children) ||
+			(children?.type === XIcon && !propsLeftSection && !propsRightSection),
+		[children, propsLeftSection, propsRightSection],
 	);
 
 	return render(
@@ -110,12 +110,12 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 				<>
 					<span className="x-btn-underlay"></span>
 					<span className="x-btn-outline"></span>
-					<span className="x-btn-inner">
-						{leftSection && (
+					<span className="x-btn-content">
+						{propsLeftSection && (
 							<span className="x-btn-section">{leftSection}</span>
 						)}
-						{children && <span className="x-btn-content">{children}</span>}
-						{rightSection && (
+						{children && <span className="x-btn-label">{children}</span>}
+						{propsRightSection && (
 							<span className="x-btn-section">{rightSection}</span>
 						)}
 					</span>
