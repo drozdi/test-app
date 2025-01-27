@@ -74,14 +74,15 @@
 .x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading, .x-btn--text):active::before {
 	@apply opacity-25;
 }
-.x-btn--tonal {
-	background-color: color-mix(in srgb, currentColor 20%, transparent) !important;
-}
+
 .x-btn--outline,
 .x-btn--plain,
 .x-btn--text,
 .x-btn--link {
 	@apply bg-transparent !important;
+}
+.x-btn--tonal {
+	background-color: color-mix(in srgb, currentColor 20%, transparent) !important;
 }
 .x-btn--plain,
 .x-btn--text,

@@ -82,7 +82,6 @@ export const XMessage = memo(
 				)}
 				ref={ref}
 			>
-				<div className="x-message__outline" />
 				{icon && !loading && Icon}
 				{loading && <XSpinner thickness="5" />}
 				<div className="x-message__body">

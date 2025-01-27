@@ -3,7 +3,7 @@
 	background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
-.x-message:before {
+.x-message::before {
 	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout pointer-events-none border-0 border-current;
 	content: '';
 }
@@ -32,19 +32,19 @@
 .x-message--flat {
 	@apply shadow-none !important;
 }
-.x-message--outline:before {
+.x-message--outline::before {
 	@apply border;
 }
-.x-message--underlined-top:before {
+.x-message--underlined-top::before {
 	@apply border-t-4;
 }
-.x-message--underlined-bottom:before {
+.x-message--underlined-bottom::before {
 	@apply border-b-4;
 }
-.x-message--underlined-left:before {
+.x-message--underlined-left::before {
 	@apply border-l-4;
 }
-.x-message--underlined-right:before {
+.x-message--underlined-right::before {
 	@apply border-r-4;
 }
 
@@ -91,6 +91,6 @@
 .x-message--filled.x-message--warning {
 	@apply x-bg-warning;
 }
-.x-message--filled:before {
+.x-message--filled::before {
 	@apply border-color;
 }

@@ -57,7 +57,6 @@ export function XTabsTab({
 				</span>
 			)}
 			<span className="x-tabs-tab__label">{children}</span>
-			<div className="x-tabs-tab__underlay"></div>
 			{rightSection && (
 				<span className="x-tabs-tab__section">
 					{isString(rightSection) ? (

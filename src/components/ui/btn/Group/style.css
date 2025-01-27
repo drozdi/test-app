@@ -13,8 +13,7 @@
 	@apply grow;
 }
 
-.x-btn-group:not(.x-btn-group--pills):not(.x-btn-group--vertical):not(.x-btn-group--round)
-	> * {
+.x-btn-group:not(.x-btn-group--pills, .x-btn-group--vertical, .x-btn-group--round) > * {
 	&:not(:first-child) {
 		@apply rounded-l-none;
 	}
