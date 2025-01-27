@@ -108,8 +108,6 @@ const XBtnRoot = forwardRefWithAs(function XBtnFn(params, ref) {
 				children
 			) : (
 				<>
-					<span className="x-btn-underlay"></span>
-					<span className="x-btn-outline"></span>
 					<span className="x-btn-content">
 						{propsLeftSection && (
 							<span className="x-btn-section">{leftSection}</span>

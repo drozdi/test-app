@@ -17,26 +17,31 @@
 .x-btn--loading {
 	@apply shadow-none opacity-50 cursor-not-allowed transform-none !important;
 }
-.x-btn-outline,
-.x-btn-underlay,
+.x-btn::after,
+.x-btn::before,
 .x-btn-loader {
-	@apply absolute top-0 left-0 w-full h-full rounded-inherit pointer-events-none;
+	@apply absolute top-0 left-0 w-full h-full rounded-s-inherit;
 }
-.x-btn-outline {
-	@apply hidden bg-transparent border border-inherit opacity-80;
+.x-btn::after {
+	@apply bg-transparent border border-current opacity-80;
 }
-.x-btn-underlay {
-	@apply bg-current opacity-0;
+.x-btn--outline::after {
+	content: '';
+}
+.x-btn::before {
+	@apply bg-black opacity-0;
+	content: ' ';
 }
 .x-btn,
 .x-btn * {
 	@apply transition-all duration-200 ease-in-out;
 }
-.x-btn-content {
-	@apply flex;
+.x-btn-content,
+.x-btn-loader {
+	@apply flex z-10;
 }
 .x-btn-loader {
-	@apply top-full flex items-center justify-center;
+	@apply top-full items-center justify-center;
 }
 .x-btn--loading {
 	& .x-btn-content {
@@ -46,7 +51,6 @@
 		@apply top-0;
 	}
 }
-
 .x-btn-section {
 	@apply flex items-center justify-center;
 	& > svg {
@@ -61,51 +65,35 @@
 		@apply ml-3;
 	}
 }
-.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading):hover .x-btn-underlay {
+.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading, .x-btn--text):hover::before {
 	@apply opacity-15;
 }
-.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading):focus .x-btn-underlay {
+.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading, .x-btn--text):focus::before {
 	@apply opacity-20;
 }
-.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading):active .x-btn-underlay {
+.x-btn:not(:disabled, .x-btn--disabled, .x-btn--loading, .x-btn--text):active::before {
 	@apply opacity-25;
 }
-
-.x-btn--tonal .x-btn-underlay {
-	@apply opacity-25;
-}
-.x-btn--tonal,
-.x-btn--plain {
-	&:not(:disabled, .x-btn--disabled, .x-btn--loading) {
-		&:hover .x-btn-underlay {
-			@apply opacity-35;
-		}
-		&:focus .x-btn-underlay {
-			@apply opacity-40;
-		}
-		&:active .x-btn-underlay {
-			@apply opacity-45;
-		}
-	}
+.x-btn--tonal {
+	background-color: color-mix(in srgb, currentColor 20%, transparent) !important;
 }
 .x-btn--outline,
-.x-btn--tonal,
 .x-btn--plain,
 .x-btn--text,
 .x-btn--link {
 	@apply bg-transparent !important;
 }
+.x-btn--plain,
+.x-btn--text,
+.x-btn--link {
+	&::before {
+		@apply bg-current;
+	}
+}
 .x-btn--flat {
 	@apply shadow-none !important;
 }
-
-.x-btn--outline {
-	@apply border-current;
-}
-.x-btn--outline .x-btn-outline {
-	@apply block border;
-}
-.x-btn--outline:not(:disabled, .x-btn--disabled, .x-btn--loading):hover .x-btn-outline {
+.x-btn--outline:not(:disabled, .x-btn--disabled, .x-btn--loading):hover::after {
 	@apply opacity-100;
 }
 .x-btn--text,
@@ -125,25 +113,11 @@
 		}
 	}
 }
-
-.x-btn--active .x-btn-underlay {
-	@apply opacity-25 !important;
-}
-
-.x-btn--tonal,
-.x-btn--plain {
-	&:not(:disabled, .x-btn--disabled, .x-btn--loading).x-btn--active .x-btn-underlay {
-		@apply opacity-45 !important;
-	}
-}
-
 .x-btn--active {
-	@apply shadow-md shadow-black/50;
-}
-
-.x-btn--text .x-btn-underlay,
-.x-btn--outline:not(.x-btn--tonal, .x-btn--plain) .x-btn-underlay {
-	@apply opacity-0 !important;
+	@apply shadow-md;
+	&::before {
+		@apply bg-current opacity-20 !important;
+	}
 }
 
 .x-btn--xs {
@@ -307,6 +281,6 @@
 .x-btn--dimmed {
 	@apply bg-dimmed !important;
 }
-.x-btn--dimmed .x-btn-outline {
-	@apply border-separator;
+.x-btn--dimmed::after {
+	@apply border-color;
 }

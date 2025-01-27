@@ -237,7 +237,7 @@ const XSidebarRoot = forwardRefWithAs(function XSidebarFn(
 									dimmed
 									block
 									square
-									icon={
+									leftSection={
 										isMini
 											? `mdi-arrow-${type === 'left' ? 'right' : 'left'}-bold-box-outline`
 											: `mdi-arrow-${type}-bold-box-outline`
