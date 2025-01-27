@@ -3,19 +3,24 @@
 }
 .x-input-before,
 .x-input-after,
-.x-input-prepend,
-.x-input-append {
+.x-input-section {
 	@apply flex items-center content-center;
 }
+
+.x-input-section {
+	&:is(*:first-child) {
+		@apply mr-3;
+	}
+	&:is(*:last-child) {
+		@apply ml-3;
+	}
+}
+
 .x-input-before {
 	@apply mr-2;
 }
 .x-input-after {
 	@apply ml-2;
-}
-.x-input-prepend,
-.x-input-append {
-	@apply px-3;
 }
 
 .x-input-container,

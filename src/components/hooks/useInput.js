@@ -5,7 +5,7 @@ import { useForkRef } from './useForkRef';
 const validation = (value, rules = []) => {
 	return rules.map((rule) => rule(value)).filter((v) => v !== true);
 };
-export const useInput = (props) => {
+export const useInput = (props, externalRef) => {
 	const {
 		initialValue,
 		error: errorProp = false,
@@ -13,7 +13,6 @@ export const useInput = (props) => {
 		required = false,
 		rules = [],
 		lazyRules = false,
-		ref: externalRef,
 		...other
 	} = props;
 	const inputRef = useRef();

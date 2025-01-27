@@ -235,6 +235,7 @@ const XSidebarRoot = forwardRefWithAs(function XSidebarFn(
 							<div className="xSidebar-toggle-mini">
 								<XBtn
 									dimmed
+									plain
 									block
 									square
 									leftSection={
@@ -252,7 +253,7 @@ const XSidebarRoot = forwardRefWithAs(function XSidebarFn(
 							<div className="xSidebar-toggle">
 								<XBtn
 									color="accent"
-									icon={
+									leftSection={
 										isOpen
 											? `mdi-menu-${type}`
 											: `mdi-menu-${type === 'left' ? 'right' : 'left'}`

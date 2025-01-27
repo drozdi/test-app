@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { forwardRef, memo, useMemo, useRef } from 'react';
 import { useInput } from '../../hooks/useInput';
 import './style.css';
-const XInputRoot = forwardRef(function XInput(props, ref) {
+const XInputRoot = forwardRef(function XInputFn(props, ref) {
 	/**
 	 * initialValue
 	 * error
@@ -21,7 +21,7 @@ const XInputRoot = forwardRef(function XInput(props, ref) {
 		inputRef,
 		disabled,
 		attrs: _attrs,
-	} = useInput({ ...props, ref });
+	} = useInput(props, ref);
 
 	const {
 		className,
