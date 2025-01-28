@@ -57,6 +57,8 @@ export function InputExample() {
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
 			<div className="p-6 w-36">
 				<XInputBase
+					label="Label"
+					placeholder="Placeholder"
 					leftSection="mdi-account"
 					rightSection="mdi-lock-off-outline"
 				/>

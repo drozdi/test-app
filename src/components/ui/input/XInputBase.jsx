@@ -5,7 +5,15 @@ import { isString } from '../../../utils/is';
 import { XIcon } from '../icon';
 import './style.css';
 const XInputBaseRoot = forwardRef(function XInputBaseFn(
-	{ id, label, leftSection: propsLeftSection, rightSection: propsRightSection },
+	{
+		id,
+		label,
+		placeholder,
+		color,
+		labelColor,
+		leftSection: propsLeftSection,
+		rightSection: propsRightSection,
+	},
 	ref,
 ) {
 	const controlRef = useRef();
@@ -27,7 +35,11 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(
 			),
 		[propsRightSection],
 	);
-	const attrs = {};
+	const attrs = {
+		className: 'x-input-native',
+	};
+	const modColor = null;
+	const labelStyle = {};
 
 	return (
 		<div className="x-input-container">
@@ -51,7 +63,7 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(
 				<input {...attrs} />
 				{label && (
 					<label
-						htmlFor={props.id}
+						htmlFor={id}
 						className={classNames(
 							'x-input-label',
 							labelColor || modColor
