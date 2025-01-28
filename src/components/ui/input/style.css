@@ -4,16 +4,20 @@
 .x-input-before,
 .x-input-after,
 .x-input-section {
-	@apply flex items-center content-center;
+	@apply flex justify-center items-center content-center min-w-9;
+}
+
+.x-input-container {
+	@apply bg-dimmed;
 }
 
 .x-input-section {
-	&:is(*:first-child) {
-		@apply mr-3;
-	}
-	&:is(*:last-child) {
+	/*&:is(*:first-child) {
 		@apply ml-3;
 	}
+	&:is(*:last-child) {
+		@apply mr-3;
+	}*/
 }
 
 .x-input-before {

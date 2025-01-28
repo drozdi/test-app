@@ -37,6 +37,7 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(
 	);
 	const attrs = {
 		className: 'x-input-native',
+		placeholder,
 	};
 	const modColor = null;
 	const labelStyle = {};

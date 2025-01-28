@@ -55,7 +55,7 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
-			<div className="p-6 w-36">
+			<div className="p-6 w-80">
 				<XInputBase
 					label="Label"
 					placeholder="Placeholder"
