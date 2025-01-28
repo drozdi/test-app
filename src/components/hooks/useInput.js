@@ -5,16 +5,18 @@ import { useForkRef } from './useForkRef';
 const validation = (value, rules = []) => {
 	return rules.map((rule) => rule(value)).filter((v) => v !== true);
 };
-export const useInput = (props, externalRef) => {
-	const {
-		initialValue,
+export const useInput = (
+	{
+		value: initialValue,
 		error: errorProp = false,
 		disabled = false,
 		required = false,
 		rules = [],
 		lazyRules = false,
 		...other
-	} = props;
+	},
+	externalRef,
+) => {
 	const inputRef = useRef();
 	const handleRef = useForkRef(externalRef, inputRef);
 	const externalEventHandlers = {
@@ -100,6 +102,7 @@ export const useInput = (props, externalRef) => {
 		errors,
 		focus,
 		disabled,
+		required,
 		inputRef,
 		attrs,
 	};

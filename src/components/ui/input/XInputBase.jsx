@@ -1,22 +1,30 @@
 //todo add styles label over border
-import classNames from 'classnames';
 import { forwardRef, memo, useMemo, useRef } from 'react';
 import { isString } from '../../../utils/is';
+import { useInput } from '../../hooks/useInput';
 import { XIcon } from '../icon';
 import './style.css';
-const XInputBaseRoot = forwardRef(function XInputBaseFn(
-	{
+import { XInputLabel } from './XInputLabel';
+const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
+	const { value, dirty, error, errors, focus, inputRef, disabled, attrs } = useInput(
+		props,
+		ref,
+	);
+
+	const {
 		id,
 		label,
-		placeholder,
+		dense,
+		outline,
 		color,
 		labelColor,
 		stackLabel,
+		required,
 		leftSection: propsLeftSection,
 		rightSection: propsRightSection,
-	},
-	ref,
-) {
+		...other
+	} = props;
+
 	const controlRef = useRef();
 	const leftSection = useMemo(
 		() =>
@@ -36,25 +44,27 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(
 			),
 		[propsRightSection],
 	);
-	const attrs = {
-		className: 'x-input-native',
-		placeholder,
-	};
 	const modColor = null;
-	const labelStyle = {};
+
+	const shiftLabel = useMemo(
+		() => controlRef.current?.offsetLeft || 0,
+		[controlRef.current, leftSection],
+	);
+
+	const isShift = dense && outline && (focus || stackLabel);
+	const labelStyle = {
+		left: isShift ? -shiftLabel : '',
+	};
 
 	return (
 		<div className="x-input-container">
 			{propsLeftSection && <span className="x-input-section">{leftSection}</span>}
+			<div className="x-input-underlay"></div>
 
 			<div className="x-input-outline">
 				<div className="x-input-outline-start"></div>
 				<div className="x-input-outline-notch">
-					{label && (
-						<label htmlFor={id} className="x-input-label">
-							{label}
-						</label>
-					)}
+					<XInputLabel required={required}>{label}</XInputLabel>
 				</div>
 				<div className="x-input-outline-end"></div>
 			</div>
@@ -62,21 +72,16 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(
 			<div className="x-input-underlined"></div>
 
 			<div className="x-input-control" ref={controlRef}>
-				<input {...attrs} />
-				{label && (
-					<label
-						htmlFor={id}
-						className={classNames(
-							'x-input-label',
-							labelColor || modColor
-								? 'text-' + (labelColor || modColor)
-								: '',
-						)}
-						style={labelStyle}
-					>
-						{label}
-					</label>
-				)}
+				<input {...{ ...other, ...attrs }} className="x-input-native" />
+
+				<XInputLabel
+					htmlFor={id}
+					color={labelColor || modColor}
+					style={labelStyle}
+					required={required}
+				>
+					{label}
+				</XInputLabel>
 			</div>
 
 			{propsRightSection && <span className="x-input-section">{rightSection}</span>}

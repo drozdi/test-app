@@ -163,7 +163,7 @@ export function InputExample() {
 					</tbody>
 				</table>
 			)}
-			{false && (
+			{true && (
 				<>
 					<hr className="my-2" />
 					<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
