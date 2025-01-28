@@ -11,6 +11,7 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(
 		placeholder,
 		color,
 		labelColor,
+		stackLabel,
 		leftSection: propsLeftSection,
 		rightSection: propsRightSection,
 	},
