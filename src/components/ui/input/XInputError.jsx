@@ -2,21 +2,21 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './style.css';
 
-export function XInputDescription({ className, children, ...props }) {
+export function XInputError({ className, children, ...props }) {
 	if (!children) {
 		return null;
 	}
 	return (
 		<p
 			{...props}
-			className={classNames('x-input-message x-input-message--hint', className)}
+			className={classNames('x-input-message x-input-message--error', className)}
 		>
-			{children === ' ' ? '&nbsp;' : children}
+			{children}
 		</p>
 	);
 }
 
-XInputDescription.propTypes = {
+XInputError.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
 };

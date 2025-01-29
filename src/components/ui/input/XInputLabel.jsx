@@ -6,7 +6,6 @@ export function XInputLabel({ className, children, htmlFor, color, required, ...
 	if (!children) {
 		return null;
 	}
-	console.log(props);
 	return (
 		<label
 			{...props}
