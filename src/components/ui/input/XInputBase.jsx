@@ -28,9 +28,6 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 		rightSection: propsRightSection,
 
 		lazyRules,
-		hint,
-		hideHint,
-		hideMessage,
 		errorMessage,
 
 		...other

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XIcon, XInput, XInputBase } from '../ui';
+import { XInput, XInputBase } from '../ui';
 import { Form, useProps } from './utils';
 export function InputExample() {
 	const [danses, setDanses] = useState({
@@ -27,8 +27,6 @@ export function InputExample() {
 			label: 'Lable',
 			labelColor: '',
 			placeholder: 'Placeholder',
-			//hint: 'Hint',
-			//errorMessage: '',
 			color: '',
 			outline: false,
 			filled: true,
@@ -37,14 +35,17 @@ export function InputExample() {
 			dense: false,
 			stackLabel: false,
 			disabled: false,
+			required: false,
+			leftSection: '',
+			rightSection: '',
+			//hint: 'Hint',
+			//errorMessage: '',
 			//lazyRules: true,
 			//hideHint: false,
 			//hideMessage: false,
 			///???
 			/*before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
 			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,*/
-			leftSection: <XIcon>mdi-account</XIcon>,
-			rightSection: <XIcon>mdi-lock-off-outline</XIcon>,
 			/*rules: [
 				(v) => (v && v.length > 2) || 'min 3 characters',
 				(v) => (v && v.length < 7) || 'max 6 characters',
@@ -57,7 +58,6 @@ export function InputExample() {
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
 			<div className="p-6 w-80">
 				<XInputBase
-					label="Label"
 					placeholder="Placeholder"
 					leftSection="mdi-account"
 					rightSection="mdi-lock-off-outline"
@@ -200,6 +200,8 @@ export function InputExample() {
 											'warning',
 										],
 									},
+									leftSection: { type: 'checkbox', val: 'mdi-account' },
+									rightSection: { type: 'checkbox', val: 'mdi-close' },
 									label: { type: 'text' },
 									placeholder: { type: 'text' },
 									hint: { type: 'text' },
@@ -210,6 +212,7 @@ export function InputExample() {
 									underlined: { type: 'checkbox' },
 									dense: { type: 'checkbox' },
 									stackLabel: { type: 'checkbox' },
+									required: { type: 'checkbox' },
 									disabled: { type: 'checkbox' },
 									hideMessage: { type: 'checkbox' },
 									lazyRules: { type: 'checkbox' },
