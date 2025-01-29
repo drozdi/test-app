@@ -70,6 +70,11 @@
 	@apply text-[0.8em] top-2;
 }
 
+.x-input--filled::before {
+	@apply absolute top-0 left-0 w-full h-full rounded-inherit contain-layout box-border bg-dimmed;
+	content: '';
+}
+
 .x-input-underlay,
 .x-input-underlined,
 .x-input-outline {
@@ -115,12 +120,12 @@
 	.x-input-control .x-input-native {
 		@apply py-2;
 	}
-	.x-input-control:has(input:focus) .x-input-label,
+	.x-input-control:focus-within .x-input-label,
 	.x-input-control:has(input:not(:placeholder-shown)) .x-input-label {
 		@apply top-0 ml-3;
 	}
 
-	.x-input-control:has(input:focus) ~ .x-input-outline > .x-input-outline-notch,
+	.x-input-control:focus-within ~ .x-input-outline > .x-input-outline-notch,
 	.x-input-control:has(input:not(:placeholder-shown))
 		~ .x-input-outline
 		> .x-input-outline-notch {
@@ -147,7 +152,7 @@
 .x-input--underlined .x-input-underlined {
 	@apply block;
 }
-.x-input--underlined:has(input:focus) .x-input-underlined {
+.x-input--underlined:focus-within .x-input-underlined {
 	@apply border-b-3;
 }
 
@@ -161,19 +166,17 @@
 	@apply block;
 }
 
-.x-input:has(input:focus) {
+.x-input-container:focus-within {
 	@apply border-blue-600;
 }
 
-.x-input:where(
-		.x-input--primary,
-		.x-input--secondary,
-		.x-input--accent,
-		.x-input--positive,
-		.x-input--negative,
-		.x-input--info,
-		.x-input--warning
-	) {
+.x-input--primary,
+.x-input--secondary,
+.x-input--accent,
+.x-input--positive,
+.x-input--negative,
+.x-input--info,
+.x-input--warning {
 	.x-input-underlay {
 		background-color: color-mix(in srgb, currentColor 30%, transparent);
 	}
@@ -181,8 +184,8 @@
 	.x-input-underlined {
 		@apply border-current opacity-60;
 	}
-	&:has(input:focus) .x-input-outline,
-	&:has(input:focus) .x-input-underlined {
+	&:focus-within .x-input-outline,
+	&:focus-within .x-input-underlined {
 		@apply opacity-100;
 	}
 }
@@ -244,7 +247,7 @@
 .x-input-messages--error .x-input-message--error {
 	@apply top-1 translate-y-0;
 }
-.x-input:has(input:focus)
+.x-input:focus-within
 	.x-input-messages:not(.x-input-messages--error)
 	.x-input-message--hint,
 .x-input-messages--hint .x-input-message--hint {

@@ -27,24 +27,24 @@ export function InputExample() {
 			label: 'Lable',
 			labelColor: '',
 			placeholder: 'Placeholder',
-			hint: 'Hint',
-			errorMessage: '',
+			//hint: 'Hint',
+			//errorMessage: '',
 			color: '',
 			outline: false,
-			field: true,
+			filled: true,
 			square: false,
 			underlined: false,
 			dense: false,
 			stackLabel: false,
 			disabled: false,
-			lazyRules: true,
-			hideHint: false,
-			hideMessage: false,
+			//lazyRules: true,
+			//hideHint: false,
+			//hideMessage: false,
 			///???
-			before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
-			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,
-			prepend: <XIcon>mdi-account</XIcon>,
-			append: <XIcon>mdi-lock-off-outline</XIcon>,
+			/*before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
+			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,*/
+			leftSection: <XIcon>mdi-account</XIcon>,
+			rightSection: <XIcon>mdi-lock-off-outline</XIcon>,
 			/*rules: [
 				(v) => (v && v.length > 2) || 'min 3 characters',
 				(v) => (v && v.length < 7) || 'max 6 characters',
@@ -168,7 +168,7 @@ export function InputExample() {
 					<hr className="my-2" />
 					<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 						<div>
-							<XInput {...inputExample.props} />
+							<XInputBase {...inputExample.props} />
 							<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 								{inputExample.code}
 							</pre>
@@ -205,7 +205,7 @@ export function InputExample() {
 									hint: { type: 'text' },
 									errorMessage: { type: 'text' },
 									outline: { type: 'checkbox' },
-									field: { type: 'checkbox' },
+									filled: { type: 'checkbox' },
 									square: { type: 'checkbox' },
 									underlined: { type: 'checkbox' },
 									dense: { type: 'checkbox' },

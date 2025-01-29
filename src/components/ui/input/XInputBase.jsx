@@ -1,4 +1,5 @@
 //todo add styles label over border
+import classNames from 'classnames';
 import { forwardRef, memo, useMemo, useRef } from 'react';
 import { isString } from '../../../utils/is';
 import { useInput } from '../../hooks/useInput';
@@ -15,13 +16,23 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 		id,
 		label,
 		dense,
+		square,
+		filled,
 		outline,
+		underlined,
 		color,
 		labelColor,
 		stackLabel,
 		required,
 		leftSection: propsLeftSection,
 		rightSection: propsRightSection,
+
+		lazyRules,
+		hint,
+		hideHint,
+		hideMessage,
+		errorMessage,
+
 		...other
 	} = props;
 
@@ -44,7 +55,8 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 			),
 		[propsRightSection],
 	);
-	const modColor = null;
+	const isError = dirty && (error || !!errorMessage);
+	const modColor = isError ? 'negative' : color;
 
 	const shiftLabel = useMemo(
 		() => controlRef.current?.offsetLeft || 0,
@@ -57,7 +69,20 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 	};
 
 	return (
-		<div className="x-input-container">
+		<div
+			className={classNames('x-input-container', {
+				'x-input--dense': dense,
+				'x-input--square': square,
+
+				'x-input--filled': filled,
+				'x-input--outline': outline,
+				'x-input--underlined': underlined,
+
+				'x-input--stack-label': stackLabel,
+				'x-input--disabled': disabled,
+				[`x-input--${modColor}`]: !!modColor,
+			})}
+		>
 			{propsLeftSection && <span className="x-input-section">{leftSection}</span>}
 			<div className="x-input-underlay"></div>
 
