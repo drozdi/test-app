@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { forwardRef, memo, useMemo, useRef } from 'react';
 import { useInput } from '../../hooks/useInput';
 import './style.css';
-const XInputRoot = forwardRef(function XInputFn(props, ref) {
+const XInputRoot = forwardRef(function XInput(props, ref) {
 	/**
 	 * initialValue
 	 * error
@@ -88,7 +88,6 @@ const XInputRoot = forwardRef(function XInputFn(props, ref) {
 			{before && <div className="x-input-before">{before}</div>}
 			<div className="x-input-container">
 				<div className="x-input-underlay"></div>
-				<div className="x-input-outline">
 				<div className="x-input-outline">
 					<div className="x-input-outline-start"></div>
 					<div className="x-input-outline-notch">
