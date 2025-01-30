@@ -1,6 +1,6 @@
 //todo add styles label over border
 import classNames from 'classnames';
-import { forwardRef, memo, useMemo, useRef } from 'react';
+import { forwardRef, memo, useMemo } from 'react';
 import { isString } from '../../../utils/is';
 import { useInput } from '../../hooks/useInput';
 import { XIcon } from '../icon';
@@ -33,7 +33,6 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 		...other
 	} = props;
 
-	const controlRef = useRef();
 	const leftSection = useMemo(
 		() =>
 			isString(propsLeftSection) ? (
@@ -54,16 +53,6 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 	);
 	const isError = dirty && (error || !!errorMessage);
 	const modColor = isError ? 'negative' : color;
-
-	const shiftLabel = useMemo(
-		() => controlRef.current?.offsetLeft || 0,
-		[controlRef.current, leftSection],
-	);
-
-	const isShift = dense && outline && (focus || stackLabel);
-	const labelStyle = {
-		//left: isShift ? -shiftLabel : '',
-	};
 
 	return (
 		<div
@@ -95,12 +84,7 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 
 			<input {...{ ...other, ...attrs }} className="x-input-native" />
 
-			<XInputLabel
-				htmlFor={id}
-				color={labelColor || modColor}
-				style={labelStyle}
-				required={required}
-			>
+			<XInputLabel htmlFor={id} color={labelColor || modColor} required={required}>
 				{label}
 			</XInputLabel>
 
