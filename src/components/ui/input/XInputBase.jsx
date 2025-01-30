@@ -2,6 +2,7 @@
 import classNames from 'classnames';
 import { forwardRef, memo, useMemo } from 'react';
 import { isString } from '../../../utils/is';
+import { useId } from '../../hooks/useId';
 import { useInput } from '../../hooks/useInput';
 import { XIcon } from '../icon';
 import './style.css';
@@ -32,6 +33,8 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 
 		...other
 	} = props;
+
+	const uid = useId(id);
 
 	const leftSection = useMemo(
 		() =>
@@ -82,9 +85,9 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 
 			<div className="x-input-underlined"></div>
 
-			<input {...{ ...other, ...attrs }} className="x-input-native" />
+			<input id={uid} {...other} {...attrs} className="x-input-native" />
 
-			<XInputLabel htmlFor={id} color={labelColor || modColor} required={required}>
+			<XInputLabel htmlFor={uid} color={labelColor || modColor} required={required}>
 				{label}
 			</XInputLabel>
 

@@ -2,12 +2,15 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import './style.css';
 
-export function XInputError({ className, children, ...props }) {
+export function XInputError({ id, className, children, ...props }) {
 	if (!children) {
 		return null;
 	}
+	const ctx = useXInputControlContext();
+	const uid = useId(id || ctx?.errorId);
 	return (
 		<p
+			id={uid}
 			{...props}
 			className={classNames('x-input-message x-input-message--error', className)}
 		>
@@ -17,6 +20,7 @@ export function XInputError({ className, children, ...props }) {
 }
 
 XInputError.propTypes = {
+	id: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,
 };
