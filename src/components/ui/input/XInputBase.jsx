@@ -62,7 +62,7 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 
 	const isShift = dense && outline && (focus || stackLabel);
 	const labelStyle = {
-		left: isShift ? -shiftLabel : '',
+		//left: isShift ? -shiftLabel : '',
 	};
 
 	return (
@@ -93,18 +93,16 @@ const XInputBaseRoot = forwardRef(function XInputBaseFn(props, ref) {
 
 			<div className="x-input-underlined"></div>
 
-			<div className="x-input-control" ref={controlRef}>
-				<input {...{ ...other, ...attrs }} className="x-input-native" />
+			<input {...{ ...other, ...attrs }} className="x-input-native" />
 
-				<XInputLabel
-					htmlFor={id}
-					color={labelColor || modColor}
-					style={labelStyle}
-					required={required}
-				>
-					{label}
-				</XInputLabel>
-			</div>
+			<XInputLabel
+				htmlFor={id}
+				color={labelColor || modColor}
+				style={labelStyle}
+				required={required}
+			>
+				{label}
+			</XInputLabel>
 
 			{propsRightSection && <span className="x-input-section">{rightSection}</span>}
 		</div>

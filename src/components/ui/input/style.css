@@ -1,39 +1,56 @@
+.x-input-container {
+	--input-section-width: 2rem;
+	--imput-padding: 0.75rem;
+	--input-padding-start: var(--imput-padding);
+	--input-padding-end: var(--imput-padding);
+}
+
 .x-input-container,
 .x-input-container * {
 	@apply transition-all ease-in-out duration-200;
 }
 
-.x-input-container,
-.x-input-control {
-	@apply relative flex-1 flex border-inherit rounded-inherit;
+.x-input-container {
+	@apply relative border-inherit rounded-inherit;
 }
 .x-input-section {
-	@apply flex justify-center items-center content-center;
+	@apply absolute top-0 bottom-0 z-10 flex justify-center items-center content-center;
+	width: var(--input-section-width);
 	&:is(*:first-child) {
-		@apply pl-3;
+		top: 0;
 	}
 	&:is(*:last-child) {
-		@apply pr-3;
+		right: 0;
 	}
 }
 
 .x-input-native {
-	@apply block w-full bg-transparent px-3 pt-6 pb-2 outline-none placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	@apply block w-full relative bg-transparent pt-6 pb-2 outline-none placeholder:opacity-0 focus:placeholder:opacity-100 focus:outline-none;
+	padding-inline-start: var(--input-padding-start);
+	padding-inline-end: var(--input-padding-end);
 }
+.x-input-container:has(.x-input-section:is(*:first-child)) {
+	--input-padding-start: var(--input-section-width);
+}
+.x-input-container:has(.x-input-section:is(*:last-child)) {
+	--input-padding-end: var(--input-section-width);
+}
+
 .x-input-label {
-	@apply pointer-events-none opacity-70 truncate absolute ml-3 left-0 top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2;
+	@apply pointer-events-none opacity-70 truncate absolute top-1/2 max-w-[calc(100%-2rem)] -translate-y-1/2;
+	left: var(--input-padding-start);
 }
 
 .x-input--stack-label .x-input-native,
-.x-input-control:not(:has(.x-input-label)) .x-input-native {
+.x-input-container:not(:has(.x-input-label)) .x-input-native {
 	@apply placeholder:opacity-100;
 }
 
-.x-input-control:not(:has(.x-input-label)) .x-input-native {
+.x-input-container:not(:has(.x-input-label)) .x-input-native {
 	@apply py-4 placeholder:opacity-100;
 }
 
-.x-input-control:focus-within .x-input-label {
+.x-input-container:focus-within .x-input-label {
 	@apply opacity-100;
 }
 
@@ -89,7 +106,7 @@
 	.x-input-native:not(:placeholder-shown) ~ .x-input-label {
 		@apply text-[0.8em] top-2;
 	}
-	.x-input-control:not(:has(*.x-input-label)) .x-input-native {
+	&:not(:has(*.x-input-label)) .x-input-native {
 		@apply py-2;
 	}
 }
@@ -108,7 +125,8 @@
 	&.x-input--stack-label .x-input-native ~ .x-input-label,
 	.x-input-native:focus ~ .x-input-label,
 	.x-input-native:not(:placeholder-shown) ~ .x-input-label {
-		@apply top-0 ml-3;
+		@apply top-0;
+		left: var(--imput-padding);
 	}
 
 	&.x-input--stack-label,
@@ -205,7 +223,6 @@
 }
 
 /*
-
 .x-input {
 	@apply relative flex border-color rounded flex-wrap;
 }
@@ -219,9 +236,6 @@
 .x-input-after {
 	@apply ml-2;
 }
-
-
-
 
 .x-input-messages {
 	@apply flex-auto w-full min-h-3 relative text-xs/none px-3 py-1 overflow-hidden;

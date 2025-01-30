@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XInput, XInputBase } from '../ui';
+import { XIcon, XInput, XInputBase, XInputLabel } from '../ui';
 import { Form, useProps } from './utils';
 export function InputExample() {
 	const [danses, setDanses] = useState({
@@ -56,13 +56,41 @@ export function InputExample() {
 	return (
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
-			<div className="p-6 w-80">
-				<XInputBase
-					placeholder="Placeholder"
-					leftSection="mdi-account"
-					rightSection="mdi-lock-off-outline"
-				/>
-			</div>
+			{false && (
+				<div className="p-6 w-96">
+					<div className="x-input-container">
+						<span className="x-input-section">
+							<XIcon>mdi-account</XIcon>
+						</span>
+						<div className="x-input-underlay"></div>
+
+						<div className="x-input-outline">
+							<div className="x-input-outline-start"></div>
+							<div className="x-input-outline-notch">
+								<XInputLabel required>Label</XInputLabel>
+							</div>
+							<div className="x-input-outline-end"></div>
+						</div>
+
+						<div className="x-input-underlined"></div>
+
+						<input placeholder="Placeholder" className="x-input-native" />
+						<XInputLabel required>Label</XInputLabel>
+
+						<span className="x-input-section">
+							<XIcon>mdi-lock-off-outline</XIcon>
+						</span>
+					</div>
+
+					<hr className="my-4" />
+					<XInputBase
+						label="Label"
+						placeholder="Placeholder"
+						leftSection="mdi-account"
+						rightSection="mdi-lock-off-outline"
+					/>
+				</div>
+			)}
 
 			{false && (
 				<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
