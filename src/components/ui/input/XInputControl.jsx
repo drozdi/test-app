@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { useId } from '../../hooks/useId';
 import { XInputControlProvider } from './XInputControlContext';
 import './style.css';
@@ -9,17 +9,21 @@ export const XInputControl = forwardRef(function XInputControlFn(
 	ref,
 ) {
 	const uid = useId(id);
-	const context = {
-		inputId: `${uid}-input`,
-		labelId: `${uid}-label`,
-		errorId: `${uid}-error`,
-		hintId: `${uid}-hint`,
-	};
+	const context = useMemo(
+		() => ({
+			inputId: `${uid}-input`,
+			labelId: `${uid}-label`,
+			errorId: `${uid}-error`,
+			hintId: `${uid}-hint`,
+		}),
+		[uid],
+	);
 	return <XInputControlProvider value={context}>{children}</XInputControlProvider>;
 });
 
 XInputControl.propTypes = {
 	id: PropTypes.string,
+	context: PropTypes.object,
 	children: PropTypes.node,
 	className: PropTypes.string,
 };

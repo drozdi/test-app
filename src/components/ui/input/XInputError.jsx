@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useId } from '../../hooks/useId';
+import { useXInputControlContext } from './XInputControlContext';
 import './style.css';
 
 export function XInputError({ id, className, children, ...props }) {

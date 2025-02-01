@@ -16,12 +16,12 @@ export function XInputHint({ id, className, children, ...props }) {
 			{...props}
 			className={classNames('x-input-message x-input-message--hint', className)}
 		>
-			{children === ' ' ? '&nbsp;' : children}
+			{children === ' ' ? '\u00A0' : children}
 		</p>
 	);
 }
 
-XInputDescription.propTypes = {
+XInputHint.propTypes = {
 	id: PropTypes.string,
 	children: PropTypes.node,
 	className: PropTypes.string,

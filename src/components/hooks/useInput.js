@@ -52,6 +52,13 @@ export const useInput = (
 			otherHandlers.onChange?.(event, ...args);
 		};
 
+	const createHandleClick = (otherHandlers) => (event) => {
+		if (inputRef.current && event.currentTarget === event.target) {
+			inputRef.current.focus();
+		}
+		otherHandlers.onClick?.(event);
+	};
+
 	//todo: onChange onInput ???
 	const createHandleInput =
 		(otherHandlers) =>
@@ -60,13 +67,6 @@ export const useInput = (
 			setValue(element.value);
 			otherHandlers.onInput?.(event, ...args);
 		};
-
-	const createHandleClick = (otherHandlers) => (event) => {
-		if (inputRef.current && event.currentTarget === event.target) {
-			inputRef.current.focus();
-		}
-		otherHandlers.onClick?.(event);
-	};
 
 	useEffect(() => {
 		checkValue(value);
@@ -87,7 +87,7 @@ export const useInput = (
 			'aria-autocomplete': other['aria-autocomplete'],
 			'aria-haspopup': other['aria-haspopup'],
 			'aria-controls': other['aria-controls'],
-			value,
+			//value,
 			required,
 			disabled,
 			readOnly,

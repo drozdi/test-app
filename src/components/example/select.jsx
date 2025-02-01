@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XSelect } from '../ui';
+import { XIcon, XInputSelect } from '../ui';
 import { Form, useProps } from './utils';
 export function SelectExample() {
 	const [danses, setDanses] = useState({
@@ -31,7 +31,7 @@ export function SelectExample() {
 			errorMessage: '',
 			color: '',
 			outline: false,
-			field: true,
+			filled: true,
 			square: false,
 			underlined: false,
 			dense: false,
@@ -41,16 +41,16 @@ export function SelectExample() {
 			hideHint: false,
 			hideMessage: false,
 			///???
-			/*before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
+			leftSection: '',
+			rightSection: '',
+			before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
 			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,
-			prepend: <XIcon>mdi-account</XIcon>,
-			append: <XIcon>mdi-lock-off-outline</XIcon>,
 			/*rules: [
 				(v) => (v && v.length > 2) || 'min 3 characters',
 				(v) => (v && v.length < 7) || 'max 6 characters',
 			],*/
 		},
-		'XSelect',
+		'XInputSelect',
 	);
 	return (
 		<div className="max-w-4xl m-auto py-4">
@@ -59,11 +59,11 @@ export function SelectExample() {
 			<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 				<div>
 					<div>
-						<XSelect {...selectExample.props}>
+						<XInputSelect {...selectExample.props}>
 							<option value="1">item 1</option>
 							<option value="2">item 2</option>
 							<option value="3">item 3</option>
-						</XSelect>
+						</XInputSelect>
 					</div>
 					<div>
 						<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
@@ -98,12 +98,14 @@ export function SelectExample() {
 									'warning',
 								],
 							},
+							leftSection: { type: 'checkbox', val: 'mdi-account' },
+							rightSection: { type: 'checkbox', val: 'mdi-close' },
 							label: { type: 'text' },
 							placeholder: { type: 'text' },
 							hint: { type: 'text' },
 							errorMessage: { type: 'text' },
 							outline: { type: 'checkbox' },
-							field: { type: 'checkbox' },
+							filled: { type: 'checkbox' },
 							square: { type: 'checkbox' },
 							underlined: { type: 'checkbox' },
 							dense: { type: 'checkbox' },

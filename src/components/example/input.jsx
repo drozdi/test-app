@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { XIcon, XInput, XInputBase, XInputLabel } from '../ui';
+import { XIcon, XInput } from '../ui';
 import { Form, useProps } from './utils';
 export function InputExample() {
 	const [danses, setDanses] = useState({
@@ -38,18 +38,18 @@ export function InputExample() {
 			required: false,
 			leftSection: '',
 			rightSection: '',
-			//hint: 'Hint',
-			//errorMessage: '',
-			//lazyRules: true,
-			//hideHint: false,
-			//hideMessage: false,
+			hint: 'Hint',
+			errorMessage: '',
+			lazyRules: true,
+			hideHint: false,
+			hideMessage: false,
 			///???
-			/*before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
-			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,*/
-			/*rules: [
+			before: <XIcon className="text-warning text-4xl">mdi-home-account</XIcon>,
+			after: <XIcon className="text-primary text-2xl">mdi-close</XIcon>,
+			rules: [
 				(v) => (v && v.length > 2) || 'min 3 characters',
 				(v) => (v && v.length < 7) || 'max 6 characters',
-			],*/
+			], //*/
 		},
 		'XInput',
 	);
@@ -57,48 +57,12 @@ export function InputExample() {
 		<div className="max-w-4xl m-auto py-4">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XInput</h2>
 			{false && (
-				<div className="p-6 w-96">
-					<div className="x-input-container">
-						<span className="x-input-section">
-							<XIcon>mdi-account</XIcon>
-						</span>
-						<div className="x-input-underlay"></div>
-
-						<div className="x-input-outline">
-							<div className="x-input-outline-start"></div>
-							<div className="x-input-outline-notch">
-								<XInputLabel required>Label</XInputLabel>
-							</div>
-							<div className="x-input-outline-end"></div>
-						</div>
-
-						<div className="x-input-underlined"></div>
-
-						<input placeholder="Placeholder" className="x-input-native" />
-						<XInputLabel required>Label</XInputLabel>
-
-						<span className="x-input-section">
-							<XIcon>mdi-lock-off-outline</XIcon>
-						</span>
-					</div>
-
-					<hr className="my-4" />
-					<XInputBase
-						label="Label"
-						placeholder="Placeholder"
-						leftSection="mdi-account"
-						rightSection="mdi-lock-off-outline"
-					/>
-				</div>
-			)}
-
-			{false && (
 				<table className="table-auto w-full border-collapse border-spacing-0 border border-separator">
 					<thead>
 						<tr className="*:text-center">
 							<td className="w-32">color</td>
 							<td>standart</td>
-							<td>field</td>
+							<td>filled</td>
 							<td>outline</td>
 							<td>underlined</td>
 						</tr>
@@ -160,7 +124,7 @@ export function InputExample() {
 											color={color !== 'default' ? color : ''}
 											dense={danses[color]}
 											disabled={disables[color]}
-											field={true}
+											filled={true}
 											label="Label"
 											placeholder="Placeholder"
 										/>
@@ -196,7 +160,7 @@ export function InputExample() {
 					<hr className="my-2" />
 					<div className="grid grid-cols-2 *:col-span-1 *:p-4 *:border *:border-separator">
 						<div>
-							<XInputBase {...inputExample.props} />
+							<XInput {...inputExample.props} />
 							<pre className="bg-sky-500/50 text-white p-2 rounded-md mt-4 select-text">
 								{inputExample.code}
 							</pre>
