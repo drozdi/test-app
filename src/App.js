@@ -76,6 +76,14 @@ function App() {
 										<XItemLabel lines>XInput</XItemLabel>
 									</XItemSection>
 								</XItem>
+								<XItem to="/select">
+									<XItemSection side>
+										<XIcon>mdi-select</XIcon>
+									</XItemSection>
+									<XItemSection>
+										<XItemLabel lines>XSelect</XItemLabel>
+									</XItemSection>
+								</XItem>
 								<XItem to="/link">
 									<XItemSection side>
 										<XIcon>mdi-link</XIcon>
@@ -122,15 +130,6 @@ function App() {
 									</XItemSection>
 									<XItemSection>
 										<XItemLabel lines>XTabs</XItemLabel>
-									</XItemSection>
-								</XItem>
-
-								<XItem to="/select">
-									<XItemSection side>
-										<XIcon>mdi-select</XIcon>
-									</XItemSection>
-									<XItemSection>
-										<XItemLabel lines>XSelect</XItemLabel>
 									</XItemSection>
 								</XItem>
 							</XList>
