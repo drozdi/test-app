@@ -23,6 +23,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 		role,
 		onClick,
 		hoverable,
+		color,
 		...props
 	},
 	ref,
@@ -53,6 +54,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 						'x-item--clickable': isClickable,
 						'x-item--hoverable': isHoverable,
 						'x-item--vertical': vertical,
+						[`text-${color}`]: color,
 					},
 					active && !disabled ? activeClass : '',
 				),
@@ -86,14 +88,7 @@ export const XItem = forwardRefWithAs(function XItemFn(
 			...props,
 			...attrs,
 			ref: handleRef,
-			children: isFunction(children) ? (
-				children
-			) : (
-				<>
-					<span className="x-item__underlay" />
-					{children}
-				</>
-			),
+			children,
 		},
 		{
 			active,
@@ -106,6 +101,7 @@ XItem.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
 	dense: PropTypes.bool,
+	color: PropTypes.string,
 	active: PropTypes.bool,
 	disabled: PropTypes.bool,
 	vertical: PropTypes.bool,

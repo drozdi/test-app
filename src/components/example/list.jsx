@@ -4,7 +4,7 @@ export function ListExample() {
 		<div className="max-w-4xl m-auto py-4 relative">
 			<h2 className="text-center text-2xl mb-4 bg-bgmb1">XList</h2>
 			<div className="w-64 absolute left-1/2 -translate-x-1/2 top-12 pt-8">
-				<XList bordered={true} separator={true}>
+				<XList bordered separator>
 					<XItem as="label">
 						<XItemSection side>
 							<input type="checkbox" value={1} disabled />
@@ -27,6 +27,20 @@ export function ListExample() {
 						</XItemSection>
 						<XItemSection>
 							<XItemLabel>Item 3</XItemLabel>
+						</XItemSection>
+					</XItem>
+					<XItem>
+						<XItemSection side>
+							<XIcon>mdi-home</XIcon>
+						</XItemSection>
+						<XItemSection>
+							<XItemLabel>Item 3</XItemLabel>
+						</XItemSection>
+						<XItemSection side>
+							<XIcon>mdi-home</XIcon>
+						</XItemSection>
+						<XItemSection side>
+							<XIcon>mdi-close</XIcon>
 						</XItemSection>
 					</XItem>
 					<XItem to="https://ya.ru/" target="_blank">

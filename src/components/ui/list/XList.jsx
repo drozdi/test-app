@@ -5,17 +5,17 @@ import './style.css';
 
 const roleAttrExceptions = ['ul', 'ol'];
 export function XList({
-	tag = 'div',
+	as = 'div',
 	children,
 	className,
 	role = null,
-	dense = false,
-	separator = false,
-	bordered = false,
+	dense,
+	separator,
+	bordered,
 }) {
-	const attrRole = roleAttrExceptions.includes(tag) ? null : (role ?? 'list');
+	const attrRole = roleAttrExceptions.includes(as) ? null : (role ?? 'list');
 	return h(
-		tag,
+		as,
 		{
 			className: classNames('x-list', className, {
 				'x-list--dense': dense,
@@ -31,7 +31,7 @@ export function XList({
 XList.propTypes = {
 	children: PropTypes.node,
 	className: PropTypes.string,
-	tag: PropTypes.string,
+	as: PropTypes.string,
 	role: PropTypes.string,
 	dense: PropTypes.bool,
 	separator: PropTypes.bool,

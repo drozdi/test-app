@@ -26,6 +26,7 @@ export const XInputSelect = memo(
 			useInput(props, ref);
 
 		const {
+			children,
 			className,
 			dense,
 			outline,
@@ -35,6 +36,9 @@ export const XInputSelect = memo(
 			stackLabel,
 			before: propsBefore,
 			after: propsAfter,
+
+			//label,
+			placeholder,
 
 			color,
 			labelColor,
@@ -56,6 +60,7 @@ export const XInputSelect = memo(
 			return {
 				...other,
 				...attrs,
+				placeholder: '',
 			};
 		}, [other, attrs]);
 		//console.log(attrs);
@@ -85,7 +90,6 @@ export const XInputSelect = memo(
 
 							'x-input--stack-label': stackLabel,
 							'x-input--disabled': disabled,
-							[`x-input--${modColor}`]: !!modColor,
 						},
 						className,
 					)}
@@ -96,7 +100,14 @@ export const XInputSelect = memo(
 						as="select"
 						labelColor={labelColor || modColor}
 						ref={ref}
-					/>
+					>
+						{placeholder && (
+							<option disabled selected>
+								{placeholder}
+							</option>
+						)}
+						{children}
+					</XInputBase>
 					{after && <div className="x-input-after">{after}</div>}
 					<XInputMessages
 						hideMessage={hideMessage}

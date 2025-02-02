@@ -195,6 +195,9 @@ module.exports = {
 			utilities['.border-color'] = {
 				borderColor: `rgb(var(--border-color))`,
 			};
+			utilities['.divide-color'] = {
+				borderColor: `rgb(var(--border-color))`,
+			};
 
 			//matchVariant
 
