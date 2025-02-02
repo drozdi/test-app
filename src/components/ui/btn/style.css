@@ -33,6 +33,8 @@
 	content: ' ';
 }
 .x-btn,
+.x-btn::before,
+.x-btn::after,
 .x-btn * {
 	@apply transition-all duration-200 ease-in-out;
 }
